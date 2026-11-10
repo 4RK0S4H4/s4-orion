@@ -1,6 +1,6 @@
 # 0020: Orion becomes its own language (accepted, 2026-11-10)
 
-**Status:** accepted by the owner on 2026-11-10 through Claude Design drafts (private claude.ai canvas
+**Status:** direction accepted on 2026-11-10, details still being refined (round 6: glass values and other directions to borrow from; building is on hold until the owner is happy). Accepted through Claude Design drafts (private claude.ai canvas
 "S4 Orion: Own Language Drafts", artifact `LTom2j96tNTT2ZiTsQJjQH`; the "Chosen direction" rows at the top hold the
 component sheet in light and dark and the Projects app). The interactive Direction Lab (`explore/direction.html`) was
 published first but the owner preferred static drafts; its questions are superseded by the answers below.
