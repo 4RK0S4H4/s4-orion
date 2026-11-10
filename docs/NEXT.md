@@ -6,7 +6,7 @@ The owner wants Orion to stop being an M3 Expressive copy: no sharp corners, fla
 simpler motion than the container transform, works everywhere (phone and desktop) like a real framework.
 **[Direction Lab](../explore/direction.html)** is published with nine questions (surfaces, corners, controls, depth,
 phone nav, type voice, motion, framework shape, token names) and a live "Your Combination" screen.
-**Pause here:** wait for the owner's answers. Then follow the plan in 0020 (pause again after step 1 and step 4).
+**Update (same day):** the owner preferred static Claude Design drafts over the lab. Canvas "S4 Orion: Own Language Drafts" (private claude.ai artifact LTom2j96tNTT2ZiTsQJjQH) has A Stone, B Pebble, C Paper; the owner picked **a mix of A and B, keeping blur for everything elevated**; the A+B row (light bills, light glass sheet, dark bill with glass menu, dark desktop) is at the top of the canvas. Next: owner feedback on A+B, then record 0020 with the A+B rules and start the plan. **Pause here:** wait for the owner's answers. Then follow the plan in 0020 (pause again after step 1 and step 4).
 Everything below this section is the pre-overhaul history; the motion/glass QA items and 1.0.0 are on hold until the
 new language is in (much of the motion work there is replaced by the fade family).
 
@@ -146,6 +146,8 @@ labs could load `components/assets/` instead of their own copies.
   transform / unfold / shared axis / slide (no origin scaling); very clear 60% glass with guaranteed AA.
 
 ## Session log
+
+- 2026-11-10 (drafts): three Claude Design directions, owner picked A+B mix with glass for elevated surfaces; A+B drafts made. Next: owner's feedback, then 0020.
 
 - 2026-11-10 (overhaul): owner asked for Orion's own language (flat, blur for depth, no sharp corners, simple motion, works everywhere). Direction Lab + 0020 (proposed) published. Next: owner's picks, then 0020's plan.
 
