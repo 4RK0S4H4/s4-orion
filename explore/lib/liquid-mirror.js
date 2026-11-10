@@ -198,14 +198,15 @@ window.LiquidMirror = (function () {
       var copy = copyOf(this.source);
       /* the copy sits outside its siblings, so rules like "app bar + content" no longer match it: carry its own box over */
       var scs = getComputedStyle(this.source);
-      copy.style.cssText += ';position:absolute;left:0;top:0;margin:0;box-sizing:border-box;padding:' + scs.padding + ';width:' + this.source.getBoundingClientRect().width + 'px;will-change:transform';
+      copy.style.cssText += ';position:absolute;left:0;top:0;margin:0;box-sizing:border-box;padding:' + scs.padding + ';width:' + this.source.getBoundingClientRect().width + 'px';
       this.copy = copy;
       this.pane.replaceChildren(shells(this.source, copy));
     }
     var sr = this.source.getBoundingClientRect();
     this.pane.style.left = this.pane.style.top = -m + 'px';
     this.pane.style.width = (gr.width + 2 * m) + 'px'; this.pane.style.height = (gr.height + 2 * m) + 'px';
-    this.copy.style.transform = 'translate3d(' + (sr.left - gr.left + m) + 'px,' + (sr.top - gr.top + m) + 'px,0)';
+    /* a 2D translate, never translate3d or will-change: WebKit draws a composited layer outside its parent's SVG filter (iPhone check 2026-11-10) */
+    this.copy.style.transform = 'translate(' + (sr.left - gr.left + m) + 'px,' + (sr.top - gr.top + m) + 'px)';
     /* smoothness while scrolling: consecutive frames more than ~1.5 frames apart count as dropped */
     var now = performance.now(), gap = now - (this.lastAt || 0); this.lastAt = now;
     if (gap < 150) { this.frames++; if (gap > 26) this.slow++; }
@@ -261,6 +262,8 @@ window.LiquidMirror = (function () {
     '.lm-on{-webkit-backdrop-filter:none!important;backdrop-filter:none!important;background-color:transparent!important}' +
     '.lm-clip{position:absolute!important;inset:0!important;grid-area:auto!important;margin:0!important;width:auto!important;height:auto!important;z-index:-1;overflow:hidden;pointer-events:none;border-radius:inherit;contain:paint}' +
     '.lm-pane{position:absolute;overflow:hidden;contain:strict}' +
+    /* nothing inside the copy may get its own compositing layer, or WebKit paints it unfiltered */
+    '.lm-pane *{will-change:auto!important;backface-visibility:visible!important}' +
     '.lm-clip{box-shadow:inherit!important}' +
     /* the tint and the frost line are the glass tokens themselves, so theme and contrast changes apply live */
     /* tint and core colors are set from JS (rim()): the full glass tint in the middle, a share of it on the rim */

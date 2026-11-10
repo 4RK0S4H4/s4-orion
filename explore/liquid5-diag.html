@@ -20,7 +20,7 @@ iframe{width:300px;height:420px;border:0;border-radius:16px;display:block}
 </head>
 <body>
 <h1>Liquid Glass Check</h1>
-<p>Round 2 (Nov 10): tile 4 failed last time, so the lens is now built without an image (tile 6). Screenshot the top of this page, then scroll the phone below and screenshot it too.</p>
+<p>Round 3 (Nov 10): tiles 7 and 8 test why the bars stayed sharp; the bars no longer use a layered copy. Screenshot the top of this page, then scroll the phone below and screenshot it too.</p>
 <div id="log">Running…</div>
 <div class="grid">
   <div class="t"><b>1. Tint</b><div class="sw"><div id="t1" style="background:color-mix(in srgb,#333 calc(calc(.6 * 1) * 100%),transparent)"></div></div><small>Should: stripes dimmed by grey.</small></div>
@@ -29,13 +29,15 @@ iframe{width:300px;height:420px;border:0;border-radius:16px;display:block}
   <div class="t"><b>4. Bend (image map)</b><div class="sw"><div id="t4"></div></div><small>Should: stripes wavy (map from an image).</small></div>
   <div class="t"><b>5. Image map, no bend</b><div class="sw"><div id="t5"></div></div><small>Should: stripes unchanged (map is flat).</small></div>
   <div class="t"><b>6. New lens (no image)</b><div class="sw" style="background:repeating-linear-gradient(0deg,#ff006e 0 6px,#3a86ff 6px 12px)"><div id="t6"></div><span id="t6r" style="position:absolute;inset:20px;border:1px dashed #fff;border-radius:20px"></span></div><small>Should: stripes squeezed and curved near the dashed box's edge, straight in its middle.</small></div>
+  <div class="t"><b>7. Blur, plain child</b><div class="sw" style="background:none"><div style="filter:url(#f-blur);background:none"><div style="position:absolute;inset:0;background:repeating-linear-gradient(90deg,#ff006e 0 10px,#3a86ff 10px 20px);transform:translate(0,0)"></div></div></div><small>Should: blurred.</small></div>
+  <div class="t"><b>8. Blur, layered child</b><div class="sw" style="background:none"><div style="filter:url(#f-blur);background:none"><div style="position:absolute;inset:0;background:repeating-linear-gradient(90deg,#ff006e 0 10px,#3a86ff 10px 20px);will-change:transform;transform:translate3d(0,0,0)"></div></div></div><small>Blurred too? If sharp, that was the bars' bug (now fixed).</small></div>
 </div>
 <iframe id="app" src="liquid5-app.html?bend=1.7&edge=lens&frost=6&rim=0.35"></iframe>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <filter id="f-blur"><feGaussianBlur stdDeviation="6"/></filter>
   <filter id="f-turb"><feTurbulence type="turbulence" baseFrequency="0.03" numOctaves="1" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="30" xChannelSelector="R" yChannelSelector="G"/></filter>
 </svg>
-<script src="lib/liquid-mirror.js?v=fc7cb3d"></script>
+<script src="lib/liquid-mirror.js?v=86d94cb"></script>
 <script>
 const log = [], out = () => document.getElementById('log').textContent = log.join('\n');
 const add = s => { log.push(s); out(); };
