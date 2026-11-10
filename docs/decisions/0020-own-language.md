@@ -1,6 +1,6 @@
 # 0020: Orion becomes its own language (accepted, 2026-11-10)
 
-**Status:** direction accepted on 2026-11-10, details still being refined (round 6: glass values and other directions to borrow from; building is on hold until the owner is happy). Accepted through Claude Design drafts (private claude.ai canvas
+**Status:** direction accepted on 2026-11-10, details still being refined (round 6, 2026-11-11: glass values set in the Glass Playground; the seven other directions inspired by Carbon, Fluent 2, Geist, Radix, Nothing OS, Teenage Engineering and Apple HIG were all rejected, tiles stay). Accepted through Claude Design drafts (private claude.ai canvas
 "S4 Orion: Own Language Drafts", artifact `LTom2j96tNTT2ZiTsQJjQH`; the "Chosen direction" rows at the top hold the
 component sheet in light and dark and the Projects app). The interactive Direction Lab (`explore/direction.html`) was
 published first but the owner preferred static drafts; its questions are superseded by the answers below.
@@ -26,13 +26,15 @@ desktop like a real framework.
 ## The rules
 
 - **Glass** only on floating chrome and overlays: top bar, navigation (floating bar on phones, rail on desktop),
-  menus, sheets, dialogs, snackbars, selection toolbars. Content stays solid. Calm frost: blur 20-32px, saturate
-  120-140%, tint about 60% of the surface color, plus a sheen in the top half (white 5% dark / 35% light, fading to 0
-  at 45%).
-- **Glass edge:** a 1px gradient border drawn with a mask, vertical so it is symmetrical: dark
-  `rgba(255,255,255,.22)` at the top, `.06` at 22%, `.025` at 60%, `.05` at the bottom; light white `.85` at the top,
-  `.3` at 25%, then a faint dark `rgba(23,23,26,.04)` to `.08` at the bottom. Full-width bars get only a 1px line on
-  their content-facing edge. Replaces the 0.5px frost line of 0013/0016.
+  menus, sheets, dialogs, snackbars, selection toolbars. Content stays solid. Values picked by the owner in the Glass
+  Playground (round 6, 2026-11-11): **neutral tint at 75%** of the surface color (dark `rgba(40,40,46,.75)`, light
+  `rgba(246,246,244,.75)`), **blur 8px**, **color boost (saturate) 150%**, **no sheen**. Full-width bars use the page
+  color at 80%.
+- **Glass edge (top light):** a 1px vertical gradient border drawn with a mask, so it is symmetrical. Playground
+  values: top 35, sides 50% of the top, bottom 25. Dark: white `.21` at the top, `.105` at 24%, `.047` at 60%, `.05`
+  at the bottom. Light: white `.805` at the top, `.403` at 24%, `.181` at 60%, then dark `rgba(23,23,26,.08)` at the
+  bottom. Full-width bars get only a 1px line on their content-facing edge. Replaces the 0.5px frost line of
+  0013/0016. With 75% tint the contrast guarantee is easier than before; re-run `check-glass` with the new tint.
 - **No shadows** anywhere (0017 stands).
 - **Color:** neutral grays plus **one accent** (default blue: `#3D5AFE` light with white text, `#8EA2FF` dark with
   `#0B1240` text; a soft accent wash at 10% / 16% for tonal states). The accent marks the main action, the current

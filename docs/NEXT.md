@@ -9,7 +9,7 @@ parts with a soft symmetrical top-edge light, no shadows, neutral grays plus one
 rectangles with small rounding, Inter with bold headings and light big numbers, a simple fade-and-rise motion family.
 The Pocket Ledger demo is replaced by a general Projects app.
 
-**Update (round 6):** the owner is not done drafting: building is ON HOLD. Canvas page "Round 6: Glass and Directions" has an interactive Glass Playground (tint, blur, color boost, sheen, edge shape/brightness/sides/bottom/width, tint color, backdrop; presets; a numbers box the owner sends back) and seven other directions for the underlying UI, each inspired by a public design language with a link (Carbon, Fluent 2, Geist, Radix Themes, Nothing OS, Teenage Engineering, Apple HIG). Next: owner's glass numbers and likes/dislikes per direction, then update 0020 and the chosen-direction rows.
+**Update (round 6):** the owner is not done drafting: building is ON HOLD. Canvas page "Round 6: Glass and Directions" has an interactive Glass Playground (tint, blur, color boost, sheen, edge shape/brightness/sides/bottom/width, tint color, backdrop; presets; a numbers box the owner sends back) and seven other directions for the underlying UI, each inspired by a public design language with a link (Carbon, Fluent 2, Geist, Radix Themes, Nothing OS, Teenage Engineering, Apple HIG). **Owner's answer:** glass = tint 75% neutral, blur 8px, color boost 150%, sheen 0, edge top light (top 35, sides 50%, bottom 25, 1px); recorded in 0020 and applied to the chosen-direction rows. None of the seven directions liked: tiles stay. Next: ask whether the owner is happy enough to start building, or wants more drafting (the base UI was called bland earlier; possible next drafts are richer tile content, not new directions).
 
 **Then:** follow the plan in 0020 (docs, then tokens, then pause for the owner; components; demo; pause; skill and
 release). Open: framework shape and token names (defaults in 0020). The motion/glass QA items and Tables/Sliders work
@@ -150,6 +150,7 @@ labs could load `components/assets/` instead of their own copies.
 
 ## Session log
 
+- 2026-11-11 (drafts 6b): glass values picked in the playground and applied; other directions rejected.
 - 2026-11-11 (drafts 6): owner still drafting; Glass Playground and seven inspired directions on a new canvas page. Build on hold.
 - 2026-11-10 (decided): owner picked tiles (A); 0020 accepted with the full rules; chosen-direction rows (component sheet, Projects app) on the canvas. Next: 0020 plan step 1 (docs) and 2 (tokens).
 
