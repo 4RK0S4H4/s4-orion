@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>S4 Orion: Liquid Glass Lab 5 Check</title>
+<style>
+/* a one-screen browser check for Liquid Glass Lab 5: which piece of the mirror glass does this browser draw? (lab page, raw colors are fine) */
+body{margin:0;padding:16px;background:#111;color:#eee;font:15px/21px -apple-system,system-ui,sans-serif}
+h1{font-size:20px;margin:0 0 4px}p{margin:0 0 12px;color:#bbb}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
+.t{background:#1d1d1d;border-radius:12px;padding:8px}
+.t b{display:block;font-size:13px;margin-bottom:6px}
+.t small{display:block;color:#999;font-size:12px;line-height:16px;margin-top:6px}
+.sw{height:90px;border-radius:8px;overflow:hidden;position:relative;background:repeating-linear-gradient(90deg,#ff006e 0 10px,#3a86ff 10px 20px)}
+.sw > div{position:absolute;inset:0;background:inherit}
+#log{white-space:pre-wrap;font:12px/17px ui-monospace,Menlo,monospace;background:#000;padding:10px;border-radius:8px;margin:12px 0}
+iframe{width:300px;height:420px;border:0;border-radius:16px;display:block}
+</style>
+</head>
+<body>
+<h1>Liquid Glass Check</h1>
+<p>Screenshot this whole page on the iPhone and send it. Each tile says what it should look like.</p>
+<div class="grid">
+  <div class="t"><b>1. Tint</b><div class="sw"><div id="t1" style="background:color-mix(in srgb,#333 calc(calc(.6 * 1) * 100%),transparent)"></div></div><small>Should: stripes dimmed by grey.</small></div>
+  <div class="t"><b>2. SVG blur</b><div class="sw"><div style="filter:url(#f-blur)"></div></div><small>Should: stripes blurred to purple.</small></div>
+  <div class="t"><b>3. Bend (generated)</b><div class="sw"><div style="filter:url(#f-turb)"></div></div><small>Should: stripes wavy.</small></div>
+  <div class="t"><b>4. Bend (image map)</b><div class="sw"><div id="t4"></div></div><small>Should: stripes wavy (map from an image).</small></div>
+  <div class="t"><b>5. Image map, no bend</b><div class="sw"><div id="t5"></div></div><small>Should: stripes unchanged (map is flat).</small></div>
+</div>
+<div id="log">Running…</div>
+<iframe id="app" src="liquid5-app.html?bend=1.7&edge=lens&frost=6&rim=0.35"></iframe>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="f-blur"><feGaussianBlur stdDeviation="6"/></filter>
+  <filter id="f-turb"><feTurbulence type="turbulence" baseFrequency="0.03" numOctaves="1" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="30" xChannelSelector="R" yChannelSelector="G"/></filter>
+</svg>
+<script>
+const log = [], out = () => document.getElementById('log').textContent = log.join('\n');
+const add = s => { log.push(s); out(); };
+add('Browser: ' + navigator.userAgent.replace(/^Mozilla\/5.0 /, ''));
+add('CSS color-mix with calc: ' + CSS.supports('background', 'color-mix(in srgb, red calc(calc(.6 * 1) * 100%), transparent)'));
+add('CSS filter url(): ' + CSS.supports('filter', 'url(#x)') + ' · backdrop-filter url(): ' + (CSS.supports('backdrop-filter', 'url(#x)') || CSS.supports('-webkit-backdrop-filter', 'url(#x)')));
+/* image-based displacement maps, the way the engine builds them (canvas -> data URL -> feImage) */
+function mapFilter(id, wavy) {
+  const c = document.createElement('canvas'); c.width = 200; c.height = 90; const g = c.getContext('2d'), im = g.createImageData(200, 90);
+  for (let y = 0; y < 90; y++) for (let x = 0; x < 200; x++) { const i = (y * 200 + x) * 4; im.data[i] = wavy ? 128 + 120 * Math.sin(y / 6) : 128; im.data[i + 1] = 128; im.data[i + 2] = 128; im.data[i + 3] = 255; }
+  g.putImageData(im, 0, 0);
+  const f = document.createElementNS('http://www.w3.org/2000/svg', 'filter'); f.id = id;
+  ['x', 'y'].forEach(k => f.setAttribute(k, 0)); f.setAttribute('width', 200); f.setAttribute('height', 90);
+  f.setAttribute('filterUnits', 'userSpaceOnUse'); f.setAttribute('primitiveUnits', 'userSpaceOnUse'); f.setAttribute('color-interpolation-filters', 'sRGB');
+  f.innerHTML = `<feImage href="${c.toDataURL()}" x="0" y="0" width="200" height="90" preserveAspectRatio="none" result="map"/><feDisplacementMap in="SourceGraphic" in2="map" scale="30" xChannelSelector="R" yChannelSelector="G"/>`;
+  document.querySelector('svg').appendChild(f);
+}
+mapFilter('f-map', true); mapFilter('f-flat', false);
+document.getElementById('t4').style.filter = 'url(#f-map)';
+document.getElementById('t5').style.filter = 'url(#f-flat)';
+add('Tile 1 tint computed: ' + getComputedStyle(document.getElementById('t1')).backgroundColor);
+/* the real engine in the phone below: did it run, and what does each surface report? */
+const app = document.getElementById('app');
+app.addEventListener('load', () => {
+  const w = app.contentWindow;
+  w.addEventListener('error', e => add('ERROR in phone: ' + e.message));
+  setTimeout(() => {
+    try {
+      const d = w.document;
+      (w.__lmErr || []).forEach(m => add('ERROR in phone: ' + m));
+      add('Mirror engine loaded: ' + !!w.LiquidMirror + (w.LiquidMirror ? ' · ' + JSON.stringify(w.LiquidMirror.status()) : ''));
+      d.querySelectorAll('.lm-clip').forEach(c => {
+        const host = c.parentElement, r = c.getBoundingClientRect(), tint = c.querySelector('.lm-tint'), pane = c.querySelector('.lm-pane');
+        const copy = pane && pane.querySelector('.s4-content');
+        add(`${host.className.split(' ')[0]}: on=${host.classList.contains('lm-on')} shown=${getComputedStyle(c).display !== 'none'} clip=${Math.round(r.width)}x${Math.round(r.height)} tint=${tint && getComputedStyle(tint).backgroundColor} filter=${pane && getComputedStyle(pane).filter} copy=${copy ? Math.round(copy.getBoundingClientRect().height) + 'px tall' : 'none'}`);
+      });
+    } catch (e) { add('Could not read the phone: ' + e.message); }
+  }, 1500);
+});
+window.addEventListener('error', e => add('ERROR: ' + e.message));
+</script>
+</body>
+</html>

@@ -202,8 +202,7 @@ NOTE: demo/ keeps its own copy of orion.css/orion.js; `npm run build` now regene
 ## Liquid glass, again (2026-11-07, [0019](decisions/0019-liquid-glass-mirror.md))
 The owner asked to bring back the Liquid Glass Lab look. New approach that should run on iPhone: a mirror (live copy of the content
 behind) inside each glass bar with the lab's SVG lens filter applied as `filter` (WebKit supports that; not `backdrop-filter: url()`).
-**[Lab 5](../explore/liquid5.html)** (A today, B soft, C lens, D extra) + `demo/index.html?liquid`. **Waiting on the owner's iPhone
-check and pick.** If adopted: move `explore/lib/liquid-mirror.js` into `components/glass/` as `S4.glass.liquid` for the top app bar,
+**[Lab 5](../explore/liquid5.html)** (A today, B soft, C lens, D extra) + `demo/index.html?liquid`. **iPhone (2026-11-10): no glass at all** (bars fully clear, content sharp behind them). Sent `explore/liquid5-diag.html` (tiles for tint, SVG blur, generated bend, image-map bend + the engine's own report). If WebKit fails the SVG tiles: abandon liquid glass for good (no other route on iPhone); if only one piece fails, fix that and retry once. If adopted: move `explore/lib/liquid-mirror.js` into `components/glass/` as `S4.glass.liquid` for the top app bar,
 nav bar and toolbars, tokens for bend/frost/rim, docs + skill, blur as fallback; menus/dialogs/sheets keep blur.
 
 ## QA pass on motion (2026-11-07, later): done, needs the owner's iPhone look
