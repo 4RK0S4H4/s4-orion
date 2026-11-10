@@ -5,7 +5,7 @@
    on an ordinary element. So each glass surface gets a mirror: a live, inert copy of the content behind it, kept lined up
    as the page scrolls, and the SVG filter (blur, refraction displacement map, saturation, the contrast squeeze) is applied
    to that copy instead of to the backdrop. The refraction math is the Liquid Glass Lab's (a convex squircle bezel, Snell's
-   law), with the soft edge from decision 0006.
+   law); on iPhone Safari the map can't come from an image, so it is built from filter primitives (lensPrims).
 
    The text guarantee is kept: the copy gets the same saturation / contrast / brightness squeeze as the glass tokens and the
    same tint is laid over it, so `check-glass` still holds (it does not depend on blur or on where pixels come from).
@@ -24,7 +24,7 @@ window.LiquidMirror = (function () {
   var NS = 'http://www.w3.org/2000/svg', svgRoot = null, uid = 0, all = [];
   var css = function (el, n) { return getComputedStyle(el).getPropertyValue(n).trim(); };
 
-  /* ---------- refraction math (same as explore/lib/liquid-glass.js) ---------- */
+  /* ---------- refraction math (shift() as in explore/lib/liquid-glass.js) ---------- */
   function sdRR(px, py, bx, by, r) {
     var qx = Math.abs(px) - bx + r, qy = Math.abs(py) - by + r;
     return Math.min(Math.max(qx, qy), 0) + Math.hypot(Math.max(qx, 0), Math.max(qy, 0)) - r;
@@ -35,35 +35,51 @@ window.LiquidMirror = (function () {
     var t = Math.max(depth / bezel, 0), th = Math.atan(slopeAt(t) * thick / bezel);
     return thick * Math.tan(th - Math.asin(Math.sin(th) / ior));
   }
-  /* displacement map for the pane (glass box + margin m on every side). Sides that don't bend are pushed far out, so a
-     full-width bar only bends along the edge that faces the content. */
-  function dispMap(w, h, m, r, bend, edges, edge) {
-    var W = Math.round(w + 2 * m), H = Math.round(h + 2 * m);
-    var bezel = 20 * Math.min(1.4, 0.6 + bend * 0.4), thick = 24 * bend, ior = 1.5;
-    var far = 4000, ext = { l: 0, r: 0, t: 0, b: 0 };
-    if (edges === 'top') { ext.l = ext.r = ext.b = far; }
-    else if (edges === 'bottom') { ext.l = ext.r = ext.t = far; }
-    var hw = w / 2 + (ext.l + ext.r) / 2, hh = h / 2 + (ext.t + ext.b) / 2, ox = (ext.r - ext.l) / 2, oy = (ext.b - ext.t) / 2;
-    var bez = Math.min(bezel, Math.min(w, h) / 2), maxD = Math.max(shift(0, bez, thick, ior), 0.5);
-    var c = document.createElement('canvas'); c.width = W; c.height = H;
-    var g = c.getContext('2d'), img = g.createImageData(W, H), d = img.data;
-    var rr = edges === 'all' ? r : 0;
-    for (var y = 0; y < H; y++) for (var x = 0; x < W; x++) {
-      var px = x + 0.5 - m - w / 2 - ox, py = y + 0.5 - m - h / 2 - oy, i = (y * W + x) * 4;
-      var s = sdRR(px, py, hw, hh, rr), mv = 0, gx = 0, gy = 0;
-      if (s <= 0) {
-        gx = sdRR(px + 0.5, py, hw, hh, rr) - sdRR(px - 0.5, py, hw, hh, rr); gy = sdRR(px, py + 0.5, hw, hh, rr) - sdRR(px, py - 0.5, hw, hh, rr);
-        var gl = Math.hypot(gx, gy) || 1; gx /= gl; gy /= gl;
-        var depth = -s; mv = shift(depth, bez, thick, ior);
-        /* edge: 'lens' bends right up to the rim (the lab's look; a visible seam where the glass starts), 'soft' eases the bend
-           in over the first 4px so content flows into the glass without a hard seam but the lens stays (0006's soft edge
-           eased in over half the bezel, which removed nearly all of the bend) */
-        if (edge !== 'lens') { var st = Math.min(depth / 4, 1); mv *= st * st * (3 - 2 * st); }
-      }
-      d[i] = 128 + (-gx * mv / maxD) * 127; d[i + 1] = 128 + (-gy * mv / maxD) * 127; d[i + 2] = 128; d[i + 3] = 255;
+  /* The same lens built only from filter primitives, because iPhone Safari ignores a displacement map that comes from an image
+     (feImage; Lab 5 check 2026-11-10). The glass shape is flooded as a rectangle (pushed far out past the sides that don't bend),
+     blurred into a soft edge, and the slope of that edge (the blurred shape shifted 1px each way, subtracted) becomes the
+     displacement: strongest at the rim, fading inward, always pointing in, following the rounded corners of the blur.
+     Every step works on opaque images, so nothing is lost to premultiplied alpha. Returns { prims, scale }. */
+  function lensPrims(w, h, m, bend, edges, edge) {
+    var bezel = 20 * Math.min(1.4, 0.6 + bend * 0.4), thick = 24 * bend, bez = Math.min(bezel, Math.min(w, h) / 2);
+    var maxD = Math.max(shift(0, bez, thick, 1.5), 0.5), sig = Math.max(bez / 2.5, 1.5), W = Math.round(w + 2 * m), H = Math.round(h + 2 * m);
+    var far = 4000, x = m, y = m, rw = w, rh = h;
+    if (edges === 'top') { x = -far; rw = W + 2 * far; rh = H + far; }
+    else if (edges === 'bottom') { x = -far; y = -far; rw = W + 2 * far; rh = m + h + far; }
+    if (edge !== 'lens') { var g = sig * 0.6; x -= g; y -= g; rw += 2 * g; rh += 2 * g; }   /* soft: the steepest part sits just outside the rim */
+    var K = (sig * Math.sqrt(2 * Math.PI) / 4).toFixed(3), all = ' x="0" y="0" width="' + W + '" height="' + H + '"';
+    /* the slope of a blurred edge falls off like a Gaussian, far wider than the lens: a lookup table turns it into the lab's
+       Snell profile (a slope g at depth d = sigma * sqrt(-2 ln g) becomes shift(d) / shift(0)), keeping its sign */
+    var N = 64, tv = [];
+    for (var i = 0; i <= N; i++) {
+      var v = i / N, gg = Math.min(Math.abs(2 * v - 1), 1), dd = gg > 0 ? sig * Math.sqrt(-2 * Math.log(gg)) : 1e9;
+      tv.push((0.5 + (v < 0.5 ? -0.5 : 0.5) * shift(dd, bez, thick, 1.5) / maxD).toFixed(4));
     }
-    g.putImageData(img, 0, 0);
-    return { url: c.toDataURL(), scale: maxD * 2, W: W, H: H };
+    var table = tv.join(' ');
+    var opaque = '0 0 0 1 0  0 0 0 1 0  0 0 0 1 0  0 0 0 0 1', inv = '<feFuncR type="linear" slope="-1" intercept="1"/><feFuncG type="linear" slope="-1" intercept="1"/><feFuncB type="linear" slope="-1" intercept="1"/>';
+    var slope = function (dx, dy, out) {
+      return '<feOffset in="ls" dx="' + (-dx) + '" dy="' + (-dy) + '"' + all + ' result="' + out + 'a"/>' +
+        '<feOffset in="ls" dx="' + dx + '" dy="' + dy + '"' + all + ' result="' + out + 'b"/>' +
+        '<feComponentTransfer in="' + out + 'b"' + all + ' result="' + out + 'i">' + inv + '</feComponentTransfer>' +
+        '<feComposite in="' + out + 'a" in2="' + out + 'i" operator="arithmetic" k1="0" k2="' + K + '" k3="' + K + '" k4="' + (0.5 - K) + '"' + all + ' result="' + out + '"/>';
+    };
+    var prims = '<feFlood flood-color="#fff" flood-opacity="1" x="' + x + '" y="' + y + '" width="' + rw + '" height="' + rh + '" result="lf"/>' +
+      '<feGaussianBlur in="lf" stdDeviation="' + sig.toFixed(2) + '"' + all + ' result="lb"/>' +
+      '<feColorMatrix in="lb" type="matrix" values="' + opaque + '"' + all + ' result="ls"/>' +
+      slope(1, 0, 'gx') + slope(0, 1, 'gy') +
+      '<feColorMatrix in="gx" type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0 1"' + all + ' result="rx"/>' +
+      '<feColorMatrix in="gy" type="matrix" values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 0 1"' + all + ' result="ry"/>' +
+      '<feComposite in="rx" in2="ry" operator="arithmetic" k1="0" k2="1" k3="1" k4="0"' + all + ' result="map0"/>' +
+      '<feComponentTransfer in="map0"' + all + ' result="map"><feFuncR type="table" tableValues="' + table + '"/><feFuncG type="table" tableValues="' + table + '"/></feComponentTransfer>';
+    return { prims: prims, scale: (maxD * 2).toFixed(2) };
+  }
+  /* any CSS color -> rgba(), through a 1px canvas (Safari may not take color-mix with nested calc() in a custom property) */
+  var cctx;
+  function rgba(str, a) {
+    if (!cctx) { var c = document.createElement('canvas'); c.width = c.height = 1; cctx = c.getContext('2d', { willReadFrequently: true }); }
+    cctx.clearRect(0, 0, 1, 1); cctx.fillStyle = '#000'; cctx.fillStyle = str; cctx.fillRect(0, 0, 1, 1);
+    var d = cctx.getImageData(0, 0, 1, 1).data;
+    return 'rgba(' + d[0] + ',' + d[1] + ',' + d[2] + ',' + (Math.round(a * 1000) / 1000) + ')';
   }
   function host() {
     if (svgRoot && svgRoot.isConnected) return svgRoot;
@@ -161,7 +177,8 @@ window.LiquidMirror = (function () {
   Mirror.prototype.render = function () {
     var t0 = performance.now(), g = this.glass, gr = g.getBoundingClientRect();
     if (!gr.width || !gr.height || !this.source.isConnected) return;
-    var o = this.opts, m = Math.ceil(this.sd() * 2.5) + 4;
+    /* margin around the glass: room for the frost, and for the lens's own blurred edge (3 sigma) to fade before the pane ends */
+    var o = this.opts, m = Math.ceil(Math.max(this.sd() * 2.5, o.bend > 0 ? 36 : 0)) + 4;
     var sig = [Math.round(gr.width), Math.round(gr.height), o.bend, o.edges, o.edge, o.frost, o.rimTint, document.documentElement.dataset.theme, document.documentElement.dataset.contrast, document.documentElement.dataset.glass].join('|');
     if (sig !== this.sig) {
       this.sig = sig;
@@ -196,7 +213,7 @@ window.LiquidMirror = (function () {
   Mirror.prototype.buildFilter = function (w, h, m, r) {
     var g = this.glass, o = this.opts, dark = document.documentElement.dataset.theme === 'dark' || (!document.documentElement.dataset.theme && matchMedia('(prefers-color-scheme: dark)').matches);
     var sat = num(css(g, '--s4-glass-saturation-float'), 1.2), c = num(css(g, '--s4-glass-backdrop-contrast-float'), dark ? 1 : 0.74), b = num(css(g, '--s4-glass-backdrop-brightness-float'), dark ? 0.8 : 1.1);
-    var map = o.bend > 0 ? dispMap(w, h, m, r, o.bend, o.edges, o.edge) : null;
+    var map = o.bend > 0 ? lensPrims(w, h, m, o.bend, o.edges, o.edge) : null;
     var f = document.getElementById(this.id); if (f) f.remove();
     f = document.createElementNS(NS, 'filter'); f.id = this.id;
     ['x', 'y'].forEach(function (k) { f.setAttribute(k, 0); });
@@ -204,7 +221,7 @@ window.LiquidMirror = (function () {
     f.setAttribute('filterUnits', 'userSpaceOnUse'); f.setAttribute('primitiveUnits', 'userSpaceOnUse'); f.setAttribute('color-interpolation-filters', 'sRGB');
     var lin = 'type="linear" slope="' + (c * b) + '" intercept="' + ((0.5 - 0.5 * c) * b) + '"';
     f.innerHTML = '<feGaussianBlur in="SourceGraphic" stdDeviation="' + this.sd() + '" edgeMode="duplicate" result="b"/>' +
-      (map ? '<feImage href="' + map.url + '" x="0" y="0" width="' + map.W + '" height="' + map.H + '" preserveAspectRatio="none" result="map"/>' +
+      (map ? map.prims +
              '<feDisplacementMap in="b" in2="map" scale="' + map.scale + '" xChannelSelector="R" yChannelSelector="G" result="d"/>' : '') +
       '<feColorMatrix in="' + (map ? 'd' : 'b') + '" type="saturate" values="' + sat + '" result="s"/>' +
       '<feComponentTransfer in="s"><feFuncR ' + lin + '/><feFuncG ' + lin + '/><feFuncB ' + lin + '/></feComponentTransfer>';
@@ -217,12 +234,15 @@ window.LiquidMirror = (function () {
      tint, the rest the full tint, so text keeps the AA guarantee and the bend shows in color. rimTint 1 = same everywhere. */
   Mirror.prototype.rim = function (r) {
     var o = this.opts, k = o.rimTint == null ? 1 : o.rimTint, band = 12, soft = 6, e = o.edges;
-    this.clip.style.setProperty('--lm-rim', k);
+    /* plain rgba() colors worked out here (the full glass tint in the middle, a share of it on the rim) */
+    var g = this.glass, base = css(g, '--s4-glass-tint-float') || css(document.documentElement, '--md-sys-color-surface-container'), full = num(css(g, '--_glass-tint'), 0.6);
+    var rimA = full * Math.min(k, 1), coreA = rimA >= 1 ? 0 : 1 - (1 - full) / (1 - rimA);
+    this.tint.style.background = rgba(base, rimA);
+    var cc = rgba(base, coreA); this.core.style.background = cc; this.core.style.boxShadow = '0 0 ' + soft + 'px ' + soft / 2 + 'px ' + cc;
     this.core.style.display = k >= 1 ? 'none' : '';
     var ins = function (side) { return (e === 'all' || e === side ? band + soft : -soft * 3) + 'px'; };
     this.core.style.inset = [ins('top'), ins('right'), ins('bottom'), ins('left')].join(' ');
     this.core.style.borderRadius = e === 'all' ? Math.max(0, r - band) + 'px' : '0';
-    this.core.style.setProperty('--lm-soft', soft + 'px');
   };
   Mirror.prototype.set = function (o) { Object.assign(this.opts, o); this.sig = ''; this.schedule(); };
   Mirror.prototype.refresh = function () { this.sig = ''; this.dirty = 2; this.schedule(); };
@@ -243,12 +263,14 @@ window.LiquidMirror = (function () {
     '.lm-pane{position:absolute;overflow:hidden;contain:strict}' +
     '.lm-clip{box-shadow:inherit!important}' +
     /* the tint and the frost line are the glass tokens themselves, so theme and contrast changes apply live */
-    '.lm-tint{position:absolute;inset:0;border-radius:inherit;box-shadow:inherit;--_a:calc(var(--_glass-tint,.6) * var(--lm-rim,1));background:color-mix(in srgb,var(--s4-glass-tint-float) calc(var(--_a) * 100%),transparent)}' +
-    /* the core tops the rim tint up to the full glass tint: 1 - (1 - full) / (1 - rim); soft-edged with a spread shadow of its own color */
-    '.lm-core{position:absolute;--_c:color-mix(in srgb,var(--s4-glass-tint-float) calc((1 - (1 - var(--_glass-tint,.6)) / (1 - var(--_glass-tint,.6) * var(--lm-rim,1))) * 100%),transparent);background:var(--_c);box-shadow:0 0 var(--lm-soft) calc(var(--lm-soft) / 2) var(--_c)}';
+    /* tint and core colors are set from JS (rim()): the full glass tint in the middle, a share of it on the rim */
+    '.lm-tint{position:absolute;inset:0;border-radius:inherit;box-shadow:inherit}' +
+    '.lm-core{position:absolute}';
   document.head.appendChild(style);
 
   return {
+    /* for the lab's browser check: the lens primitives for a w x h box with a margin m all round */
+    _lens: lensPrims,
     attach: function (glass, opts) { var m = new Mirror(glass, opts || {}); all.push(m); return m; },
     status: function () {
       var probe = document.createElement('div'); probe.style.filter = 'url(#x)';

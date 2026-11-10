@@ -29,3 +29,9 @@ D extra lens. Also on the real demo: `demo/index.html?liquid` (C's settings; `?l
   today's blur (their backdrop is the whole page plus a scrim). Blur stays the fallback (reduced transparency, high contrast,
   no SVG filter support).
 - Not verified on Safari here (no WebKit in the sandbox). The lab's status line reports what ran and dropped scroll frames.
+
+## iPhone check (2026-11-10)
+Round 1: no glass at all on iOS 18.7. The check page showed SVG blur and a generated (`feTurbulence`) displacement work in WebKit, but a
+displacement map from an image (`feImage`, data URL) is ignored. The lens is now built from filter primitives only (`lensPrims`: the
+glass shape flooded and blurred, its slope via 1px offsets, a lookup table to the lab's Snell profile), and the tint is a plain rgba()
+set from JS. Round 2 pending; if it still fails, liquid glass is abandoned.

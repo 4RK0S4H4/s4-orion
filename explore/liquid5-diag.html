@@ -20,20 +20,22 @@ iframe{width:300px;height:420px;border:0;border-radius:16px;display:block}
 </head>
 <body>
 <h1>Liquid Glass Check</h1>
-<p>Screenshot this whole page on the iPhone and send it. Each tile says what it should look like.</p>
+<p>Round 2 (Nov 10): tile 4 failed last time, so the lens is now built without an image (tile 6). Screenshot the top of this page, then scroll the phone below and screenshot it too.</p>
+<div id="log">Running…</div>
 <div class="grid">
   <div class="t"><b>1. Tint</b><div class="sw"><div id="t1" style="background:color-mix(in srgb,#333 calc(calc(.6 * 1) * 100%),transparent)"></div></div><small>Should: stripes dimmed by grey.</small></div>
   <div class="t"><b>2. SVG blur</b><div class="sw"><div style="filter:url(#f-blur)"></div></div><small>Should: stripes blurred to purple.</small></div>
   <div class="t"><b>3. Bend (generated)</b><div class="sw"><div style="filter:url(#f-turb)"></div></div><small>Should: stripes wavy.</small></div>
   <div class="t"><b>4. Bend (image map)</b><div class="sw"><div id="t4"></div></div><small>Should: stripes wavy (map from an image).</small></div>
   <div class="t"><b>5. Image map, no bend</b><div class="sw"><div id="t5"></div></div><small>Should: stripes unchanged (map is flat).</small></div>
+  <div class="t"><b>6. New lens (no image)</b><div class="sw" style="background:repeating-linear-gradient(0deg,#ff006e 0 6px,#3a86ff 6px 12px)"><div id="t6"></div><span id="t6r" style="position:absolute;inset:20px;border:1px dashed #fff;border-radius:20px"></span></div><small>Should: stripes squeezed and curved near the dashed box's edge, straight in its middle.</small></div>
 </div>
-<div id="log">Running…</div>
 <iframe id="app" src="liquid5-app.html?bend=1.7&edge=lens&frost=6&rim=0.35"></iframe>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <filter id="f-blur"><feGaussianBlur stdDeviation="6"/></filter>
   <filter id="f-turb"><feTurbulence type="turbulence" baseFrequency="0.03" numOctaves="1" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="30" xChannelSelector="R" yChannelSelector="G"/></filter>
 </svg>
+<script src="lib/liquid-mirror.js?v=fc7cb3d"></script>
 <script>
 const log = [], out = () => document.getElementById('log').textContent = log.join('\n');
 const add = s => { log.push(s); out(); };
@@ -52,6 +54,21 @@ function mapFilter(id, wavy) {
   document.querySelector('svg').appendChild(f);
 }
 mapFilter('f-map', true); mapFilter('f-flat', false);
+/* tile 6: the engine's real lens (same code path as the bars) on a box inside the tile */
+(function () {
+  {
+    const t = document.getElementById('t6'), r = t.parentElement.getBoundingClientRect();
+    const fake = document.createElement('div'); fake.className = 'lm-test-glass'; fake.style.cssText = 'position:absolute;inset:20px;border-radius:20px';
+    t.parentElement.appendChild(fake);
+    const f = LiquidMirror._lens(r.width - 40, r.height - 40, 20, 1.7, 'all', 'lens');
+    const el = document.createElementNS('http://www.w3.org/2000/svg', 'filter'); el.id = 'f-lens';
+    ['x', 'y'].forEach(k => el.setAttribute(k, 0)); el.setAttribute('width', Math.round(r.width - 40) + 40); el.setAttribute('height', Math.round(r.height - 40) + 40);
+    el.setAttribute('filterUnits', 'userSpaceOnUse'); el.setAttribute('primitiveUnits', 'userSpaceOnUse'); el.setAttribute('color-interpolation-filters', 'sRGB');
+    el.innerHTML = f.prims + '<feDisplacementMap in="SourceGraphic" in2="map" scale="' + f.scale + '" xChannelSelector="R" yChannelSelector="G"/>';
+    document.querySelector('svg').appendChild(el); t.style.filter = 'url(#f-lens)'; fake.remove();
+    add('Tile 6 lens built (scale ' + f.scale + ').');
+  }
+})();
 document.getElementById('t4').style.filter = 'url(#f-map)';
 document.getElementById('t5').style.filter = 'url(#f-flat)';
 add('Tile 1 tint computed: ' + getComputedStyle(document.getElementById('t1')).backgroundColor);
