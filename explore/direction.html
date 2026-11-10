@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>S4 Orion: Direction Lab</title>
+<style>
+@font-face{font-family:Inter;font-weight:100 900;font-display:swap;src:url(lib/inter-variable.woff2) format("woff2")}
+:root{color-scheme:light;--pg:#f7f7f8;--pg-ink:#1f1f1f;--pg-ink2:#55585c}
+:root[data-theme=dark]{color-scheme:dark;--pg:#121214;--pg-ink:#e6e6e8;--pg-ink2:#a5a7ab}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){color-scheme:dark;--pg:#121214;--pg-ink:#e6e6e8;--pg-ink2:#a5a7ab}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--pg);color:var(--pg-ink);font:15px/1.5 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-text-size-adjust:100%}
+h1,h2,h3,p{margin:0}
+.top{position:sticky;top:0;z-index:50;display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;padding:12px 16px;background:var(--pg);border-bottom:1px solid color-mix(in srgb,var(--pg-ink) 12%,transparent)}
+.top h1{font-size:20px;line-height:28px;font-weight:600;margin-right:auto}
+.tt{display:inline-flex;gap:4px;padding:3px;border-radius:999px;background:color-mix(in srgb,var(--pg-ink) 8%,transparent)}
+.tt button{font:inherit;font-size:13px;font-weight:500;border:0;border-radius:999px;padding:5px 12px;background:transparent;color:var(--pg-ink);cursor:pointer}
+.tt button[aria-pressed=true]{background:var(--pg-ink);color:var(--pg)}
+.page{max-width:1200px;margin:0 auto;padding:20px 16px 64px;display:flex;flex-direction:column;gap:44px}
+.intro{max-width:78ch;display:flex;flex-direction:column;gap:12px;color:var(--pg-ink2)}
+.intro b{color:var(--pg-ink)}
+.intro ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px}
+.sec>h2{font-size:24px;line-height:32px;font-weight:600;margin-bottom:6px}
+.sec>p{color:var(--pg-ink2);max-width:80ch;margin-bottom:14px}
+.cards{--rv-min:300px}
+.cards.wide{--rv-min:340px}
+.code{margin:0;padding:12px 14px;border-radius:14px;background:color-mix(in srgb,var(--pg-ink) 7%,transparent);font:12px/1.55 ui-monospace,SFMono-Regular,Menlo,monospace;white-space:pre-wrap;word-break:break-word;color:var(--pg-ink)}
+.motion-ctl{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:10px}
+.motion-ctl button{font:inherit;font-size:13px;font-weight:500;border:0;border-radius:999px;padding:7px 14px;background:color-mix(in srgb,var(--pg-ink) 9%,transparent);color:var(--pg-ink);cursor:pointer}
+.combo-wrap{display:grid;gap:20px;grid-template-columns:minmax(0,340px) minmax(0,1fr);align-items:start}
+@media (max-width:760px){.combo-wrap{grid-template-columns:minmax(0,1fr)}}
+.combo-sum{display:flex;flex-direction:column;gap:6px;color:var(--pg-ink2)}
+.combo-sum b{color:var(--pg-ink)}
+footer{padding:24px;text-align:center;font-size:12px;color:var(--pg-ink2)}
+footer a{color:inherit}
+
+/* =====================================================================================
+   The proposal, as a scoped sketch (.o2). Not the system yet: the lab's own CSS so every
+   option can sit side by side. Class axes on .o2: sv-* surfaces, cr-* corners, ct-* controls,
+   gl-* depth, nv-* nav, ty-* type. data-motion on .o2 picks the motion style.
+   ===================================================================================== */
+.o2{--bg:#f6f6f4;--s1:#ececea;--s2:#e0e0dc;--raise:#fff;--ink:#17171a;--ink2:#5c5d63;--line:#d9d9d4;--on-ink:#fff;--tint:246 246 244;--scrim:20 20 24;
+  --r-ctl:12px;--r-field:12px;--r-card:18px;--r-chip:10px;--r-over:22px;--r-menu:14px;
+  --glass-a:.62;--glass-blur:20px;--glass-sat:120%;
+  --h-w:500;--h-ls:0;--k-w:500;--k-ls:-.01em;
+  position:relative;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased}
+:root[data-theme=dark] .o2{--bg:#111113;--s1:#1b1b1e;--s2:#27272b;--raise:#202024;--ink:#ececee;--ink2:#a4a5ab;--line:#303035;--on-ink:#111113;--tint:17 17 19;--scrim:0 0 0;--glass-a:.68}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]) .o2{--bg:#111113;--s1:#1b1b1e;--s2:#27272b;--raise:#202024;--ink:#ececee;--ink2:#a4a5ab;--line:#303035;--on-ink:#111113;--tint:17 17 19;--scrim:0 0 0;--glass-a:.68}}
+:where(.o2) button{font:inherit;color:inherit;border:0;background:none;padding:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
+:where(.o2) svg{width:22px;height:22px;display:block}
+
+/* phone frame */
+.ph{width:100%;max-width:300px;height:560px;margin:0 auto;border-radius:34px;overflow:hidden;isolation:isolate;box-shadow:0 0 0 6px color-mix(in srgb,var(--pg-ink) 10%,transparent)}
+.ph .scr{position:absolute;inset:0;overflow-y:auto;overscroll-behavior:contain;padding:62px 12px 96px;display:flex;flex-direction:column;gap:12px;scrollbar-width:none}
+.ph .scr::-webkit-scrollbar{display:none}
+
+/* type */
+.o2 .h{font-size:22px;line-height:28px;font-weight:var(--h-w);letter-spacing:var(--h-ls)}
+.o2 .lbl{font-size:12px;line-height:16px;font-weight:500;color:var(--ink2)}
+.o2 .kpi{font-size:34px;line-height:40px;font-weight:var(--k-w);letter-spacing:var(--k-ls);font-variant-numeric:tabular-nums}
+.ty-b{--h-w:650;--h-ls:-.02em;--k-w:650;--k-ls:-.035em}
+.ty-c{--h-w:600;--h-ls:-.01em;--k-w:300;--k-ls:-.02em}
+.ty-c .lbl{text-transform:uppercase;letter-spacing:.08em;font-size:11px}
+
+/* hero (photo-like content, so the blur has something to show) */
+.hero{position:relative;flex:none;height:120px;border-radius:var(--r-card);padding:14px 16px;display:flex;flex-direction:column;justify-content:flex-end;color:#fff;overflow:hidden;
+  background:radial-gradient(circle at 18% 22%,#ffcf6b 0 18%,transparent 42%),radial-gradient(circle at 85% 30%,#ff6f91 0 14%,transparent 40%),linear-gradient(135deg,#3a7bd5,#7b3fe4 55%,#e2537a)}
+.hero::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(100deg,transparent 0 18px,rgba(255,255,255,.18) 18px 21px)}
+.hero>*{position:relative;z-index:1}
+.hero .lbl{color:rgba(255,255,255,.85)}
+
+/* surfaces */
+.panel{border-radius:var(--r-card);padding:6px 0}
+.sv-tone .panel{background:var(--s1)}
+.sv-line .panel{background:var(--bg);box-shadow:inset 0 0 0 1px var(--line)}
+.sv-island{background:var(--s1)}
+.sv-island .panel{background:var(--raise)}
+.sv-island .chip,.sv-island .seg,.sv-island .btn.sec{background:var(--raise)}
+.sv-island .scr{gap:10px}
+.row{display:flex;align-items:center;gap:12px;padding:9px 14px;min-height:52px}
+.sv-line .row+.row{box-shadow:inset 0 1px 0 var(--line)}
+.row .av{width:34px;height:34px;flex:none;border-radius:calc(var(--r-chip) + 2px);background:linear-gradient(135deg,hsl(var(--h) 75% 60%),hsl(calc(var(--h) + 40) 75% 50%))}
+.row div{flex:1;min-width:0;display:flex;flex-direction:column}
+.row b{font-weight:500;font-size:15px;line-height:20px}
+.row small{font-size:12px;color:var(--ink2)}
+.row>span{font-size:15px;font-variant-numeric:tabular-nums}
+.form{padding:14px;display:flex;flex-direction:column;gap:12px}
+
+/* controls */
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{height:34px;padding:0 14px;border-radius:var(--r-chip);font-size:14px;font-weight:500;background:var(--s1);transition:background-color .15s,color .15s}
+.sv-tone .chip{background:var(--s2)}
+.chip[aria-pressed=true]{background:var(--ink);color:var(--on-ink)}
+.ct-tonal .chip[aria-pressed=true]{background:var(--s2);color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--ink)}
+.ct-ghost .chip{background:transparent}
+.ct-tonal .sw[aria-checked=true],.ct-tonal .cb[aria-checked=true]{background:color-mix(in srgb,var(--ink) 55%,var(--s2))}
+.ct-ghost .chip[aria-pressed=true]{background:var(--ink);color:var(--on-ink)}
+.fld{display:flex;flex-direction:column;gap:4px}
+.fld input{font:inherit;font-size:15px;color:var(--ink);height:44px;padding:0 14px;border:0;outline:0;border-radius:var(--r-field);background:var(--s2);width:100%}
+.sv-tone .fld input{background:var(--bg)}
+.sv-island .fld input{background:var(--s1)}
+.fld input:focus-visible{box-shadow:inset 0 0 0 2px var(--ink)}
+.tgl{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:15px;min-height:36px}
+.sw{position:relative;width:48px;height:28px;border-radius:999px;background:var(--s2);flex:none;transition:background-color .18s}
+.sv-tone .sw{background:color-mix(in srgb,var(--ink) 14%,var(--s1))}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:var(--ink2);transition:transform .22s cubic-bezier(.2,.8,.2,1),background-color .18s}
+.sw[aria-checked=true]{background:var(--ink)}
+.sw[aria-checked=true]::after{transform:translateX(20px);background:var(--on-ink)}
+.cb{width:24px;height:24px;flex:none;border-radius:8px;background:var(--s2);display:grid;place-items:center;transition:background-color .15s}
+.sv-tone .cb{background:color-mix(in srgb,var(--ink) 14%,var(--s1))}
+.cb svg{width:16px;height:16px;opacity:0;transition:opacity .12s}
+.cb[aria-checked=true]{background:var(--ink);color:var(--on-ink)}
+.cb[aria-checked=true] svg{opacity:1}
+.seg{position:relative;display:flex;padding:3px;border-radius:calc(var(--r-ctl) + 3px);background:var(--s2)}
+.sv-tone .seg{background:var(--bg)}
+.seg button{position:relative;z-index:1;flex:1;height:34px;border-radius:var(--r-ctl);font-size:14px;font-weight:500;transition:color .2s}
+.seg button[aria-pressed=true]{color:var(--on-ink)}
+.seg i{position:absolute;top:3px;bottom:3px;left:3px;width:calc((100% - 6px)/3);border-radius:var(--r-ctl);background:var(--ink);transition:transform .26s cubic-bezier(.2,.8,.2,1)}
+.ct-tonal .seg i{background:var(--raise);box-shadow:inset 0 0 0 1px var(--line)}
+.ct-tonal .seg button[aria-pressed=true]{color:var(--ink)}
+.btns{display:flex;gap:8px}
+.btn{flex:1;height:44px;border-radius:var(--r-ctl);font-size:15px;font-weight:500;transition:background-color .15s,filter .15s}
+.btn.pri{background:var(--ink);color:var(--on-ink)}
+.btn.sec{background:var(--s2)}
+.sv-tone .btn.sec{background:color-mix(in srgb,var(--ink) 10%,var(--s1))}
+.ct-tonal .btn.pri{background:color-mix(in srgb,var(--ink) 16%,var(--s1));color:var(--ink)}
+.ct-ghost .btn.sec{background:transparent}
+.btn:active,.chip:active{filter:brightness(.92)}
+:root[data-theme=dark] .btn:active{filter:brightness(1.2)}
+.ib{width:40px;height:40px;border-radius:999px;display:grid;place-items:center}
+.ib:hover{background:color-mix(in srgb,var(--ink) 8%,transparent)}
+
+/* corners */
+.cr-round{--r-ctl:999px;--r-field:16px;--r-card:26px;--r-chip:999px;--r-over:30px;--r-menu:20px}
+.cr-sq{--r-ctl:999px;--r-field:14px;--r-card:22px;--r-chip:999px;--r-over:26px;--r-menu:18px}
+@supports (corner-shape:squircle){
+  .cr-sq{--r-field:22px;--r-card:38px;--r-over:44px;--r-menu:28px}
+  .cr-sq .panel,.cr-sq .hero,.cr-sq .fld input,.cr-sq .dlg,.cr-sq .menu,.cr-sq .sheet,.cr-sq .row .av,.cr-sq .cb{corner-shape:squircle}
+}
+
+/* glass: floating chrome and overlays only */
+.glass{--ink2:var(--ink);background:rgb(var(--tint) / var(--glass-a));-webkit-backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-sat));backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-sat))}
+.o2.gl-deep{--glass-a:.76;--glass-blur:40px;--glass-sat:110%}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.glass{background:rgb(var(--tint))}}
+@media (prefers-reduced-transparency:reduce){.glass{background:rgb(var(--tint));-webkit-backdrop-filter:none;backdrop-filter:none}}
+.bar{position:absolute;z-index:5;top:0;left:0;right:0;height:56px;display:flex;align-items:center;gap:2px;padding:0 6px 0 16px;box-shadow:inset 0 -.5px 0 color-mix(in srgb,var(--ink) 12%,transparent)}
+.bar .h{flex:1;font-size:20px}
+.nav{position:absolute;z-index:5;display:flex;justify-content:space-around;align-items:center}
+.nv-pill .nav{left:14px;right:14px;bottom:14px;height:62px;border-radius:999px;padding:0 6px}
+.nv-bar .nav{left:0;right:0;bottom:0;height:72px;padding:0 8px 8px;box-shadow:inset 0 .5px 0 color-mix(in srgb,var(--ink) 12%,transparent)}
+.nv-dock .nav{left:50%;bottom:16px;transform:translateX(-50%);height:56px;border-radius:999px;padding:0 6px;gap:2px}
+.nav button{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;width:60px;height:50px;border-radius:999px;font-size:11px;font-weight:500;color:var(--ink2)}
+.nv-dock .nav button{width:48px;height:44px}
+.nv-dock .nav button span{display:none}
+.nav button[aria-current=page]{color:var(--ink)}
+.nav button[aria-current=page]::before{content:"";position:absolute;inset:4px 6px;border-radius:999px;background:color-mix(in srgb,var(--ink) 11%,transparent);z-index:-1}
+.nv-bar .nav button[aria-current=page]::before{inset:4px 10px 22px}
+.nv-pill .scr,.nv-dock .scr{padding-bottom:96px}
+
+/* overlays */
+.layer{position:absolute;inset:0;z-index:10;pointer-events:none}
+.layer>*{pointer-events:auto}
+.scrim{position:absolute;inset:0;background:rgb(var(--scrim) / .32)}
+.gl-back .scrim{background:rgb(var(--tint) / .25);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.dlg{position:absolute;left:18px;right:18px;top:50%;margin-top:-104px;border-radius:var(--r-over);padding:22px 20px 16px;display:flex;flex-direction:column;gap:10px}
+.dlg p{font-size:14px;color:var(--ink2)}
+.dlg .btns{margin-top:8px}
+.sheet{position:absolute;left:8px;right:8px;bottom:8px;border-radius:var(--r-over);padding:10px 18px 18px;display:flex;flex-direction:column;gap:12px}
+.sheet .grab{width:36px;height:4px;border-radius:4px;background:color-mix(in srgb,var(--ink) 25%,transparent);margin:0 auto}
+.menu{position:absolute;top:52px;right:8px;width:180px;border-radius:var(--r-menu);padding:6px;display:flex;flex-direction:column}
+.menu button{display:flex;align-items:center;gap:12px;height:44px;padding:0 12px;border-radius:calc(var(--r-menu) - 6px);font-size:15px;text-align:left}
+.menu button:hover{background:color-mix(in srgb,var(--ink) 8%,transparent)}
+.menu svg{width:20px;height:20px}
+.gl-back .dlg,.gl-back .sheet{background:var(--raise);-webkit-backdrop-filter:none;backdrop-filter:none}
+.ovl-static .dlg,.ovl-static .scrim{pointer-events:none}
+</style>
+</head>
+<body>
+<div class="top">
+  <h1>S4 Orion: Direction Lab</h1>
+  <div class="tt" id="theme" role="group" aria-label="Theme"><button type="button" value="light">Light</button><button type="button" value="dark">Dark</button></div>
+</div>
+<main class="page">
+  <div class="intro">
+    <p><b>The new direction, in your words:</b> leave Material 3 Expressive behind and make Orion its own thing.</p>
+    <ul>
+      <li><b>No sharp corners</b>, anywhere.</li>
+      <li><b>Flat</b>: content sits on the page as plain shapes and tones, no layers of cards.</li>
+      <li><b>Depth only through blur</b>: floating chrome and overlays are frosted glass (today's glass, AA guaranteed). No shadows.</li>
+      <li><b>Simpler motion</b> than the container transform: short fades and slides that look the same in every browser.</li>
+      <li><b>Works everywhere, phone and desktop</b>, like a real framework.</li>
+    </ul>
+    <p><b>What stays:</b> monochrome by default with one optional seed color, Inter, Solar icons, Title Case labels, the glass contrast guarantee and its solid fallbacks (high contrast, reduced transparency, browsers without blur).</p>
+    <p><b>Compatibility target:</b> Safari and iOS 15.4+, Chrome and Edge 100+, Firefox 103+. Plain CSS and a small script, no build step, usable from plain HTML, React, Vue, Svelte or server pages. Every effect has a fallback: no blur means solid, no <code>corner-shape</code> means plain round corners, reduced motion means fades only.</p>
+    <p>Each question changes one thing; the others show option A. Tap the card above a preview to pick it (the previews themselves are live: tap chips, switches, the tabs and the menu button). <b>Your Combination</b> at the end puts all your picks together.</p>
+  </div>
+  <div id="sections"></div>
+  <section class="sec" id="combo">
+    <h2>Your Combination</h2>
+    <p>Everything you picked above, in one screen (unanswered questions use A). Try the motion buttons under it.</p>
+    <div class="combo-wrap"><div id="combo-ph"></div><div class="combo-sum" id="combo-sum"></div></div>
+  </section>
+</main>
+<footer><a href="../">S4 Orion</a> exploration · Inter (SIL OFL 1.1) · Solar icons by 480 Design (CC BY 4.0)</footer>
+
+<script src="lib/scrub.js?v=b7738ee"></script>
+<script src="../components/assets/icons.js?v=d322e35"></script>
+<script src="lib/questions.js?v=b4269e7"></script>
+<script src="lib/review.js?v=2d9b250"></script>
+<script>
+const ic = n => `<svg viewBox="${S4_ICONS.viewBox}" aria-hidden="true">${S4_ICONS.icons[n] || ''}</svg>`;
+const h = html => { const t = document.createElement('template'); t.innerHTML = html.trim(); return t.content.firstElementChild; };
+const DEF = { surface: 'sv-tone', corner: 'cr-soft', controls: 'ct-ink', depth: 'gl-frost', nav: 'nv-pill', type: 'ty-a', motion: 'rise' };
+const ROWS = [['Netflix', 'Due Nov 14', '$15.49', 350], ['Electric', 'Due Nov 18', '$84.20', 40], ['Spotify', 'Paid Nov 2', '$11.99', 140], ['Rent', 'Due Dec 1', '$1,450', 210], ['Gym', 'Paid Nov 5', '$39.00', 280]];
+
+function phone(o = {}, extra = '') {
+  const c = Object.assign({}, DEF, o);
+  return `<div class="o2 ph ${c.surface} ${c.corner} ${c.controls} ${c.depth} ${c.nav} ${c.type} ${extra}" data-motion="${c.motion}">
+    <div class="scr">
+      <div class="hero"><span class="lbl">Left This Month</span><span class="kpi">$4,280</span></div>
+      <div class="chips"><button class="chip" type="button" aria-pressed="true">All</button><button class="chip" type="button" aria-pressed="false">Due</button><button class="chip" type="button" aria-pressed="false">Paid</button></div>
+      <div class="panel form">
+        <label class="fld"><span class="lbl">Vendor</span><input value="Spotify" aria-label="Vendor"></label>
+        <div class="tgl"><span>Autopay</span><button class="sw" type="button" role="switch" aria-checked="true" aria-label="Autopay"></button></div>
+        <div class="tgl"><span>Remind Me</span><button class="cb" type="button" role="checkbox" aria-checked="true" aria-label="Remind Me"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+        <div class="seg" role="group" aria-label="Period"><i></i><button type="button" aria-pressed="true">Week</button><button type="button" aria-pressed="false">Month</button><button type="button" aria-pressed="false">Year</button></div>
+        <div class="btns"><button class="btn sec" type="button">Later</button><button class="btn pri" type="button" data-open="dialog">Pay Now</button></div>
+      </div>
+      <div class="panel">${ROWS.map(r => `<div class="row"><i class="av" style="--h:${r[3]}"></i><div><b>${r[0]}</b><small>${r[1]}</small></div><span>${r[2]}</span></div>`).join('')}</div>
+    </div>
+    <header class="bar glass"><span class="h">Bills</span><button class="ib" type="button" aria-label="Search">${ic('search')}</button><button class="ib" type="button" aria-label="More" data-open="menu">${ic('more-vert')}</button></header>
+    <nav class="nav glass" aria-label="Main">${[['home', 'Home'], ['bills', 'Bills'], ['chart', 'Insights'], ['settings', 'Settings']].map((n, i) => `<button type="button" ${i === 1 ? 'aria-current="page"' : ''}>${ic(n[0])}<span>${n[1]}</span></button>`).join('')}</nav>
+    <div class="layer"></div>
+  </div>`;
+}
+const motionCtl = `<div class="motion-ctl"><button type="button" data-open="menu">Menu</button><button type="button" data-open="dialog">Dialog</button><button type="button" data-open="sheet">Sheet</button><button type="button" data-open="view">Switch View</button></div>`;
+const code = t => `<pre class="code">${t.replace(/&/g, '&amp;').replace(/</g, '&lt;')}</pre>`;
+
+const SECTIONS = [
+  { id: 'surface', title: 'Flat Surfaces', desc: 'How areas are told apart on a flat page, with no shadows and no stacked cards.', opts: [
+    { k: 'A', name: 'Tone Steps', desc: 'Groups sit on a shape one shade off the page. No lines. Calm and clearly flat.', o: { surface: 'sv-tone' } },
+    { k: 'B', name: 'Hairlines', desc: 'Everything is the page color; 1px lines outline groups and split rows. The most minimal.', o: { surface: 'sv-line' } },
+    { k: 'C', name: 'Islands', desc: 'The page is a shade darker and groups are lighter shapes on it, like tiles on a tray (still no shadows).', o: { surface: 'sv-island' } }]},
+  { id: 'corner', title: 'Corners', desc: 'All three have no sharp corners. The question is how soft, and which shape the curve has.', opts: [
+    { k: 'A', name: 'Soft', desc: 'Moderate radii everywhere (12 on controls, 18 on groups). Neat, works for dense desktop screens.', o: { corner: 'cr-soft' } },
+    { k: 'B', name: 'Round', desc: 'Pill buttons and chips, very round groups (26) and overlays (30). Friendlier, more phone-like.', o: { corner: 'cr-round' } },
+    { k: 'C', name: 'Squircle', desc: 'Pills plus smooth, continuous corners (like app icons) where the browser supports corner-shape (Chrome 139+); plain round corners elsewhere.', o: { corner: 'cr-sq' } }]},
+  { id: 'controls', title: 'Controls', desc: 'How buttons, chips and the segmented control carry emphasis without shadows or outlines.', opts: [
+    { k: 'A', name: 'Ink', desc: 'The main action and selections are solid ink (black in light, white in dark); the rest are soft fills. Strong and clear.', o: { controls: 'ct-ink' } },
+    { k: 'B', name: 'Tonal', desc: 'No solid ink blocks: emphasis is a darker tone, selection a thin ink ring. The quietest.', o: { controls: 'ct-tonal' } },
+    { k: 'C', name: 'Ink and Ghost', desc: 'Solid ink for the main action and selections, everything else has no fill until hovered or pressed. Very flat.', o: { controls: 'ct-ghost' } }]},
+  { id: 'depth', title: 'Depth (the Blur)', desc: 'Only floating things blur what is behind them. The dialog is open here; scroll the list to see the bars over the colorful card.', static: true, opts: [
+    { k: 'A', name: 'Frost', tag: 'Today', desc: 'Today\'s clear glass (62% tint, 20px blur, calm color) on bars, menus, sheets and dialogs; a soft dark scrim behind dialogs.', o: { depth: 'gl-frost' } },
+    { k: 'B', name: 'Deep Frost', desc: 'More frosted: denser tint (74%) and twice the blur. Content behind turns into soft color only.', o: { depth: 'gl-deep' } },
+    { k: 'C', name: 'Blurred Page', desc: 'Bars stay frosted; when a dialog or sheet opens, the whole page behind blurs instead of darkening, and the dialog itself is solid.', o: { depth: 'gl-back' } }]},
+  { id: 'nav', title: 'Navigation Bar (Phone)', desc: 'On desktop this becomes a side rail either way.', opts: [
+    { k: 'A', name: 'Floating Pill', desc: 'A frosted pill floating above the content with a gap all round. Distinctive, clearly not Material.', o: { nav: 'nv-pill' } },
+    { k: 'B', name: 'Full-Width Bar', tag: 'Today', desc: 'A frosted bar across the bottom edge, icons with labels.', o: { nav: 'nv-bar' } },
+    { k: 'C', name: 'Icon Dock', desc: 'A small centered frosted pill, icons only (labels as tooltips and for screen readers). Compact.', o: { nav: 'nv-dock' } }]},
+  { id: 'type', title: 'Type Voice', desc: 'Still Inter. Only headings and big numbers change; body text stays as it is.', opts: [
+    { k: 'A', name: 'Plain', tag: 'Today', desc: 'Medium weight headings, normal spacing.', o: { type: 'ty-a' } },
+    { k: 'B', name: 'Tight and Bold', desc: 'Semi-bold headings and numbers, tightly spaced. A confident, modern voice.', o: { type: 'ty-b' } },
+    { k: 'C', name: 'Light Numbers, Caps Labels', desc: 'Big numbers in light weight, small labels in spaced capitals. Editorial, instrument-like.', o: { type: 'ty-c' } }]},
+  { id: 'motion', title: 'Motion', desc: 'Replaces the container transform. Use the buttons under each phone (also: Pay Now, the menu button, the tabs). The Freeze bar at the bottom of the screen stops any animation so you can drag through it. With Reduce Motion on, every option becomes a short fade.', motion: true, opts: [
+    { k: 'A', name: 'Fade and Rise', desc: 'Things fade in while moving 8px into place (menus drop 4px from their button). Sheets slide up. Views: out, then in with a small rise. About 200ms.', o: { motion: 'rise' } },
+    { k: 'B', name: 'Fade and Settle', desc: 'Things fade in while settling from 96% to full size, from their own center. Sheets slide up. Views crossfade.', o: { motion: 'settle' } },
+    { k: 'C', name: 'Fade Only', desc: 'Pure fades, 150ms, nothing moves. The simplest and calmest.', o: { motion: 'fade' } },
+    { k: 'D', name: 'Slide', desc: 'Everything slides a little from where it comes from: dialogs rise 24px, menus come down from the button, views slide sideways 24px.', o: { motion: 'slide' } }]},
+  { id: 'pack', title: 'Framework Shape', desc: 'How apps use Orion. All three keep the same CSS and look; they differ in what comes on top.', code: true, opts: [
+    { k: 'A', name: 'Drop-In CSS and JS', tag: 'Today', desc: 'One stylesheet and one small script. Classes and data attributes on normal HTML; works in any framework or none. Least upkeep.', c: '<link rel="stylesheet" href="orion.css">\n<script src="orion.js" defer><\/script>\n\n<button class="s4-button" data-variant="ink">Pay Now</button>\n<dialog class="s4-dialog">…</dialog>' },
+    { k: 'B', name: 'Drop-In Plus Web Components', desc: 'A, plus custom elements for the parts with behavior (dialog, menu, sheet, tabs). Still framework-free; React, Vue and Svelte use them like HTML.', c: '<link rel="stylesheet" href="orion.css">\n<script type="module" src="orion.js"><\/script>\n\n<s4-button variant="ink">Pay Now</s4-button>\n<s4-menu anchor="more">…</s4-menu>' },
+    { k: 'C', name: 'Drop-In Plus Framework Packages', desc: 'A, plus React and Vue component packages with typed props. Nicest inside those apps, most upkeep (every component three times).', c: 'import { Button, Menu } from "@s4/orion-react";\n\n<Button variant="ink">Pay Now</Button>\n<Menu anchor={ref}>…</Menu>' }]},
+  { id: 'names', title: 'Token Names', desc: 'The CSS variables apps use. Today they are Material\'s own names.', code: true, opts: [
+    { k: 'A', name: 'Own Names', desc: 'Short Orion names. The old Material names keep working as aliases for one release, then go.', c: 'background: var(--s4-surface);\ncolor: var(--s4-ink);\nborder-radius: var(--s4-radius-card);\ntransition: opacity var(--s4-duration) var(--s4-ease);' },
+    { k: 'B', name: 'Keep Material Names', tag: 'Today', desc: 'Stay compatible with Material color tools and themes, even though the look moves away from Material.', c: 'background: var(--md-sys-color-surface);\ncolor: var(--md-sys-color-on-surface);\nborder-radius: var(--md-sys-shape-corner-large);' }]}
+];
+
+const host = document.getElementById('sections');
+SECTIONS.forEach(sec => {
+  const el = h(`<section class="sec" id="q-${sec.id}"><h2>${sec.title}</h2><p>${sec.desc}</p><div class="cards ${sec.code ? 'wide' : ''} rv-group" role="radiogroup" aria-label="${sec.title}"></div></section>`);
+  host.appendChild(el);
+  sec.opts.forEach(o => {
+    const pv = sec.code ? code(o.c) : `<div>${phone(o.o, sec.static ? 'ovl-static' : '')}${sec.motion ? motionCtl : ''}</div>`;
+    el.querySelector('.cards').appendChild(S4Review.card({ pick: `${sec.id}:${o.k}`, letter: o.k, title: o.name, desc: o.desc, tag: o.tag || '', preview: h(pv) }));
+  });
+});
+
+/* ---------- live bits ---------- */
+document.addEventListener('click', e => {
+  const t = e.target;
+  const chip = t.closest('.o2 .chip'); if (chip) chip.parentNode.querySelectorAll('.chip').forEach(x => x.setAttribute('aria-pressed', x === chip));
+  const sw = t.closest('.o2 .sw, .o2 .cb'); if (sw) sw.setAttribute('aria-checked', sw.getAttribute('aria-checked') !== 'true');
+  const sb = t.closest('.o2 .seg button'); if (sb) { const bs = [...sb.parentNode.querySelectorAll('button')]; bs.forEach(x => x.setAttribute('aria-pressed', x === sb)); sb.parentNode.querySelector('i').style.transform = `translateX(${bs.indexOf(sb) * 100}%)`; }
+  const nb = t.closest('.o2 .nav button'); if (nb && nb.getAttribute('aria-current') !== 'page') { nb.parentNode.querySelectorAll('button').forEach(x => x.toggleAttribute('aria-current', x === nb)); nb.setAttribute('aria-current', 'page'); switchView(nb.closest('.o2'), nb.textContent.trim()); }
+  const op = t.closest('[data-open]');
+  if (op) { const ph = op.closest('.o2') || op.parentNode.previousElementSibling; if (ph && ph.classList.contains('o2')) { op.dataset.open === 'view' ? switchView(ph) : open(ph, op.dataset.open); } }
+  const cl = t.closest('.o2 [data-close], .o2 .scrim'); if (cl && !cl.closest('.ovl-static')) close(cl.closest('.o2'));
+  const mi = t.closest('.o2 .menu button'); if (mi) close(mi.closest('.o2'));
+});
+
+/* ---------- motion styles ---------- */
+const RM = matchMedia('(prefers-reduced-motion: reduce)');
+const E_OUT = 'cubic-bezier(.2,.8,.2,1)', E_IN = 'cubic-bezier(.4,0,1,1)';
+const STYLE = {
+  rise:   { dialog: 'translateY(8px)', menu: 'translateY(-4px)', sheet: 'translateY(100%)', dur: 220, out: 150, viewIn: 'translateY(8px)', viewOut: null },
+  settle: { dialog: 'scale(.96)', menu: 'scale(.96)', sheet: 'translateY(100%)', dur: 220, out: 150, viewIn: 'scale(.985)', viewOut: null, cross: true },
+  fade:   { dialog: null, menu: null, sheet: null, dur: 150, out: 120, viewIn: null, viewOut: null, cross: true },
+  slide:  { dialog: 'translateY(24px)', menu: 'translateY(-12px)', sheet: 'translateY(100%)', dur: 260, out: 170, viewIn: 'translateX(24px)', viewOut: 'translateX(-24px)' }
+};
+const style = ph => STYLE[ph.dataset.motion] || STYLE.rise;
+function frames(from, inward) { const a = { opacity: 0 }, b = { opacity: 1 }; if (from && !RM.matches) { a.transform = from; b.transform = 'none'; } return inward ? [a, b] : [b, a]; }
+
+function open(ph, kind) {
+  const layer = ph.querySelector('.layer'); if (layer.firstChild) return close(ph);
+  const s = style(ph), html = {
+    dialog: `<div class="dlg glass" role="dialog" aria-modal="true" aria-label="Pay Netflix"><span class="h" style="font-size:20px">Pay Netflix?</span><p>$15.49 will be paid from Everyday today.</p><div class="btns"><button class="btn sec" type="button" data-close>Cancel</button><button class="btn pri" type="button" data-close>Pay</button></div></div>`,
+    sheet: `<div class="sheet glass" role="dialog" aria-label="Add Bill"><div class="grab"></div><span class="h" style="font-size:20px">Add Bill</span><label class="fld"><span class="lbl">Vendor</span><input aria-label="Vendor"></label><label class="fld"><span class="lbl">Amount</span><input aria-label="Amount" inputmode="decimal"></label><button class="btn pri" type="button" data-close>Save</button></div>`,
+    menu: `<div class="menu glass" role="menu"><button role="menuitem" type="button">${ic('edit')}Edit</button><button role="menuitem" type="button">${ic('schedule')}Snooze</button><button role="menuitem" type="button">${ic('delete')}Delete</button></div>`
+  }[kind];
+  if (kind !== 'menu') layer.appendChild(h('<div class="scrim"></div>')); else layer.appendChild(h('<div class="scrim" style="background:none;-webkit-backdrop-filter:none;backdrop-filter:none"></div>'));
+  const el = h(html); layer.appendChild(el); layer.dataset.kind = kind;
+  const sc = layer.querySelector('.scrim');
+  sc.animate([{ opacity: 0 }, { opacity: 1 }], { duration: s.dur, easing: 'linear' });
+  el.animate(frames(s[kind], true), { duration: kind === 'sheet' && !RM.matches ? s.dur + 60 : s.dur, easing: E_OUT });
+}
+function close(ph) {
+  const layer = ph.querySelector('.layer'); if (!layer.firstChild || layer.dataset.closing) return;
+  const s = style(ph), kind = layer.dataset.kind, el = layer.lastChild, sc = layer.querySelector('.scrim');
+  layer.dataset.closing = '1';
+  const out = kind === 'sheet' && !RM.matches ? 'translateY(100%)' : s[kind];
+  sc.animate([{ opacity: 1 }, { opacity: 0 }], { duration: s.out, easing: 'linear', fill: 'forwards' });
+  el.animate(frames(out && kind !== 'sheet' ? out.replace(/(-?\d+)px/, (m, n) => Math.round(n / 2) + 'px') : out, false), { duration: s.out, easing: E_IN, fill: 'forwards' })
+    .finished.then(() => { layer.innerHTML = ''; delete layer.dataset.closing; });
+}
+const VIEWS = { Home: 'Home', Bills: 'Bills', Insights: 'Insights', Settings: 'Settings' };
+function switchView(ph, name) {
+  const s = style(ph), scr = ph.querySelector('.scr'), title = ph.querySelector('.bar .h');
+  const next = name || (title.textContent === 'Bills' ? 'Insights' : 'Bills');
+  if (!name) ph.querySelectorAll('.nav button').forEach(b => b.toggleAttribute('aria-current', b.textContent.trim() === next));
+  const swap = () => { title.textContent = next; scr.scrollTop = 0; const rows = [...scr.querySelectorAll('.row')]; rows.push(rows.shift()); rows.forEach(r => r.parentNode.appendChild(r)); };
+  if (s.cross || RM.matches) {
+    scr.animate([{ opacity: 1 }, { opacity: 0 }], { duration: s.out * .6, easing: 'linear' }).finished.then(() => { swap(); scr.animate(frames(s.viewIn, true), { duration: s.dur, easing: E_OUT }); });
+  } else {
+    scr.animate(frames(s.viewOut, false), { duration: s.out * .6, easing: E_IN }).finished.then(() => { swap(); scr.animate(frames(s.viewIn, true), { duration: s.dur, easing: E_OUT }); });
+  }
+}
+
+/* static open dialog in the Depth section; content scrolled so the colorful card is under the bar */
+function prime(root) {
+  root.querySelectorAll('.o2').forEach(ph => { ph.querySelector('.scr').scrollTop = 44; });
+  root.querySelectorAll('.ovl-static').forEach(ph => {
+    const layer = ph.querySelector('.layer');
+    layer.innerHTML = `<div class="scrim"></div><div class="dlg glass" role="dialog" aria-label="Pay Netflix"><span class="h" style="font-size:20px">Pay Netflix?</span><p>$15.49 will be paid from Everyday today.</p><div class="btns"><button class="btn sec" type="button">Cancel</button><button class="btn pri" type="button">Pay</button></div></div>`;
+  });
+}
+prime(document);
+
+/* ---------- your combination ---------- */
+const AX = { surface: ['surface', { A: 'sv-tone', B: 'sv-line', C: 'sv-island' }], corner: ['corner', { A: 'cr-soft', B: 'cr-round', C: 'cr-sq' }], controls: ['controls', { A: 'ct-ink', B: 'ct-tonal', C: 'ct-ghost' }],
+  depth: ['depth', { A: 'gl-frost', B: 'gl-deep', C: 'gl-back' }], nav: ['nav', { A: 'nv-pill', B: 'nv-bar', C: 'nv-dock' }], type: ['type', { A: 'ty-a', B: 'ty-b', C: 'ty-c' }], motion: ['motion', { A: 'rise', B: 'settle', C: 'fade', D: 'slide' }] };
+let lastCombo = '';
+function combo() {
+  const ans = ((S4Review.load().pages.direction || {}).answers) || {}, o = {}, sum = [];
+  SECTIONS.forEach(sec => {
+    const a = ans[sec.id], v = a ? a.v : 'A', opt = sec.opts.find(x => x.k === v);
+    if (AX[sec.id]) o[AX[sec.id][0]] = AX[sec.id][1][v] || AX[sec.id][1].A;
+    sum.push(`<span><b>${sec.title}:</b> ${opt ? v + '. ' + opt.name : v}${a ? '' : ' (default)'}</span>`);
+  });
+  const key = JSON.stringify(o) + sum.join('');
+  if (key === lastCombo) return; lastCombo = key;
+  const box = document.getElementById('combo-ph'); box.innerHTML = phone(o) + motionCtl; prime(box);
+  document.getElementById('combo-sum').innerHTML = sum.join('');
+}
+
+/* ---------- theme ---------- */
+const themeBtns = [...document.querySelectorAll('#theme button')];
+function setTheme(m) { document.documentElement.dataset.theme = m; themeBtns.forEach(b => b.setAttribute('aria-pressed', b.value === m)); }
+themeBtns.forEach(b => b.onclick = () => setTheme(b.value));
+setTheme(matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+
+S4Review.page('direction');
+combo();
+document.addEventListener('click', () => setTimeout(combo, 0));
+</script>
+</body>
+</html>

@@ -145,4 +145,19 @@ window.S4_REVIEW_DEMOS = [
       { id: 'motion', label: 'How a menu opens', options: [{ v: 'A', label: 'Quiet Unfold (before)' }, { v: 'D', label: 'Container Transform, Button Stays' }, { v: 'H', label: 'D, With the Shape Below the Button' }, { v: 'Other', label: 'Describe in notes' }] }
     ]
   }
+  ,
+  {
+    id: 'direction', title: 'Direction Lab', href: 'explore/direction.html',
+    questions: [
+      { id: 'surface', label: 'Flat surfaces', options: [{ v: 'A', label: 'Tone Steps' }, { v: 'B', label: 'Hairlines' }, { v: 'C', label: 'Islands' }, { v: 'Other', label: 'Describe in notes' }] },
+      { id: 'corner', label: 'Corners', options: [{ v: 'A', label: 'Soft' }, { v: 'B', label: 'Round' }, { v: 'C', label: 'Squircle' }, { v: 'Other', label: 'Describe in notes' }] },
+      { id: 'controls', label: 'Controls', options: [{ v: 'A', label: 'Ink' }, { v: 'B', label: 'Tonal' }, { v: 'C', label: 'Ink and Ghost' }, { v: 'Other', label: 'Describe in notes' }] },
+      { id: 'depth', label: 'Depth (the blur)', options: [{ v: 'A', label: 'Frost (today)' }, { v: 'B', label: 'Deep Frost' }, { v: 'C', label: 'Blurred Page' }, { v: 'Other', label: 'Describe in notes' }] },
+      { id: 'nav', label: 'Navigation bar (phone)', options: [{ v: 'A', label: 'Floating Pill' }, { v: 'B', label: 'Full-Width Bar (today)' }, { v: 'C', label: 'Icon Dock' }, { v: 'Other', label: 'Describe in notes' }] },
+      { id: 'type', label: 'Type voice', options: [{ v: 'A', label: 'Plain (today)' }, { v: 'B', label: 'Tight and Bold' }, { v: 'C', label: 'Light Numbers, Caps Labels' }, { v: 'Other', label: 'Describe in notes' }] },
+      { id: 'motion', label: 'Motion', options: [{ v: 'A', label: 'Fade and Rise' }, { v: 'B', label: 'Fade and Settle' }, { v: 'C', label: 'Fade Only' }, { v: 'D', label: 'Slide' }, { v: 'Other', label: 'Describe in notes' }] },
+      { id: 'pack', label: 'Framework shape', options: [{ v: 'A', label: 'Drop-In CSS and JS (today)' }, { v: 'B', label: 'Plus Web Components' }, { v: 'C', label: 'Plus Framework Packages' }, { v: 'Other', label: 'Describe in notes' }] },
+      { id: 'names', label: 'Token names', options: [{ v: 'A', label: 'Own Names' }, { v: 'B', label: 'Keep Material Names (today)' }, { v: 'Other', label: 'Describe in notes' }] }
+    ]
+  }
 ];

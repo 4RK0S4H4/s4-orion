@@ -1,5 +1,15 @@
 # Where S4 Orion stands (resume here)
 
+## NOW (2026-11-10): the overhaul, Orion's own language ([0020](decisions/0020-own-language.md))
+
+The owner wants Orion to stop being an M3 Expressive copy: no sharp corners, flat, depth only through blur, no shadows,
+simpler motion than the container transform, works everywhere (phone and desktop) like a real framework.
+**[Direction Lab](../explore/direction.html)** is published with nine questions (surfaces, corners, controls, depth,
+phone nav, type voice, motion, framework shape, token names) and a live "Your Combination" screen.
+**Pause here:** wait for the owner's answers. Then follow the plan in 0020 (pause again after step 1 and step 4).
+Everything below this section is the pre-overhaul history; the motion/glass QA items and 1.0.0 are on hold until the
+new language is in (much of the motion work there is replaced by the fade family).
+
 Last updated: 2026-11-07 (liquid glass: Lab 4 diagnostics, see 0012) (owner liked the demo; button groups angular again, plan reviewed; see below). **Phase 6 demo built and published; awaiting the owner's iPhone check, then release 1.0.0.** Working notes for Claude are in [`/CLAUDE.md`](../CLAUDE.md).
 
 ## The brief (original plan, six phases)
@@ -136,6 +146,8 @@ labs could load `components/assets/` instead of their own copies.
   transform / unfold / shared axis / slide (no origin scaling); very clear 60% glass with guaranteed AA.
 
 ## Session log
+
+- 2026-11-10 (overhaul): owner asked for Orion's own language (flat, blur for depth, no sharp corners, simple motion, works everywhere). Direction Lab + 0020 (proposed) published. Next: owner's picks, then 0020's plan.
 
 - 2026-11-10: liquid glass (Lab 5 mirror) abandoned by the owner after three iPhone check rounds (0019). Next: owner's iPhone check of the motion QA fixes, then 1.0.0.
 

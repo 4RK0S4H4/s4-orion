@@ -10,6 +10,10 @@ All notable changes to S4 Orion are recorded here. The format follows [Keep a Ch
 
 The first version of S4 Orion, a leaner rebuild of S4 Material 1.3 on Material 3 Expressive.
 
+### Proposed (overhaul, 2026-11-10, decision 0020)
+
+- Direction Lab (`explore/direction.html`): Orion moving off M3 Expressive to its own flat language with blur for depth, no sharp corners and a simple fade-based motion family. Awaiting the owner's picks; no system changes yet.
+
 ### Fixed (QA pass on motion, 2026-11-07)
 
 - Container transform (dialogs, sheets, row to detail): the blur is now off for the whole time the shape moves (WebKit draws a backdrop blur unclipped by `clip-path`, the likely cause of the choppy iPhone morph). After landing the blur comes on under the still-solid color, holds 120ms, then the color fades to glass; closing settles the glass to solid in place first, then collapses.
