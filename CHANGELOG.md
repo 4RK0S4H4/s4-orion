@@ -10,9 +10,9 @@ All notable changes to S4 Orion are recorded here. The format follows [Keep a Ch
 
 The first version of S4 Orion, a leaner rebuild of S4 Material 1.3 on Material 3 Expressive.
 
-### Proposed (overhaul, 2026-11-10, decision 0020)
+### Decided (overhaul, 2026-11-10, decision 0020)
 
-- Direction Lab (`explore/direction.html`): Orion moving off M3 Expressive to its own flat language with blur for depth, no sharp corners and a simple fade-based motion family. Awaiting the owner's picks; no system changes yet.
+- Orion moves off M3 Expressive to its own language: glass only on floating parts with a symmetrical top-edge light, no shadows, neutral grays plus one accent, solid tiles, rounded rectangles with small rounding, bold headings and light big numbers, a simple fade-and-rise motion family. Decided through Claude Design drafts; the restyle of tokens and components follows. The Direction Lab (`explore/direction.html`) is superseded.
 
 ### Fixed (QA pass on motion, 2026-11-07)
 

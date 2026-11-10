@@ -1,16 +1,17 @@
 # Where S4 Orion stands (resume here)
 
-## NOW (2026-11-10): the overhaul, Orion's own language ([0020](decisions/0020-own-language.md))
+## NOW (2026-11-10): the overhaul is decided, start building ([0020](decisions/0020-own-language.md))
 
-The owner wants Orion to stop being an M3 Expressive copy: no sharp corners, flat, depth only through blur, no shadows,
-simpler motion than the container transform, works everywhere (phone and desktop) like a real framework.
-**[Direction Lab](../explore/direction.html)** is published with nine questions (surfaces, corners, controls, depth,
-phone nav, type voice, motion, framework shape, token names) and a live "Your Combination" screen.
-**Update (same day):** the owner preferred static Claude Design drafts over the lab. Canvas "S4 Orion: Own Language Drafts" (private claude.ai artifact LTom2j96tNTT2ZiTsQJjQH) has A Stone, B Pebble, C Paper; the owner picked **a mix of A and B, keeping blur for everything elevated**; the A+B row (light bills, light glass sheet, dark bill with glass menu, dark desktop) is at the top of the canvas. Owner: drop the Pocket Ledger demo; the showcase becomes a normal app that uses many components (drafted as a Projects/tasks app: Tasks, Settings, New Task form, dialog over a board, desktop table) plus a component sheet (light and dark) on the same canvas. The Phase 6 demo gets rebuilt as this app when the system is restyled. Owner round 3: likes the glass edge highlight; wants it symmetrical (bright top edge, like the iOS dock), glass on more than floating parts (explore), and squarer shapes with small rounding (not everything a pill/circle). Glass study row at the top of the canvas: three levels (floating only / plus controls / plus groups), light and dark, corners chips 10, buttons/fields/icon buttons 14, groups 22, menus 20, nav 28, sheets 32. Edge = 1px gradient border via mask (top bright, sides fade, faint bottom) + top-half sheen. Owner picked level 1 (glass on floating parts only), edge more subtle (top ~0.22 dark / 0.85 white light, sides ~0.03), and found the base UI bland. Round 4 row: richer Today screen in three personalities (A project colors, B one accent, C warm), dark and light. Owner picked B (one accent). Round 5 row: the underlying UI in four styles (A tiles, B outline, C tinted, D open), dark and light, same screen. Next: owner picks an underlying style, then update the component sheet and app screens, then record 0020 with the A+B rules and start the plan. **Pause here:** wait for the owner's answers. Then follow the plan in 0020 (pause again after step 1 and step 4).
-Everything below this section is the pre-overhaul history; the motion/glass QA items and 1.0.0 are on hold until the
-new language is in (much of the motion work there is replaced by the fade family).
+Orion stops being an M3 Expressive copy. The owner chose the direction through five rounds of Claude Design drafts
+(private claude.ai canvas "S4 Orion: Own Language Drafts", artifact `LTom2j96tNTT2ZiTsQJjQH`; the "Chosen direction"
+rows at the top are the reference: component sheet light/dark and the Projects app). Summary: glass only on floating
+parts with a soft symmetrical top-edge light, no shadows, neutral grays plus one accent, solid tiles, rounded
+rectangles with small rounding, Inter with bold headings and light big numbers, a simple fade-and-rise motion family.
+The Pocket Ledger demo is replaced by a general Projects app.
 
-Last updated: 2026-11-07 (liquid glass: Lab 4 diagnostics, see 0012) (owner liked the demo; button groups angular again, plan reviewed; see below). **Phase 6 demo built and published; awaiting the owner's iPhone check, then release 1.0.0.** Working notes for Claude are in [`/CLAUDE.md`](../CLAUDE.md).
+**Next:** follow the plan in 0020 (docs, then tokens, then pause for the owner; components; demo; pause; skill and
+release). Open: framework shape and token names (defaults in 0020). The motion/glass QA items and Tables/Sliders work
+below are superseded by the restyle. The Direction Lab (`explore/direction.html`) is superseded by the drafts.
 
 ## The brief (original plan, six phases)
 
@@ -146,6 +147,8 @@ labs could load `components/assets/` instead of their own copies.
   transform / unfold / shared axis / slide (no origin scaling); very clear 60% glass with guaranteed AA.
 
 ## Session log
+
+- 2026-11-10 (decided): owner picked tiles (A); 0020 accepted with the full rules; chosen-direction rows (component sheet, Projects app) on the canvas. Next: 0020 plan step 1 (docs) and 2 (tokens).
 
 - 2026-11-10 (drafts 5): one accent chosen; four underlying UI styles drafted.
 - 2026-11-10 (drafts 4): level 1 glass chosen, subtler edge, three personality options for the base UI.
