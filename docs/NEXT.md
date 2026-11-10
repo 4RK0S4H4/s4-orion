@@ -137,6 +137,8 @@ labs could load `components/assets/` instead of their own copies.
 
 ## Session log
 
+- 2026-11-10: liquid glass (Lab 5 mirror) abandoned by the owner after three iPhone check rounds (0019). Next: owner's iPhone check of the motion QA fixes, then 1.0.0.
+
 - 2026-11-07 (liquid 5): liquid glass via a mirror + SVG filter (iPhone-safe in theory), Lab 5 and `demo?liquid` published (0019). Next: owner's iPhone check and pick.
 
 - 2026-11-07 (QA): motion bug pass (container transform blur timing for WebKit, menu/dialog interruption, FAB fold, snackbar scale, tooltips), skill/docs wording. Next: owner's iPhone check, then 1.0.0.
@@ -199,7 +201,9 @@ NOTE: demo/ keeps its own copy of orion.css/orion.js; `npm run build` now regene
 
 **Scrubber (2026-11-07):** `explore/lib/scrub.js` is one slim bar: Freeze and a slider. Tap Freeze, open a menu (it stops at 0%), drag or tap the bar to any moment and screenshot. It sits above a bottom nav if the page has one and does its own hit-testing, so open menus and modal dialogs neither close nor ignore it. The owner found earlier versions glitchy, then too complicated: keep it this simple. Add the script to any new motion lab.
 
-## Liquid glass, again (2026-11-07, [0019](decisions/0019-liquid-glass-mirror.md))
+## Liquid glass, again (2026-11-07, [0019](decisions/0019-liquid-glass-mirror.md)): ABANDONED 2026-11-10
+The owner dropped liquid glass for good after the iPhone checks (no reliable Safari method exists). Today's glass stays. Remaining work: the motion QA iPhone check, tables, sliders, 1.0.0. The notes below are history.
+
 The owner asked to bring back the Liquid Glass Lab look. New approach that should run on iPhone: a mirror (live copy of the content
 behind) inside each glass bar with the lab's SVG lens filter applied as `filter` (WebKit supports that; not `backdrop-filter: url()`).
 **[Lab 5](../explore/liquid5.html)** (A today, B soft, C lens, D extra) + `demo/index.html?liquid`. **iPhone (2026-11-10): no glass at all** (bars fully clear, content sharp behind them). Sent `explore/liquid5-diag.html` (tiles for tint, SVG blur, generated bend, image-map bend + the engine's own report). If WebKit fails the SVG tiles: abandon liquid glass for good (no other route on iPhone); if only one piece fails, fix that and retry once. **Result (2026-11-10):** tint, SVG blur and feTurbulence displacement work on iOS 18.7; a displacement map from `feImage` does NOT. Rebuilt the lens from primitives only (flood + blur + offset slope + lookup table to the Snell profile, `lensPrims`), and the tint as plain rgba() from JS. Round 2: tile 6 (primitive lens) WORKS on iPhone; tint now shows; but the bars' content stayed sharp. Suspect: the copy had `will-change`/translate3d, and WebKit paints a composited layer outside its parent's SVG filter. Removed (2D translate, no layers inside the copy); round 3 adds tiles 7/8 to confirm. If the bars still don't blur/bend, abandon. **Round 3:** confirmed (tile 7 blurred, tile 8 sharp); the bars now show frosted glass on iPhone. Next: owner picks a look in Lab 5 and reports scroll smoothness; then build `S4.glass.liquid` (0019). If adopted: move `explore/lib/liquid-mirror.js` into `components/glass/` as `S4.glass.liquid` for the top app bar,
