@@ -168,4 +168,12 @@ window.S4_REVIEW_DEMOS = [
         options: [{ v: 'A', label: 'Keep as it is' }, { v: 'B', label: 'Bold and Graphic' }, { v: 'C', label: 'Soft and Quiet' }, { v: 'D', label: 'Expressive Shapes' }, { v: 'Other', label: 'Describe in notes' }] }
     ]
   }
+  ,
+  {
+    id: 'icon-set', title: 'Icon Set', href: 'explore/review-icon-set.html',
+    questions: [
+      { id: 'iconset', label: 'Icon set', help: 'Phosphor has no bold duotone; C is composed to get closest to Solar.',
+        options: [{ v: 'A', label: 'Solar Bold Duotone (today)' }, { v: 'B', label: 'Phosphor Duotone' }, { v: 'C', label: 'Phosphor Bold Duotone' }, { v: 'Other', label: 'Describe in notes' }] }
+    ]
+  }
 ];

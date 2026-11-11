@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>S4 Orion: Icon Set</title>
+<link rel="stylesheet" href="../components/orion.css?v=b6c3af1">
+<style>
+body{margin:0;background:var(--md-sys-color-surface);color:var(--md-sys-color-on-surface)}
+h1,h2,p{margin:0}
+.bar{display:flex;align-items:center;padding:12px 24px;background:var(--md-sys-color-surface-container);border-bottom:1px solid var(--md-sys-color-outline-variant)}
+.bar h1{font-size:20px;line-height:28px;font-weight:500}
+.page{max-width:1100px;margin:0 auto;padding:24px 16px 64px;display:flex;flex-direction:column;gap:28px}
+.intro{max-width:80ch;color:var(--md-sys-color-on-surface-variant);display:flex;flex-direction:column;gap:12px}
+.sec > h2{font-size:24px;line-height:32px;font-weight:500;margin-bottom:6px}
+.sec > p{color:var(--md-sys-color-on-surface-variant);max-width:85ch;margin-bottom:16px}
+.cards{--rv-min:320px}
+.pv{display:flex;flex-direction:column;gap:16px;padding:16px;background:var(--md-sys-color-surface);border-radius:16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(40px,1fr));gap:12px 8px}
+.ic{width:32px;height:32px;display:grid;place-items:center;color:var(--md-sys-color-on-surface)}
+.ic svg{width:28px;height:28px;display:block}
+.nav{display:flex;justify-content:space-around;padding:8px;border-radius:999px;background:var(--md-sys-color-surface-container)}
+.nav span{display:grid;justify-items:center;gap:2px;font-size:12px;padding:6px 14px;border-radius:999px}
+.nav span.on{background:var(--md-sys-color-secondary-container)}
+.nav svg{width:24px;height:24px}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 20px 0 16px;border-radius:999px;background:var(--md-sys-color-primary);color:var(--md-sys-color-on-primary);font:500 14px Inter,system-ui,sans-serif}
+.btn.t{background:var(--md-sys-color-secondary-container);color:var(--md-sys-color-on-secondary-container)}
+.btn svg{width:20px;height:20px}
+.li{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:16px;background:var(--md-sys-color-surface-container-low)}
+.li svg{width:24px;height:24px}
+.li b{font-weight:500}
+</style>
+</head>
+<body>
+<div class="bar"><h1>S4 Orion: Icon Set</h1></div>
+<main class="page">
+  <div class="intro">
+    <p>You like Solar Bold Duotone and want alternatives in a similar style. Phosphor has no bold duotone, so there are three: Solar (today), Phosphor Duotone as it ships (lighter strokes with a tint), and Phosphor Bold Duotone, which I composed from Phosphor's bold outlines over its duotone tint to get closer to Solar's weight.</p>
+    <p>You can also switch live in the showcase app: Settings, Icon Style. Tap the card above its preview to pick one; Other plus a note if none is right.</p>
+  </div>
+  <div id="sections"></div>
+</main>
+<footer style="padding:24px;text-align:center;font-size:12px;color:var(--md-sys-color-on-surface-variant)"><a href="../">S4 Orion</a> exploration · Solar icons by 480 Design (CC BY 4.0) · Phosphor Icons (MIT)</footer>
+<script src="../components/assets/m3color.js"></script>
+<script src="../components/assets/icons.js?v=0b2fd72"></script>
+<script src="../components/orion.js?v=76309f6"></script>
+<script src="lib/questions.js?v=0215686"></script>
+<script src="lib/review.js?v=2d9b250"></script>
+<script>
+const R = window.S4_ICONS;
+const svg = (set, name) => { const s = R.sets[set]; return `<svg viewBox="${s.viewBox}" aria-hidden="true" focusable="false">${s.icons[name]}</svg>`; };
+const ALL = Object.keys(R.sets.solar.icons);
+const preview = set => {
+  const el = document.createElement('div'); el.className = 'pv';
+  el.innerHTML = `<div class="nav">${[['home','Home',1],['dashboard','Browse',0],['edit','Write',0],['settings','Settings',0]].map(([i,l,on]) => `<span class="${on ? 'on' : ''}">${svg(set,i)}${l}</span>`).join('')}</div>
+  <div class="row"><span class="btn">${svg(set,'add')}New Note</span><span class="btn t">${svg(set,'share')}Share</span><span class="ic">${svg(set,'favorite')}</span><span class="ic">${svg(set,'bookmark')}</span><span class="ic">${svg(set,'more-vert')}</span></div>
+  <div class="li">${svg(set,'document')}<b>Design review notes</b></div>
+  <div class="grid">${ALL.map(n => `<span class="ic" title="${n}">${svg(set,n)}</span>`).join('')}</div>`;
+  return el;
+};
+const OPTS = [
+  { k: 'A', set: 'solar', name: 'Solar Bold Duotone', tag: 'Today', desc: 'Heavy, soft shapes with a tinted second layer. Arrows and chevrons in Linear.' },
+  { k: 'B', set: 'phosphor-duotone', name: 'Phosphor Duotone', desc: 'Lighter, even strokes with a pale tint. Crisper and a bit more technical.' },
+  { k: 'C', set: 'phosphor-bold-duotone', name: 'Phosphor Bold Duotone', desc: "Phosphor shapes with bold strokes over a tint: the closest to Solar's weight." }
+];
+const sec = document.createElement('section'); sec.className = 'sec';
+sec.innerHTML = '<h2>Icon Set</h2><p>Same 67 icons, same sizes, same colors. Only the drawing changes.</p><div class="cards rv-group" role="radiogroup" aria-label="Icon set"></div>';
+document.getElementById('sections').appendChild(sec);
+OPTS.forEach(o => sec.querySelector('.cards').appendChild(S4Review.card({ pick: 'iconset:' + o.k, letter: o.k, title: o.name, desc: o.desc, tag: o.tag || '', preview: preview(o.set) })));
+S4Review.page('icon-set');
+</script>
+</body>
+</html>

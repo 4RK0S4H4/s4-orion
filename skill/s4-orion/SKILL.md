@@ -9,7 +9,7 @@ S4 Orion is the user's design system for web apps and pages. It **is** Material 
 type scale, shape scale, state layers, springs and components, under M3's own names. The personal layer on top is short
 and deliberate:
 
-- **Inter** as the typeface, **Solar** icons (Bold Duotone, Linear arrows) behind neutral names.
+- **Inter** as the typeface, **Solar** icons (Bold Duotone, Linear arrows) behind neutral names. Phosphor Duotone and Phosphor Bold Duotone are built in as alternatives: `S4.icon.use('phosphor-duotone')` switches the page (credit the set in use).
 - **Title Case** labels; sentences stay sentence case.
 - **Monochrome by default.** An app that wants color sets one seed; every role is generated from it.
 - **Very clear glass on floating chrome only** (app bars over scrolled content, nav bar, toolbars, menus, dialogs, sheets),

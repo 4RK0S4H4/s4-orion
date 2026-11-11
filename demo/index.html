@@ -271,6 +271,21 @@
             </div>
           </section>
 
+          <section class="s4-pane" aria-labelledby="icons-h">
+            <h2 class="s4-pane-title" id="icons-h">Icon Style</h2>
+            <p class="s4-pane-supporting">Switches every icon in the app.</p>
+            <div class="s4-stack">
+              <div class="s4-button-group" data-connected data-select="single" aria-label="Icon style" id="icon-set">
+                <button class="s4-button" type="button" value="solar" aria-pressed="true">Solar</button>
+                <button class="s4-button" type="button" value="phosphor-duotone" aria-pressed="false">Phosphor</button>
+                <button class="s4-button" type="button" value="phosphor-bold-duotone" aria-pressed="false">Phosphor Bold</button>
+              </div>
+              <div class="s4-row demo-icon-row" aria-hidden="true">
+                <span class="s4-icon" data-icon="home"></span><span class="s4-icon" data-icon="bookmark"></span><span class="s4-icon" data-icon="chat"></span><span class="s4-icon" data-icon="calendar"></span><span class="s4-icon" data-icon="settings"></span><span class="s4-icon" data-icon="favorite"></span><span class="s4-icon" data-icon="camera"></span>
+              </div>
+            </div>
+          </section>
+
           <section class="s4-pane" aria-labelledby="notif-h">
             <h2 class="s4-pane-title" id="notif-h">Notifications</h2>
             <ul class="s4-list">
@@ -295,7 +310,7 @@
             <div class="s4-row"><button class="s4-button" data-color="error" type="button" data-dialog="confirm-delete">Delete All Notes</button></div>
           </section>
 
-          <p class="s4-body-small s4-on-surface-variant demo-footer">Solar icons by 480 Design (CC BY 4.0)</p>
+          <p class="s4-body-small s4-on-surface-variant demo-footer" id="icon-credit">Solar icons by 480 Design (CC BY 4.0)</p>
         </div>
       </section>
 
@@ -375,8 +390,8 @@
 
 <script src="icons.js"></script>
 <script>if (/[?&]scrub\b/.test(location.search)) document.write('<script src="../explore/lib/scrub.js"><\/script>');</script>
-<script src="orion.js?v=fc167b4"></script>
-<script>S4.theme.restore('orion-showcase-theme', { mode: 'system' });</script>
+<script src="orion.js?v=76309f6"></script>
+<script>S4.theme.restore('orion-showcase-theme', { mode: 'system' }); S4.icon.restore('orion-showcase-icons');</script>
 <script src="demo.js"></script>
 </body>
 </html>

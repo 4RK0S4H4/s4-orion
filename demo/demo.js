@@ -20,6 +20,16 @@
   $('#confirm-delete').addEventListener('s4-close', function (e) { if (e.detail.value === 'delete') S4.snackbar('All notes deleted'); });
   $('#filters').addEventListener('s4-close', function (e) { if (e.detail.value === 'apply') S4.snackbar('Filters applied'); });
 
+  /* Settings: icon set (S4.icon.use switches every icon; the choice is remembered) */
+  var CREDITS = { solar: 'Solar icons by 480 Design (CC BY 4.0)', 'phosphor-duotone': 'Phosphor Icons (MIT)', 'phosphor-bold-duotone': 'Phosphor Icons (MIT)' };
+  function showIconSet() {
+    var id = S4.icon.use();
+    $$('#icon-set [value]').forEach(function (b) { b.setAttribute('aria-pressed', b.value === id); });
+    $('#icon-credit').textContent = CREDITS[id] || '';
+  }
+  $('#icon-set').addEventListener('s4-change', function (e) { S4.icon.use(e.detail.value, { save: 'orion-showcase-icons' }); showIconSet(); });
+  showIconSet();
+
   /* Settings: theme controls (patterns.md) */
   $('#mode').addEventListener('s4-change', function (e) { S4.theme({ mode: e.detail.value }); });
   $('#contrast').addEventListener('s4-change', function (e) { S4.theme({ contrast: +e.detail.value }); });

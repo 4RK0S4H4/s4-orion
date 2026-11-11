@@ -70,6 +70,20 @@
   }
   S4.icon = {
     set: function (el, name) { el.setAttribute('data-icon', name); drawIcons(el); },
+    /* switch the whole page to another built-in set: S4.icon.use('phosphor-duotone', { save: 'app-key' }); S4.icon.use() returns the active set */
+    use: function (id, opts) {
+      var reg = window.S4_ICONS; if (!reg) return;
+      if (!id) return reg.set;
+      var s = reg.sets && reg.sets[id]; if (!s) { console.warn('S4: unknown icon set "' + id + '"'); return reg.set; }
+      reg.set = id; reg.viewBox = s.viewBox; reg.icons = s.icons; reg.credit = s.credit;
+      S4.util.all(document, '.s4-icon[data-s4-drawn]').forEach(function (el) { delete el.dataset.s4Drawn; });
+      drawIcons(document);
+      if (opts && opts.save) { try { localStorage.setItem(opts.save, id); } catch (e) {} }
+      document.dispatchEvent(new CustomEvent('s4-icon-set', { detail: { set: id } }));
+      return id;
+    },
+    restore: function (key) { try { var id = localStorage.getItem(key); if (id) S4.icon.use(id); } catch (e) {} },
+    sets: function () { var r = window.S4_ICONS || {}; return Object.keys(r.sets || {}).map(function (k) { return { id: k, label: r.sets[k].label }; }); },
     add: function (map) { window.S4_ICONS = window.S4_ICONS || { viewBox: '0 0 24 24', icons: {} }; for (var k in map) window.S4_ICONS.icons[k] = map[k]; drawIcons(document); },
     names: function () { return Object.keys((window.S4_ICONS || {}).icons || {}); }
   };
