@@ -10,9 +10,16 @@ All notable changes to S4 Orion are recorded here. The format follows [Keep a Ch
 
 The first version of S4 Orion, a leaner rebuild of S4 Material 1.3 on Material 3 Expressive.
 
-### Decided (overhaul, 2026-11-10, decision 0020)
+### Changed (glass from the playground, 2026-11-11, decision 0021)
 
-- Orion moves off M3 Expressive to its own language: glass only on floating parts with a symmetrical top-edge light, no shadows, neutral grays plus one accent, solid tiles, rounded rectangles with small rounding, bold headings and light big numbers, a simple fade-and-rise motion family. Decided through Claude Design drafts; the restyle of tokens and components follows. The Direction Lab (`explore/direction.html`) is superseded.
+- Glass: tint 60% to 75%, blur 16px to 8px, saturate 120% to 150%, backdrop contrast/brightness filter removed (the tint alone keeps text at 5.5:1 or better over any backdrop).
+- Glass edge: the 0.5px frost line is replaced by a 1px top-light edge (`--s4-glass-edge-top`, `-side`, `-bottom`, `-line`; `--s4-glass-highlight-*` removed). Drawn with inset shadows, so it follows corners and does not scroll with content.
+
+### Changed (simpler motion, 2026-11-11, decision 0022)
+
+- Dialogs and the phone sheet card **pop** (rise 16px and fade); menus **drop** 8px from their button. Container transform, menu emerge and the other menu styles removed; `S4.transition.containerTransform` and `unfold` remain as aliases; `data-motion` on menus is ignored.
+- Every transition animates only transform and opacity, glass stays glass throughout, and a new transition on an element starts from where the previous one was (no stuck states on fast taps). orion.js 125 KB to 95 KB.
+- The Claude Design drafts of decision 0020 were not adopted apart from the glass.
 
 ### Fixed (QA pass on motion, 2026-11-07)
 

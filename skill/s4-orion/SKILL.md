@@ -14,7 +14,7 @@ and deliberate:
 - **Monochrome by default.** An app that wants color sets one seed; every role is generated from it.
 - **Very clear glass on floating chrome only** (app bars over scrolled content, nav bar, toolbars, menus, dialogs, sheets),
   with a contrast floor that keeps text WCAG AA over any backdrop. Content is always solid.
-- **Motion that comes from somewhere, quietly:** container transform, menus emerging from their button, shared axis, slide from edge.
+- **Simple, sturdy motion:** dialogs pop in, menus drop from their button, shared axis between views, sheets slide from their edge; only movement and fades, on M3 Expressive springs.
 
 When a question isn't answered here or in the references, do what stock Material 3 Expressive does. That keeps every app
 predictable and lets M3 guidance apply directly. Inventing new components, colors or radii is how a design system drifts.
@@ -110,9 +110,9 @@ Everything ships in this skill's `assets/` folder: `orion.css` (tokens, every co
 - Confirm only what can't be undone. Prefer Undo in a snackbar.
 
 **Motion** (built in; use the APIs, never hand-write durations or easings)
-- Something opened from what you touched (dialog from a button, sheet from a FAB, detail from a row): **container transform**
-  (`[data-dialog]`, `[data-sheet]`, or `S4.transition.containerTransform(surface, source)`).
-- Menus **emerge** from behind their button (built into `[data-menu]`); sibling views and tabs use **shared axis**; sheets not from a FAB **slide from the edge**; snackbars **rise** 10px and fade in (built in).
+- Dialogs (and the bottom sheet on a phone) **pop**: rise 16px and fade in (`[data-dialog]`, `[data-sheet]`, or `S4.transition.pop(el, { open })`).
+- Menus **drop** 8px out of their button's side (built into `[data-menu]`); sibling views and tabs use **shared axis**; sheets on wider screens **slide from the edge**; snackbars **rise** 10px (built in).
+- Transitions only move and fade (decision 0022): never animate clip-path, size, color or blur, never clone elements.
 - Never scale a surface's content to make it appear (it stretches text). Bounce is fine on movement; fades never bounce.
 - Custom animation: `S4.motion.animate(el, keyframes, 'spatial')` (reads the spring tokens and reduced motion).
 
@@ -193,8 +193,7 @@ Request: "Add a screen to my expenses app listing this month's bills, with a way
 ```
 
 Why it looks like this: a list (scan and open), grouped with a subtotal; a status word, not a red row; one FAB for the one
-dominant action, inside its view so it floats above the nav bar and leaves with the screen, and it grows into the sheet
-(container transform) because the sheet opens from it; Title Case labels,
+dominant action, inside its view so it floats above the nav bar and leaves with the screen, and it opens the sheet; Title Case labels,
 sentence-case nothing here; amounts in tabular figures; no colors, sizes or motion written by hand. Handle
 `s4-close` on the sheet (`e.detail.value === 'save'`) and confirm with `S4.snackbar({ text: 'Bill added', action: 'Undo' })`.
 

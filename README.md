@@ -31,7 +31,7 @@ S4 Orion is being built phase by phase. Decisions are recorded in [`docs/decisio
 | 4 | Components and the glass layer | Done ([0004](docs/decisions/0004-glass.md), [components](https://4rk0s4h4.github.io/s4-orion/components/)) |
 | 5 | Claude skill | Done, approved ([skill](skill/), [download](skill/dist/s4-orion.skill)) |
 | 6 | Demo and review against the skill | Built; end-to-end review and motion fixes done 2026-11-03; awaiting the owner's iPhone check ([0005](docs/decisions/0005-phase-6-review.md)) |
-| 7 | Overhaul: Orion's own language (flat, blur for depth, no sharp corners, simple motion) | Direction decided 2026-11-10 through design drafts ([0020](docs/decisions/0020-own-language.md)); restyle next |
+| 7 | Glass from the playground and simpler motion | Done 2026-11-11 ([0021](docs/decisions/0021-glass-from-the-playground.md), [0022](docs/decisions/0022-simpler-motion.md)); design review with proposals ([review](docs/reviews/2026-11-11-design-review.md)) awaiting the owner |
 
 ## Building
 

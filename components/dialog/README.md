@@ -1,8 +1,7 @@
 # Dialog
 
-Asks for a decision or a short input. The button you press **becomes** the dialog (container transform): its shape and
-color grow into the dialog at real size while the label fades out and the content fades in; closing runs it back into
-the button. On glass, over a 32% scrim.
+Asks for a decision or a short input. It **pops** in: rises 16px and fades in on the spatial spring, and closes with a
+quick drop and fade (decision 0022). On glass, over a 32% scrim.
 
 ```html
 <button class="s4-button" data-color="error" data-dialog="confirm-delete">Delete Bill</button>
@@ -19,7 +18,7 @@ the button. On glass, over a 32% scrim.
 
 | Attribute / API | Use |
 |---|---|
-| `[data-dialog="id"]` | Opens the dialog from this element (container transform) |
+| `[data-dialog="id"]` | Opens the dialog (focus returns to this element when it closes) |
 | `[data-close="value"]` | Closes it; the value comes back in `s4-close { value }` |
 | `data-fullscreen="compact"` | Full screen on phones. Needs **both** markups: the normal headline + actions (wide screens) and a `.s4-dialog-bar` (phones) holding a close icon button (`data-close="cancel"`), a `.s4-dialog-headline` and a confirm text button; the other set is hidden at each size |
 | `data-persistent` | A click on the scrim doesn't close it (Escape still does) |

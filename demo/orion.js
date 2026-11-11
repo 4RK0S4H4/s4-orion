@@ -154,368 +154,93 @@
 })();
 
 /* ---- motion/motion.js ---- */
-/* S4 Orion transition patterns (decision 0001, Transitions Lab):
-     S4.transition.containerTransform(surface, source, { open, radius })  dialogs from buttons, sheets from FABs, details from rows
-     S4.transition.unfold(menu, { open, from: 'top'|'bottom' })            menus
-     S4.transition.sharedAxis(outView, inView, direction)                   switching sibling views (tabs, destinations, steps)
-     S4.transition.slide(el, { open, edge: 'bottom'|'end'|'start' })        sheets and snackbars from the edge where they live
-   All timings come from the spring tokens through S4.motion; under reduced motion spatial movement is instant and fades remain.
-   Each returns a Promise that resolves when the transition has finished. */
+/* S4 Orion transition patterns, simplified (decision 0022). Five patterns, each only moves and fades:
+     S4.transition.pop(surface, { open })                     dialogs, the phone sheet card: rise 16px and fade in on the spatial spring
+     S4.transition.drop(menu, { open, from: 'top'|'bottom' })  menus: drop 8px out of their button's side and fade in
+     S4.transition.slide(el, { open, edge })                  sheets from the edge they live on
+     S4.transition.rise(el, { open })                         snackbars: rise 10px and fade in
+     S4.transition.sharedAxis(outView, inView, direction)     switching sibling views (tabs, destinations, steps)
+     S4.transition.fade(el, open)                             anything else
+   Rules that keep it simple and robust in every browser:
+     - only transform and opacity ever animate (never clip-path, size, color or backdrop-filter), so glass is glass from the
+       first frame and WebKit has nothing to get wrong;
+     - nothing is cloned or measured beyond the element itself;
+     - each element runs one transition at a time: a new one cancels the old and starts from where the old one was showing,
+       so tapping fast never jumps or leaves something stuck;
+     - under reduced motion the spatial springs take 0ms and only fades remain.
+   Each returns a Promise that resolves (true when it finished, false when a newer transition replaced it).
+   containerTransform() and unfold() are kept as the old names for pop() and drop(). */
 (function () {
   var S4 = window.S4, M = S4.motion;
-  var done = function (a) { return a && a.finished ? a.finished.catch(function () {}) : Promise.resolve(); };
-  function rect(el) { return el.getBoundingClientRect(); }
-  /* room around a menu that its own shadow needs, so a clip that has "finished" opening doesn't cut the shadow and pop it in */
-  var SHADOW_ROOM = 48;
-  /* any CSS color (rgb, oklab, color-mix results…) -> [r, g, b, a] through a 1px canvas, so every browser's computed
-     color syntax is understood */
-  var colors = {}, ctx;
-  function rgba(str) {
-    if (!str) return null;
-    if (colors[str]) return colors[str];
-    if (!ctx) { var c = document.createElement('canvas'); c.width = c.height = 1; ctx = c.getContext('2d', { willReadFrequently: true }); }
-    ctx.clearRect(0, 0, 1, 1); ctx.fillStyle = 'rgba(0, 0, 0, 0)'; ctx.fillStyle = str; ctx.fillRect(0, 0, 1, 1);
-    var d = ctx.getImageData(0, 0, 1, 1).data;
-    return (colors[str] = [d[0], d[1], d[2], d[3] / 255]);
+
+  /* end what an element is running and report what it shows right now, so the next transition starts from there */
+  function begin(el) {
+    var running = (el._s4anims || []).filter(function (a) { return a.playState === 'running'; });
+    var now = null;
+    if (running.length) { var cs = getComputedStyle(el); now = { opacity: cs.opacity, transform: cs.transform }; }
+    (el._s4anims || []).forEach(function (a) { a.cancel(); });
+    el._s4anims = [];
+    return now;
   }
-  function rgb(c) { return 'rgb(' + Math.round(c[0]) + ',' + Math.round(c[1]) + ',' + Math.round(c[2]) + ')'; }
-  /* what the eye sees at an element: its own background laid over its ancestors' until something is opaque. A transparent
-     source (outlined or text button, list row) otherwise makes the morphing surface see-through. */
-  function visibleBg(el) {
-    var layers = [], n, c, out;
-    for (n = el; n; n = n.parentElement) {
-      c = rgba(getComputedStyle(n).backgroundColor);
-      if (c && c[3] > 0) { layers.push(c); if (c[3] >= 0.999) break; }
-    }
-    out = layers.length && layers[layers.length - 1][3] >= 0.999 ? [0, 0, 0] : (rgba(getComputedStyle(document.body).backgroundColor) || [255, 255, 255]).slice(0, 3);
-    for (var i = layers.length - 1; i >= 0; i--) { c = layers[i]; out = [c[0] * c[3] + out[0] * (1 - c[3]), c[1] * c[3] + out[1] * (1 - c[3]), c[2] * c[3] + out[2] * (1 - c[3])]; }
-    return rgb(out);
+  function track(el, anim) { el._s4anims.push(anim); return anim; }
+  function settle(el, anims, keep) {
+    return Promise.all(anims.map(function (a) { return a.finished; })).then(function () {
+      if (!keep) anims.forEach(function (a) { a.cancel(); });   /* opened: the element's own styles take over */
+      return true;
+    }, function () { return false; });
   }
-  /* the four corner radii of a box as px, for clip-path's "round" (percentages resolved, never more than half the box) */
-  function corners(cs, r) {
-    var max = Math.min(r.width, r.height) / 2;
-    return ['borderTopLeftRadius', 'borderTopRightRadius', 'borderBottomRightRadius', 'borderBottomLeftRadius'].map(function (k) {
-      var v = String(cs[k]).split(' ')[0], n = parseFloat(v) || 0;
-      if (/%$/.test(v)) n = n / 100 * Math.min(r.width, r.height);
-      return Math.min(n, max) + 'px';
-    }).join(' ');
-  }
-  /* a spring's easing with its overshoot cut off: a container's edges must land, not bounce past the surface (the
-     overshoot would be clipped away anyway, and anything pinned to the edge would wobble) */
-  function landing(easing) {
-    return /^linear\(/.test(easing) ? easing.replace(/(\(|,)\s*([\d.]+)/g, function (m, sep, v) { return sep + ' ' + Math.min(1, parseFloat(v)); }) : easing;
+  /* move + fade on two springs: movement on a spatial spring, opacity on an effects spring (never overshoots) */
+  function moveFade(el, open, offTransform, springs) {
+    var now = begin(el);
+    var shown = { opacity: '1', transform: 'none' }, hidden = { opacity: '0', transform: offTransform };
+    var start = now || (open ? hidden : shown), end = open ? shown : hidden;
+    var t = track(el, M.animate(el, [{ transform: start.transform }, { transform: end.transform }], springs[0]));
+    var o = track(el, M.animate(el, [{ opacity: start.opacity }, { opacity: end.opacity }], springs[1]));
+    return settle(el, [t, o], !open);
   }
 
-  /* ---------- container transform ----------
-     The source becomes the surface at real size (nothing stretches or reflows). The surface starts moved onto the source
-     (its top center on the source's top center) and clipped to the source's rect, corners and color; then it travels
-     home while its edges open to its own shape. Everything inside rides on the container: the source's label (carried as
-     a copy) and the surface's content move with it, so nothing slides across it while it grows or shrinks. Where the
-     source reaches past the surface's box (a wide row opening a narrow dialog), a spread shadow in the container color
-     paints the rest. Opening, the label fades out by 30% and the content fades in from 35%; closing, the content is gone
-     by 20% and the label is back by 60%. Glass surfaces stay solid (no blur, nothing showing through) while the shape
-     moves and turn to glass once it has landed (blur on under the solid color, a short hold, then the color fades), so nothing
-     behind them is ever seen double and WebKit never draws an unclipped blur; the shadow fades in after landing instead of
-     being cut by the clip. Closing runs it backwards on the calm (critically damped) spring, so it
-     lands exactly on the source, then the real source is shown again. */
-  function containerTransform(surface, source, opts) {
+  /* ---------- pop: dialogs and the phone sheet card ---------- */
+  function pop(el, opts) {
+    var open = !opts || opts.open !== false, d = M.reduced() ? 0 : 16;
+    return moveFade(el, open, 'translateY(' + (open ? d : d / 2) + 'px)', open ? ['spatial', 'effects'] : ['fast-effects', 'fast-effects']);
+  }
+
+  /* ---------- drop: menus come out of their button's side ---------- */
+  function drop(el, opts) {
     opts = opts || {};
-    /* closed while still opening (or the reverse): end the running one first, keeping the color it shows now so nothing flashes */
-    var shownBg = null;
-    if (surface._s4ctStop) { shownBg = getComputedStyle(surface).backgroundColor; surface._s4ctStop(); }
-    if (!source || !source.isConnected || M.reduced()) return fadeOnly(surface, opts.open);
-    var s = rect(source), e = rect(surface);
-    if (!s.width || !e.width) return fadeOnly(surface, opts.open);
-    var cs = getComputedStyle(source), ce = getComputedStyle(surface);
-    var open = opts.open !== false, name = open ? (opts.spring || 'spatial') : 'spatial-calm';
-    var sp = M.spring(name), dur = sp.duration, geo = { duration: dur, easing: landing(sp.easing), fill: 'both' }, lin = { duration: dur, easing: 'linear', fill: 'both' };
-    /* the surface's box moved so its top center sits on the source's top center */
-    var dx = (s.left + s.width / 2) - (e.left + e.width / 2), dy = s.top - e.top;
-    var at = { top: e.top + dy, left: e.left + dx, right: e.right + dx, bottom: e.bottom + dy };
-    var ins = [s.top - at.top, at.right - s.right, at.bottom - s.bottom, s.left - at.left];
-    var over = Math.max(0, -Math.min.apply(null, ins));   /* how far the source reaches past the moved box */
-    var from = 'inset(' + ins.join('px ') + 'px round ' + corners(cs, s) + ')';
-    var to = 'inset(0px 0px 0px 0px round ' + (opts.radius ? [opts.radius, opts.radius, opts.radius, opts.radius].join(' ') : corners(ce, e)) + ')';
-    var moved = 'translate(' + dx + 'px, ' + dy + 'px)';
-    var bgFrom = visibleBg(source), glass = rgba(ce.backgroundColor) || [0, 0, 0, 1], bgTo = ce.backgroundColor, solid = rgb(glass);
-    var blur = ce.backdropFilter || ce.webkitBackdropFilter, glassy = glass[3] < 0.999, shadow = ce.boxShadow;
-    var spread = over ? over + parseFloat(corners(ce, e)) + 2 : 0;
-    var paint = function (c) { return spread ? '0 0 0 ' + spread + 'px ' + c : 'none'; };
-    /* the source's label rides along inside the surface */
-    var ghost = source.cloneNode(true);
-    ghost.removeAttribute('id'); ghost.className = source.className + ' s4-ct-ghost';   /* keep the source's own classes: its icon sizes, gaps and type must lay out exactly as on the real thing */
-    ghost.setAttribute('aria-hidden', 'true'); ghost.removeAttribute('data-dialog'); ghost.removeAttribute('data-sheet');
-    Object.assign(ghost.style, { left: (s.left - at.left + surface.scrollLeft) + 'px', top: (s.top - at.top + surface.scrollTop) + 'px', width: s.width + 'px', height: s.height + 'px',
-      visibility: 'visible',   /* a closing source is hidden (inline) while its surface is open; the copy must not inherit that */
-      background: 'transparent', boxShadow: 'none', transition: 'none', animation: 'none', transform: 'none', translate: 'none', scale: 'none', minWidth: '0', maxWidth: 'none',
-      padding: cs.padding, fontFamily: cs.fontFamily, fontSize: cs.fontSize, fontWeight: cs.fontWeight, lineHeight: cs.lineHeight, fontFeatureSettings: cs.fontFeatureSettings,
-      fontVariantNumeric: cs.fontVariantNumeric, letterSpacing: cs.letterSpacing, textTransform: cs.textTransform, color: cs.color, justifyContent: cs.justifyContent, gap: cs.gap,
-      border: cs.borderTopWidth + ' ' + cs.borderTopStyle + ' ' + cs.borderTopColor, borderRadius: cs.borderTopLeftRadius });   /* an outlined source keeps its ring until it fades */
-    var overflow = surface.style.overflow, overflowX = surface.style.overflowX;
-    if (over) {   /* let the copy show past the box (clipped by the shape) without making the surface scroll sideways */
-      if (surface.scrollHeight > surface.clientHeight + 1) surface.style.overflowX = 'hidden'; else surface.style.overflow = 'visible';
-    }
-    surface.appendChild(ghost);
-    /* the copy is laid out outside the source's own container (list, group…): put anything that landed elsewhere back
-       exactly where it sits on the source */
-    Array.prototype.forEach.call(ghost.children, function (g, i) {   /* parts hidden by the source's context (a collapsed rail hides the FAB's label) stay hidden */
-      var o = source.children[i]; if (o && !o.getClientRects().length) g.style.display = 'none';
-    });
-    var gr = rect(ghost);
-    Array.prototype.forEach.call(ghost.children, function (g, i) {
-      var o = source.children[i]; if (!o || g.style.display === 'none') return;
-      var a = o.getBoundingClientRect(), b = g.getBoundingClientRect(), ox = (a.left - s.left) - (b.left - gr.left), oy = (a.top - s.top) - (b.top - gr.top);
-      if (Math.abs(ox) > 0.5 || Math.abs(oy) > 0.5) g.style.translate = ox + 'px ' + oy + 'px';
-    });
-    var content = Array.prototype.filter.call(surface.children, function (c) { return c !== ghost; });
-    if (!opts.keepSource) source.style.visibility = 'hidden';   /* keepSource: the real button stays put under the copy that detaches from it */
-    /* WebKit does not clip backdrop-filter with clip-path, so the blur must be off for as long as the clip moves; and an animated blur is
-       choppy there. So a glass surface is fully solid with no blur while the shape moves; opening, once it has landed the blur comes back
-       under the still-solid color, holds a moment (so the browser has built it) and only then the color fades to glass. Closing does the
-       same backwards: the glass settles to solid first, in place, and only then the blur goes and the shape moves. One timeline per
-       direction (later phases are delays), so the scrubber can step through all of it. */
-    var all = [], add = function (el, kf, o) { var an = el.animate(kf, o); all.push(an); return an; };
-    var at0 = function (o, delay, fill) { return Object.assign({}, o, { delay: delay || 0, fill: fill || o.fill }); };
-    var k = function (bg, edge, offset) { var f = { backgroundColor: bg, boxShadow: paint(edge), backdropFilter: 'none', webkitBackdropFilter: 'none' }; if (offset != null) f.offset = offset; return f; };
-    var HOLD = 120, FADE = M.spring('effects').duration || 0, SETTLE = glassy ? (M.spring('fast-effects').duration || 0) : 0;
-    var shape, last;
-    if (open) {
-      shape = add(surface, [{ clipPath: from, transform: moved }, { clipPath: to, transform: 'none' }], geo);
-      /* color on the same timeline, linear so it can't overshoot either color; this one stops applying when the shape lands */
-      add(surface, [k(bgFrom, bgFrom), k(solid, solid, 0.5), k(solid, solid)], at0(lin, 0, 'backwards'));
-      if (glassy) last = add(surface, [{ backgroundColor: solid }, { backgroundColor: solid, offset: HOLD / (HOLD + FADE) }, { backgroundColor: bgTo }], { duration: HOLD + FADE, delay: dur, easing: 'linear', fill: 'forwards' });
-      add(ghost, [{ opacity: 1 }, { opacity: 0, offset: 0.3 }, { opacity: 0 }], lin);
-      content.forEach(function (c) { add(c, [{ opacity: 0 }, { opacity: 0, offset: 0.35 }, { opacity: 1 }], lin); });
-    } else {
-      if (glassy) add(surface, [{ backgroundColor: shownBg || bgTo }, { backgroundColor: solid }], { duration: SETTLE, easing: 'linear', fill: 'forwards' });
-      shape = add(surface, [{ clipPath: to, transform: 'none' }, { clipPath: from, transform: moved }], at0(geo, SETTLE, 'forwards'));
-      add(surface, [k(solid, solid), k(solid, solid, 0.5), k(bgFrom, bgFrom)], at0(lin, SETTLE, 'forwards'));
-      add(ghost, [{ opacity: 0 }, { opacity: 0, offset: 0.2 }, { opacity: 1, offset: 0.6 }, { opacity: 1 }], at0(lin, SETTLE));
-      content.forEach(function (c) { add(c, [{ opacity: 1 }, { opacity: 0 }], { duration: SETTLE + dur * 0.2, easing: 'linear', fill: 'both' }); });
-    }
-    var finish = function () {
-      if (surface._s4ctStop === finish) surface._s4ctStop = null;
-      if (ghost.isConnected) ghost.remove();
-      surface.style.overflow = overflow; surface.style.overflowX = overflowX;
-      all.forEach(function (a) { a.cancel(); }); all = [];
-    };
-    surface._s4ctStop = finish;
-    return done(shape).then(function () {
-      if (surface._s4ctStop !== finish) return;   /* interrupted: the next transition owns the surface now */
-      if (open) {
-        /* landed: the copy and the clip go (the glass fade, if any, runs on); the source stays hidden while the surface "is" the source */
-        if (ghost.isConnected) ghost.remove();
-        surface.style.overflow = overflow; surface.style.overflowX = overflowX;
-        all.forEach(function (a) { if (a !== last) a.cancel(); });
-        if (shadow && shadow !== 'none' && !glassy) surface.animate([{ boxShadow: 'none' }, { boxShadow: shadow }], { duration: M.spring('fast-effects').duration, easing: 'linear' });
-        return done(last).then(function () { if (surface._s4ctStop === finish) finish(); });
-      }
-      finish();
-      surface.style.visibility = 'hidden'; if (!opts.keepSource) source.style.visibility = '';
-    });
-  }
-  function fadeOnly(el, open) {
-    return done(M.animate(el, open !== false ? [{ opacity: 0 }, { opacity: 1 }] : [{ opacity: 1 }, { opacity: 0 }], open !== false ? 'effects' : 'fast-effects'))
-      .then(function () { el.getAnimations().forEach(function (a) { a.cancel(); }); if (open === false) el.style.visibility = 'hidden'; });
-  }
-  /* call after the surface is hidden/closed so the next open starts clean */
-  function restore(surface, source) { surface.style.visibility = ''; if (source) source.style.visibility = ''; }
-
-  /* ---------- unfold: a menu settles in from its anchor, quietly ----------
-     The menu is revealed from the edge that faces its anchor (about half of its height shows at the start), rises 6px and
-     fades in; the items fade in a little after. On the spatial spring, so it feels like the container transforms, but
-     with far less travel, so nothing seems to come from nowhere. Closing is the same on the calm spring, shorter.
-     opts: open, from ('top'|'bottom'), anchor, align */
-  /* ---------- emerge: the menu's shape grows out from a layer BELOW its button ----------
-     The owner's "D, but from underneath": the container transform with the button staying, except the moving shape sits in a lower
-     layer than the button instead of a higher one. A menu is in the browser's top layer, which always paints above the page, so the real
-     menu cannot be below the button. Instead a plain layer (a div, not in the top layer, no backdrop-filter) is put in the button's own
-     stacking context just behind it (the button is lifted one step above it for the duration). The layer covers the button AND the menu's
-     final box and never moves or resizes; only its clip-path animates, from a pill just inside the button to the menu's rounded box (a plain
-     solid div, so WebKit's clip-path-vs-backdrop-filter problem cannot happen, and nothing is laid out per frame). The real menu stays hidden
-     until the layer has landed, then takes over at the same place, still solid; the options fade in and the color fades to glass.
-     The blur is never animated, and its layer is built early: shortly before the handoff the menu is made visible at 1% opacity (so the browser
-     has built the blur) and the glass fade starts only after a short solid hold, so the blur never appears to pop in. Closing is the same backwards.
-     The button is never copied, moved or covered (its label stays put). A button with no fill (the three dots) grows from its hover circle. */
-  function emerge(surface, source, opts) {
-    var open = opts.open !== false;
-    /* a menu reopened while it closes (or closed while it opens): end the running one first, so its layer goes and the button's own
-       position and z-index are put back before this run reads them (otherwise they stay changed for good) */
-    if (surface._s4emergeStop) surface._s4emergeStop();
-    if (!source || !source.isConnected || M.reduced()) return fadeOnly(surface, open);
-    var sp = M.spring(open ? 'spatial' : 'spatial-calm'), geo = { duration: sp.duration, easing: landing(sp.easing), fill: 'both' };
-    var D = geo.duration, FADE = 260, HOLD = 120;
-    if (open) {   /* never narrower than the button */
-      surface.style.minWidth = Math.max(rect(source).width, parseFloat(getComputedStyle(surface).minWidth) || 0) + 'px';
-      if (S4.position) S4.position(surface, source, { align: opts.align });
-    }
-    var s = rect(source), e = rect(surface), cs = getComputedStyle(source), ce = getComputedStyle(surface);
-    var glass = rgba(ce.backgroundColor) || [0, 0, 0, 1], bgTo = ce.backgroundColor, solid = rgb(glass), glassy = glass[3] < 0.999;
-    var own = rgba(cs.backgroundColor), hasFill = own && own[3] > 0.5;
-    var page = rgba(visibleBg(source)) || [255, 255, 255, 1], fg = rgba(cs.color) || [0, 0, 0, 1];
-    var bgFrom = hasFill ? cs.backgroundColor : rgb([0, 1, 2].map(function (i) { return page[i] * 0.88 + fg[i] * 0.12; }));
-    var content = Array.prototype.slice.call(surface.children);
-    /* the start is a pill a hair INSIDE the button: a button squares off while pressed and springs back, and any of the layer outside that
-       moving edge would show as a glitch */
-    var IN = 2, sIn = { left: s.left + IN, top: s.top + IN, right: s.right - IN, bottom: s.bottom - IN };
-    var U = { left: Math.min(sIn.left, e.left), top: Math.min(sIn.top, e.top), right: Math.max(sIn.right, e.right), bottom: Math.max(sIn.bottom, e.bottom) };
-    var inset = function (r, radius) { return 'inset(' + (r.top - U.top) + 'px ' + (U.right - r.right) + 'px ' + (U.bottom - r.bottom) + 'px ' + (r.left - U.left) + 'px round ' + radius + ')'; };
-    var rBtn = Math.min(sIn.right - sIn.left, sIn.bottom - sIn.top) / 2 + 'px', rMenu = ce.borderTopLeftRadius;
-    var from = inset(sIn, rBtn), to = inset({ left: e.left, top: e.top, right: e.right, bottom: e.bottom }, rMenu);
-    var layer = document.createElement('div'); layer.setAttribute('aria-hidden', 'true'); layer.className = 's4-emerge-layer';
-    Object.assign(layer.style, { position: 'fixed', left: U.left + 'px', top: U.top + 'px', width: (U.right - U.left) + 'px', height: (U.bottom - U.top) + 'px', margin: '0', padding: '0', border: '0', pointerEvents: 'none', boxShadow: 'none', backgroundColor: solid });
-    var posBefore = source.style.position, zBefore = source.style.zIndex, z0 = parseInt(cs.zIndex, 10) || 0;
-    if (cs.position === 'static') source.style.position = 'relative';
-    source.style.zIndex = String(z0 + 1); layer.style.zIndex = String(z0);
-    source.parentNode.insertBefore(layer, source);
-    /* an ancestor with a transform, filter or backdrop-filter (a glass toolbar or app bar) becomes the containing block of a fixed
-       element: measure where the layer landed and move it back onto the viewport coordinates */
-    var lr = rect(layer);
-    if (Math.abs(lr.left - U.left) > 0.5 || Math.abs(lr.top - U.top) > 0.5) { layer.style.left = (2 * U.left - lr.left) + 'px'; layer.style.top = (2 * U.top - lr.top) + 'px'; }
-    var restored = false, restore = function () { if (restored) return; restored = true; layer.remove(); source.style.position = posBefore; source.style.zIndex = zBefore; };
-    var lin = function (ms, delay) { return { duration: ms, delay: delay || 0, easing: 'linear', fill: 'both' }; };
-    var all = [], add = function (el, kf, o) { var an = el.animate(kf, o); all.push(an); return an; };
-    var T1 = FADE * 0.8, EPS = 0.001;
-    var wipe = function () { all.forEach(function (an) { an.cancel(); }); all = []; };
-    var stop = surface._s4emergeStop = function () { if (surface._s4emergeStop === stop) surface._s4emergeStop = null; wipe(); restore(); surface.style.opacity = ''; surface.style.pointerEvents = ''; };
-    /* ONE timeline per direction (every animation is created up front; later phases are delays), so the scrubber can step through all of it */
-    if (open) {
-      /* [0, D] the layer grows. [D, ...] the real menu takes over, solid, holds, then fades to glass. The menu is made 1% visible shortly before
-         the handoff so the browser has built the blur by then. */
-      surface.style.pointerEvents = 'none';
-      var grow = add(layer, [{ clipPath: from }, { clipPath: to }], geo);
-      add(layer, [{ backgroundColor: bgFrom }, { backgroundColor: solid }], lin(D));
-      add(layer, [{ opacity: 0 }, { opacity: 1, offset: 0.1 }, { opacity: 1 }], lin(D));
-      add(surface, [{ opacity: 0, offset: 0 }, { opacity: 0, offset: 0.549 }, { opacity: 0.01, offset: 0.55 }, { opacity: 0.01, offset: 1 - EPS }, { opacity: 1, offset: 1 }], lin(D));
-      add(surface, glassy ? [{ backgroundColor: solid }, { backgroundColor: solid, offset: HOLD / (HOLD + FADE) }, { backgroundColor: bgTo }] : [{ backgroundColor: solid }, { backgroundColor: solid }], lin(HOLD + FADE, D));
-      content.forEach(function (c) { add(c, [{ opacity: 0 }, { opacity: 1 }], lin(HOLD + 120, D)); });
-      var last = all.reduce(function (m, an) { return an.effect.getComputedTiming().endTime > m.effect.getComputedTiming().endTime ? an : m; }, all[0]);
-      done(grow).then(function () {
-        if (surface._s4emergeStop !== stop) return;   /* interrupted */
-        surface.style.pointerEvents = '';
-        var first = surface.querySelector('.s4-menu-item[aria-checked="true"]') || surface.querySelector('.s4-menu-item:not(:disabled)');   /* it was not visible when it opened, so focus could not move in then */
-        if (first && first !== document.activeElement) first.focus({ preventScroll: true });
-        restore();
-      });
-      return done(last).then(function () { if (surface._s4emergeStop === stop) stop(); });
-    }
-    /* close: [0, T1] the glass settles to solid; then the menu is gone and the layer, at the menu's place, folds back into the button */
-    surface.style.pointerEvents = 'none';
-    layer.style.opacity = '0';
-    if (glassy) add(surface, [{ backgroundColor: bgTo }, { backgroundColor: solid }], lin(T1));
-    add(surface, [{ opacity: 1 }, { opacity: 0 }], lin(1, T1));
-    content.forEach(function (c) { add(c, [{ opacity: 1 }, { opacity: 0 }], lin(120, T1 * 0.5)); });
-    var shrink = add(layer, [{ clipPath: to }, { clipPath: from }], { duration: D, delay: T1, easing: geo.easing, fill: 'both' });
-    add(layer, [{ backgroundColor: solid }, { backgroundColor: bgFrom }], lin(D, T1));
-    /* a button with a fill of its own is hidden behind by the layer's identical color; a button with none dissolves slowly into its hover circle */
-    add(layer, hasFill ? [{ opacity: 0, offset: 0 }, { opacity: 1, offset: EPS }, { opacity: 1, offset: 0.9 }, { opacity: 0, offset: 1 }] : [{ opacity: 0, offset: 0 }, { opacity: 1, offset: EPS }, { opacity: 1, offset: 0.35 }, { opacity: 0, offset: 1 }], lin(D, T1));
-    return done(shrink).then(function () { if (surface._s4emergeStop !== stop) return; stop(); surface.style.minWidth = ''; });
+    var open = opts.open !== false, up = opts.from === 'bottom', d = M.reduced() ? 0 : 8;
+    return moveFade(el, open, 'translateY(' + (up ? d : -d) + 'px)', open ? ['spatial', 'effects'] : ['fast-effects', 'fast-effects']);
   }
 
-  /* ---------- expand in place: the button's shape grows into the menu, one solid piece ----------
-     The menu is placed ON its button (same top-start corner, or the bottom edge when there is no room below), so the
-     surface starts exactly as the button (rect, corners, color) and grows into the menu. The button's label stays where
-     it is as the first row (a copy rides in the menu, the real button is hidden under it); the options fade in below.
-     Color goes from the button's to the menu's, solid while the shape moves, glass after landing. Closing folds back. */
-  function expandMenu(el, anchor, opts) {
-    var open = opts.open !== false;
-    if (!anchor || M.reduced()) return done(M.animate(el, open ? [{ opacity: 0 }, { opacity: 1 }] : [{ opacity: 1 }, { opacity: 0 }], open ? 'effects' : 'fast-effects'));
-    var sp = M.spring(open ? 'spatial' : 'spatial-calm'), geo = { duration: sp.duration, easing: landing(sp.easing), fill: 'both' }, lin = { duration: sp.duration, easing: 'linear', fill: 'both' };
-    var a = rect(anchor), cs = getComputedStyle(anchor), ce, e, up = false, ghost = el._s4ghost, reset = function () { el.style.minWidth = el.style.paddingTop = el.style.paddingBottom = ''; };
-    if (open) {
-      reset(); el.style.minWidth = Math.max(a.width, parseFloat(getComputedStyle(el).minWidth) || 0) + 'px';
-      var pad = parseFloat(getComputedStyle(el).paddingTop) || 0;
-      el.style.paddingTop = (a.height + pad) + 'px';
-      e = rect(el);
-      up = a.top + e.height > innerHeight - 8 && a.bottom - e.height > 8;
-      if (up) { el.style.paddingTop = ''; el.style.paddingBottom = (a.height + pad) + 'px'; e = rect(el); }
-      var end = opts.align === 'end' || (a.left + e.width > innerWidth - 8);
-      var left = Math.max(8, Math.min(end ? a.right - e.width : a.left, innerWidth - e.width - 8)), top = up ? a.bottom - e.height : Math.max(8, Math.min(a.top, innerHeight - e.height - 8));
-      el.style.left = left + 'px'; el.style.top = top + 'px'; e = rect(el);
-      el._s4up = up;
-      ghost = el._s4ghost = anchor.cloneNode(true);
-      ghost.removeAttribute('id'); ghost.removeAttribute('data-menu'); ghost.className = anchor.className + ' s4-ct-ghost'; ghost.setAttribute('aria-hidden', 'true'); ghost.tabIndex = -1;
-      Object.assign(ghost.style, { left: (a.left - e.left) + 'px', top: (a.top - e.top) + 'px', width: a.width + 'px', height: a.height + 'px', visibility: 'visible', background: 'transparent', boxShadow: 'none', transition: 'none', animation: 'none',
-        transform: 'none', translate: 'none', scale: 'none', minWidth: '0', maxWidth: 'none', margin: '0', padding: cs.padding, fontFamily: cs.fontFamily, fontSize: cs.fontSize, fontWeight: cs.fontWeight, lineHeight: cs.lineHeight,
-        letterSpacing: cs.letterSpacing, color: cs.color, justifyContent: cs.justifyContent, gap: cs.gap, border: '0', pointerEvents: 'auto', cursor: 'pointer' });
-      ghost.addEventListener('click', function (ev) { ev.stopPropagation(); anchor.click(); });
-      el.appendChild(ghost);
-      el._s4bgFrom = visibleBg(anchor);
-    } else { e = rect(el); up = !!el._s4up; }
-    ce = getComputedStyle(el);
-    var glass = rgba(ce.backgroundColor) || [0, 0, 0, 1], bgTo = ce.backgroundColor, solid = rgb(glass), blur = ce.backdropFilter || ce.webkitBackdropFilter, glassy = glass[3] < 0.999, bgFrom = el._s4bgFrom || solid;
-    var from = 'inset(' + (a.top - e.top) + 'px ' + (e.right - a.right) + 'px ' + (e.bottom - a.bottom) + 'px ' + (a.left - e.left) + 'px round ' + corners(cs, a) + ')', to = 'inset(0px round ' + corners(ce, e) + ')';
-    var content = Array.prototype.filter.call(el.children, function (c) { return c !== ghost; });
-    if (open) anchor.style.visibility = 'hidden';
-    var shape = el.animate(open ? [{ clipPath: from }, { clipPath: to }] : [{ clipPath: to }, { clipPath: from }], geo);
-    var k = function (bg, offset) { var f = { backgroundColor: bg, backdropFilter: 'none', webkitBackdropFilter: 'none' }; if (offset != null) f.offset = offset; return f; };
-    el.animate(open ? [k(bgFrom), k(solid, 0.5), glassy ? { backgroundColor: bgTo, backdropFilter: blur, webkitBackdropFilter: blur } : k(solid)]
-      : [{ backgroundColor: bgTo, backdropFilter: blur, webkitBackdropFilter: blur }, { backgroundColor: solid, backdropFilter: blur, webkitBackdropFilter: blur, offset: 0.15 }, k(solid, 0.1501), k(solid, 0.5), k(bgFrom)], lin);
-    content.forEach(function (c) {
-      c.animate(open ? [{ opacity: 0 }, { opacity: 0, offset: 0.3 }, { opacity: 1 }] : [{ opacity: 1 }, { opacity: 0, offset: 0.25 }, { opacity: 0 }], lin);
-    });
-    return done(shape).then(function () {
-      el.getAnimations().forEach(function (x) { x.cancel(); });
-      content.forEach(function (c) { c.getAnimations().forEach(function (x) { x.cancel(); }); });
-      if (!open) { if (ghost) ghost.remove(); el._s4ghost = null; anchor.style.visibility = ''; reset(); }
-    });
+  /* ---------- rise: snackbars ---------- */
+  function rise(el, opts) {
+    var open = !opts || opts.open !== false, d = M.reduced() ? 0 : 10;
+    return moveFade(el, open, 'translateY(' + d + 'px)', open ? ['spatial', 'effects'] : ['fast-effects', 'fast-effects']);
   }
 
-  /* the 0008 way, kept as an option (opts.style = 'grow'): the menu's shape starts at the anchor's size and position and grows to the menu */
-  function grow(el, opts) {
-    var open = opts.open !== false, up = opts.from === 'bottom', anchor = opts.anchor;
-    if (!anchor || M.reduced()) return done(M.animate(el, open ? [{ opacity: 0 }, { opacity: 1 }] : [{ opacity: 1 }, { opacity: 0 }], open ? 'effects' : 'fast-effects'));
-    var e = rect(el), a = rect(anchor), ca = getComputedStyle(anchor), ce = getComputedStyle(el);
-    var w = Math.min(a.width, e.width), h = opts.strip ? Math.min(10, e.height) : Math.min(a.height, e.height);
-    var end = opts.align === 'end' || (e.right - a.right < a.left - e.left && Math.abs((e.right - a.right)) < 2);
-    var r = Math.min(parseFloat(ca.borderTopLeftRadius) || 0, h / 2, w / 2) + 'px', rEnd = ce.borderTopLeftRadius;
-    var top = up ? e.height - h : 0, left = end ? e.width - w : 0;
-    var from = 'inset(' + top + 'px ' + (e.width - w - left) + 'px ' + (e.height - h - top) + 'px ' + left + 'px round ' + r + ')';
-    var to = 'inset(0px round ' + rEnd + ')';
-    var sp = M.spring(open ? 'spatial' : 'spatial-calm'), lin = { duration: sp.duration, easing: 'linear', fill: 'both' };
-    var shape = el.animate(open ? [{ clipPath: from }, { clipPath: to }] : [{ clipPath: to }, { clipPath: from }], { duration: sp.duration, easing: landing(sp.easing), fill: 'both' });
-    el.animate(open ? [{ opacity: 0 }, { opacity: 1, offset: 0.25 }, { opacity: 1 }] : [{ opacity: 1 }, { opacity: 1, offset: 0.7 }, { opacity: 0 }], lin);
-    Array.prototype.forEach.call(el.children, function (c) {
-      c.animate(open ? [{ opacity: 0 }, { opacity: 0, offset: 0.3 }, { opacity: 1 }] : [{ opacity: 1 }, { opacity: 0, offset: 0.25 }, { opacity: 0 }], lin);
-    });
-    return done(shape).then(function () {
-      el.getAnimations().forEach(function (x) { x.cancel(); });
-      Array.prototype.forEach.call(el.children, function (c) { c.getAnimations().forEach(function (x) { x.cancel(); }); });
-    });
-  }
-
-  function unfold(el, opts) {
+  /* ---------- slide from edge: sheets ---------- */
+  function slide(el, opts) {
     opts = opts || {};
-    var style = opts.style || 'emerge';
-    if (style === 'emerge') return emerge(el, opts.anchor, opts);
-    if (style === 'grow') return grow(el, opts);
-    if (style === 'inplace' && opts.anchor) return expandMenu(el, opts.anchor, opts);
-    if (style === 'edge') return grow(el, Object.assign({}, opts, { strip: true }));
-    if (style === 'transform' && opts.anchor) return containerTransform(el, opts.anchor, { open: opts.open !== false });
-    if (style === 'transform-keep' && opts.anchor) return containerTransform(el, opts.anchor, { open: opts.open !== false, keepSource: true });
-    var open = opts.open !== false, up = opts.from === 'bottom';
-    if (M.reduced()) return done(M.animate(el, open ? [{ opacity: 0 }, { opacity: 1 }] : [{ opacity: 1 }, { opacity: 0 }], open ? 'effects' : 'fast-effects'));
-    var r = getComputedStyle(el).borderTopLeftRadius, dy = up ? 6 : -6;
-    var part = up ? 'inset(50% -48px -48px -48px round ' + r + ')' : 'inset(-48px -48px 50% -48px round ' + r + ')';
-    var full = 'inset(-48px round ' + r + ')';
-    var sp = M.spring(open ? 'spatial' : 'spatial-calm'), lin = { duration: sp.duration, easing: 'linear', fill: 'both' };
-    var ease = { duration: sp.duration, easing: landing(sp.easing), fill: 'both' };
-    var shape = el.animate(open ? [{ clipPath: part, transform: 'translateY(' + dy + 'px)' }, { clipPath: full, transform: 'none' }] : [{ clipPath: full, transform: 'none' }, { clipPath: part, transform: 'translateY(' + dy + 'px)' }], ease);
-    el.animate(open ? [{ opacity: 0 }, { opacity: 1, offset: 0.4 }, { opacity: 1 }] : [{ opacity: 1 }, { opacity: 1, offset: 0.4 }, { opacity: 0 }], lin);
-    Array.prototype.forEach.call(el.children, function (c) {
-      c.animate(open ? [{ opacity: 0 }, { opacity: 0, offset: 0.2 }, { opacity: 1, offset: 0.7 }, { opacity: 1 }] : [{ opacity: 1 }, { opacity: 0, offset: 0.4 }, { opacity: 0 }], lin);
-    });
-    return done(shape).then(function () {
-      el.getAnimations().forEach(function (x) { x.cancel(); });
-      Array.prototype.forEach.call(el.children, function (c) { c.getAnimations().forEach(function (x) { x.cancel(); }); });
-    });
+    var edge = opts.edge || 'bottom', rtl = getComputedStyle(el).direction === 'rtl', open = opts.open !== false;
+    var off = edge === 'bottom' ? 'translateY(calc(100% + ' + (opts.gap || '0px') + '))'
+      : edge === 'end' ? 'translateX(' + (rtl ? '-' : '') + '100%)' : 'translateX(' + (rtl ? '' : '-') + '100%)';
+    var now = begin(el);
+    var a = track(el, M.animate(el, [{ transform: now ? now.transform : (open ? off : 'none') }, { transform: open ? 'none' : off }], open ? (opts.spring || 'slow-spatial') : 'spatial-calm'));
+    return settle(el, [a], !open);
   }
 
-  /* ---------- shared axis: switching sibling views (tabs, destinations, steps) ----------
-     The old view slides 30px away and fades out (fast-effects), then the new one is shown, slides in from the side you're
-     heading and fades in (spatial / effects). onSwap (optional) runs at the moment of the swap. Views stay in normal page flow: only one is visible at a time (hidden).
-     dir 1 = forward (new comes from the end side), -1 = back. state: an object kept per container so an interrupted switch
-     is cancelled cleanly. */
+  /* ---------- fade ---------- */
+  function fade(el, open) {
+    open = open !== false;
+    var now = begin(el);
+    var a = track(el, M.animate(el, [{ opacity: now ? now.opacity : (open ? 0 : 1) }, { opacity: open ? 1 : 0 }], open ? 'effects' : 'fast-effects'));
+    return settle(el, [a], !open);
+  }
+
+  /* ---------- shared axis: switching sibling views ----------
+     The old view slides 30px away and fades out, then the new one slides in from the side you're heading and fades in.
+     onSwap (optional) runs at the moment of the swap. dir 1 = forward, -1 = back. state: kept per container so an
+     interrupted switch is cancelled cleanly. */
   function sharedAxis(from, to, dir, state, onSwap) {
     state = state || {};
     (state.anims || []).forEach(function (a) { a.cancel(); });
@@ -525,43 +250,35 @@
     return new Promise(function (resolve) {
       var enter = function () {
         if (from && from !== to) from.hidden = true;
-        if (onSwap) onSwap();   /* title and scroll position change here, once the old view is gone */
+        if (onSwap) onSwap();
         if (!to) return resolve();
         to.hidden = false;
         var move = M.animate(to, [{ transform: 'translateX(' + d + 'px)' }, { transform: 'none' }], 'spatial');
-        var fade = M.animate(to, [{ opacity: 0 }, { opacity: 1 }], 'effects');
-        state.anims = [move, fade];
-        Promise.all([move.finished, fade.finished]).then(function () { move.cancel(); fade.cancel(); resolve(); }, resolve);
+        var show = M.animate(to, [{ opacity: 0 }, { opacity: 1 }], 'effects');
+        state.anims = [move, show];
+        Promise.all([move.finished, show.finished]).then(function () { move.cancel(); show.cancel(); resolve(); }, resolve);
       };
       if (!from || from.hidden || from === to) return enter();
-      var out = M.animate(from, [{ transform: 'none' }, { transform: 'translateX(' + (-d) + 'px)' }], 'spatial');
-      var fadeOut = M.animate(from, [{ opacity: 1 }, { opacity: 0 }], 'fast-effects');
-      state.anims = [out, fadeOut];
-      fadeOut.finished.then(function () { out.cancel(); fadeOut.cancel(); enter(); }, resolve);
+      var out = M.animate(from, [{ transform: 'none' }, { transform: 'translateX(' + (-d) + 'px)' }], 'fast-effects');
+      var hide = M.animate(from, [{ opacity: 1 }, { opacity: 0 }], 'fast-effects');
+      state.anims = [out, hide];
+      hide.finished.then(function () { out.cancel(); hide.cancel(); enter(); }, resolve);
     });
   }
 
-  /* ---------- slide from edge ---------- */
-  function slide(el, opts) {
-    opts = opts || {};
-    var edge = opts.edge || 'bottom', rtl = getComputedStyle(el).direction === 'rtl';
-    var off = edge === 'bottom' ? 'translateY(calc(100% + ' + (opts.gap || '0px') + '))'
-      : edge === 'end' ? 'translateX(' + (rtl ? '-' : '') + '100%)' : 'translateX(' + (rtl ? '' : '-') + '100%)';
-    var open = opts.open !== false;
-    var a = M.animate(el, open ? [{ transform: off }, { transform: 'none' }] : [{ transform: 'none' }, { transform: off }], open ? (opts.spring || 'slow-spatial') : 'spatial-calm');
-    return done(a).then(function () { if (open) el.getAnimations().forEach(function (x) { x.cancel(); }); });
+  /* after a surface is hidden: drop any held end state so the next open starts clean */
+  function restore(surface, source) {
+    begin(surface);
+    surface.style.visibility = '';
+    if (source) source.style.visibility = '';
   }
 
-  /* ---------- rise: a small, quiet arrival for snackbars: a few pixels up and a fade ---------- */
-  function rise(el, opts) {
-    var open = !opts || opts.open !== false, dy = M.reduced() ? 0 : 10;
-    var a = [{ opacity: open ? 0 : 1, transform: open ? 'translateY(' + dy + 'px)' : 'none' }, { opacity: open ? 1 : 0, transform: open ? 'none' : 'translateY(' + dy + 'px)' }];   /* no scale: content is never scaled to appear */
-    var fade = M.animate(el, [{ opacity: a[0].opacity }, { opacity: a[1].opacity }], open ? 'effects' : 'fast-effects');
-    var move = M.animate(el, [{ transform: a[0].transform }, { transform: a[1].transform }], open ? 'spatial' : 'fast-effects');
-    return Promise.all([done(fade), done(move)]).then(function () { if (open) { fade.cancel(); move.cancel(); } });
-  }
-
-  S4.transition = { rise: rise, containerTransform: containerTransform, unfold: unfold, sharedAxis: sharedAxis, slide: slide, fade: fadeOnly, restore: restore };
+  S4.transition = {
+    pop: pop, drop: drop, rise: rise, slide: slide, fade: fade, sharedAxis: sharedAxis, restore: restore,
+    /* old names, same behavior as the new patterns */
+    containerTransform: function (surface, source, opts) { return pop(surface, opts); },
+    unfold: drop
+  };
 })();
 
 /* ---- button/button.js ---- */
@@ -1655,13 +1372,12 @@ S4.register('progress', function (scope) {
   function open(menu, anchor) {
     if (isOpen(menu) && !menu._s4closing) return;
     menu._s4closing = false;
-    if (S4.transition && S4.transition.restore) S4.transition.restore(menu, anchor);   /* a container-transform close leaves the menu hidden and its anchor hidden */
     menu._s4anchor = anchor;
     try { menu.showPopover(); } catch (e) { menu.setAttribute('data-open', ''); }
     var from = menu._s4from = S4.position(menu, anchor, { align: menu.dataset.align });
     Array.prototype.forEach.call(document.querySelectorAll('.s4-menu'), function (o) { if (o !== menu && isOpen(o)) close(o, false); });
     if (anchor) anchor.setAttribute('aria-expanded', 'true');
-    S4.transition.unfold(menu, { from: from, anchor: anchor, align: menu.dataset.align, style: menu.dataset.motion || S4.menuMotion });
+    S4.transition.drop(menu, { from: from });
     var first = menu.querySelector('.s4-menu-item[aria-checked="true"]') || items(menu)[0];
     if (first) first.focus({ preventScroll: true });
     S4.util.emit(menu, 's4-open', {});
@@ -1671,7 +1387,7 @@ S4.register('progress', function (scope) {
     if (anchor) anchor.setAttribute('aria-expanded', 'false');
     if (!isOpen(menu) || menu._s4closing) return;
     menu._s4closing = true;
-    S4.transition.unfold(menu, { open: false, from: menu._s4from, anchor: anchor, align: menu.dataset.align, style: menu.dataset.motion || S4.menuMotion }).then(function () {
+    S4.transition.drop(menu, { open: false, from: menu._s4from }).then(function () {
       if (!menu._s4closing) return;   /* reopened meanwhile */
       menu._s4closing = false;
       try { menu.hidePopover(); } catch (e) {} menu.removeAttribute('data-open');
@@ -1753,44 +1469,39 @@ S4.register('progress', function (scope) {
     var a = d.querySelector('[autofocus]');
     if (a) return a;
     var all = Array.prototype.slice.call(d.querySelectorAll(FOCUSABLE));
-    return all.find(function (x) { return x.getAttribute('data-color') !== 'error' && !x.closest('.s4-ct-ghost'); }) || all[0] || d;
+    return all.find(function (x) { return x.getAttribute('data-color') !== 'error'; }) || all[0] || d;
   }
   function narrow() { return window.matchMedia && window.matchMedia('(max-width: 599.98px)').matches; }
   function open(id, opts) {
     var d = el(id); if (!d || d.open) return;
     opts = opts || {};
     var from = opts.from || null;
-    /* decision 0001: dialogs grow from any opener; bottom sheets only from a FAB (otherwise they slide from the edge);
-       side sheets always slide from their edge */
+    /* decision 0022: dialogs and the phone sheet card pop in (rise and fade); sheets on wider screens slide from their edge */
     var phoneSheet = d.classList.contains('s4-bottom-sheet') && narrow();   /* a centered card on a phone: behaves like a dialog */
-    var isSheet = !phoneSheet && (d.classList.contains('s4-bottom-sheet') || d.classList.contains('s4-side-sheet'));
-    var transformFrom = from && d.dataset.origin !== 'none' && (!isSheet || (d.classList.contains('s4-bottom-sheet') && from.matches('.s4-fab'))) ? from : null;
     d._s4phone = phoneSheet;
-    d._s4from = from; d._s4transform = transformFrom; d.style.visibility = '';
+    d._s4from = from; d.style.visibility = '';
     d.showModal();
     initialFocus(d).focus({ preventScroll: true });
     S4.transition.restore(d);
     d.animate([{ opacity: 0 }, { opacity: 1 }], { duration: S4.motion.spring('effects').duration, easing: S4.motion.spring('effects').easing, pseudoElement: '::backdrop' });
-    var p = transformFrom ? S4.transition.containerTransform(d, transformFrom, { open: true, spring: d.classList.contains('s4-dialog') || phoneSheet ? 'spatial' : 'slow-spatial' })
-                                                : d.classList.contains('s4-bottom-sheet') && !phoneSheet ? S4.transition.slide(d, { open: true, edge: 'bottom' })
-                                                : d.classList.contains('s4-side-sheet') ? S4.transition.slide(d, { open: true, edge: 'end', spring: 'spatial' })
-                                                : S4.transition.fade(d, true);
+    var p = motion(d, true);
     S4.util.emit(d, 's4-open', { from: from });
     return p;
+  }
+  function motion(d, open) {
+    if (d.classList.contains('s4-side-sheet')) return S4.transition.slide(d, { open: open, edge: 'end', spring: 'spatial' });
+    if (d.classList.contains('s4-bottom-sheet') && !d._s4phone) return S4.transition.slide(d, { open: open, edge: 'bottom' });
+    return S4.transition.pop(d, { open: open });
   }
   function close(id, value) {
     var d = el(id); if (!d || !d.open || d._s4closing) return Promise.resolve();
     d._s4closing = true;
     var from = d._s4from;
     d.animate([{ opacity: 1 }, { opacity: 0 }], { duration: S4.motion.spring('fast-effects').duration, easing: S4.motion.spring('fast-effects').easing, pseudoElement: '::backdrop', fill: 'forwards' });
-    var t = d._s4transform, visibleSource = t && t.isConnected && t.getClientRects().length;
-    var p = visibleSource ? S4.transition.containerTransform(d, t, { open: false })
-          : d.classList.contains('s4-bottom-sheet') && !d._s4phone ? S4.transition.slide(d, { open: false, edge: 'bottom' })
-          : d.classList.contains('s4-side-sheet') ? S4.transition.slide(d, { open: false, edge: 'end' })
-          : S4.transition.fade(d, false);
+    var p = motion(d, false);
     return p.then(function () {
       d.close(value || '');
-      S4.transition.restore(d, d._s4transform || from);
+      S4.transition.restore(d);
       d.getAnimations({ subtree: true }).forEach(function (a) { a.cancel(); });
       d.style.transform = '';
       d._s4closing = false;

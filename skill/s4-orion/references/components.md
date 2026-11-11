@@ -1378,8 +1378,7 @@ only in a tooltip, or put interactive content in a plain one.
 
 ## Menu
 
-A short list of choices opened from a button. **Emerges** from behind its button (decision 0018: a solid shape grows out
-from under the button into the menu, the options fade in, then it turns to glass; the button never moves), positioned by `orion.js` (flips above when there's no room below).
+A short list of choices opened from a button. **Drops** 8px out of the side of its button and fades in, on glass from the first frame (decision 0022), positioned by `orion.js` (flips above when there's no room below).
 
 ```html
 <button class="s4-button" data-variant="tonal" data-menu="sort-menu">Sort By</button>
@@ -1415,9 +1414,8 @@ opener; Tab closes. 48dp item targets.
 
 ## Dialog
 
-Asks for a decision or a short input. The button you press **becomes** the dialog (container transform): its shape and
-color grow into the dialog at real size while the label fades out and the content fades in; closing runs it back into
-the button. On glass, over a 32% scrim.
+Asks for a decision or a short input. It **pops** in: rises 16px and fades in on the spatial spring, and closes with a
+quick drop and fade (decision 0022). On glass, over a 32% scrim.
 
 ```html
 <button class="s4-button" data-color="error" data-dialog="confirm-delete">Delete Bill</button>
@@ -1434,7 +1432,7 @@ the button. On glass, over a 32% scrim.
 
 | Attribute / API | Use |
 |---|---|
-| `[data-dialog="id"]` | Opens the dialog from this element (container transform) |
+| `[data-dialog="id"]` | Opens the dialog (focus returns to this element when it closes) |
 | `[data-close="value"]` | Closes it; the value comes back in `s4-close { value }` |
 | `data-fullscreen="compact"` | Full screen on phones. Needs **both** markups: the normal headline + actions (wide screens) and a `.s4-dialog-bar` (phones) holding a close icon button (`data-close="cancel"`), a `.s4-dialog-headline` and a confirm text button; the other set is hidden at each size |
 | `data-persistent` | A click on the scrim doesn't close it (Escape still does) |
@@ -1453,9 +1451,8 @@ only what can't be undone (use Undo in a snackbar otherwise). **Don't:** stack d
 
 ## Sheets
 
-A short task without leaving the screen. From 600 wide, **bottom sheets** grow out of a FAB (container transform) or, opened
-from anything else, slide from the bottom edge; drag the handle down to dismiss. **On a phone (under 600) the bottom sheet is a
-centered card**, shaped and animated like a dialog (container transform from any opener, no handle, no drag; decision 0011). **Side sheets** slide from the end edge. Both on glass.
+A short task without leaving the screen. From 600 wide, **bottom sheets** slide from the bottom edge; drag the handle down to dismiss. **On a phone (under 600) the bottom sheet is a
+centered card**, shaped and animated like a dialog (it pops in, no handle, no drag; decisions 0011, 0022). **Side sheets** slide from the end edge. Both on glass.
 
 ```html
 <button class="s4-fab" data-sheet="add-expense" aria-label="Add expense"><span class="s4-icon" data-icon="add"></span></button>

@@ -1,19 +1,23 @@
 # Where S4 Orion stands (resume here)
 
-## NOW (2026-11-10): the overhaul is decided, start building ([0020](decisions/0020-own-language.md))
+## NOW (2026-11-11): Orion stays M3 Expressive, with the new glass and simpler motion
 
-Orion stops being an M3 Expressive copy. The owner chose the direction through five rounds of Claude Design drafts
-(private claude.ai canvas "S4 Orion: Own Language Drafts", artifact `LTom2j96tNTT2ZiTsQJjQH`; the "Chosen direction"
-rows at the top are the reference: component sheet light/dark and the Projects app). Summary: glass only on floating
-parts with a soft symmetrical top-edge light, no shadows, neutral grays plus one accent, solid tiles, rounded
-rectangles with small rounding, Inter with bold headings and light big numbers, a simple fade-and-rise motion family.
-The Pocket Ledger demo is replaced by a general Projects app.
+The owner decided: **keep S4 Orion as built** (M3 Expressive base, decisions 0001-0019); from the Claude Design drafts
+(0020, private canvas `LTom2j96tNTT2ZiTsQJjQH`) take **only the glass**. Done and published this session:
+- **[0021](decisions/0021-glass-from-the-playground.md) glass:** tint 75%, blur 8px, saturate 150%, no backdrop dimming,
+  top-light edge (three inset shadows: `--s4-glass-edge-top/-side/-bottom`, bars `--s4-glass-edge-line`).
+  check-glass: worst 5.83 light / 5.54 dark.
+- **[0022](decisions/0022-simpler-motion.md) simpler motion:** pop (dialogs, phone sheet), drop (menus), slide, rise,
+  shared axis; only transform and opacity; one transition per element; container transform and menu emerge removed
+  (old API names still work). orion.js 125 KB to 95 KB.
+- **[Design review](reviews/2026-11-11-design-review.md):** what is already Orion's own, what still reads as stock M3,
+  nine proposals (container tones, big numbers, tonal charts, fewer inverse chips, one title, M3E shapes on FAB and
+  avatars, glass snackbar/tooltip, living gallery, pruning).
 
-**Update (round 6):** the owner is not done drafting: building is ON HOLD. Canvas page "Round 6: Glass and Directions" has an interactive Glass Playground (tint, blur, color boost, sheen, edge shape/brightness/sides/bottom/width, tint color, backdrop; presets; a numbers box the owner sends back) and seven other directions for the underlying UI, each inspired by a public design language with a link (Carbon, Fluent 2, Geist, Radix Themes, Nothing OS, Teenage Engineering, Apple HIG). **Owner's answer:** glass = tint 75% neutral, blur 8px, color boost 150%, sheen 0, edge top light (top 35, sides 50%, bottom 25, 1px); recorded in 0020 and applied to the chosen-direction rows. None of the seven directions liked: tiles stay. Next: ask whether the owner is happy enough to start building, or wants more drafting (the base UI was called bland earlier; possible next drafts are richer tile content, not new directions).
-
-**Then:** follow the plan in 0020 (docs, then tokens, then pause for the owner; components; demo; pause; skill and
-release). Open: framework shape and token names (defaults in 0020). The motion/glass QA items and Tables/Sliders work
-below are superseded by the restyle. The Direction Lab (`explore/direction.html`) is superseded by the drafts.
+**Pause here:** the owner (1) checks the new glass and motion on the iPhone (demo: FAB to Add Bill, Delete All Data,
+the menus, tabs, fast taps) and (2) picks proposals from the review. Then build the picked ones, then 1.0.0.
+Superseded by 0022: everything below about the container transform, emerge, clip-path over glass in Safari, the menu
+motion lab and the motion QA iPhone check.
 
 ## The brief (original plan, six phases)
 
@@ -149,6 +153,8 @@ labs could load `components/assets/` instead of their own copies.
   transform / unfold / shared axis / slide (no origin scaling); very clear 60% glass with guaranteed AA.
 
 ## Session log
+
+- 2026-11-11 (build): 0021 glass from the playground, 0022 simpler motion, design review published. Next: owner's iPhone check and proposal picks.
 
 - 2026-11-11 (drafts 8): owner wants some M3 Expressive quirk back. Canvas page 'Round 8: Bringing Back Quirk': a quirk catalog (shape library, shapes in use, wavy progress, shape-shifting buttons and toggles, squishy group + split button, morphing loader, FAB menu over a glass toolbar, emphasized type, coral pop color for good moments) and the degree tracker Today at three levels (Hint, Playful, Full), light and dark. Next: owner picks which quirks and how much; then amend 0020.
 - 2026-11-11 (drafts 7): the owner's WGU degree tracker (repo 4RK0S4H4/wgu-degree-tracker) redrawn in Orion on a new canvas page 'Degree Tracker in Orion' (Today, Courses, Course + menu, Schedule, Degree, desktop Today). Next: owner's reaction, then decide on building.
