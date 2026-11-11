@@ -38,7 +38,7 @@ Everything ships in this skill's `assets/` folder: `orion.css` (tokens, every co
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Pocket Ledger</title>
+<title>Orion Showcase</title>
 <script>/* theme before first paint: no flash of the wrong mode */
 (function (k) { try { var t = JSON.parse(localStorage.getItem(k) || 'null'); if (t && t.mode && t.mode !== 'system') document.documentElement.dataset.theme = t.mode; } catch (e) {} })('pocket-ledger-theme');
 </script>
