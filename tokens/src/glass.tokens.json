@@ -1,5 +1,5 @@
 {
-  "$description": "The glass layer (decision 0004): very clear frosted glass on floating chrome and overlays only, with a guaranteed contrast floor. The backdrop filter compresses whatever shows through (contrast and brightness) so on-surface text on the glass meets WCAG AA over any backdrop, for every seed (checked by scripts/check-glass.mjs). High contrast, reduced transparency and browsers without backdrop-filter make glass solid.",
+  "$description": "The glass layer (decision 0004): very clear frosted glass on floating chrome and overlays only, with a guaranteed contrast floor. The tint (75%, decision 0021) is firm enough that on-surface text on the glass meets WCAG AA over any backdrop, for every seed (checked by scripts/check-glass.mjs). High contrast, reduced transparency and browsers without backdrop-filter make glass solid.",
   "s4": {
     "glass": {
       "tint": {
@@ -16,16 +16,17 @@
       },
       "tint-opacity": {
         "$type": "number",
-        "$description": "How much of the tint role is painted over the blurred backdrop (0\u20131).",
+        "$description": "How much of the tint role is painted over the blurred backdrop (0–1).",
         "float": {
-          "$value": 0.6,
+          "$value": 0.75,
           "$extensions": {
             "com.s4.modes": {
               "high-contrast": 1,
               "dark-high-contrast": 1,
               "reduced-transparency": 1
             }
-          }
+          },
+          "$description": "Decision 0021: 75%, picked by the owner in the Glass Playground (was 0.6)."
         },
         "fill": {
           "$value": 0.56,
@@ -39,7 +40,7 @@
           }
         },
         "medium-contrast": {
-          "$value": 0.8,
+          "$value": 0.86,
           "$description": "Float tint when the app runs at medium contrast (contrast level 0.5)."
         }
       },
@@ -47,7 +48,7 @@
         "$type": "dimension",
         "float": {
           "$value": {
-            "value": 16,
+            "value": 8,
             "unit": "px"
           },
           "$extensions": {
@@ -62,105 +63,38 @@
               }
             }
           },
-          "$description": "Backdrop blur radius."
+          "$description": "Backdrop blur radius. Decision 0021: 8px (owner's playground pick; was 16px)."
         }
       },
       "saturation": {
         "$type": "number",
         "float": {
-          "$value": 1.2,
-          "$description": "saturate() on the backdrop, calmer color showing through (decision 0014: 120%, was 180%)."
+          "$value": 1.5,
+          "$description": "saturate() on the backdrop. Decision 0021: 150% (owner's playground pick; was 120% in 0014)."
         }
       },
       "backdrop-contrast": {
         "$type": "number",
         "float": {
-          "$value": 0.74,
+          "$value": 1,
           "$extensions": {
             "com.s4.modes": {
               "dark": 1
             }
           },
-          "$description": "contrast() on the backdrop: lifts blacks behind light glass so dark text keeps 4.5:1."
+          "$description": "contrast() on the backdrop. 1 (off) since decision 0021: the 75% tint alone keeps on-surface text at 4.5:1 or better over pure black or white (check-glass). Lower it below 1 only if the tint is lowered."
         }
       },
       "backdrop-brightness": {
         "$type": "number",
         "float": {
-          "$value": 1.1,
+          "$value": 1,
           "$extensions": {
             "com.s4.modes": {
-              "dark": 0.8
+              "dark": 1
             }
           },
-          "$description": "brightness() on the backdrop: dims whites behind dark glass so light text keeps 4.5:1."
-        }
-      },
-      "highlight": {
-        "$description": "The thin frost line on glass edges (decisions 0013 and 0016: a half-pixel line, white at 28%, no shadow). Full-width bars draw it only on the edge that faces the content. Zero in high contrast.",
-        "width": {
-          "$type": "dimension",
-          "$value": {
-            "value": 0.5,
-            "unit": "px"
-          }
-        },
-        "color": {
-          "$type": "color",
-          "$value": {
-            "colorSpace": "srgb",
-            "components": [
-              1,
-              1,
-              1
-            ],
-            "alpha": 0.28,
-            "hex": "#ffffff"
-          },
-          "$extensions": {
-            "com.s4.modes": {
-              "dark": {
-                "colorSpace": "srgb",
-                "components": [
-                  1,
-                  1,
-                  1
-                ],
-                "alpha": 0.28,
-                "hex": "#ffffff"
-              },
-              "high-contrast": {
-                "colorSpace": "srgb",
-                "components": [
-                  1,
-                  1,
-                  1
-                ],
-                "alpha": 0,
-                "hex": "#ffffff"
-              },
-              "dark-high-contrast": {
-                "colorSpace": "srgb",
-                "components": [
-                  1,
-                  1,
-                  1
-                ],
-                "alpha": 0,
-                "hex": "#ffffff"
-              },
-              "reduced-transparency": {
-                "colorSpace": "srgb",
-                "components": [
-                  1,
-                  1,
-                  1
-                ],
-                "alpha": 0,
-                "hex": "#ffffff"
-              }
-            }
-          }
+          "$description": "brightness() on the backdrop. 1 (off) since decision 0021, see backdrop-contrast."
         }
       },
       "max-stack": {
@@ -227,6 +161,248 @@
               ],
               "alpha": 0,
               "hex": "#ffffff"
+            }
+          }
+        }
+      },
+      "edge": {
+        "$description": "The glass edge (decision 0021, replaces the frost line of 0013/0016): light catches the top edge. Drawn as layered inset shadows so it follows the corner radius, never scrolls with content and needs no extra markup: a faint line all round (side), a brighter line along the top (top) and a faint return at the bottom (bottom). Full-width bars draw only one line on the edge that faces the content (line). All zero where glass is solid.",
+        "width": {
+          "$type": "dimension",
+          "$value": {
+            "value": 1,
+            "unit": "px"
+          }
+        },
+        "top": {
+          "$type": "color",
+          "$description": "Extra light along the top edge (on top of the side line).",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "alpha": 0.62,
+            "hex": "#ffffff"
+          },
+          "$extensions": {
+            "com.s4.modes": {
+              "dark": {
+                "colorSpace": "srgb",
+                "components": [
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "alpha": 0.13,
+                "hex": "#ffffff"
+              },
+              "high-contrast": {
+                "colorSpace": "srgb",
+                "components": [
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "alpha": 0,
+                "hex": "#ffffff"
+              },
+              "dark-high-contrast": {
+                "colorSpace": "srgb",
+                "components": [
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "alpha": 0,
+                "hex": "#ffffff"
+              },
+              "reduced-transparency": {
+                "colorSpace": "srgb",
+                "components": [
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "alpha": 0,
+                "hex": "#ffffff"
+              }
+            }
+          }
+        },
+        "side": {
+          "$type": "color",
+          "$description": "The faint line all round.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "alpha": 0.32,
+            "hex": "#ffffff"
+          },
+          "$extensions": {
+            "com.s4.modes": {
+              "dark": {
+                "colorSpace": "srgb",
+                "components": [
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "alpha": 0.06,
+                "hex": "#ffffff"
+              },
+              "high-contrast": {
+                "colorSpace": "srgb",
+                "components": [
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "alpha": 0,
+                "hex": "#ffffff"
+              },
+              "dark-high-contrast": {
+                "colorSpace": "srgb",
+                "components": [
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "alpha": 0,
+                "hex": "#ffffff"
+              },
+              "reduced-transparency": {
+                "colorSpace": "srgb",
+                "components": [
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "alpha": 0,
+                "hex": "#ffffff"
+              }
+            }
+          }
+        },
+        "bottom": {
+          "$type": "color",
+          "$description": "A faint return along the bottom edge.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.09019607843137255,
+              0.09019607843137255,
+              0.10196078431372549
+            ],
+            "alpha": 0.07,
+            "hex": "#17171a"
+          },
+          "$extensions": {
+            "com.s4.modes": {
+              "dark": {
+                "colorSpace": "srgb",
+                "components": [
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "alpha": 0.02,
+                "hex": "#ffffff"
+              },
+              "high-contrast": {
+                "colorSpace": "srgb",
+                "components": [
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "alpha": 0,
+                "hex": "#ffffff"
+              },
+              "dark-high-contrast": {
+                "colorSpace": "srgb",
+                "components": [
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "alpha": 0,
+                "hex": "#ffffff"
+              },
+              "reduced-transparency": {
+                "colorSpace": "srgb",
+                "components": [
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "alpha": 0,
+                "hex": "#ffffff"
+              }
+            }
+          }
+        },
+        "line": {
+          "$type": "color",
+          "$description": "The single line full-width bars draw on their content-facing edge.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.09019607843137255,
+              0.09019607843137255,
+              0.10196078431372549
+            ],
+            "alpha": 0.08,
+            "hex": "#17171a"
+          },
+          "$extensions": {
+            "com.s4.modes": {
+              "dark": {
+                "colorSpace": "srgb",
+                "components": [
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "alpha": 0.08,
+                "hex": "#ffffff"
+              },
+              "high-contrast": {
+                "colorSpace": "srgb",
+                "components": [
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "alpha": 0,
+                "hex": "#ffffff"
+              },
+              "dark-high-contrast": {
+                "colorSpace": "srgb",
+                "components": [
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "alpha": 0,
+                "hex": "#ffffff"
+              },
+              "reduced-transparency": {
+                "colorSpace": "srgb",
+                "components": [
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "alpha": 0,
+                "hex": "#ffffff"
+              }
             }
           }
         }

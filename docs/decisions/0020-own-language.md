@@ -1,6 +1,8 @@
 # 0020: Orion becomes its own language (accepted, 2026-11-10)
 
-**Status:** direction accepted on 2026-11-10, details still being refined (round 6, 2026-11-11: glass values set in the Glass Playground; the seven other directions inspired by Carbon, Fluent 2, Geist, Radix, Nothing OS, Teenage Engineering and Apple HIG were all rejected, tiles stay). Accepted through Claude Design drafts (private claude.ai canvas
+**Status (2026-11-11): NOT ADOPTED, except the glass (see [0021](0021-glass-from-the-playground.md)).** The owner keeps S4 Orion as built on M3 Expressive. The rest of this record is history.
+
+**Earlier status:** direction accepted on 2026-11-10, details still being refined (round 6, 2026-11-11: glass values set in the Glass Playground; the seven other directions inspired by Carbon, Fluent 2, Geist, Radix, Nothing OS, Teenage Engineering and Apple HIG were all rejected, tiles stay). Accepted through Claude Design drafts (private claude.ai canvas
 "S4 Orion: Own Language Drafts", artifact `LTom2j96tNTT2ZiTsQJjQH`; the "Chosen direction" rows at the top hold the
 component sheet in light and dark and the Projects app). The interactive Direction Lab (`explore/direction.html`) was
 published first but the owner preferred static drafts; its questions are superseded by the answers below.

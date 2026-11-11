@@ -16,8 +16,8 @@ above content. Content itself is always solid.
    nested glass surface solid; for overlays that stack visually but not in the DOM, design so it doesn't happen.
 3. **Text on glass is `on-surface`.** Glass surfaces redefine `on-surface-variant` as `on-surface`. Don't put colored or
    faded text on glass; icons and labels use the normal content colors.
-4. **The contrast floor is guaranteed, don't undo it.** The glass compresses what shows through so text stays ≥ 4.5:1 over
-   any backdrop and any seed. Don't lower `--s4-glass-tint-opacity-float` or remove the backdrop filter; `npm run check`
+4. **The contrast floor is guaranteed, don't undo it.** The 75% tint keeps text ≥ 4.5:1 over any backdrop and any seed.
+   Don't lower `--s4-glass-tint-opacity-float`; `npm run check`
    fails if the guarantee breaks.
 5. **Text over photos is not glass.** A label on an image or illustration gets a scrim or a solid chip behind it.
 6. **Glass is a surface, not a state.** Selected, active and filled controls on glass stay solid (the nav indicator, a filled
@@ -26,9 +26,11 @@ above content. Content itself is always solid.
 ## How it's built
 
 ```css
-background-color: color-mix(in srgb, var(--s4-glass-tint-float) 60%, transparent);   /* surface-container */
-backdrop-filter: blur(16px) saturate(1.2) contrast(.74) brightness(1.1);              /* dark: contrast(1) brightness(.8) */
-box-shadow: inset 0 0 0 .5px rgb(255 255 255 / .28);                                  /* the thin frost line; no elevation shadow */
+background-color: color-mix(in srgb, var(--s4-glass-tint-float) 75%, transparent);   /* surface-container */
+backdrop-filter: blur(8px) saturate(1.5);                                            /* no backdrop dimming needed at 75% */
+box-shadow: inset 0 1px 0 var(--s4-glass-edge-top),                                   /* the edge light: bright along the top, */
+            inset 0 -1px 0 var(--s4-glass-edge-bottom),                                /* a faint return at the bottom, */
+            inset 0 0 0 1px var(--s4-glass-edge-side);                                  /* a faint line all round; no shadow */
 ```
 
 Components don't write this: `glass.css` applies it to the listed components in its own cascade layer. To make something
@@ -38,7 +40,7 @@ else glass (a custom floating panel), add `class="s4-glass"`. To keep one elemen
 
 | Situation | Glass becomes |
 |---|---|
-| `prefers-contrast: more` or contrast level high | Solid (`surface-container`), no blur, no frost line |
+| `prefers-contrast: more` or contrast level high | Solid (`surface-container`), no blur, no edge light |
 | `prefers-reduced-transparency: reduce` or `data-glass="off"` on `<html>` | Solid |
 | Browser without `backdrop-filter` | Solid |
 | Contrast level medium | 80% tint |
@@ -46,7 +48,7 @@ else glass (a custom floating panel), add `class="s4-glass"`. To keep one elemen
 | `prefers-reduced-motion` | Unchanged (glass doesn't move); transitions into it follow the motion rules |
 
 ## Edge and depth
-Glass has **no shadow**: the transparency itself says what is in front. The only edge is a thin frost line (`--s4-glass-highlight-width` / `-color`: half a pixel, white at 28%), no fade, no glow (decisions 0013, 0016). Floating surfaces (toolbar, menu, dialog, phone bottom sheet) get it all the way round; full-width and docked ones (top app bar, nav bar, docked toolbar, rail, side sheet, wide bottom sheet) get it only on the edge that faces the content. Over plain white content in light mode the glass can look flat; that is accepted.
+Glass has **no shadow**: the transparency itself says what is in front. The only edge is the edge light (decision 0021, replacing the frost line of 0013/0016): 1px, light catching the top edge and fading down the sides, with a faint return at the bottom (`--s4-glass-edge-top`, `-side`, `-bottom`; light: white 62% over white 32%, a dark 7% bottom; dark: white 13% over white 6%). It is drawn with inset shadows, so it follows the corners and stays put when a menu or dialog scrolls. Floating surfaces (toolbar, menu, dialog, phone bottom sheet) get it all the way round; full-width and docked ones (top app bar, nav bar, docked toolbar, rail, side sheet, wide bottom sheet) get one line (`--s4-glass-edge-line`) only on the edge that faces the content. Over plain white content in light mode the glass can look flat; that is accepted.
 
 ## Items on glass
 Controls inside a glass surface (a dialog's fields, a menu's chips) stay your UI: they keep their own color at full fill (`--s4-glass-item-fill: 1`; lower it to let the blurred backdrop tint them) and drop their outlines, so the glass supplies the depth and the items stay clean (decision 0015).

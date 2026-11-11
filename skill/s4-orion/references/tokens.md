@@ -361,18 +361,21 @@ Light values are shown; a second value is dark mode. Color roles also change wit
 |---|---|---|---|
 | `--s4-glass-tint-float` | var(--md-sys-color-surface-container) |  | App bars over scrolled content, nav bar, nav rail, toolbars, menus, sheets, dialogs, rich tooltips. |
 | `--s4-glass-tint-fill` | var(--md-sys-color-surface-container-highest) |  | Tonal fills inside a glass surface (no blur of their own). |
-| `--s4-glass-tint-opacity-float` | 0.6 |  |  |
+| `--s4-glass-tint-opacity-float` | 0.75 |  | Decision 0021: 75%, picked by the owner in the Glass Playground (was 0.6). |
 | `--s4-glass-tint-opacity-fill` | 0.56 | 0.64 |  |
-| `--s4-glass-tint-opacity-medium-contrast` | 0.8 |  | Float tint when the app runs at medium contrast (contrast level 0.5). |
-| `--s4-glass-blur-float` | 16px |  | Backdrop blur radius. |
-| `--s4-glass-saturation-float` | 1.2 |  | saturate() on the backdrop, calmer color showing through (decision 0014: 120%, was 180%). |
-| `--s4-glass-backdrop-contrast-float` | 0.74 | 1 | contrast() on the backdrop: lifts blacks behind light glass so dark text keeps 4.5:1. |
-| `--s4-glass-backdrop-brightness-float` | 1.1 | 0.8 | brightness() on the backdrop: dims whites behind dark glass so light text keeps 4.5:1. |
-| `--s4-glass-highlight-width` | 0.5px |  |  |
-| `--s4-glass-highlight-color` | rgb(255 255 255 / 0.28) | rgb(255 255 255 / 0.28) |  |
+| `--s4-glass-tint-opacity-medium-contrast` | 0.86 |  | Float tint when the app runs at medium contrast (contrast level 0.5). |
+| `--s4-glass-blur-float` | 8px |  | Backdrop blur radius. Decision 0021: 8px (owner's playground pick; was 16px). |
+| `--s4-glass-saturation-float` | 1.5 |  | saturate() on the backdrop. Decision 0021: 150% (owner's playground pick; was 120% in 0014). |
+| `--s4-glass-backdrop-contrast-float` | 1 | 1 | contrast() on the backdrop. 1 (off) since decision 0021: the 75% tint alone keeps on-surface text at 4.5:1 or better over pure black or white (check-glass). Lower it below 1 only if the tint is lowered. |
+| `--s4-glass-backdrop-brightness-float` | 1 | 1 | brightness() on the backdrop. 1 (off) since decision 0021, see backdrop-contrast. |
 | `--s4-glass-max-stack` | 2 |  | At most two glass layers overlap at any point (e.g. a menu over an app bar). A third becomes solid. |
 | `--s4-glass-item-fill` | 1 |  | How much of its own color an item (button, chip, text field) keeps on glass, 1 = fully (decision 0015: owner picked full fill; lower it to let the blurred backdrop tint items). |
 | `--s4-glass-item-outline` | rgb(255 255 255 / 0.28) | rgb(255 255 255 / 0.28) | The outline of an outline-only item on glass (outlined button, unselected chip): the glass's milky frost line, a little stronger than the edge (decision 0015). Zero in high contrast, where glass is solid and the item keeps its own outline. |
+| `--s4-glass-edge-width` | 1px |  |  |
+| `--s4-glass-edge-top` | rgb(255 255 255 / 0.62) | rgb(255 255 255 / 0.13) | Extra light along the top edge (on top of the side line). |
+| `--s4-glass-edge-side` | rgb(255 255 255 / 0.32) | rgb(255 255 255 / 0.06) | The faint line all round. |
+| `--s4-glass-edge-bottom` | rgb(23 23 26 / 0.07) | rgb(255 255 255 / 0.02) | A faint return along the bottom edge. |
+| `--s4-glass-edge-line` | rgb(23 23 26 / 0.08) | rgb(255 255 255 / 0.08) | The single line full-width bars draw on their content-facing edge. |
 
 ## Icons
 

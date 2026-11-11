@@ -6,6 +6,7 @@
      overlays menus, dialogs, bottom and side sheets, rich tooltips
    Snackbars and plain tooltips stay solid inverse surfaces (their inverse-primary action needs the full surface).
 
+   Values (decision 0021, from the owner's Glass Playground): tint 75%, blur 8px, color boost 150%, no sheen, top-light edge.
    Guarantee: the backdrop filter compresses what shows through (contrast, brightness) so on-surface text on the glass meets
    WCAG AA over any backdrop for every seed (scripts/check-glass.mjs proves it). To keep that true, every glass surface
    redefines on-surface-variant as on-surface: secondary text on glass is drawn in the main text color.
@@ -24,18 +25,23 @@
     --md-sys-color-on-surface-variant: var(--md-sys-color-on-surface);
     --_glass-tint: var(--s4-glass-tint-opacity-float);
     background-color: color-mix(in srgb, var(--s4-glass-tint-float) calc(var(--_glass-tint) * 100%), transparent);
-    /* depth comes from the transparency, not from a shadow (decision 0013): no elevation shadow, only the thin frost line */
-    box-shadow: inset 0 0 0 var(--s4-glass-highlight-width) var(--s4-glass-highlight-color);
+    /* depth comes from the transparency, not from a shadow (0013, 0017). The edge catches light along the top (decision 0021):
+       a brighter top line over a faint line all round, with a faint return at the bottom. Inset shadows follow the corner
+       radius, never scroll with the content of a scrolling menu or dialog, and need no extra element. */
+    box-shadow:
+      inset 0 var(--s4-glass-edge-width) 0 0 var(--s4-glass-edge-top),
+      inset 0 calc(-1 * var(--s4-glass-edge-width)) 0 0 var(--s4-glass-edge-bottom),
+      inset 0 0 0 var(--s4-glass-edge-width) var(--s4-glass-edge-side);
     -webkit-backdrop-filter: blur(var(--s4-glass-blur-float)) saturate(var(--s4-glass-saturation-float)) contrast(var(--s4-glass-backdrop-contrast-float)) brightness(var(--s4-glass-backdrop-brightness-float));
     backdrop-filter: blur(var(--s4-glass-blur-float)) saturate(var(--s4-glass-saturation-float)) contrast(var(--s4-glass-backdrop-contrast-float)) brightness(var(--s4-glass-backdrop-brightness-float));
   }
-  /* full-width bars and docked surfaces touch the screen edges, so the frost line is drawn only on the edge that faces the content
+  /* full-width bars and docked surfaces touch the screen edges, so they draw a single line only on the edge that faces the content
      (a line along the screen edge reads as a box around the bar, especially on a phone) */
-  :where(.s4-top-app-bar[data-scrolled]) { box-shadow: inset 0 calc(-1 * var(--s4-glass-highlight-width)) 0 0 var(--s4-glass-highlight-color); }
-  :where(.s4-nav-bar, .s4-toolbar[data-type="docked"]) { box-shadow: inset 0 var(--s4-glass-highlight-width) 0 0 var(--s4-glass-highlight-color); }
-  :where(.s4-nav-rail:is([data-modal], [data-overlay])) { box-shadow: inset calc(-1 * var(--s4-glass-highlight-width)) 0 0 0 var(--s4-glass-highlight-color); }
-  :where(.s4-side-sheet) { box-shadow: inset var(--s4-glass-highlight-width) 0 0 0 var(--s4-glass-highlight-color); }
-  @media (min-width: 600px) { :where(.s4-bottom-sheet) { box-shadow: inset 0 var(--s4-glass-highlight-width) 0 0 var(--s4-glass-highlight-color); } }
+  :where(.s4-top-app-bar[data-scrolled]) { box-shadow: inset 0 calc(-1 * var(--s4-glass-edge-width)) 0 0 var(--s4-glass-edge-line); }
+  :where(.s4-nav-bar, .s4-toolbar[data-type="docked"]) { box-shadow: inset 0 var(--s4-glass-edge-width) 0 0 var(--s4-glass-edge-line); }
+  :where(.s4-nav-rail:is([data-modal], [data-overlay])) { box-shadow: inset calc(-1 * var(--s4-glass-edge-width)) 0 0 0 var(--s4-glass-edge-line); }
+  :where(.s4-side-sheet) { box-shadow: inset var(--s4-glass-edge-width) 0 0 0 var(--s4-glass-edge-line); }
+  @media (min-width: 600px) { :where(.s4-bottom-sheet) { box-shadow: inset 0 var(--s4-glass-edge-width) 0 0 var(--s4-glass-edge-line); } }
 
   /* a toolbar in vibrant color keeps its role as the tint */
   :where(.s4-toolbar[data-color="vibrant"]) { background-color: color-mix(in srgb, var(--md-sys-color-primary-container) calc(var(--_glass-tint) * 100%), transparent); }

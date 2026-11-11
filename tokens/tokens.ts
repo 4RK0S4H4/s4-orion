@@ -1040,7 +1040,8 @@ export const tokens = {
   },
   "--s4-glass-tint-opacity-float": {
     "type": "number",
-    "value": "0.6",
+    "value": "0.75",
+    "description": "Decision 0021: 75%, picked by the owner in the Glass Playground (was 0.6).",
     "modes": {
       "high-contrast": "1",
       "dark-high-contrast": "1",
@@ -1059,13 +1060,13 @@ export const tokens = {
   },
   "--s4-glass-tint-opacity-medium-contrast": {
     "type": "number",
-    "value": "0.8",
+    "value": "0.86",
     "description": "Float tint when the app runs at medium contrast (contrast level 0.5)."
   },
   "--s4-glass-blur-float": {
     "type": "dimension",
-    "value": "16px",
-    "description": "Backdrop blur radius.",
+    "value": "8px",
+    "description": "Backdrop blur radius. Decision 0021: 8px (owner's playground pick; was 16px).",
     "modes": {
       "high-contrast": "0px",
       "reduced-transparency": "0px",
@@ -1074,13 +1075,13 @@ export const tokens = {
   },
   "--s4-glass-saturation-float": {
     "type": "number",
-    "value": "1.2",
-    "description": "saturate() on the backdrop, calmer color showing through (decision 0014: 120%, was 180%)."
+    "value": "1.5",
+    "description": "saturate() on the backdrop. Decision 0021: 150% (owner's playground pick; was 120% in 0014)."
   },
   "--s4-glass-backdrop-contrast-float": {
     "type": "number",
-    "value": "0.74",
-    "description": "contrast() on the backdrop: lifts blacks behind light glass so dark text keeps 4.5:1.",
+    "value": "1",
+    "description": "contrast() on the backdrop. 1 (off) since decision 0021: the 75% tint alone keeps on-surface text at 4.5:1 or better over pure black or white (check-glass). Lower it below 1 only if the tint is lowered.",
     "modes": {
       "dark": "1",
       "dark-high-contrast": "1"
@@ -1088,25 +1089,11 @@ export const tokens = {
   },
   "--s4-glass-backdrop-brightness-float": {
     "type": "number",
-    "value": "1.1",
-    "description": "brightness() on the backdrop: dims whites behind dark glass so light text keeps 4.5:1.",
+    "value": "1",
+    "description": "brightness() on the backdrop. 1 (off) since decision 0021, see backdrop-contrast.",
     "modes": {
-      "dark": "0.8",
-      "dark-high-contrast": "0.8"
-    }
-  },
-  "--s4-glass-highlight-width": {
-    "type": "dimension",
-    "value": "0.5px"
-  },
-  "--s4-glass-highlight-color": {
-    "type": "color",
-    "value": "rgb(255 255 255 / 0.28)",
-    "modes": {
-      "dark": "rgb(255 255 255 / 0.28)",
-      "high-contrast": "rgb(255 255 255 / 0)",
-      "dark-high-contrast": "rgb(255 255 255 / 0)",
-      "reduced-transparency": "rgb(255 255 255 / 0)"
+      "dark": "1",
+      "dark-high-contrast": "1"
     }
   },
   "--s4-glass-max-stack": {
@@ -1125,6 +1112,54 @@ export const tokens = {
     "description": "The outline of an outline-only item on glass (outlined button, unselected chip): the glass's milky frost line, a little stronger than the edge (decision 0015). Zero in high contrast, where glass is solid and the item keeps its own outline.",
     "modes": {
       "dark": "rgb(255 255 255 / 0.28)",
+      "high-contrast": "rgb(255 255 255 / 0)",
+      "dark-high-contrast": "rgb(255 255 255 / 0)",
+      "reduced-transparency": "rgb(255 255 255 / 0)"
+    }
+  },
+  "--s4-glass-edge-width": {
+    "type": "dimension",
+    "value": "1px"
+  },
+  "--s4-glass-edge-top": {
+    "type": "color",
+    "value": "rgb(255 255 255 / 0.62)",
+    "description": "Extra light along the top edge (on top of the side line).",
+    "modes": {
+      "dark": "rgb(255 255 255 / 0.13)",
+      "high-contrast": "rgb(255 255 255 / 0)",
+      "dark-high-contrast": "rgb(255 255 255 / 0)",
+      "reduced-transparency": "rgb(255 255 255 / 0)"
+    }
+  },
+  "--s4-glass-edge-side": {
+    "type": "color",
+    "value": "rgb(255 255 255 / 0.32)",
+    "description": "The faint line all round.",
+    "modes": {
+      "dark": "rgb(255 255 255 / 0.06)",
+      "high-contrast": "rgb(255 255 255 / 0)",
+      "dark-high-contrast": "rgb(255 255 255 / 0)",
+      "reduced-transparency": "rgb(255 255 255 / 0)"
+    }
+  },
+  "--s4-glass-edge-bottom": {
+    "type": "color",
+    "value": "rgb(23 23 26 / 0.07)",
+    "description": "A faint return along the bottom edge.",
+    "modes": {
+      "dark": "rgb(255 255 255 / 0.02)",
+      "high-contrast": "rgb(255 255 255 / 0)",
+      "dark-high-contrast": "rgb(255 255 255 / 0)",
+      "reduced-transparency": "rgb(255 255 255 / 0)"
+    }
+  },
+  "--s4-glass-edge-line": {
+    "type": "color",
+    "value": "rgb(23 23 26 / 0.08)",
+    "description": "The single line full-width bars draw on their content-facing edge.",
+    "modes": {
+      "dark": "rgb(255 255 255 / 0.08)",
       "high-contrast": "rgb(255 255 255 / 0)",
       "dark-high-contrast": "rgb(255 255 255 / 0)",
       "reduced-transparency": "rgb(255 255 255 / 0)"
