@@ -33,6 +33,13 @@ the owner's yes; build in this order, one commit each, check at 390 and 1280, pu
 
 Recommended first: 1, 2, 3, 5, 9; then 6 and 7; then 8. After the picked steps: iPhone check, then release 1.0.0.
 
+**How the owner wants to go through them (2026-11-11): one at a time, with drafts.** For each step in order (1 to 9):
+make a Claude Design draft (before and after, phone light and dark, plus desktop where it matters) on the existing
+design canvas (private claude.ai artifact `https://claude.ai/artifact/LTom2j96tNTT2ZiTsQJjQH`, a new canvas page
+"Review Proposals"; the canvas keeps its files under `project/`, read `project/canvas.json` first and keep every
+existing board and note), send the link, and **pause** for the owner's verdict (build / change / skip). Only then build
+the step in the repo, check at 390 and 1280, publish, mark it in the table, and move to the next step's draft.
+
 Superseded by 0022: everything below about the container transform, emerge, clip-path over glass in Safari, the menu
 motion lab and the motion QA iPhone check.
 
