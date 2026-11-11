@@ -15,7 +15,7 @@
     --_icon: var(--s4-size-icon-small);
     --_radius: calc(var(--_h) / 2);   /* fully round = half the height. A literal 9999px makes the press/toggle morph sit unseen until its last few percent, then snap, and in a connected group squashes the other corners */
     --_radius-pressed: var(--s4-shape-button-pressed);
-    --_radius-selected: var(--md-sys-shape-corner-medium);
+    --_radius-selected: var(--_radius);
     --_font: var(--md-sys-typescale-label-large-font);
     --_size: var(--md-sys-typescale-label-large-size);
     --_line: var(--md-sys-typescale-label-large-line-height);
@@ -70,7 +70,7 @@
 
   /* ---------- variants ---------- */
   .s4-button[data-variant="tonal"] { --_bg: var(--md-sys-color-secondary-container); --_fg: var(--md-sys-color-on-secondary-container); }
-  .s4-button[data-variant="outlined"] { --_bg: transparent; --_fg: var(--md-sys-color-on-surface-variant); --_outline: var(--md-sys-color-outline-variant); }
+  .s4-button[data-variant="outlined"] { --_bg: var(--md-sys-color-surface-container-highest); --_fg: var(--md-sys-color-on-surface); }   /* decision 0023: no outlined elements, the old name now draws a filled button */
   .s4-button[data-variant="elevated"] { --_bg: var(--md-sys-color-surface-container-low); --_fg: var(--md-sys-color-primary); --_elevation: var(--md-sys-elevation-level1); }
   @media (hover: hover) { .s4-button[data-variant="elevated"]:hover:not(:disabled) { --_elevation: var(--md-sys-elevation-level2); } }
   .s4-button[data-variant="text"] { --_bg: transparent; --_fg: var(--md-sys-color-primary); --_pad: var(--s4-space-3); }
@@ -78,21 +78,21 @@
   /* destructive: the confirm button of a destructive dialog, or the action in a danger zone */
   .s4-button[data-color="error"] { --_bg: var(--md-sys-color-error); --_fg: var(--md-sys-color-on-error); }
   .s4-button[data-color="error"]:where([data-variant="tonal"]) { --_bg: var(--md-sys-color-error-container); --_fg: var(--md-sys-color-on-error-container); }
-  .s4-button[data-color="error"]:where([data-variant="outlined"], [data-variant="text"]) { --_bg: transparent; --_fg: var(--md-sys-color-error); }
-  .s4-button[data-color="error"][data-variant="outlined"] { --_outline: var(--md-sys-color-error); }
+  .s4-button[data-color="error"]:where([data-variant="text"]) { --_bg: transparent; --_fg: var(--md-sys-color-error); }
+  .s4-button[data-color="error"][data-variant="outlined"] { --_bg: var(--md-sys-color-error-container); --_fg: var(--md-sys-color-on-error-container); }
 
   /* ---------- sizes (M3 Expressive: xs 32, s 40, m 56, l 96, xl 136) ---------- */
   .s4-button[data-size="xs"] { --_h: var(--s4-size-button-small); --_pad: var(--s4-space-3); --_gap: var(--s4-space-1); }
   .s4-button[data-size="m"] {
-    --_h: var(--s4-size-button-medium); --_pad: var(--s4-space-6); --_icon: var(--s4-size-icon); --_radius-pressed: var(--md-sys-shape-corner-medium); --_radius-selected: var(--md-sys-shape-corner-large);
+    --_h: var(--s4-size-button-medium); --_pad: var(--s4-space-6); --_icon: var(--s4-size-icon); --_radius-pressed: var(--md-sys-shape-corner-medium); --_radius-selected: var(--_radius);
     --_font: var(--md-sys-typescale-title-medium-font); --_size: var(--md-sys-typescale-title-medium-size); --_line: var(--md-sys-typescale-title-medium-line-height); --_track: var(--md-sys-typescale-title-medium-tracking); --_weight: var(--md-sys-typescale-title-medium-weight);
   }
   .s4-button[data-size="l"] {
-    --_h: var(--s4-size-button-large); --_pad: var(--s4-space-12); --_gap: var(--s4-space-3); --_icon: var(--s4-size-icon-large); --_radius-pressed: var(--md-sys-shape-corner-large); --_radius-selected: var(--md-sys-shape-corner-extra-large);
+    --_h: var(--s4-size-button-large); --_pad: var(--s4-space-12); --_gap: var(--s4-space-3); --_icon: var(--s4-size-icon-large); --_radius-pressed: var(--md-sys-shape-corner-large); --_radius-selected: var(--_radius);
     --_font: var(--md-sys-typescale-headline-small-font); --_size: var(--md-sys-typescale-headline-small-size); --_line: var(--md-sys-typescale-headline-small-line-height); --_track: var(--md-sys-typescale-headline-small-tracking); --_weight: var(--md-sys-typescale-headline-small-weight);
   }
   .s4-button[data-size="xl"] {
-    --_h: var(--s4-size-button-extra-large); --_pad: var(--s4-space-16); --_gap: var(--s4-space-4); --_icon: var(--s4-space-10); --_radius-pressed: var(--md-sys-shape-corner-large); --_radius-selected: var(--md-sys-shape-corner-extra-large);
+    --_h: var(--s4-size-button-extra-large); --_pad: var(--s4-space-16); --_gap: var(--s4-space-4); --_icon: var(--s4-space-10); --_radius-pressed: var(--md-sys-shape-corner-large); --_radius-selected: var(--_radius);
     --_font: var(--md-sys-typescale-headline-large-font); --_size: var(--md-sys-typescale-headline-large-size); --_line: var(--md-sys-typescale-headline-large-line-height); --_track: var(--md-sys-typescale-headline-large-tracking); --_weight: var(--md-sys-typescale-headline-large-weight);
   }
   .s4-button[data-shape="square"] { --_radius: var(--_radius-selected); }
@@ -101,8 +101,8 @@
   .s4-button[aria-pressed="false"] { --_bg: var(--md-sys-color-surface-container); --_fg: var(--md-sys-color-on-surface-variant); }
   .s4-button[aria-pressed="false"]:where([data-variant="tonal"]) { --_bg: var(--md-sys-color-secondary-container); --_fg: var(--md-sys-color-on-secondary-container); }
   .s4-button[aria-pressed="true"]:where([data-variant="tonal"]) { --_bg: var(--md-sys-color-secondary); --_fg: var(--md-sys-color-on-secondary); }
-  .s4-button[aria-pressed="false"]:where([data-variant="outlined"]) { --_bg: transparent; --_fg: var(--md-sys-color-on-surface-variant); }
-  .s4-button[aria-pressed="true"]:where([data-variant="outlined"]) { --_bg: var(--md-sys-color-inverse-surface); --_fg: var(--md-sys-color-inverse-on-surface); --_outline: transparent; }
+  .s4-button[aria-pressed="false"]:where([data-variant="outlined"]) { --_bg: var(--md-sys-color-surface-container-highest); --_fg: var(--md-sys-color-on-surface-variant); }
+  .s4-button[aria-pressed="true"]:where([data-variant="outlined"]) { --_bg: var(--md-sys-color-inverse-surface); --_fg: var(--md-sys-color-inverse-on-surface); }
   .s4-button[aria-pressed="true"] { --_radius: var(--_radius-selected); }
 
   /* ---------- disabled (M3: on-surface at 12% container, 38% content) ---------- */
@@ -112,7 +112,6 @@
     --_elevation: var(--md-sys-elevation-level0);
   }
   .s4-button.s4-button:is(:disabled, [aria-disabled="true"]):is([data-variant="text"]) { --_bg: transparent; }
-  .s4-button.s4-button:is(:disabled, [aria-disabled="true"]):is([data-variant="outlined"]) { --_bg: transparent; --_outline: color-mix(in srgb, var(--md-sys-color-on-surface) calc(var(--md-sys-state-disabled-container-opacity) * 100%), transparent); }
 
   /* forced colors: outlines and fills are dropped by the browser, so draw a real border */
   @media (forced-colors: active) {

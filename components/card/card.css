@@ -46,9 +46,8 @@
     --_elevation: var(--md-sys-elevation-level0);
     --_elevation-hover: var(--md-sys-elevation-level1);
   }
-  .s4-card[data-variant="outlined"] {
-    --_bg: var(--md-sys-color-surface);
-    --_outline: var(--md-sys-color-outline-variant);
+  .s4-card[data-variant="outlined"] {   /* decision 0023: filled, never outlined */
+    --_bg: var(--md-sys-color-surface-container-highest);
     --_elevation: var(--md-sys-elevation-level0);
     --_elevation-hover: var(--md-sys-elevation-level1);
   }
@@ -135,9 +134,6 @@
   }
   .s4-card[data-variant="filled"]:is(:disabled, [aria-disabled="true"]) {
     --_bg: color-mix(in srgb, var(--md-sys-color-surface-variant) calc(var(--md-sys-state-disabled-content-opacity) * 100%), transparent);
-  }
-  .s4-card[data-variant="outlined"]:is(:disabled, [aria-disabled="true"]) {
-    --_outline: color-mix(in srgb, var(--md-sys-color-on-surface) calc(var(--md-sys-state-disabled-container-opacity) * 100%), transparent);
   }
   .s4-card:is(:disabled, [aria-disabled="true"]) .s4-card-media { opacity: var(--md-sys-state-disabled-content-opacity); }
 

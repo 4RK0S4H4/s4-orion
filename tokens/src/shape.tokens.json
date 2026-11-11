@@ -78,20 +78,20 @@
         "$description": "All button sizes at rest (M3 Expressive round buttons)."
       },
       "button-pressed": {
-        "$value": "{md.sys.shape.corner.small}",
+        "$value": "{md.sys.shape.corner.large}",
         "$description": "Buttons square off while pressed (M3 Expressive shape morph)."
       },
       "icon-button": {
         "$value": "{md.sys.shape.corner.full}"
       },
       "fab": {
-        "$value": "{md.sys.shape.corner.large}"
+        "$value": "{md.sys.shape.corner.full}"
       },
       "fab-large": {
-        "$value": "{md.sys.shape.corner.extra-large}"
+        "$value": "{md.sys.shape.corner.full}"
       },
       "chip": {
-        "$value": "{md.sys.shape.corner.small}"
+        "$value": "{md.sys.shape.corner.full}"
       },
       "card": {
         "$value": "{md.sys.shape.corner.medium}"
@@ -108,14 +108,14 @@
         "$description": "Outer corners of a segmented list group."
       },
       "text-field": {
-        "$value": "{md.sys.shape.corner.medium}",
+        "$value": "{md.sys.shape.corner.full}",
         "$description": "All corners of a text field (the Quiet Box)."
       },
       "menu": {
         "$value": "{md.sys.shape.corner.extra-large}"
       },
       "menu-item": {
-        "$value": "{md.sys.shape.corner.large}"
+        "$value": "{md.sys.shape.corner.full}"
       },
       "dialog": {
         "$value": "{md.sys.shape.corner.extra-large}"
@@ -125,10 +125,10 @@
         "$description": "Top corners of a bottom sheet; the edge that meets the screen stays square."
       },
       "snackbar": {
-        "$value": "{md.sys.shape.corner.extra-small}"
+        "$value": "{md.sys.shape.corner.full}"
       },
       "tooltip": {
-        "$value": "{md.sys.shape.corner.extra-small}"
+        "$value": "{md.sys.shape.corner.full}"
       },
       "nav-indicator": {
         "$value": "{md.sys.shape.corner.full}"

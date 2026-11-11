@@ -5,7 +5,7 @@
      <button class="s4-chip" data-type="filter" aria-pressed="false" type="button">Utilities</button>
      <span class="s4-chip" data-type="input">Office<button class="s4-chip-remove" type="button" aria-label="Remove Office"></button></span>
    </div>
-   32dp, corner --s4-shape-chip, 1dp outline-variant outline. Selected filter chips are secondary-container with no outline
+   32dp pill, filled surface-container-highest (decision 0023: no outlines). Selected filter chips are inverse-surface
    and a check that slides in (chip.js adds .s4-chip-check). data-elevated swaps the outline for a level-1 shadow.
    Leading .s4-icon or .s4-chip-avatar (24dp image or initials). chip.js fires s4-change { pressed } on filter chips and
    s4-remove (cancelable) on input chips before removing them. */
@@ -33,10 +33,10 @@
     --_pad-start: var(--s4-space-4);
     --_pad-end: var(--s4-space-4);
     --_gap: var(--s4-space-2);
-    --_bg: transparent;
+    --_bg: var(--md-sys-color-surface-container-highest);   /* decision 0023: filled, never outlined */
     --_fg: var(--md-sys-color-on-surface);
     --_icon-color: var(--md-sys-color-primary);
-    --_outline: var(--md-sys-color-outline-variant);
+    --_outline: transparent;
     --_elevation: var(--md-sys-elevation-level0);
     --_spatial: var(--md-sys-motion-spring-fast-spatial-duration) var(--md-sys-motion-spring-fast-spatial);
     --_effects: var(--md-sys-motion-spring-fast-effects-duration) var(--md-sys-motion-spring-fast-effects);
@@ -51,7 +51,7 @@
     border-radius: var(--s4-shape-chip);
     background: var(--_bg);
     color: var(--_fg);
-    box-shadow: inset 0 0 0 1px var(--_outline), var(--_elevation);
+    box-shadow: var(--_elevation);
     font-family: var(--md-sys-typescale-label-large-font);
     font-size: var(--md-sys-typescale-label-large-size);
     line-height: var(--md-sys-typescale-label-large-line-height);
@@ -107,10 +107,9 @@
   }
   .s4-chip[data-type="filter"] > .s4-icon { transition: width var(--_spatial), margin var(--_spatial), opacity var(--_effects); }
   .s4-chip[aria-pressed="true"] {
-    --_bg: var(--md-sys-color-secondary-container);
-    --_fg: var(--md-sys-color-on-secondary-container);
-    --_icon-color: var(--md-sys-color-on-secondary-container);
-    --_outline: transparent;
+    --_bg: var(--md-sys-color-inverse-surface);
+    --_fg: var(--md-sys-color-inverse-on-surface);
+    --_icon-color: var(--md-sys-color-inverse-on-surface);
     --_pad-start: var(--s4-space-2);
   }
   .s4-chip[aria-pressed="true"] > .s4-chip-check { width: var(--_icon); margin-inline-end: 0; }

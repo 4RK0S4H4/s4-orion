@@ -50,7 +50,7 @@
     height: var(--_h);
     border-radius: var(--md-sys-shape-corner-full);
     background: var(--_track);
-    box-shadow: inset 0 0 0 2px var(--_border);
+    
     transition: background-color var(--_effects), box-shadow var(--_effects);
   }
   /* 48dp touch target */

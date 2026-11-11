@@ -47,14 +47,14 @@
   .s4-button-group[data-connected]:has(> [data-size="xl"]) { --_inner: var(--md-sys-shape-corner-large); --_inner-pressed: var(--md-sys-shape-corner-medium); }
 
   .s4-button-group[data-connected] > :is(.s4-button, .s4-icon-button) {
-    --_r: var(--_inner);
+    --_r: var(--_full);   /* decision 0023: every button is a pill */
     --_full: calc(var(--_h) / 2);   /* a finite "full": with 9999px the browser scales every corner of the button down to nothing, so the inner corners rendered square */
     flex: 1 1 0;
     min-width: max-content;
     border-radius: var(--_r);
   }
   .s4-button-group[data-connected][data-fit="content"] > :is(.s4-button, .s4-icon-button) { flex: none; }
-  .s4-button-group[data-connected] > :is(.s4-button, .s4-icon-button):active:not(:disabled) { --_r: var(--_inner-pressed); }
+  .s4-button-group[data-connected] > :is(.s4-button, .s4-icon-button):active:not(:disabled) { --_r: calc(var(--_full) * 0.8); }
   .s4-button-group[data-connected] > :is(.s4-button, .s4-icon-button):first-child {
     border-start-start-radius: var(--_full);
     border-end-start-radius: var(--_full);

@@ -14,8 +14,8 @@
    without a label is just the box. Parts are placed on a grid, so their source order only matters for leading vs trailing icons. */
 @layer s4.components {
   .s4-text-field {
-    --_bg: var(--md-sys-color-surface);
-    --_outline: var(--md-sys-color-outline-variant);
+    --_bg: var(--md-sys-color-surface-container-highest);
+    --_outline: transparent;
     --_ring: 0px;
     --_ring-color: var(--md-sys-color-on-surface);
     --_label: var(--md-sys-color-on-surface-variant);
@@ -137,9 +137,11 @@
   .s4-text-field-counter { justify-self: end; color: var(--md-sys-color-on-surface-variant); font-variant-numeric: tabular-nums; }
   .s4-text-field:has(> .s4-text-field-counter) > .s4-text-field-supporting { padding-inline-end: var(--s4-space-16); }
 
+  .s4-text-field:has(> textarea)::before { border-radius: var(--md-sys-shape-corner-extra-large); }   /* a pill would clip multi-line text */
+
   /* ---------- states ---------- */
   @media (hover: hover) {
-    .s4-text-field:hover:not(:has(> :is(input, select, textarea):focus)) { --_outline: var(--md-sys-color-outline); }
+    .s4-text-field:hover:not(:has(> :is(input, select, textarea):focus)) { --_bg: var(--md-sys-color-surface-container-high); }
   }
   .s4-text-field:has(> :is(input, select, textarea):focus) {
     --_outline: var(--md-sys-color-on-surface);

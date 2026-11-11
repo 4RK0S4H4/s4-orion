@@ -1246,7 +1246,7 @@ export const tokens = {
   },
   "--s4-shape-button-pressed": {
     "type": "dimension",
-    "value": "var(--md-sys-shape-corner-small)",
+    "value": "var(--md-sys-shape-corner-large)",
     "description": "Buttons square off while pressed (M3 Expressive shape morph)."
   },
   "--s4-shape-icon-button": {
@@ -1255,15 +1255,15 @@ export const tokens = {
   },
   "--s4-shape-fab": {
     "type": "dimension",
-    "value": "var(--md-sys-shape-corner-large)"
+    "value": "var(--md-sys-shape-corner-full)"
   },
   "--s4-shape-fab-large": {
     "type": "dimension",
-    "value": "var(--md-sys-shape-corner-extra-large)"
+    "value": "var(--md-sys-shape-corner-full)"
   },
   "--s4-shape-chip": {
     "type": "dimension",
-    "value": "var(--md-sys-shape-corner-small)"
+    "value": "var(--md-sys-shape-corner-full)"
   },
   "--s4-shape-card": {
     "type": "dimension",
@@ -1285,7 +1285,7 @@ export const tokens = {
   },
   "--s4-shape-text-field": {
     "type": "dimension",
-    "value": "var(--md-sys-shape-corner-medium)",
+    "value": "var(--md-sys-shape-corner-full)",
     "description": "All corners of a text field (the Quiet Box)."
   },
   "--s4-shape-menu": {
@@ -1294,7 +1294,7 @@ export const tokens = {
   },
   "--s4-shape-menu-item": {
     "type": "dimension",
-    "value": "var(--md-sys-shape-corner-large)"
+    "value": "var(--md-sys-shape-corner-full)"
   },
   "--s4-shape-dialog": {
     "type": "dimension",
@@ -1307,11 +1307,11 @@ export const tokens = {
   },
   "--s4-shape-snackbar": {
     "type": "dimension",
-    "value": "var(--md-sys-shape-corner-extra-small)"
+    "value": "var(--md-sys-shape-corner-full)"
   },
   "--s4-shape-tooltip": {
     "type": "dimension",
-    "value": "var(--md-sys-shape-corner-extra-small)"
+    "value": "var(--md-sys-shape-corner-full)"
   },
   "--s4-shape-nav-indicator": {
     "type": "dimension",

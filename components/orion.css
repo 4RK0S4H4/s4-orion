@@ -226,22 +226,22 @@
     --s4-motion-pattern-shared-axis-distance: 30px;
     --s4-motion-pattern-unfold-start-scale: 0;
     --s4-shape-button: var(--md-sys-shape-corner-full);
-    --s4-shape-button-pressed: var(--md-sys-shape-corner-small);
+    --s4-shape-button-pressed: var(--md-sys-shape-corner-large);
     --s4-shape-icon-button: var(--md-sys-shape-corner-full);
-    --s4-shape-fab: var(--md-sys-shape-corner-large);
-    --s4-shape-fab-large: var(--md-sys-shape-corner-extra-large);
-    --s4-shape-chip: var(--md-sys-shape-corner-small);
+    --s4-shape-fab: var(--md-sys-shape-corner-full);
+    --s4-shape-fab-large: var(--md-sys-shape-corner-full);
+    --s4-shape-chip: var(--md-sys-shape-corner-full);
     --s4-shape-card: var(--md-sys-shape-corner-medium);
     --s4-shape-pane: var(--md-sys-shape-corner-large);
     --s4-shape-list-segment: var(--md-sys-shape-corner-extra-small);
     --s4-shape-list-group: var(--md-sys-shape-corner-large);
-    --s4-shape-text-field: var(--md-sys-shape-corner-medium);
+    --s4-shape-text-field: var(--md-sys-shape-corner-full);
     --s4-shape-menu: var(--md-sys-shape-corner-extra-large);
-    --s4-shape-menu-item: var(--md-sys-shape-corner-large);
+    --s4-shape-menu-item: var(--md-sys-shape-corner-full);
     --s4-shape-dialog: var(--md-sys-shape-corner-extra-large);
     --s4-shape-sheet: var(--md-sys-shape-corner-extra-large);
-    --s4-shape-snackbar: var(--md-sys-shape-corner-extra-small);
-    --s4-shape-tooltip: var(--md-sys-shape-corner-extra-small);
+    --s4-shape-snackbar: var(--md-sys-shape-corner-full);
+    --s4-shape-tooltip: var(--md-sys-shape-corner-full);
     --s4-shape-nav-indicator: var(--md-sys-shape-corner-full);
     --s4-shape-toolbar: var(--md-sys-shape-corner-full);
     --s4-shape-search: var(--md-sys-shape-corner-full);
@@ -1026,7 +1026,7 @@
     --_icon: var(--s4-size-icon-small);
     --_radius: calc(var(--_h) / 2);   /* fully round = half the height. A literal 9999px makes the press/toggle morph sit unseen until its last few percent, then snap, and in a connected group squashes the other corners */
     --_radius-pressed: var(--s4-shape-button-pressed);
-    --_radius-selected: var(--md-sys-shape-corner-medium);
+    --_radius-selected: var(--_radius);
     --_font: var(--md-sys-typescale-label-large-font);
     --_size: var(--md-sys-typescale-label-large-size);
     --_line: var(--md-sys-typescale-label-large-line-height);
@@ -1081,7 +1081,7 @@
 
   /* ---------- variants ---------- */
   .s4-button[data-variant="tonal"] { --_bg: var(--md-sys-color-secondary-container); --_fg: var(--md-sys-color-on-secondary-container); }
-  .s4-button[data-variant="outlined"] { --_bg: transparent; --_fg: var(--md-sys-color-on-surface-variant); --_outline: var(--md-sys-color-outline-variant); }
+  .s4-button[data-variant="outlined"] { --_bg: var(--md-sys-color-surface-container-highest); --_fg: var(--md-sys-color-on-surface); }   /* decision 0023: no outlined elements, the old name now draws a filled button */
   .s4-button[data-variant="elevated"] { --_bg: var(--md-sys-color-surface-container-low); --_fg: var(--md-sys-color-primary); --_elevation: var(--md-sys-elevation-level1); }
   @media (hover: hover) { .s4-button[data-variant="elevated"]:hover:not(:disabled) { --_elevation: var(--md-sys-elevation-level2); } }
   .s4-button[data-variant="text"] { --_bg: transparent; --_fg: var(--md-sys-color-primary); --_pad: var(--s4-space-3); }
@@ -1089,21 +1089,21 @@
   /* destructive: the confirm button of a destructive dialog, or the action in a danger zone */
   .s4-button[data-color="error"] { --_bg: var(--md-sys-color-error); --_fg: var(--md-sys-color-on-error); }
   .s4-button[data-color="error"]:where([data-variant="tonal"]) { --_bg: var(--md-sys-color-error-container); --_fg: var(--md-sys-color-on-error-container); }
-  .s4-button[data-color="error"]:where([data-variant="outlined"], [data-variant="text"]) { --_bg: transparent; --_fg: var(--md-sys-color-error); }
-  .s4-button[data-color="error"][data-variant="outlined"] { --_outline: var(--md-sys-color-error); }
+  .s4-button[data-color="error"]:where([data-variant="text"]) { --_bg: transparent; --_fg: var(--md-sys-color-error); }
+  .s4-button[data-color="error"][data-variant="outlined"] { --_bg: var(--md-sys-color-error-container); --_fg: var(--md-sys-color-on-error-container); }
 
   /* ---------- sizes (M3 Expressive: xs 32, s 40, m 56, l 96, xl 136) ---------- */
   .s4-button[data-size="xs"] { --_h: var(--s4-size-button-small); --_pad: var(--s4-space-3); --_gap: var(--s4-space-1); }
   .s4-button[data-size="m"] {
-    --_h: var(--s4-size-button-medium); --_pad: var(--s4-space-6); --_icon: var(--s4-size-icon); --_radius-pressed: var(--md-sys-shape-corner-medium); --_radius-selected: var(--md-sys-shape-corner-large);
+    --_h: var(--s4-size-button-medium); --_pad: var(--s4-space-6); --_icon: var(--s4-size-icon); --_radius-pressed: var(--md-sys-shape-corner-medium); --_radius-selected: var(--_radius);
     --_font: var(--md-sys-typescale-title-medium-font); --_size: var(--md-sys-typescale-title-medium-size); --_line: var(--md-sys-typescale-title-medium-line-height); --_track: var(--md-sys-typescale-title-medium-tracking); --_weight: var(--md-sys-typescale-title-medium-weight);
   }
   .s4-button[data-size="l"] {
-    --_h: var(--s4-size-button-large); --_pad: var(--s4-space-12); --_gap: var(--s4-space-3); --_icon: var(--s4-size-icon-large); --_radius-pressed: var(--md-sys-shape-corner-large); --_radius-selected: var(--md-sys-shape-corner-extra-large);
+    --_h: var(--s4-size-button-large); --_pad: var(--s4-space-12); --_gap: var(--s4-space-3); --_icon: var(--s4-size-icon-large); --_radius-pressed: var(--md-sys-shape-corner-large); --_radius-selected: var(--_radius);
     --_font: var(--md-sys-typescale-headline-small-font); --_size: var(--md-sys-typescale-headline-small-size); --_line: var(--md-sys-typescale-headline-small-line-height); --_track: var(--md-sys-typescale-headline-small-tracking); --_weight: var(--md-sys-typescale-headline-small-weight);
   }
   .s4-button[data-size="xl"] {
-    --_h: var(--s4-size-button-extra-large); --_pad: var(--s4-space-16); --_gap: var(--s4-space-4); --_icon: var(--s4-space-10); --_radius-pressed: var(--md-sys-shape-corner-large); --_radius-selected: var(--md-sys-shape-corner-extra-large);
+    --_h: var(--s4-size-button-extra-large); --_pad: var(--s4-space-16); --_gap: var(--s4-space-4); --_icon: var(--s4-space-10); --_radius-pressed: var(--md-sys-shape-corner-large); --_radius-selected: var(--_radius);
     --_font: var(--md-sys-typescale-headline-large-font); --_size: var(--md-sys-typescale-headline-large-size); --_line: var(--md-sys-typescale-headline-large-line-height); --_track: var(--md-sys-typescale-headline-large-tracking); --_weight: var(--md-sys-typescale-headline-large-weight);
   }
   .s4-button[data-shape="square"] { --_radius: var(--_radius-selected); }
@@ -1112,8 +1112,8 @@
   .s4-button[aria-pressed="false"] { --_bg: var(--md-sys-color-surface-container); --_fg: var(--md-sys-color-on-surface-variant); }
   .s4-button[aria-pressed="false"]:where([data-variant="tonal"]) { --_bg: var(--md-sys-color-secondary-container); --_fg: var(--md-sys-color-on-secondary-container); }
   .s4-button[aria-pressed="true"]:where([data-variant="tonal"]) { --_bg: var(--md-sys-color-secondary); --_fg: var(--md-sys-color-on-secondary); }
-  .s4-button[aria-pressed="false"]:where([data-variant="outlined"]) { --_bg: transparent; --_fg: var(--md-sys-color-on-surface-variant); }
-  .s4-button[aria-pressed="true"]:where([data-variant="outlined"]) { --_bg: var(--md-sys-color-inverse-surface); --_fg: var(--md-sys-color-inverse-on-surface); --_outline: transparent; }
+  .s4-button[aria-pressed="false"]:where([data-variant="outlined"]) { --_bg: var(--md-sys-color-surface-container-highest); --_fg: var(--md-sys-color-on-surface-variant); }
+  .s4-button[aria-pressed="true"]:where([data-variant="outlined"]) { --_bg: var(--md-sys-color-inverse-surface); --_fg: var(--md-sys-color-inverse-on-surface); }
   .s4-button[aria-pressed="true"] { --_radius: var(--_radius-selected); }
 
   /* ---------- disabled (M3: on-surface at 12% container, 38% content) ---------- */
@@ -1123,7 +1123,6 @@
     --_elevation: var(--md-sys-elevation-level0);
   }
   .s4-button.s4-button:is(:disabled, [aria-disabled="true"]):is([data-variant="text"]) { --_bg: transparent; }
-  .s4-button.s4-button:is(:disabled, [aria-disabled="true"]):is([data-variant="outlined"]) { --_bg: transparent; --_outline: color-mix(in srgb, var(--md-sys-color-on-surface) calc(var(--md-sys-state-disabled-container-opacity) * 100%), transparent); }
 
   /* forced colors: outlines and fills are dropped by the browser, so draw a real border */
   @media (forced-colors: active) {
@@ -1196,7 +1195,7 @@
   /* ---------- variants ---------- */
   .s4-icon-button[data-variant="filled"] { --_bg: var(--md-sys-color-primary); --_fg: var(--md-sys-color-on-primary); }
   .s4-icon-button[data-variant="tonal"] { --_bg: var(--md-sys-color-secondary-container); --_fg: var(--md-sys-color-on-secondary-container); }
-  .s4-icon-button[data-variant="outlined"] { --_outline: var(--md-sys-color-outline-variant); }
+  .s4-icon-button[data-variant="outlined"] { --_bg: var(--md-sys-color-surface-container-highest); }   /* decision 0023: filled */
 
   /* ---------- sizes (M3 Expressive: xs 32, s 40, m 56, l 96, xl 136; icons 20 / 24 / 24 / 32 / 40) ----------
      widths per size: narrow / default / wide = xs 28/32/40, s 32/40/52, m 48/56/72, l 64/96/128, xl 104/136/184 */
@@ -1235,12 +1234,11 @@
      M3 Expressive: standard selected = primary icon; filled unselected = surface-container, selected = primary;
      tonal unselected = secondary-container, selected = secondary; outlined selected = inverse-surface.
      Selected swaps the shape: round -> square, square -> round. */
-  .s4-icon-button[aria-pressed="true"] { --_fg: var(--md-sys-color-primary); --_radius: var(--_radius-square); }
-  .s4-icon-button[aria-pressed="true"][data-shape="square"] { --_radius: var(--_radius-round); }
+  .s4-icon-button[aria-pressed="true"] { --_fg: var(--md-sys-color-primary); }
   .s4-icon-button[data-variant="filled"][aria-pressed="false"] { --_bg: var(--md-sys-color-surface-container); --_fg: var(--md-sys-color-on-surface-variant); }
   .s4-icon-button[data-variant="filled"][aria-pressed="true"] { --_bg: var(--md-sys-color-primary); --_fg: var(--md-sys-color-on-primary); }
   .s4-icon-button[data-variant="tonal"][aria-pressed="true"] { --_bg: var(--md-sys-color-secondary); --_fg: var(--md-sys-color-on-secondary); }
-  .s4-icon-button[data-variant="outlined"][aria-pressed="true"] { --_bg: var(--md-sys-color-inverse-surface); --_fg: var(--md-sys-color-inverse-on-surface); --_outline: transparent; }
+  .s4-icon-button[data-variant="outlined"][aria-pressed="true"] { --_bg: var(--md-sys-color-inverse-surface); --_fg: var(--md-sys-color-inverse-on-surface); }
 
   /* ---------- disabled (M3: on-surface at 12% container, 38% content) ---------- */
   .s4-icon-button:is(:disabled, [aria-disabled="true"]) {
@@ -1248,10 +1246,6 @@
   }
   .s4-icon-button:is(:disabled, [aria-disabled="true"]):is([data-variant="filled"], [data-variant="tonal"]) {
     --_bg: color-mix(in srgb, var(--md-sys-color-on-surface) calc(var(--md-sys-state-disabled-container-opacity) * 100%), transparent);
-  }
-  .s4-icon-button:is(:disabled, [aria-disabled="true"])[data-variant="outlined"] {
-    --_bg: transparent;
-    --_outline: color-mix(in srgb, var(--md-sys-color-on-surface) calc(var(--md-sys-state-disabled-container-opacity) * 100%), transparent);
   }
 
   @media (forced-colors: active) {
@@ -1310,14 +1304,14 @@
   .s4-button-group[data-connected]:has(> [data-size="xl"]) { --_inner: var(--md-sys-shape-corner-large); --_inner-pressed: var(--md-sys-shape-corner-medium); }
 
   .s4-button-group[data-connected] > :is(.s4-button, .s4-icon-button) {
-    --_r: var(--_inner);
+    --_r: var(--_full);   /* decision 0023: every button is a pill */
     --_full: calc(var(--_h) / 2);   /* a finite "full": with 9999px the browser scales every corner of the button down to nothing, so the inner corners rendered square */
     flex: 1 1 0;
     min-width: max-content;
     border-radius: var(--_r);
   }
   .s4-button-group[data-connected][data-fit="content"] > :is(.s4-button, .s4-icon-button) { flex: none; }
-  .s4-button-group[data-connected] > :is(.s4-button, .s4-icon-button):active:not(:disabled) { --_r: var(--_inner-pressed); }
+  .s4-button-group[data-connected] > :is(.s4-button, .s4-icon-button):active:not(:disabled) { --_r: calc(var(--_full) * 0.8); }
   .s4-button-group[data-connected] > :is(.s4-button, .s4-icon-button):first-child {
     border-start-start-radius: var(--_full);
     border-end-start-radius: var(--_full);
@@ -2395,9 +2389,8 @@
     --_elevation: var(--md-sys-elevation-level0);
     --_elevation-hover: var(--md-sys-elevation-level1);
   }
-  .s4-card[data-variant="outlined"] {
-    --_bg: var(--md-sys-color-surface);
-    --_outline: var(--md-sys-color-outline-variant);
+  .s4-card[data-variant="outlined"] {   /* decision 0023: filled, never outlined */
+    --_bg: var(--md-sys-color-surface-container-highest);
     --_elevation: var(--md-sys-elevation-level0);
     --_elevation-hover: var(--md-sys-elevation-level1);
   }
@@ -2484,9 +2477,6 @@
   }
   .s4-card[data-variant="filled"]:is(:disabled, [aria-disabled="true"]) {
     --_bg: color-mix(in srgb, var(--md-sys-color-surface-variant) calc(var(--md-sys-state-disabled-content-opacity) * 100%), transparent);
-  }
-  .s4-card[data-variant="outlined"]:is(:disabled, [aria-disabled="true"]) {
-    --_outline: color-mix(in srgb, var(--md-sys-color-on-surface) calc(var(--md-sys-state-disabled-container-opacity) * 100%), transparent);
   }
   .s4-card:is(:disabled, [aria-disabled="true"]) .s4-card-media { opacity: var(--md-sys-state-disabled-content-opacity); }
 
@@ -3167,8 +3157,8 @@
    without a label is just the box. Parts are placed on a grid, so their source order only matters for leading vs trailing icons. */
 @layer s4.components {
   .s4-text-field {
-    --_bg: var(--md-sys-color-surface);
-    --_outline: var(--md-sys-color-outline-variant);
+    --_bg: var(--md-sys-color-surface-container-highest);
+    --_outline: transparent;
     --_ring: 0px;
     --_ring-color: var(--md-sys-color-on-surface);
     --_label: var(--md-sys-color-on-surface-variant);
@@ -3290,9 +3280,11 @@
   .s4-text-field-counter { justify-self: end; color: var(--md-sys-color-on-surface-variant); font-variant-numeric: tabular-nums; }
   .s4-text-field:has(> .s4-text-field-counter) > .s4-text-field-supporting { padding-inline-end: var(--s4-space-16); }
 
+  .s4-text-field:has(> textarea)::before { border-radius: var(--md-sys-shape-corner-extra-large); }   /* a pill would clip multi-line text */
+
   /* ---------- states ---------- */
   @media (hover: hover) {
-    .s4-text-field:hover:not(:has(> :is(input, select, textarea):focus)) { --_outline: var(--md-sys-color-outline); }
+    .s4-text-field:hover:not(:has(> :is(input, select, textarea):focus)) { --_bg: var(--md-sys-color-surface-container-high); }
   }
   .s4-text-field:has(> :is(input, select, textarea):focus) {
     --_outline: var(--md-sys-color-on-surface);
@@ -3380,7 +3372,7 @@
     height: var(--_h);
     border-radius: var(--md-sys-shape-corner-full);
     background: var(--_track);
-    box-shadow: inset 0 0 0 2px var(--_border);
+    
     transition: background-color var(--_effects), box-shadow var(--_effects);
   }
   /* 48dp touch target */
@@ -3504,8 +3496,8 @@
    40dp circular state layer around the box; 48dp touch target. */
 @layer s4.components {
   .s4-checkbox {
-    --_border: var(--md-sys-color-outline);
-    --_fill: transparent;
+    --_border: transparent;
+    --_fill: var(--md-sys-color-surface-container-highest);
     --_mark: var(--md-sys-color-on-primary);
     --_state: var(--md-sys-color-on-surface);
     --_box: calc(var(--s4-space-4) + var(--s4-space-1));   /* 20dp */
@@ -3547,8 +3539,8 @@
     width: var(--_box);
     height: var(--_box);
     margin: calc((var(--_layer) - var(--_box)) / 2);
-    border: 1.5px solid var(--_border);
-    border-radius: calc(var(--md-sys-shape-corner-extra-small) * 1.5);   /* soft square: 6dp */
+    border: 0;
+    border-radius: var(--md-sys-shape-corner-full);   /* decision 0023: a filled circle, no outline */
     background: var(--_fill);
     transition: background-color var(--_effects), border-color var(--_effects);
   }
@@ -3596,7 +3588,7 @@
   /* ---------- hover, focus, pressed ---------- */
   @media (hover: hover) {
     .s4-checkbox:hover:not(:has(> input:disabled)) .s4-checkbox-box::before { opacity: var(--md-sys-state-hover-state-layer-opacity); }
-    .s4-checkbox:hover:not(:has(> input:disabled)):not(:has(> input:is(:checked, :indeterminate))) { --_border: var(--md-sys-color-on-surface); }
+    .s4-checkbox:hover:not(:has(> input:disabled)):not(:has(> input:is(:checked, :indeterminate))) { --_fill: var(--md-sys-color-surface-container-high); }
   }
   .s4-checkbox:has(> input:focus-visible) .s4-checkbox-box::before {
     opacity: var(--md-sys-state-focus-state-layer-opacity);
@@ -3647,8 +3639,9 @@
     min-inline-size: 0;
     margin: 0;
     padding: var(--s4-space-1) var(--s4-space-4) var(--s4-space-2);
-    border: 1px solid var(--md-sys-color-outline-variant);
-    border-radius: var(--md-sys-shape-corner-medium);
+    border: 0;
+    background: var(--md-sys-color-surface-container);
+    border-radius: var(--md-sys-shape-corner-extra-large);
   }
   fieldset:has(> :is(.s4-radio, .s4-checkbox)) > legend { padding-inline: var(--s4-space-2); color: var(--md-sys-color-on-surface-variant); }
   .s4-radio {
@@ -3692,9 +3685,10 @@
     width: var(--_size);
     height: var(--_size);
     margin: calc((var(--_layer) - var(--_size)) / 2);
-    border: 2px solid var(--_ring);
+    border: 0;
+    background: var(--md-sys-color-surface-container-highest);   /* decision 0023: a filled disc, no outline */
     border-radius: var(--md-sys-shape-corner-full);
-    transition: border-color var(--_effects);
+    transition: background-color var(--_effects);
   }
   .s4-radio-ring::before {
     content: "";
@@ -3719,16 +3713,16 @@
     width: calc(var(--_size) / 2);
     height: calc(var(--_size) / 2);
     border-radius: var(--md-sys-shape-corner-full);
-    background: var(--_ring);
+    background: var(--md-sys-color-on-primary);
     transform: translate(-50%, -50%) scale(0);
     transition: transform var(--md-sys-motion-spring-fast-spatial-duration) var(--md-sys-motion-spring-fast-spatial), background-color var(--_effects);
   }
-  .s4-radio:has(> input:checked) { --_ring: var(--md-sys-color-primary); --_state: var(--md-sys-color-primary); }
+  .s4-radio:has(> input:checked) { --_state: var(--md-sys-color-primary); }
+  .s4-radio:has(> input:checked) .s4-radio-ring { background: var(--md-sys-color-primary); }
   .s4-radio:has(> input:checked) .s4-radio-ring::after { transform: translate(-50%, -50%) scale(1); }
 
   @media (hover: hover) {
     .s4-radio:hover:not(:has(> input:disabled)) .s4-radio-ring::before { opacity: var(--md-sys-state-hover-state-layer-opacity); }
-    .s4-radio:hover:not(:has(> input:disabled)):not(:has(> input:checked)) { --_ring: var(--md-sys-color-on-surface); }
   }
   .s4-radio:has(> input:focus-visible) .s4-radio-ring::before { opacity: var(--md-sys-state-focus-state-layer-opacity); }
   .s4-radio:has(> input:focus-visible) .s4-radio-ring {
@@ -3761,7 +3755,7 @@
      <button class="s4-chip" data-type="filter" aria-pressed="false" type="button">Utilities</button>
      <span class="s4-chip" data-type="input">Office<button class="s4-chip-remove" type="button" aria-label="Remove Office"></button></span>
    </div>
-   32dp, corner --s4-shape-chip, 1dp outline-variant outline. Selected filter chips are secondary-container with no outline
+   32dp pill, filled surface-container-highest (decision 0023: no outlines). Selected filter chips are inverse-surface
    and a check that slides in (chip.js adds .s4-chip-check). data-elevated swaps the outline for a level-1 shadow.
    Leading .s4-icon or .s4-chip-avatar (24dp image or initials). chip.js fires s4-change { pressed } on filter chips and
    s4-remove (cancelable) on input chips before removing them. */
@@ -3789,10 +3783,10 @@
     --_pad-start: var(--s4-space-4);
     --_pad-end: var(--s4-space-4);
     --_gap: var(--s4-space-2);
-    --_bg: transparent;
+    --_bg: var(--md-sys-color-surface-container-highest);   /* decision 0023: filled, never outlined */
     --_fg: var(--md-sys-color-on-surface);
     --_icon-color: var(--md-sys-color-primary);
-    --_outline: var(--md-sys-color-outline-variant);
+    --_outline: transparent;
     --_elevation: var(--md-sys-elevation-level0);
     --_spatial: var(--md-sys-motion-spring-fast-spatial-duration) var(--md-sys-motion-spring-fast-spatial);
     --_effects: var(--md-sys-motion-spring-fast-effects-duration) var(--md-sys-motion-spring-fast-effects);
@@ -3807,7 +3801,7 @@
     border-radius: var(--s4-shape-chip);
     background: var(--_bg);
     color: var(--_fg);
-    box-shadow: inset 0 0 0 1px var(--_outline), var(--_elevation);
+    box-shadow: var(--_elevation);
     font-family: var(--md-sys-typescale-label-large-font);
     font-size: var(--md-sys-typescale-label-large-size);
     line-height: var(--md-sys-typescale-label-large-line-height);
@@ -3863,10 +3857,9 @@
   }
   .s4-chip[data-type="filter"] > .s4-icon { transition: width var(--_spatial), margin var(--_spatial), opacity var(--_effects); }
   .s4-chip[aria-pressed="true"] {
-    --_bg: var(--md-sys-color-secondary-container);
-    --_fg: var(--md-sys-color-on-secondary-container);
-    --_icon-color: var(--md-sys-color-on-secondary-container);
-    --_outline: transparent;
+    --_bg: var(--md-sys-color-inverse-surface);
+    --_fg: var(--md-sys-color-inverse-on-surface);
+    --_icon-color: var(--md-sys-color-inverse-on-surface);
     --_pad-start: var(--s4-space-2);
   }
   .s4-chip[aria-pressed="true"] > .s4-chip-check { width: var(--_icon); margin-inline-end: 0; }
@@ -4265,7 +4258,7 @@
     height: var(--s4-space-6);
     max-width: 100%;
     padding: 0 var(--s4-space-2);
-    border-radius: var(--md-sys-shape-corner-small);
+    border-radius: var(--md-sys-shape-corner-full);
     background: var(--_bg);
     color: var(--_fg);
     font-family: var(--md-sys-typescale-label-medium-font);

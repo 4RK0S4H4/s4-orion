@@ -8,8 +8,8 @@
    40dp circular state layer around the box; 48dp touch target. */
 @layer s4.components {
   .s4-checkbox {
-    --_border: var(--md-sys-color-outline);
-    --_fill: transparent;
+    --_border: transparent;
+    --_fill: var(--md-sys-color-surface-container-highest);
     --_mark: var(--md-sys-color-on-primary);
     --_state: var(--md-sys-color-on-surface);
     --_box: calc(var(--s4-space-4) + var(--s4-space-1));   /* 20dp */
@@ -51,8 +51,8 @@
     width: var(--_box);
     height: var(--_box);
     margin: calc((var(--_layer) - var(--_box)) / 2);
-    border: 1.5px solid var(--_border);
-    border-radius: calc(var(--md-sys-shape-corner-extra-small) * 1.5);   /* soft square: 6dp */
+    border: 0;
+    border-radius: var(--md-sys-shape-corner-full);   /* decision 0023: a filled circle, no outline */
     background: var(--_fill);
     transition: background-color var(--_effects), border-color var(--_effects);
   }
@@ -100,7 +100,7 @@
   /* ---------- hover, focus, pressed ---------- */
   @media (hover: hover) {
     .s4-checkbox:hover:not(:has(> input:disabled)) .s4-checkbox-box::before { opacity: var(--md-sys-state-hover-state-layer-opacity); }
-    .s4-checkbox:hover:not(:has(> input:disabled)):not(:has(> input:is(:checked, :indeterminate))) { --_border: var(--md-sys-color-on-surface); }
+    .s4-checkbox:hover:not(:has(> input:disabled)):not(:has(> input:is(:checked, :indeterminate))) { --_fill: var(--md-sys-color-surface-container-high); }
   }
   .s4-checkbox:has(> input:focus-visible) .s4-checkbox-box::before {
     opacity: var(--md-sys-state-focus-state-layer-opacity);

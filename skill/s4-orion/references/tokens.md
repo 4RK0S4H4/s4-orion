@@ -183,22 +183,22 @@ Light values are shown; a second value is dark mode. Color roles also change wit
 | Token | Value | Dark | Notes |
 |---|---|---|---|
 | `--s4-shape-button` | var(--md-sys-shape-corner-full) |  | All button sizes at rest (M3 Expressive round buttons). |
-| `--s4-shape-button-pressed` | var(--md-sys-shape-corner-small) |  | Buttons square off while pressed (M3 Expressive shape morph). |
+| `--s4-shape-button-pressed` | var(--md-sys-shape-corner-large) |  | Buttons square off while pressed (M3 Expressive shape morph). |
 | `--s4-shape-icon-button` | var(--md-sys-shape-corner-full) |  |  |
-| `--s4-shape-fab` | var(--md-sys-shape-corner-large) |  |  |
-| `--s4-shape-fab-large` | var(--md-sys-shape-corner-extra-large) |  |  |
-| `--s4-shape-chip` | var(--md-sys-shape-corner-small) |  |  |
+| `--s4-shape-fab` | var(--md-sys-shape-corner-full) |  |  |
+| `--s4-shape-fab-large` | var(--md-sys-shape-corner-full) |  |  |
+| `--s4-shape-chip` | var(--md-sys-shape-corner-full) |  |  |
 | `--s4-shape-card` | var(--md-sys-shape-corner-medium) |  |  |
 | `--s4-shape-pane` | var(--md-sys-shape-corner-large) |  |  |
 | `--s4-shape-list-segment` | var(--md-sys-shape-corner-extra-small) |  | Inner corners of rows in a segmented list. |
 | `--s4-shape-list-group` | var(--md-sys-shape-corner-large) |  | Outer corners of a segmented list group. |
-| `--s4-shape-text-field` | var(--md-sys-shape-corner-medium) |  | All corners of a text field (the Quiet Box). |
+| `--s4-shape-text-field` | var(--md-sys-shape-corner-full) |  | All corners of a text field (the Quiet Box). |
 | `--s4-shape-menu` | var(--md-sys-shape-corner-extra-large) |  |  |
-| `--s4-shape-menu-item` | var(--md-sys-shape-corner-large) |  |  |
+| `--s4-shape-menu-item` | var(--md-sys-shape-corner-full) |  |  |
 | `--s4-shape-dialog` | var(--md-sys-shape-corner-extra-large) |  |  |
 | `--s4-shape-sheet` | var(--md-sys-shape-corner-extra-large) |  | Top corners of a bottom sheet; the edge that meets the screen stays square. |
-| `--s4-shape-snackbar` | var(--md-sys-shape-corner-extra-small) |  |  |
-| `--s4-shape-tooltip` | var(--md-sys-shape-corner-extra-small) |  |  |
+| `--s4-shape-snackbar` | var(--md-sys-shape-corner-full) |  |  |
+| `--s4-shape-tooltip` | var(--md-sys-shape-corner-full) |  |  |
 | `--s4-shape-nav-indicator` | var(--md-sys-shape-corner-full) |  |  |
 | `--s4-shape-toolbar` | var(--md-sys-shape-corner-full) |  | Floating toolbar. |
 | `--s4-shape-search` | var(--md-sys-shape-corner-full) |  |  |

@@ -10,8 +10,9 @@
     min-inline-size: 0;
     margin: 0;
     padding: var(--s4-space-1) var(--s4-space-4) var(--s4-space-2);
-    border: 1px solid var(--md-sys-color-outline-variant);
-    border-radius: var(--md-sys-shape-corner-medium);
+    border: 0;
+    background: var(--md-sys-color-surface-container);
+    border-radius: var(--md-sys-shape-corner-extra-large);
   }
   fieldset:has(> :is(.s4-radio, .s4-checkbox)) > legend { padding-inline: var(--s4-space-2); color: var(--md-sys-color-on-surface-variant); }
   .s4-radio {
@@ -55,9 +56,10 @@
     width: var(--_size);
     height: var(--_size);
     margin: calc((var(--_layer) - var(--_size)) / 2);
-    border: 2px solid var(--_ring);
+    border: 0;
+    background: var(--md-sys-color-surface-container-highest);   /* decision 0023: a filled disc, no outline */
     border-radius: var(--md-sys-shape-corner-full);
-    transition: border-color var(--_effects);
+    transition: background-color var(--_effects);
   }
   .s4-radio-ring::before {
     content: "";
@@ -82,16 +84,16 @@
     width: calc(var(--_size) / 2);
     height: calc(var(--_size) / 2);
     border-radius: var(--md-sys-shape-corner-full);
-    background: var(--_ring);
+    background: var(--md-sys-color-on-primary);
     transform: translate(-50%, -50%) scale(0);
     transition: transform var(--md-sys-motion-spring-fast-spatial-duration) var(--md-sys-motion-spring-fast-spatial), background-color var(--_effects);
   }
-  .s4-radio:has(> input:checked) { --_ring: var(--md-sys-color-primary); --_state: var(--md-sys-color-primary); }
+  .s4-radio:has(> input:checked) { --_state: var(--md-sys-color-primary); }
+  .s4-radio:has(> input:checked) .s4-radio-ring { background: var(--md-sys-color-primary); }
   .s4-radio:has(> input:checked) .s4-radio-ring::after { transform: translate(-50%, -50%) scale(1); }
 
   @media (hover: hover) {
     .s4-radio:hover:not(:has(> input:disabled)) .s4-radio-ring::before { opacity: var(--md-sys-state-hover-state-layer-opacity); }
-    .s4-radio:hover:not(:has(> input:disabled)):not(:has(> input:checked)) { --_ring: var(--md-sys-color-on-surface); }
   }
   .s4-radio:has(> input:focus-visible) .s4-radio-ring::before { opacity: var(--md-sys-state-focus-state-layer-opacity); }
   .s4-radio:has(> input:focus-visible) .s4-radio-ring {

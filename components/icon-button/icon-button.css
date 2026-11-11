@@ -61,7 +61,7 @@
   /* ---------- variants ---------- */
   .s4-icon-button[data-variant="filled"] { --_bg: var(--md-sys-color-primary); --_fg: var(--md-sys-color-on-primary); }
   .s4-icon-button[data-variant="tonal"] { --_bg: var(--md-sys-color-secondary-container); --_fg: var(--md-sys-color-on-secondary-container); }
-  .s4-icon-button[data-variant="outlined"] { --_outline: var(--md-sys-color-outline-variant); }
+  .s4-icon-button[data-variant="outlined"] { --_bg: var(--md-sys-color-surface-container-highest); }   /* decision 0023: filled */
 
   /* ---------- sizes (M3 Expressive: xs 32, s 40, m 56, l 96, xl 136; icons 20 / 24 / 24 / 32 / 40) ----------
      widths per size: narrow / default / wide = xs 28/32/40, s 32/40/52, m 48/56/72, l 64/96/128, xl 104/136/184 */
@@ -100,12 +100,11 @@
      M3 Expressive: standard selected = primary icon; filled unselected = surface-container, selected = primary;
      tonal unselected = secondary-container, selected = secondary; outlined selected = inverse-surface.
      Selected swaps the shape: round -> square, square -> round. */
-  .s4-icon-button[aria-pressed="true"] { --_fg: var(--md-sys-color-primary); --_radius: var(--_radius-square); }
-  .s4-icon-button[aria-pressed="true"][data-shape="square"] { --_radius: var(--_radius-round); }
+  .s4-icon-button[aria-pressed="true"] { --_fg: var(--md-sys-color-primary); }
   .s4-icon-button[data-variant="filled"][aria-pressed="false"] { --_bg: var(--md-sys-color-surface-container); --_fg: var(--md-sys-color-on-surface-variant); }
   .s4-icon-button[data-variant="filled"][aria-pressed="true"] { --_bg: var(--md-sys-color-primary); --_fg: var(--md-sys-color-on-primary); }
   .s4-icon-button[data-variant="tonal"][aria-pressed="true"] { --_bg: var(--md-sys-color-secondary); --_fg: var(--md-sys-color-on-secondary); }
-  .s4-icon-button[data-variant="outlined"][aria-pressed="true"] { --_bg: var(--md-sys-color-inverse-surface); --_fg: var(--md-sys-color-inverse-on-surface); --_outline: transparent; }
+  .s4-icon-button[data-variant="outlined"][aria-pressed="true"] { --_bg: var(--md-sys-color-inverse-surface); --_fg: var(--md-sys-color-inverse-on-surface); }
 
   /* ---------- disabled (M3: on-surface at 12% container, 38% content) ---------- */
   .s4-icon-button:is(:disabled, [aria-disabled="true"]) {
@@ -113,10 +112,6 @@
   }
   .s4-icon-button:is(:disabled, [aria-disabled="true"]):is([data-variant="filled"], [data-variant="tonal"]) {
     --_bg: color-mix(in srgb, var(--md-sys-color-on-surface) calc(var(--md-sys-state-disabled-container-opacity) * 100%), transparent);
-  }
-  .s4-icon-button:is(:disabled, [aria-disabled="true"])[data-variant="outlined"] {
-    --_bg: transparent;
-    --_outline: color-mix(in srgb, var(--md-sys-color-on-surface) calc(var(--md-sys-state-disabled-container-opacity) * 100%), transparent);
   }
 
   @media (forced-colors: active) {
