@@ -12,7 +12,7 @@ something, so the next session can pick up cold.
 
 - **Publish everything reviewable to GitHub Pages** and link it in the reply: https://4rk0s4h4.github.io/s4-orion/
   (deploys from `main`, repo root). The owner reviews on an iPhone, so check pages at 390px as well as desktop.
-- **Drafts go on GitHub Pages** as quiz-style review labs, not Claude Design canvases (owner preference, 2026-11-11). Whole layouts: mobile only, the real demo in 390px frames with a theme/view switcher up top (`explore/lib/phone-review.js`, template `explore/review-2-numbers.html`).
+- **Drafts go on GitHub Pages** as quiz-style review labs, not Claude Design canvases (owner preference, 2026-11-11). Plain quiz layout, no toggles up top. Whole layouts: mobile only, the real demo restyled in 390px frames (`explore/lib/phone-review.js`, template `explore/review-direction.html`). Ask big questions (overall direction), not small tweaks.
 - **Design decisions are made through review labs** in `explore/` (questionnaire style: options picked by tapping the
   option card right above its demo, answers saved in localStorage with an in-memory fallback, a Copy Answers button at
   the end). Labs use their own "review blue" UI so the questionnaire never looks like the design being reviewed.

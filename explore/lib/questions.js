@@ -162,9 +162,10 @@ window.S4_REVIEW_DEMOS = [
   }
   ,
   {
-    id: 'review-2', title: 'Review 2: Big Numbers', href: 'explore/review-2-numbers.html',
+    id: 'direction-2', title: 'Design Direction', href: 'explore/review-direction.html',
     questions: [
-      { id: 'numbers', label: 'KPI numbers on the Overview', options: [{ v: 'A', label: 'Keep today' }, { v: 'B', label: 'Heavy two-up' }, { v: 'C', label: 'Hero plus two-up' }, { v: 'Other', label: 'Describe in notes' }] }
+      { id: 'direction', label: 'Overall direction', help: 'The general character of the design language. Once you pick, I apply it everywhere and take it from there.',
+        options: [{ v: 'A', label: 'Keep as it is' }, { v: 'B', label: 'Bold and Graphic' }, { v: 'C', label: 'Soft and Quiet' }, { v: 'D', label: 'Expressive Shapes' }, { v: 'Other', label: 'Describe in notes' }] }
     ]
   }
 ];

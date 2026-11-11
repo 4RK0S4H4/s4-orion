@@ -22,7 +22,7 @@ the owner's yes; build in this order, one commit each, check at 390 and 1280, pu
 | Step | Proposal | Touches | State |
 |---|---|---|---|
 | 1 | Three container tones with a job each (summary `surface-container-high`, panes `-low`, lists flat with dividers) | demo, `patterns.md`, card/pane READMEs | Skipped (owner likes the current look) |
-| 2 | Big, heavy numbers: KPIs on emphasized `display-small`, two per row on phones | demo, typography doc, patterns | Draft up: [review-2-numbers.html](../explore/review-2-numbers.html), awaiting pick |
+| 2 | Big, heavy numbers: KPIs on emphasized `display-small`, two per row on phones | demo, typography doc, patterns | Folded into the direction pick |
 | 3 | Tonal charts: `outline-variant` bars, current period in `primary`, rounded bar tops | demo chart, patterns | Awaiting pick |
 | 4 | Status chips tonal by default; inverse only for the one key status per view | status component, demo | Awaiting pick |
 | 5 | One title per screen; period and filters in a row under the bar | demo, app shell docs, skill | Awaiting pick |
@@ -33,7 +33,7 @@ the owner's yes; build in this order, one commit each, check at 390 and 1280, pu
 
 Recommended first: 1, 2, 3, 5, 9; then 6 and 7; then 8. After the picked steps: iPhone check, then release 1.0.0.
 
-**Format (2026-11-11, latest): review drafts are quiz-style labs (option cards, Copy Answers) on Pages. Whole layouts: mobile only, real demo in 390px frames restyled per option (`explore/lib/phone-review.js`), with a top bar to switch theme and view. Template: `explore/review-2-numbers.html`.**
+**Direction first (2026-11-11, latest): the owner found the nine proposals too small and wants to decide the general direction of the design language, then leave the rest to Claude.** Draft: [review-direction.html](../explore/review-direction.html) (A keep, B Bold and Graphic, C Soft and Quiet, D Expressive Shapes; real demo restyled in 390px frames, Overview light and dark, Bills light). After the pick: record it as decision 0023, apply it across components, demo, docs and skill (the nine proposals below are the raw material, folded in as the direction needs; step 1 was skipped, owner likes the current look), then check, publish and 1.0.0. Format for drafts: quiz-style lab, no toggles up top, mobile only, `explore/lib/phone-review.js`.
 
 **Update (2026-11-11, later): from step 2 on, drafts are pages on GitHub Pages (e.g. `explore/review-<step>.html`, built from orion.css, before/after, 390 and 1280, light and dark), not Claude Design canvas boards. Step 1's draft stays on the canvas.**
 
