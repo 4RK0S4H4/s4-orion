@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>S4 Orion: Review 1, Container Tones</title>
+<style>
+:root{--b:#1d4ed8;--bg:#f5f7ff;--ink:#14182b;--ink2:#4a5170;--line:#c9d1f5}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/24px Inter,system-ui,sans-serif}
+main{max-width:1500px;margin:0 auto;padding:20px 16px 64px;display:grid;gap:28px}
+h1{margin:0;font-size:24px;line-height:32px;color:var(--b)}
+h2{margin:0;font-size:18px}
+p{margin:0;max-width:70ch;color:var(--ink2)}
+.row{display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start}
+figure{margin:0;display:grid;gap:6px}
+figcaption{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--b)}
+iframe{border:1px solid var(--line);border-radius:12px;background:#fff;display:block}
+.p iframe{width:390px;height:760px;max-width:calc(100vw - 34px)}
+.w iframe{width:1280px;height:620px}
+.scroll{overflow-x:auto;padding-bottom:6px}
+.note{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:grid;gap:8px;max-width:72ch}
+ul{margin:0;padding-left:20px;color:var(--ink2)}
+</style>
+</head>
+<body>
+<main>
+  <h1>Review 1: three container tones with a job each</h1>
+  <div class="note">
+    <p><b>Before (what the demo does today):</b> the four KPIs, the chart and the due list are all <code>surface-container-low</code> panes. Every box is the same tone.</p>
+    <p><b>After:</b></p>
+    <ul>
+      <li>Summary (the four KPIs) is one pane on <code>surface-container-high</code>.</li>
+      <li>Ordinary panes (the chart) stay on <code>surface-container-low</code>.</li>
+      <li>The due list sits flat on the page with dividers, no box.</li>
+    </ul>
+    <p>Real Orion components and tokens, no new colors, no shadows. Light mode tones are close (page f9, low f3, high e8); dark separates more. Verdict: build, change or skip.</p>
+  </div>
+
+  <h2>Phone, 390</h2>
+  <div class="scroll"><div class="row p">
+    <figure><figcaption>Before, light</figcaption><iframe title="Before light phone" src="review-1-frame.html?v=before&amp;theme=light"></iframe></figure>
+    <figure><figcaption>After, light</figcaption><iframe title="After light phone" src="review-1-frame.html?v=after&amp;theme=light"></iframe></figure>
+    <figure><figcaption>Before, dark</figcaption><iframe title="Before dark phone" src="review-1-frame.html?v=before&amp;theme=dark"></iframe></figure>
+    <figure><figcaption>After, dark</figcaption><iframe title="After dark phone" src="review-1-frame.html?v=after&amp;theme=dark"></iframe></figure>
+  </div></div>
+
+  <h2>Desktop, 1280</h2>
+  <div class="scroll"><div class="row w">
+    <figure><figcaption>Before, light</figcaption><iframe title="Before light desktop" src="review-1-frame.html?v=before&amp;theme=light"></iframe></figure>
+    <figure><figcaption>After, light</figcaption><iframe title="After light desktop" src="review-1-frame.html?v=after&amp;theme=light"></iframe></figure>
+    <figure><figcaption>Before, dark</figcaption><iframe title="Before dark desktop" src="review-1-frame.html?v=before&amp;theme=dark"></iframe></figure>
+    <figure><figcaption>After, dark</figcaption><iframe title="After dark desktop" src="review-1-frame.html?v=after&amp;theme=dark"></iframe></figure>
+  </div></div>
+</main>
+</body>
+</html>
