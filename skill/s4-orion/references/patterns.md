@@ -66,14 +66,14 @@ grid of panes: KPI panes (label, emphasized number, delta status) · a chart pan
 - Inside a pane, a `.s4-list` of rows: a switch as the trailing element for on/off, a trailing value + chevron for a
   choice that opens a dialog or menu.
 - Switches apply immediately (no Save button). Confirm with nothing, or a snackbar only when the effect is invisible.
-- A destructive setting goes last, in a pane with `data-color="error"`, with an outlined error button that opens a
+- A destructive setting goes last, in a pane with `data-color="error"`, with a tonal error button that opens a
   confirm dialog.
 - Appearance settings: see **Theme controls**.
 
 ## Forms
 
 - One column, fields at full width up to about 560px (`max-width: 35rem` on the form). Group long forms into sections.
-- Text fields are one look, the Quiet Box (label above a thin-outlined box); there is no filled or outlined variant.
+- Text fields are one look: a filled pill (label above, no outline; a textarea gets large corners). An error is a filled error-container field.
 - Labels in Title Case, helper text and errors as sentences. Validate on blur and on submit, not on every keystroke;
   set `data-error="Enter an amount above $0.00."` and move focus to the first invalid field on submit.
 - Actions at the end, end-aligned: Cancel (text) then the main action (filled), named by what it does ("Save Bill").

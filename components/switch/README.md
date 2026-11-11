@@ -14,7 +14,7 @@ Turns a single setting on or off immediately (Autopay, Remind Me). M3 switch, bu
 | `data-icons` on the label | check (on) / close (off) icon in the handle; the off handle grows to 24dp |
 | label text before the track | end-aligns the switch (settings rows, with `justify-content: space-between`) |
 
-Track 52×32 (`--s4-space-12 + --s4-space-1` × `--s4-space-8`). Off: surface-container-highest with a 2dp outline border and
+Track 52×32 (`--s4-space-12 + --s4-space-1` × `--s4-space-8`). Off: surface-container-highest, no border (decision 0023), and
 a 16dp outline handle. On: primary track, 24dp on-primary handle. Pressed: 28dp. The handle slides and resizes on the
 fast-spatial spring; colors on fast-effects. 40dp state layer circle around the handle; 48dp target.
 

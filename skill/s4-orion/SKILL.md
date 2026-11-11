@@ -91,7 +91,7 @@ Everything ships in this skill's `assets/` folder: `orion.css` (tokens, every co
 - Raise contrast with `S4.theme({ contrast: 0.5 | 1 })`, never by darkening one color.
 
 **Actions**
-- One **filled** button per area for the main action; **tonal** for a strong second; **outlined** or **text** for the rest.
+- One **filled** button per area for the main action; **tonal** for a strong second; **text** for the rest. Nothing is ever outlined (decision 0023): fields, chips, checkboxes, radios and cards are filled; the old `outlined` variants draw filled. Small things are pills (chips, status, buttons, fields, FAB); no sharp or squared corners on them.
 - A **FAB** only when one action dominates a screen (Add Bill); never two FABs.
 - Icon-only actions are icon buttons with `aria-label` and usually a `data-tooltip`.
 - Related choices: a **connected button group** for 2–5 short options; **filter chips** for more, or for multi-select.

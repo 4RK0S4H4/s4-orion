@@ -13,7 +13,7 @@ reviewed, and they save answers in the browser so several labs can be worked thr
 | `liquid5.html` | Abandoned 2026-11-10: liquid glass over real pages via a mirror (a live copy of the content with the SVG lens filter on it), iPhone-safe ([0019](../docs/decisions/0019-liquid-glass-mirror.md)); phone page `liquid5-app.html` |
 | `liquid4.html` | Open: the WebGL liquid glass over a real DOM page, using a snapshot of the page as the texture (needs the iPhone check) |
 | `liquid3.html` | Open: glass with a magnified-rim copy of the content behind it (iPhone-safe, no WebGL) |
-| `review-direction.html` | Open: overall design direction (keep, Bold and Graphic, Soft and Quiet, Expressive Shapes), phone previews of the real demo |
+| `review-direction.html` | Superseded by [0023](../docs/decisions/0023-filled-and-pills.md): the owner kept the current direction, filled and pills (it restyles the old demo and no longer fits the new one) |
 | `style2.html` | Open: button groups, sliders, phone sheets and glass edge looks |
 | `style.html` | Open: alternative looks (less Material) for text fields, checkboxes, tables and tab headers |
 | `icons.html` | Open: plain or boxed glyphs for add, close, check and menu (Solar Bold Duotone either way) |

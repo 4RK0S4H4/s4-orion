@@ -149,7 +149,8 @@
     --_label: var(--md-sys-color-on-surface);
   }
   .s4-text-field:is([data-error], :has(> [aria-invalid="true"])) {
-    --_outline: var(--md-sys-color-error);
+    --_bg: var(--md-sys-color-error-container);   /* decision 0023: an error is a filled field, not a red outline */
+    --_outline: transparent;
     --_ring-color: var(--md-sys-color-error);
     --_label: var(--md-sys-color-error);
     --_caret: var(--md-sys-color-error);

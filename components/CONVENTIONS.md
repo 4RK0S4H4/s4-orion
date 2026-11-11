@@ -26,6 +26,7 @@ Each component lives in `components/<name>/`:
 - **"Fully round" on an element whose corners change (press, toggle, connected groups) is half its height (`calc(var(--_h) / 2)`), never `--md-sys-shape-corner-full`.** 9999px makes the browser scale all the element's corners down together and makes radius transitions look delayed then abrupt. `corner-full` is fine on shapes that never mix or morph (badges, switches, pills).
 - Internals use `--_name` custom properties set on the component and overridden by variants (see button.css). Public knobs, if any, are `--s4-<component>-*`.
 - **State layers come from base.css.** If your component is interactive, it must be in the shared list in `base/base.css` (`.s4-chip`, `.s4-tab`, `a.s4-list-item`, …); don't write your own hover overlay. Tint it with `--_state-color` if M3 uses a non-content color.
+- Decision 0023: nothing is outlined. Resting controls are filled (`surface-container-highest`), selected ones are inverse or tonal fills; small things (chips, status, buttons, fields, FAB, avatars of text) are pills. A focus ring is the only line allowed.
 - Selected/active states use M3 roles (usually `secondary-container` / `on-secondary-container`), never an outline in an accent color.
 - Disabled: container `on-surface` at `--md-sys-state-disabled-container-opacity`, content at `--md-sys-state-disabled-content-opacity` via `color-mix`.
 - Touch targets ≥ `--s4-size-touch-target` (48): use a `::after` hit area like the button when the visual is smaller.

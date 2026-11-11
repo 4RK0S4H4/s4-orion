@@ -28,7 +28,7 @@ Starts an action. M3 Expressive buttons: five variants, five sizes, round or squ
 
 | Attribute | Values | Default |
 |---|---|---|
-| `data-variant` | `filled`, `tonal`, `outlined`, `elevated`, `text` | `filled` |
+| `data-variant` | `filled`, `tonal`, `elevated`, `text` (`outlined` still works and draws filled) | `filled` |
 | `data-size` | `xs` (32), `s` (40), `m` (56), `l` (96), `xl` (136) | `s` |
 | `data-shape` | `round`, `square` | `round` |
 | `data-color` | `error` (destructive) | — |
@@ -43,7 +43,7 @@ action; **outlined** and **text** for the rest; **elevated** only when a button 
 - Use `data-color="error"` only for the confirm button of a destructive dialog or a danger zone.
 
 **Don't**
-- Don't put two filled buttons side by side; make one tonal or outlined.
+- Don't put two filled buttons side by side; make one tonal.
 - Don't grey out the main action when there's nothing to do; hide it or explain why.
 - Don't color every row's delete button red; a per-row delete is a plain icon button.
 
@@ -875,7 +875,7 @@ use the list's `data-dividers` instead.
 
 ## Text Field
 
-Lets people enter and edit text. The Quiet Box (decision 0009): a thin outline, medium corners, surface fill and the label
+Lets people enter and edit text. A filled pill (decisions 0009, 0023): no outline, surface-container-highest fill and the label
 above the box, always visible. Icons, prefix / suffix, supporting text, counter, error state, select and auto-growing
 textarea. 48dp tall, tabular figures. There is one look: `data-variant` is ignored.
 
@@ -1003,7 +1003,7 @@ Turns a single setting on or off immediately (Autopay, Remind Me). M3 switch, bu
 | `data-icons` on the label | check (on) / close (off) icon in the handle; the off handle grows to 24dp |
 | label text before the track | end-aligns the switch (settings rows, with `justify-content: space-between`) |
 
-Track 52×32 (`--s4-space-12 + --s4-space-1` × `--s4-space-8`). Off: surface-container-highest with a 2dp outline border and
+Track 52×32 (`--s4-space-12 + --s4-space-1` × `--s4-space-8`). Off: surface-container-highest, no border (decision 0023), and
 a 16dp outline handle. On: primary track, 24dp on-primary handle. Pressed: 28dp. The handle slides and resizes on the
 fast-spatial spring; colors on fast-effects. 40dp state layer circle around the handle; 48dp target.
 
