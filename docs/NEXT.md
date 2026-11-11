@@ -150,6 +150,7 @@ labs could load `components/assets/` instead of their own copies.
 
 ## Session log
 
+- 2026-11-11 (drafts 8): owner wants some M3 Expressive quirk back. Canvas page 'Round 8: Bringing Back Quirk': a quirk catalog (shape library, shapes in use, wavy progress, shape-shifting buttons and toggles, squishy group + split button, morphing loader, FAB menu over a glass toolbar, emphasized type, coral pop color for good moments) and the degree tracker Today at three levels (Hint, Playful, Full), light and dark. Next: owner picks which quirks and how much; then amend 0020.
 - 2026-11-11 (drafts 7): the owner's WGU degree tracker (repo 4RK0S4H4/wgu-degree-tracker) redrawn in Orion on a new canvas page 'Degree Tracker in Orion' (Today, Courses, Course + menu, Schedule, Degree, desktop Today). Next: owner's reaction, then decide on building.
 - 2026-11-11 (drafts 6b): glass values picked in the playground and applied; other directions rejected.
 - 2026-11-11 (drafts 6): owner still drafting; Glass Playground and seven inspired directions on a new canvas page. Build on hold.
