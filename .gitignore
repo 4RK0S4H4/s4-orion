@@ -4,3 +4,4 @@ node_modules/
 check-shots/
 .DS_Store
 s4-check/
+demo/index.single.html
