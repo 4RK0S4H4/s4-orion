@@ -160,4 +160,11 @@ window.S4_REVIEW_DEMOS = [
       { id: 'names', label: 'Token names', options: [{ v: 'A', label: 'Own Names' }, { v: 'B', label: 'Keep Material Names (today)' }, { v: 'Other', label: 'Describe in notes' }] }
     ]
   }
+  ,
+  {
+    id: 'review-2', title: 'Review 2: Big Numbers', href: 'explore/review-2-numbers.html',
+    questions: [
+      { id: 'numbers', label: 'KPI numbers on the Overview', options: [{ v: 'A', label: 'Keep today' }, { v: 'B', label: 'Heavy two-up' }, { v: 'C', label: 'Hero plus two-up' }, { v: 'Other', label: 'Describe in notes' }] }
+    ]
+  }
 ];

@@ -21,8 +21,8 @@ the owner's yes; build in this order, one commit each, check at 390 and 1280, pu
 
 | Step | Proposal | Touches | State |
 |---|---|---|---|
-| 1 | Three container tones with a job each (summary `surface-container-high`, panes `-low`, lists flat with dividers) | demo, `patterns.md`, card/pane READMEs | Awaiting pick |
-| 2 | Big, heavy numbers: KPIs on emphasized `display-small`, two per row on phones | demo, typography doc, patterns | Awaiting pick |
+| 1 | Three container tones with a job each (summary `surface-container-high`, panes `-low`, lists flat with dividers) | demo, `patterns.md`, card/pane READMEs | Skipped (owner likes the current look) |
+| 2 | Big, heavy numbers: KPIs on emphasized `display-small`, two per row on phones | demo, typography doc, patterns | Draft up: [review-2-numbers.html](../explore/review-2-numbers.html), awaiting pick |
 | 3 | Tonal charts: `outline-variant` bars, current period in `primary`, rounded bar tops | demo chart, patterns | Awaiting pick |
 | 4 | Status chips tonal by default; inverse only for the one key status per view | status component, demo | Awaiting pick |
 | 5 | One title per screen; period and filters in a row under the bar | demo, app shell docs, skill | Awaiting pick |
@@ -32,6 +32,8 @@ the owner's yes; build in this order, one commit each, check at 390 and 1280, pu
 | 9 | Prune legacy tokens (`--s4-motion-pattern-unfold-*` etc.), old menu-style docs, superseded labs on the hub | tokens, docs, hub | Awaiting pick |
 
 Recommended first: 1, 2, 3, 5, 9; then 6 and 7; then 8. After the picked steps: iPhone check, then release 1.0.0.
+
+**Format (2026-11-11, latest): review drafts are quiz-style labs (option cards, Copy Answers) on Pages. Whole layouts: mobile only, real demo in 390px frames restyled per option (`explore/lib/phone-review.js`), with a top bar to switch theme and view. Template: `explore/review-2-numbers.html`.**
 
 **Update (2026-11-11, later): from step 2 on, drafts are pages on GitHub Pages (e.g. `explore/review-<step>.html`, built from orion.css, before/after, 390 and 1280, light and dark), not Claude Design canvas boards. Step 1's draft stays on the canvas.**
 
