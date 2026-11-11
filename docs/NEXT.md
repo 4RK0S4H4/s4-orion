@@ -16,6 +16,23 @@ The owner decided: **keep S4 Orion as built** (M3 Expressive base, decisions 000
 
 **Pause here:** the owner (1) checks the new glass and motion on the iPhone (demo: FAB to Add Bill, Delete All Data,
 the menus, tabs, fast taps) and (2) picks proposals from the review. Then build the picked ones, then 1.0.0.
+**Plan: review proposals** (from the [design review](reviews/2026-11-11-design-review.md); none built yet, each waits for
+the owner's yes; build in this order, one commit each, check at 390 and 1280, publish after each step):
+
+| Step | Proposal | Touches | State |
+|---|---|---|---|
+| 1 | Three container tones with a job each (summary `surface-container-high`, panes `-low`, lists flat with dividers) | demo, `patterns.md`, card/pane READMEs | Awaiting pick |
+| 2 | Big, heavy numbers: KPIs on emphasized `display-small`, two per row on phones | demo, typography doc, patterns | Awaiting pick |
+| 3 | Tonal charts: `outline-variant` bars, current period in `primary`, rounded bar tops | demo chart, patterns | Awaiting pick |
+| 4 | Status chips tonal by default; inverse only for the one key status per view | status component, demo | Awaiting pick |
+| 5 | One title per screen; period and filters in a row under the bar | demo, app shell docs, skill | Awaiting pick |
+| 6 | M3 Expressive shapes in two fixed places: FAB and avatars (cookie, clover; round fallback) | fab, avatar/list, shape tokens | Awaiting pick |
+| 7 | Glass on the snackbar and plain tooltips (edge light, action in primary); extend check-glass to the action color | glass.css, snackbar, tooltip, check-glass | Awaiting pick |
+| 8 | Living gallery: each card renders its component; labs moved to an Archive section | components/index.html, index.html | Awaiting pick |
+| 9 | Prune legacy tokens (`--s4-motion-pattern-unfold-*` etc.), old menu-style docs, superseded labs on the hub | tokens, docs, hub | Awaiting pick |
+
+Recommended first: 1, 2, 3, 5, 9; then 6 and 7; then 8. After the picked steps: iPhone check, then release 1.0.0.
+
 Superseded by 0022: everything below about the container transform, emerge, clip-path over glass in Safari, the menu
 motion lab and the motion QA iPhone check.
 
