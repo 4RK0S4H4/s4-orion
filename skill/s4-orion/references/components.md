@@ -875,7 +875,7 @@ use the list's `data-dividers` instead.
 
 ## Text Field
 
-Lets people enter and edit text. A filled pill (decisions 0009, 0023): no outline, surface-container-highest fill and the label
+Lets people enter and edit text. A filled box with medium corners (decisions 0009, 0023, 0024): no outline, surface-container-highest fill and the label
 above the box, always visible. Icons, prefix / suffix, supporting text, counter, error state, select and auto-growing
 textarea. 48dp tall, tabular figures. There is one look: `data-variant` is ignored.
 

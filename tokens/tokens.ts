@@ -1285,7 +1285,7 @@ export const tokens = {
   },
   "--s4-shape-text-field": {
     "type": "dimension",
-    "value": "var(--md-sys-shape-corner-full)",
+    "value": "var(--md-sys-shape-corner-medium)",
     "description": "All corners of a text field (the Quiet Box)."
   },
   "--s4-shape-menu": {
@@ -1324,7 +1324,7 @@ export const tokens = {
   },
   "--s4-shape-search": {
     "type": "dimension",
-    "value": "var(--md-sys-shape-corner-full)"
+    "value": "var(--md-sys-shape-corner-large)"
   },
   "--s4-space-0": {
     "type": "dimension",

@@ -1,8 +1,8 @@
-/* Button group (S4 Orion: Notched connected groups)
+/* Button group (S4 Orion: tray groups, decision 0024)
    Standard: <div class="s4-button-group"> <button class="s4-button">…</button> … </div>
      Buttons 8dp apart. Pressing one widens it a little while its neighbours give way (M3 Expressive press interaction).
    Connected: <div class="s4-button-group" data-connected data-select="single|multi" aria-label="View">
-     Buttons 2dp apart, outer corners full, inner corners are soft squares, the Notched look (xs 4, s/m 6, l 12, xl 16; tighter while pressed); the selected button morphs into a full pill.
+     One rounded-rectangle tray (surface-container-high, 4dp padding) holding separate rounded segments 2dp apart; the selected segment is filled with the inverse color.
      Connected groups stretch to fill their width (equal weights); data-fit="content" keeps them as wide as their labels.
    Works with .s4-button and .s4-icon-button children. The size comes from the buttons' own data-size.
    button-group.js manages aria-pressed (data-select), arrow-key navigation and the s4-change event. */
@@ -36,35 +36,33 @@
     width: calc(var(--_w) - var(--_give));
   }
 
-  /* ---------- connected group ---------- */
+  /* ---------- connected group (decision 0024): one tray, rounded-rect segments, the selected segment is filled ----------
+     Tabs are a pill tray with a sliding pill (you switch between views); a group is a rounded-rectangle tray with
+     separate segments (you choose a value). */
   .s4-button-group[data-connected] {
-    --_inner: calc(var(--md-sys-shape-corner-extra-small) * 1.5);   /* Notched (decision 0011): soft-square joins (6dp), fully round ends, a fully round pill once selected */
-    --_inner-pressed: calc(var(--md-sys-shape-corner-extra-small) / 1.5);
-    gap: 2px;   /* M3 Expressive connected groups: 2dp between buttons */
+    --_gpad: var(--s4-space-1);
+    --_gtray: var(--md-sys-shape-corner-large);
+    gap: 2px;
+    padding: var(--_gpad);
+    border-radius: var(--_gtray);
+    background: var(--md-sys-color-surface-container-high);
   }
-  .s4-button-group[data-connected]:has(> [data-size="xs"]) { --_inner: var(--md-sys-shape-corner-extra-small); --_inner-pressed: calc(var(--md-sys-shape-corner-extra-small) / 2); }
-  .s4-button-group[data-connected]:has(> [data-size="l"]) { --_inner: var(--md-sys-shape-corner-medium); --_inner-pressed: var(--md-sys-shape-corner-small); }
-  .s4-button-group[data-connected]:has(> [data-size="xl"]) { --_inner: var(--md-sys-shape-corner-large); --_inner-pressed: var(--md-sys-shape-corner-medium); }
+  .s4-button-group[data-connected]:has(> [data-size="xs"]) { --_gtray: var(--md-sys-shape-corner-medium); }
+  .s4-button-group[data-connected]:has(> [data-size="m"]) { --_gtray: var(--md-sys-shape-corner-large-increased); }
+  .s4-button-group[data-connected]:has(> [data-size="l"]) { --_gtray: var(--md-sys-shape-corner-extra-large); }
+  .s4-button-group[data-connected]:has(> [data-size="xl"]) { --_gtray: var(--md-sys-shape-corner-extra-large-increased); }
 
   .s4-button-group[data-connected] > :is(.s4-button, .s4-icon-button) {
-    --_r: var(--_full);   /* decision 0023: every button is a pill */
-    --_full: calc(var(--_h) / 2);   /* a finite "full": with 9999px the browser scales every corner of the button down to nothing, so the inner corners rendered square */
+    --_r: calc(var(--_gtray) - var(--_gpad));
+    --_bg: transparent;
+    --_fg: var(--md-sys-color-on-surface-variant);
     flex: 1 1 0;
     min-width: max-content;
     border-radius: var(--_r);
   }
+  .s4-button-group[data-connected] > :is(.s4-button, .s4-icon-button)[aria-pressed="true"] { --_bg: var(--md-sys-color-inverse-surface); --_fg: var(--md-sys-color-inverse-on-surface); }
   .s4-button-group[data-connected][data-fit="content"] > :is(.s4-button, .s4-icon-button) { flex: none; }
-  .s4-button-group[data-connected] > :is(.s4-button, .s4-icon-button):active:not(:disabled) { --_r: calc(var(--_full) * 0.8); }
-  .s4-button-group[data-connected] > :is(.s4-button, .s4-icon-button):first-child {
-    border-start-start-radius: var(--_full);
-    border-end-start-radius: var(--_full);
-  }
-  .s4-button-group[data-connected] > :is(.s4-button, .s4-icon-button):last-child {
-    border-start-end-radius: var(--_full);
-    border-end-end-radius: var(--_full);
-  }
-  /* the selected button morphs fully round */
-  .s4-button-group[data-connected] > :is(.s4-button, .s4-icon-button)[aria-pressed="true"] { border-radius: var(--_full); }
+  .s4-button-group[data-connected] > :is(.s4-button, .s4-icon-button):active:not(:disabled) { --_r: calc((var(--_gtray) - var(--_gpad)) * 0.8); }
   /* a disabled option of a toggle group: button.css's aria-pressed colors would otherwise win over its disabled colors */
   .s4-button-group > :is(.s4-button, .s4-icon-button)[aria-pressed]:is(:disabled, [aria-disabled="true"]) {
     --_bg: color-mix(in srgb, var(--md-sys-color-on-surface) calc(var(--md-sys-state-disabled-container-opacity) * 100%), transparent);

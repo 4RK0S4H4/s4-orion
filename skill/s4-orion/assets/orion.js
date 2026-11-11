@@ -1106,9 +1106,49 @@ S4.register('text-field', function (scope) {
       c.after(ch); S4.icon.set(ch, 'chevron-down');
     }
 
+    /* a select opens the glass menu instead of the browser's list */
+    var trigger = null;
+    if (isSelect && S4.menu) {
+      var menu = document.createElement('div'); menu.className = 's4-menu'; menu.setAttribute('role', 'listbox'); menu.dataset.fieldMenu = '';
+      menu.id = 's4-select-' + Math.random().toString(36).slice(2, 8);
+      trigger = document.createElement('button'); trigger.type = 'button'; trigger.className = 's4-text-field-select';
+      trigger.setAttribute('aria-haspopup', 'listbox'); trigger.setAttribute('aria-expanded', 'false');
+      trigger.id = (c.id || menu.id) + '-button';
+      if (label) { label.htmlFor = trigger.id; }
+      c.setAttribute('data-s4-native', ''); c.tabIndex = -1; c.setAttribute('aria-hidden', 'true');
+      c.before(trigger);
+      var build = function () {
+        menu.innerHTML = '';
+        Array.prototype.forEach.call(c.options, function (o) {
+          var b = document.createElement('button'); b.type = 'button'; b.className = 's4-menu-item'; b.setAttribute('role', 'menuitemradio');
+          b.setAttribute('aria-checked', o.selected); b.dataset.value = o.value; b.textContent = o.textContent;
+          if (o.disabled) b.disabled = true;
+          menu.appendChild(b);
+        });
+        var sel = c.options[c.selectedIndex]; trigger.textContent = sel ? sel.textContent : '';
+        trigger.setAttribute('aria-label', (label ? label.textContent + ': ' : '') + trigger.textContent);
+      };
+      build();
+      document.body.appendChild(menu);
+      S4.init && S4.init(menu);
+      trigger.addEventListener('click', function () {
+        if (c.disabled) return;
+        menu.style.minWidth = f.querySelector(':scope > .s4-text-field-select').closest('.s4-text-field').getBoundingClientRect().width + 'px';
+        menu.hasAttribute('data-open') || menu.matches(':popover-open') ? S4.menu.close(menu) : S4.menu.open(menu, trigger);
+      });
+      menu.addEventListener('s4-select', function (e) {
+        c.value = e.detail.item.dataset.value; build();
+        c.dispatchEvent(new Event('input', { bubbles: true })); c.dispatchEvent(new Event('change', { bubbles: true }));
+        trigger.focus();
+      });
+      menu.addEventListener('s4-close', function () { trigger.setAttribute('aria-expanded', 'false'); });
+      c.addEventListener('change', build);
+    }
+
     /* the whole container is the hit area */
     f.addEventListener('click', function (e) {
-      if (c.disabled || e.target === c || e.target.closest('button, a, .s4-text-field-supporting, .s4-text-field-counter')) return;
+      if (c.disabled || e.target === c || e.target === trigger || e.target.closest('button, a, .s4-text-field-supporting, .s4-text-field-counter')) return;
+      if (trigger) { trigger.click(); return; }
       c.focus();
       if (isSelect && c.showPicker) { try { c.showPicker(); } catch (err) {} }
     });

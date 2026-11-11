@@ -92,6 +92,30 @@
   .s4-text-field > input::-webkit-search-decoration { appearance: none; }
   .s4-text-field > textarea { align-self: stretch; resize: none; overflow: hidden; min-height: var(--_h); }
   .s4-text-field > select { height: var(--_h); padding-block: 0; appearance: none; cursor: pointer; }
+  /* text-field.js replaces the browser's drop-down list with the glass menu: the native select stays (form value, label,
+     screen readers) but is invisible, and this button takes its place */
+  .s4-text-field > select[data-s4-native] { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+  .s4-text-field-select {
+    grid-row: 2;
+    grid-column: 4;
+    display: block;
+    width: 100%;
+    min-width: 0;
+    height: var(--_h);
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    text-align: start;
+    cursor: pointer;
+    outline: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .s4-text-field:has(> .s4-text-field-select[aria-expanded="true"]) .s4-text-field-chevron { rotate: 180deg; }
   .s4-text-field > select > option { background: var(--md-sys-color-surface-container); color: var(--md-sys-color-on-surface); }
   .s4-text-field > :is(input, textarea)::placeholder { color: var(--md-sys-color-on-surface-variant); opacity: 0.7; }
   /* text-field.js sets placeholder=" " on fields without one: keep that invisible */
@@ -137,12 +161,11 @@
   .s4-text-field-counter { justify-self: end; color: var(--md-sys-color-on-surface-variant); font-variant-numeric: tabular-nums; }
   .s4-text-field:has(> .s4-text-field-counter) > .s4-text-field-supporting { padding-inline-end: var(--s4-space-16); }
 
-  .s4-text-field:has(> textarea)::before { border-radius: var(--md-sys-shape-corner-extra-large); }   /* a pill would clip multi-line text */
-
   /* ---------- states ---------- */
   @media (hover: hover) {
     .s4-text-field:hover:not(:has(> :is(input, select, textarea):focus)) { --_bg: var(--md-sys-color-surface-container-high); }
   }
+  .s4-text-field:has(> :is(input, select, textarea, .s4-text-field-select):focus-visible),
   .s4-text-field:has(> :is(input, select, textarea):focus) {
     --_outline: var(--md-sys-color-on-surface);
     --_ring: 1px;   /* with the 1px outline: a 2dp ink ring */

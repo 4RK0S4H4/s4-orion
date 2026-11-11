@@ -14,7 +14,9 @@
     background: var(--md-sys-color-surface-container);
     border-radius: var(--md-sys-shape-corner-extra-large);
   }
-  fieldset:has(> :is(.s4-radio, .s4-checkbox)) > legend { padding-inline: var(--s4-space-2); color: var(--md-sys-color-on-surface-variant); }
+  /* the legend is a heading inside the box (a normal legend would straddle the top edge) */
+  fieldset:has(> :is(.s4-radio, .s4-checkbox)) > legend { float: left; width: 100%; padding: var(--s4-space-2) 0 var(--s4-space-1); color: var(--md-sys-color-on-surface-variant); }
+  fieldset:has(> :is(.s4-radio, .s4-checkbox)) > legend + * { clear: left; }
   .s4-radio {
     --_ring: var(--md-sys-color-on-surface-variant);
     --_state: var(--md-sys-color-on-surface);

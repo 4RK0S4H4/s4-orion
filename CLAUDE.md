@@ -20,7 +20,7 @@ something, so the next session can pick up cold.
 - **Motion labs get the scrubber** (`explore/lib/scrub.js`: a blue bar to freeze an animation and drag through it, so the owner can send screenshots of exact moments); the demo has it at `demo/index.html?scrub`.
 - **Pause for approval** at the points named in `docs/NEXT.md`; otherwise keep going without asking.
 - Keep replies short and plain; lead with links and what needs a decision. Subagents are fine for parallel work.
-- Recorded decisions live in `docs/decisions/` (0001 audit, 0002 repo, 0003 tokens, 0004 glass, 0005 phase 6 review, 0006 liquid glass, 0007 icons, 0008 owner critique, 0009 style lab, 0010 critique round 2, 0011 style lab 2, 0012 liquid glass webkit, 0013 glass edge and no shadow, 0014 calmer glass color, 0015 items on glass, 0016 thinner frost line, 0017 no shadows, 0018 menu emerges, 0019 liquid glass mirror, abandoned, 0020 own language, not adopted except glass, 0021 glass from the playground, 0022 simpler motion, 0023 filled and pills). Don't reopen a
+- Recorded decisions live in `docs/decisions/` (0001 audit, 0002 repo, 0003 tokens, 0004 glass, 0005 phase 6 review, 0006 liquid glass, 0007 icons, 0008 owner critique, 0009 style lab, 0010 critique round 2, 0011 style lab 2, 0012 liquid glass webkit, 0013 glass edge and no shadow, 0014 calmer glass color, 0015 items on glass, 0016 thinner frost line, 0017 no shadows, 0018 menu emerges, 0019 liquid glass mirror, abandoned, 0020 own language, not adopted except glass, 0021 glass from the playground, 0022 simpler motion, 0023 filled and pills, 0024 tray groups and inputs). Don't reopen a
   decision without the owner; add a new numbered record for new ones.
 
 ## Git and publishing
@@ -72,6 +72,7 @@ Validate with `scripts/quick_validate.py <repo>/skill/s4-orion`. Keep `SKILL.md`
   Dialogs pop (rise 16px + fade), menus drop 8px from their button, sheets slide from their edge, snackbars rise,
   shared axis between views. One transition per element at a time. No origin scaling.
 - Glass (decision 0021): tint 75%, blur 8px, saturate 150%, top-light edge via `--s4-glass-edge-*` inset shadows.
+- Decision 0024: things you click are round; things you type into are medium-rounded (12), never pills or squared; selects open the glass menu; button groups are a rounded tray with filled segments.
 - Decision 0023: nothing is outlined (everything filled); small things are pills, never squared or sharp. The demo is a generic mobile app (Orion Showcase) that shows every element; quizzes show only the one element being changed, not the app.
 - Monochrome by default; a seed only when an app asks for color. Inter; Solar icons (Bold Duotone, Linear arrows)
   behind semantic names in `components/icons/names.json`. Title Case labels, sentence case sentences.
