@@ -33,6 +33,8 @@ the owner's yes; build in this order, one commit each, check at 390 and 1280, pu
 
 Recommended first: 1, 2, 3, 5, 9; then 6 and 7; then 8. After the picked steps: iPhone check, then release 1.0.0.
 
+**Update (2026-11-11, later): from step 2 on, drafts are pages on GitHub Pages (e.g. `explore/review-<step>.html`, built from orion.css, before/after, 390 and 1280, light and dark), not Claude Design canvas boards. Step 1's draft stays on the canvas.**
+
 **How the owner wants to go through them (2026-11-11): one at a time, with drafts.** For each step in order (1 to 9):
 make a Claude Design draft (before and after, phone light and dark, plus desktop where it matters) on the existing
 design canvas (private claude.ai artifact `https://claude.ai/artifact/LTom2j96tNTT2ZiTsQJjQH`, a new canvas page

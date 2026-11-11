@@ -12,6 +12,7 @@ something, so the next session can pick up cold.
 
 - **Publish everything reviewable to GitHub Pages** and link it in the reply: https://4rk0s4h4.github.io/s4-orion/
   (deploys from `main`, repo root). The owner reviews on an iPhone, so check pages at 390px as well as desktop.
+- **Drafts go on GitHub Pages**, not on a Claude Design canvas (owner preference, 2026-11-11; only step 1 of the review proposals is on the canvas).
 - **Design decisions are made through review labs** in `explore/` (questionnaire style: options picked by tapping the
   option card right above its demo, answers saved in localStorage with an in-memory fallback, a Copy Answers button at
   the end). Labs use their own "review blue" UI so the questionnaire never looks like the design being reviewed.
