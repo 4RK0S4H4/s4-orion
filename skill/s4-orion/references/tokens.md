@@ -190,8 +190,8 @@ Light values are shown; a second value is dark mode. Color roles also change wit
 | `--s4-shape-chip` | var(--md-sys-shape-corner-full) |  |  |
 | `--s4-shape-card` | var(--md-sys-shape-corner-medium) |  |  |
 | `--s4-shape-pane` | var(--md-sys-shape-corner-large) |  |  |
-| `--s4-shape-list-segment` | var(--md-sys-shape-corner-extra-small) |  | Inner corners of rows in a segmented list. |
-| `--s4-shape-list-group` | var(--md-sys-shape-corner-large) |  | Outer corners of a segmented list group. |
+| `--s4-shape-list-segment` | var(--md-sys-shape-corner-medium) |  | Inner corners of rows in a segmented list. |
+| `--s4-shape-list-group` | var(--md-sys-shape-corner-large-increased) |  | Outer corners of a segmented list group. |
 | `--s4-shape-text-field` | var(--md-sys-shape-corner-medium) |  | All corners of a text field (the Quiet Box). |
 | `--s4-shape-menu` | var(--md-sys-shape-corner-extra-large) |  |  |
 | `--s4-shape-menu-item` | var(--md-sys-shape-corner-full) |  |  |
@@ -362,6 +362,7 @@ Light values are shown; a second value is dark mode. Color roles also change wit
 | `--s4-glass-tint-float` | var(--md-sys-color-surface-container) |  | App bars over scrolled content, nav bar, nav rail, toolbars, menus, sheets, dialogs, rich tooltips. |
 | `--s4-glass-tint-fill` | var(--md-sys-color-surface-container-highest) |  | Tonal fills inside a glass surface (no blur of their own). |
 | `--s4-glass-tint-opacity-float` | 0.75 |  | Decision 0021: 75%, picked by the owner in the Glass Playground (was 0.6). |
+| `--s4-glass-tint-opacity-fab` | 0.9 |  | Decision 0025: a floating action button is glass tinted with its own color. 90% so its icon and label keep at least 3:1 over a pure black or white backdrop for every seed (check-glass.mjs; the opaque FAB pair itself is only 4.5:1 in the worst schemes, so 4.5:1 can't hold under any translucency). Over a normal backdrop it is much higher. |
 | `--s4-glass-tint-opacity-fill` | 0.56 | 0.64 |  |
 | `--s4-glass-tint-opacity-medium-contrast` | 0.86 |  | Float tint when the app runs at medium contrast (contrast level 0.5). |
 | `--s4-glass-blur-float` | 8px |  | Backdrop blur radius. Decision 0021: 8px (owner's playground pick; was 16px). |

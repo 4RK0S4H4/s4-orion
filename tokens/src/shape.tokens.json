@@ -100,11 +100,11 @@
         "$value": "{md.sys.shape.corner.large}"
       },
       "list-segment": {
-        "$value": "{md.sys.shape.corner.extra-small}",
+        "$value": "{md.sys.shape.corner.medium}",
         "$description": "Inner corners of rows in a segmented list."
       },
       "list-group": {
-        "$value": "{md.sys.shape.corner.large}",
+        "$value": "{md.sys.shape.corner.large-increased}",
         "$description": "Outer corners of a segmented list group."
       },
       "text-field": {

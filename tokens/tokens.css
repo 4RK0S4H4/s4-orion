@@ -194,6 +194,7 @@
     --s4-glass-tint-float: var(--md-sys-color-surface-container);
     --s4-glass-tint-fill: var(--md-sys-color-surface-container-highest);
     --s4-glass-tint-opacity-float: 0.75;
+    --s4-glass-tint-opacity-fab: 0.9;
     --s4-glass-tint-opacity-fill: 0.56;
     --s4-glass-tint-opacity-medium-contrast: 0.86;
     --s4-glass-blur-float: 8px;
@@ -230,8 +231,8 @@
     --s4-shape-chip: var(--md-sys-shape-corner-full);
     --s4-shape-card: var(--md-sys-shape-corner-medium);
     --s4-shape-pane: var(--md-sys-shape-corner-large);
-    --s4-shape-list-segment: var(--md-sys-shape-corner-extra-small);
-    --s4-shape-list-group: var(--md-sys-shape-corner-large);
+    --s4-shape-list-segment: var(--md-sys-shape-corner-medium);
+    --s4-shape-list-group: var(--md-sys-shape-corner-large-increased);
     --s4-shape-text-field: var(--md-sys-shape-corner-medium);
     --s4-shape-menu: var(--md-sys-shape-corner-extra-large);
     --s4-shape-menu-item: var(--md-sys-shape-corner-full);
@@ -496,6 +497,7 @@
       --md-sys-color-on-tertiary-fixed: #ffffff;
       --md-sys-color-on-tertiary-fixed-variant: #ffffff;
       --s4-glass-tint-opacity-float: 1;
+      --s4-glass-tint-opacity-fab: 1;
       --s4-glass-tint-opacity-fill: 1;
       --s4-glass-blur-float: 0px;
       --s4-glass-item-outline: rgb(255 255 255 / 0);
@@ -556,6 +558,7 @@
     --md-sys-color-on-tertiary-fixed: #ffffff;
     --md-sys-color-on-tertiary-fixed-variant: #ffffff;
     --s4-glass-tint-opacity-float: 1;
+    --s4-glass-tint-opacity-fab: 1;
     --s4-glass-tint-opacity-fill: 1;
     --s4-glass-blur-float: 0px;
     --s4-glass-item-outline: rgb(255 255 255 / 0);
@@ -616,6 +619,7 @@
       --md-sys-color-on-tertiary-fixed: #000000;
       --md-sys-color-on-tertiary-fixed-variant: #0b0b0b;
       --s4-glass-tint-opacity-float: 1;
+      --s4-glass-tint-opacity-fab: 1;
       --s4-glass-tint-opacity-fill: 1;
       --s4-glass-blur-float: 0px;
       --s4-glass-backdrop-contrast-float: 1;
@@ -680,6 +684,7 @@
       --md-sys-color-on-tertiary-fixed: #000000;
       --md-sys-color-on-tertiary-fixed-variant: #0b0b0b;
       --s4-glass-tint-opacity-float: 1;
+      --s4-glass-tint-opacity-fab: 1;
       --s4-glass-tint-opacity-fill: 1;
       --s4-glass-blur-float: 0px;
       --s4-glass-backdrop-contrast-float: 1;
@@ -744,6 +749,7 @@
       --md-sys-color-on-tertiary-fixed: #000000;
       --md-sys-color-on-tertiary-fixed-variant: #0b0b0b;
       --s4-glass-tint-opacity-float: 1;
+      --s4-glass-tint-opacity-fab: 1;
       --s4-glass-tint-opacity-fill: 1;
       --s4-glass-blur-float: 0px;
       --s4-glass-backdrop-contrast-float: 1;
@@ -807,6 +813,7 @@
     --md-sys-color-on-tertiary-fixed: #000000;
     --md-sys-color-on-tertiary-fixed-variant: #0b0b0b;
     --s4-glass-tint-opacity-float: 1;
+    --s4-glass-tint-opacity-fab: 1;
     --s4-glass-tint-opacity-fill: 1;
     --s4-glass-blur-float: 0px;
     --s4-glass-backdrop-contrast-float: 1;
@@ -839,6 +846,7 @@
   @media (prefers-reduced-transparency: reduce) {
     :where(:root) {
       --s4-glass-tint-opacity-float: 1;
+      --s4-glass-tint-opacity-fab: 1;
       --s4-glass-tint-opacity-fill: 1;
       --s4-glass-blur-float: 0px;
       --s4-glass-item-outline: rgb(255 255 255 / 0);
@@ -850,6 +858,7 @@
     }
   :where(:root[data-glass="off"]) {
     --s4-glass-tint-opacity-float: 1;
+    --s4-glass-tint-opacity-fab: 1;
     --s4-glass-tint-opacity-fill: 1;
     --s4-glass-blur-float: 0px;
     --s4-glass-item-outline: rgb(255 255 255 / 0);
@@ -861,6 +870,7 @@
   @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
     :where(:root) {
       --s4-glass-tint-opacity-float: 1;
+      --s4-glass-tint-opacity-fab: 1;
       --s4-glass-tint-opacity-fill: 1;
       --s4-glass-blur-float: 0px;
       --s4-glass-item-outline: rgb(255 255 255 / 0);

@@ -108,7 +108,7 @@
     margin: 0;
     padding: 0;
     border: 0;
-    border-radius: var(--md-sys-shape-corner-extra-small);
+    border-radius: var(--md-sys-shape-corner-full);
     background: none;
     color: inherit;
     font: inherit;
@@ -160,6 +160,10 @@
     background-color: color-mix(in srgb, currentColor calc(var(--_state) * 100%), transparent);
     transition: background-color var(--md-sys-motion-spring-fast-effects-duration) var(--md-sys-motion-spring-fast-effects);
   }
+
+  /* the hover, focus and press layer follows rounded ends (decision 0025) */
+  .s4-table tr[tabindex] > :is(td, th):first-child { border-start-start-radius: var(--md-sys-shape-corner-large); border-end-start-radius: var(--md-sys-shape-corner-large); }
+  .s4-table tr[tabindex] > :is(td, th):last-child { border-start-end-radius: var(--md-sys-shape-corner-large); border-end-end-radius: var(--md-sys-shape-corner-large); }
 
   .s4-table tbody tr {
     transition:

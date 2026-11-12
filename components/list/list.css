@@ -34,7 +34,7 @@
     --_bg: transparent;
     --_fg: var(--md-sys-color-on-surface);
     --_fg-variant: var(--md-sys-color-on-surface-variant);
-    --_radius: 0;
+    --_radius: var(--md-sys-shape-corner-large);   /* decision 0025: no sharp corners, so hover and press layers are rounded too */
 
     display: flex;
     align-items: center;

@@ -1048,6 +1048,16 @@ export const tokens = {
       "reduced-transparency": "1"
     }
   },
+  "--s4-glass-tint-opacity-fab": {
+    "type": "number",
+    "value": "0.9",
+    "description": "Decision 0025: a floating action button is glass tinted with its own color. 90% so its icon and label keep at least 3:1 over a pure black or white backdrop for every seed (check-glass.mjs; the opaque FAB pair itself is only 4.5:1 in the worst schemes, so 4.5:1 can't hold under any translucency). Over a normal backdrop it is much higher.",
+    "modes": {
+      "high-contrast": "1",
+      "dark-high-contrast": "1",
+      "reduced-transparency": "1"
+    }
+  },
   "--s4-glass-tint-opacity-fill": {
     "type": "number",
     "value": "0.56",
@@ -1275,12 +1285,12 @@ export const tokens = {
   },
   "--s4-shape-list-segment": {
     "type": "dimension",
-    "value": "var(--md-sys-shape-corner-extra-small)",
+    "value": "var(--md-sys-shape-corner-medium)",
     "description": "Inner corners of rows in a segmented list."
   },
   "--s4-shape-list-group": {
     "type": "dimension",
-    "value": "var(--md-sys-shape-corner-large)",
+    "value": "var(--md-sys-shape-corner-large-increased)",
     "description": "Outer corners of a segmented list group."
   },
   "--s4-shape-text-field": {

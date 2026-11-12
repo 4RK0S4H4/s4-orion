@@ -4,6 +4,7 @@
    Where glass goes: floating chrome and overlays only. Never content (cards, panes, lists, fields, tables).
      chrome   top app bar once content scrolls under it, nav bar, modal or expanded nav rail, floating and docked toolbars
      overlays menus, dialogs, bottom and side sheets, rich tooltips
+     floating actions FABs (tinted with their own color)
    Snackbars and plain tooltips stay solid inverse surfaces (their inverse-primary action needs the full surface).
 
    Values (decision 0021, from the owner's Glass Playground): tint 75%, blur 8px, color boost 150%, no sheen, top-light edge.
@@ -42,6 +43,27 @@
   :where(.s4-nav-rail:is([data-modal], [data-overlay])) { box-shadow: inset calc(-1 * var(--s4-glass-edge-width)) 0 0 0 var(--s4-glass-edge-line); }
   :where(.s4-side-sheet) { box-shadow: inset var(--s4-glass-edge-width) 0 0 0 var(--s4-glass-edge-line); }
   @media (min-width: 600px) { :where(.s4-bottom-sheet) { box-shadow: inset 0 var(--s4-glass-edge-width) 0 0 var(--s4-glass-edge-line); } }
+
+  /* FLOATING ACTION BUTTONS (decision 0025): glass too, tinted with the FAB's own color (--_bg) instead of the surface color, so
+     it keeps its identity (primary-container by default, or the data-color it sets). Its icon and label keep the FAB's own
+     on-color; scripts/check-glass.mjs proves that pair too. */
+  :where(.s4-fab:not([data-glass="off"])) {
+    --_glass-tint: var(--s4-glass-tint-opacity-fab);
+    background-color: color-mix(in srgb, var(--_bg) calc(var(--_glass-tint) * 100%), transparent);
+    box-shadow:
+      inset 0 var(--s4-glass-edge-width) 0 0 var(--s4-glass-edge-top),
+      inset 0 calc(-1 * var(--s4-glass-edge-width)) 0 0 var(--s4-glass-edge-bottom),
+      inset 0 0 0 var(--s4-glass-edge-width) var(--s4-glass-edge-side);
+    -webkit-backdrop-filter: blur(var(--s4-glass-blur-float)) saturate(var(--s4-glass-saturation-float)) contrast(var(--s4-glass-backdrop-contrast-float)) brightness(var(--s4-glass-backdrop-brightness-float));
+    backdrop-filter: blur(var(--s4-glass-blur-float)) saturate(var(--s4-glass-saturation-float)) contrast(var(--s4-glass-backdrop-contrast-float)) brightness(var(--s4-glass-backdrop-brightness-float));
+  }
+  :where(:root[data-contrast="high"]) :where(.s4-fab) { background-color: var(--_bg); box-shadow: var(--_elevation); -webkit-backdrop-filter: none; backdrop-filter: none; }
+  @media (prefers-reduced-transparency: reduce) {
+    :where(.s4-fab) { background-color: var(--_bg); box-shadow: var(--_elevation); -webkit-backdrop-filter: none; backdrop-filter: none; }
+  }
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    :where(.s4-fab) { background-color: var(--_bg); box-shadow: var(--_elevation); }
+  }
 
   /* a toolbar in vibrant color keeps its role as the tint */
   :where(.s4-toolbar[data-color="vibrant"]) { background-color: color-mix(in srgb, var(--md-sys-color-primary-container) calc(var(--_glass-tint) * 100%), transparent); }
