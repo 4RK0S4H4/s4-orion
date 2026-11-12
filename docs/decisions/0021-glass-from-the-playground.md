@@ -23,8 +23,8 @@ The tint still follows the surface role (`surface-container`), so a seeded app's
 
 Drawn with three inset shadows so it follows the corner radius, never scrolls with the content of a scrolling menu or
 dialog, works in Safari and needs no extra element: a faint line all round (`side`), a brighter line along the top (`top`)
-and a faint return along the bottom (`bottom`). Light: white 32% all round, plus white 62% on top, dark 7% at the bottom.
-Dark: white 6% all round, plus 13% on top, 2% at the bottom. This approximates the playground's vertical gradient (the
+and a faint return along the bottom (`bottom`). Light: white 30% all round, plus white 80.5% on top, dark 8% at the bottom.
+Dark: white 8.5% all round, plus 21% on top, 5% at the bottom. (Corrected in [0027](0027-glass-edge-matches-the-playground.md): the first version shipped 62/32/7 and 13/6/2.) This approximates the playground's vertical gradient (the
 sides in the playground fade from 50% to about 20% of the top; here they hold one faint value). Full-width bars and docked
 surfaces draw one line on their content-facing edge (`--s4-glass-edge-line`). All zero where glass is solid.
 

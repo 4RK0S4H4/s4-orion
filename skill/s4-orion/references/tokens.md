@@ -373,9 +373,9 @@ Light values are shown; a second value is dark mode. Color roles also change wit
 | `--s4-glass-item-fill` | 1 |  | How much of its own color an item (button, chip, text field) keeps on glass, 1 = fully (decision 0015: owner picked full fill; lower it to let the blurred backdrop tint items). |
 | `--s4-glass-item-outline` | rgb(255 255 255 / 0.28) | rgb(255 255 255 / 0.28) | The outline of an outline-only item on glass (outlined button, unselected chip): the glass's milky frost line, a little stronger than the edge (decision 0015). Zero in high contrast, where glass is solid and the item keeps its own outline. |
 | `--s4-glass-edge-width` | 1px |  |  |
-| `--s4-glass-edge-top` | rgb(255 255 255 / 0.62) | rgb(255 255 255 / 0.13) | Extra light along the top edge (on top of the side line). |
-| `--s4-glass-edge-side` | rgb(255 255 255 / 0.32) | rgb(255 255 255 / 0.06) | The faint line all round. |
-| `--s4-glass-edge-bottom` | rgb(23 23 26 / 0.07) | rgb(255 255 255 / 0.02) | A faint return along the bottom edge. |
+| `--s4-glass-edge-top` | rgb(255 255 255 / 0.805) | rgb(255 255 255 / 0.21) | Extra light along the top edge (on top of the side line). |
+| `--s4-glass-edge-side` | rgb(255 255 255 / 0.3) | rgb(255 255 255 / 0.085) | The faint line all round. |
+| `--s4-glass-edge-bottom` | rgb(23 23 26 / 0.08) | rgb(255 255 255 / 0.05) | A faint return along the bottom edge. |
 | `--s4-glass-edge-line` | rgb(23 23 26 / 0.08) | rgb(255 255 255 / 0.08) | The single line full-width bars draw on their content-facing edge. |
 
 ## Icons

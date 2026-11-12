@@ -205,9 +205,9 @@
     --s4-glass-item-fill: 1;
     --s4-glass-item-outline: rgb(255 255 255 / 0.28);
     --s4-glass-edge-width: 1px;
-    --s4-glass-edge-top: rgb(255 255 255 / 0.62);
-    --s4-glass-edge-side: rgb(255 255 255 / 0.32);
-    --s4-glass-edge-bottom: rgb(23 23 26 / 0.07);
+    --s4-glass-edge-top: rgb(255 255 255 / 0.805);
+    --s4-glass-edge-side: rgb(255 255 255 / 0.3);
+    --s4-glass-edge-bottom: rgb(23 23 26 / 0.08);
     --s4-glass-edge-line: rgb(23 23 26 / 0.08);
     --s4-icon-duo-opacity: 0.8;
     --s4-motion-spring-fast-spatial-calm-stiffness: 1400;
@@ -377,9 +377,9 @@
       --s4-glass-backdrop-contrast-float: 1;
       --s4-glass-backdrop-brightness-float: 1;
       --s4-glass-item-outline: rgb(255 255 255 / 0.28);
-      --s4-glass-edge-top: rgb(255 255 255 / 0.13);
-      --s4-glass-edge-side: rgb(255 255 255 / 0.06);
-      --s4-glass-edge-bottom: rgb(255 255 255 / 0.02);
+      --s4-glass-edge-top: rgb(255 255 255 / 0.21);
+      --s4-glass-edge-side: rgb(255 255 255 / 0.085);
+      --s4-glass-edge-bottom: rgb(255 255 255 / 0.05);
       --s4-glass-edge-line: rgb(255 255 255 / 0.08);
       --s4-icon-duo-opacity: 0.65;
     }
@@ -439,9 +439,9 @@
     --s4-glass-backdrop-contrast-float: 1;
     --s4-glass-backdrop-brightness-float: 1;
     --s4-glass-item-outline: rgb(255 255 255 / 0.28);
-    --s4-glass-edge-top: rgb(255 255 255 / 0.13);
-    --s4-glass-edge-side: rgb(255 255 255 / 0.06);
-    --s4-glass-edge-bottom: rgb(255 255 255 / 0.02);
+    --s4-glass-edge-top: rgb(255 255 255 / 0.21);
+    --s4-glass-edge-side: rgb(255 255 255 / 0.085);
+    --s4-glass-edge-bottom: rgb(255 255 255 / 0.05);
     --s4-glass-edge-line: rgb(255 255 255 / 0.08);
     --s4-icon-duo-opacity: 0.65;
   }

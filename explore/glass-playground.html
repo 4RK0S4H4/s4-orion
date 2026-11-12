@@ -44,7 +44,7 @@ pre{margin:0;padding:12px;border-radius:12px;background:var(--soft);font:12px/1.
     <figure><figcaption>Dark</figcaption><iframe id="f-dark" title="Dark preview" src="glass-playground-frame.html?theme=dark"></iframe></figure>
   </section>
   <aside aria-label="Glass controls">
-    <p>The previews use the real Orion glass layer: top bar, dialog, menu, floating buttons and navigation bar. Move the sliders; both previews follow. Today's values are the real tokens (decision 0021 and 0025: tint 75%, floating buttons 90%, blur 8px, color boost 150%, edge 62 / 32 / 7%). The edge sliders are the light values; dark scales them to its own, fainter tokens. Send me the numbers at the bottom.</p>
+    <p>The previews use the real Orion glass layer: top bar, dialog, menu, floating buttons and navigation bar. Move the sliders; both previews follow. Today's values are your playground numbers: tint 75%, blur 8px, color boost 150%, no sheen, edge top 35, sides 50% of top, bottom 25, width 1px (floating buttons 90%). The edge uses the same units as the first playground, so numbers you send round-trip. Send me the numbers at the bottom.</p>
 
     <div><div class="lab">Presets</div><div class="chips" id="presets"></div></div>
     <div><div class="lab">Behind the glass</div><div class="chips" id="back"></div></div>
@@ -62,18 +62,18 @@ const SL = [
   { k: 'sat', label: 'Color Boost', min: 100, max: 220, step: 5, v: 150, fmt: v => v + '%', css: v => ['--s4-glass-saturation-float', v / 100] },
   { k: 'contrast', label: 'Backdrop Contrast', min: 40, max: 100, step: 5, v: 100, fmt: v => v + '%', css: v => ['--s4-glass-backdrop-contrast-float', v / 100] },
   { k: 'bright', label: 'Backdrop Brightness', min: 60, max: 120, step: 5, v: 100, fmt: v => v + '%', css: v => ['--s4-glass-backdrop-brightness-float', v / 100] },
-  { k: 'top', label: 'Edge Light, Top', min: 0, max: 100, step: 1, v: 62, fmt: v => v + '%' },
-  { k: 'side', label: 'Edge Light, Sides', min: 0, max: 100, step: 1, v: 32, fmt: v => v + '%' },
-  { k: 'bottom', label: 'Edge, Bottom', min: 0, max: 40, step: 1, v: 7, fmt: v => v + '%' },
+  { k: 'top', label: 'Edge, Top', min: 0, max: 100, step: 1, v: 35, fmt: v => v },
+  { k: 'side', label: 'Edge on the Sides (% of top)', min: 0, max: 100, step: 1, v: 50, fmt: v => v + '%' },
+  { k: 'bottom', label: 'Edge, Bottom', min: 0, max: 100, step: 1, v: 25, fmt: v => v },
   { k: 'width', label: 'Edge Width', min: 0, max: 3, step: 0.5, v: 1, fmt: v => v + 'px', css: v => ['--s4-glass-edge-width', v + 'px'] }
 ];
 const PRE = {
-  'Today (0021)': { tint: 75, fab: 90, blur: 8, sat: 150, contrast: 100, bright: 100, top: 62, side: 32, bottom: 7, width: 1 },
-  'Clearer': { tint: 55, fab: 85, blur: 14, sat: 160, contrast: 100, bright: 100, top: 70, side: 40, bottom: 8, width: 1 },
-  'Frosted': { tint: 84, fab: 92, blur: 24, sat: 130, contrast: 100, bright: 100, top: 50, side: 28, bottom: 6, width: 1 },
-  'Thick Rim': { tint: 70, fab: 90, blur: 10, sat: 150, contrast: 100, bright: 100, top: 85, side: 60, bottom: 14, width: 2 },
+  'Today (0021)': { tint: 75, fab: 90, blur: 8, sat: 150, contrast: 100, bright: 100, top: 35, side: 50, bottom: 25, width: 1 },
+  'Clearer': { tint: 55, fab: 85, blur: 14, sat: 160, contrast: 100, bright: 100, top: 45, side: 55, bottom: 25, width: 1 },
+  'Frosted': { tint: 84, fab: 92, blur: 24, sat: 130, contrast: 100, bright: 100, top: 30, side: 45, bottom: 20, width: 1 },
+  'Thick Rim': { tint: 70, fab: 90, blur: 10, sat: 150, contrast: 100, bright: 100, top: 55, side: 70, bottom: 40, width: 2 },
   'No Edge': { tint: 75, fab: 90, blur: 8, sat: 150, contrast: 100, bright: 100, top: 0, side: 0, bottom: 0, width: 0 },
-  'Soft Edge': { tint: 75, fab: 90, blur: 8, sat: 150, contrast: 100, bright: 100, top: 40, side: 20, bottom: 4, width: 1 }
+  'Soft Edge': { tint: 75, fab: 90, blur: 8, sat: 150, contrast: 100, bright: 100, top: 22, side: 40, bottom: 12, width: 1 }
 };
 const state = Object.fromEntries(SL.map(s => [s.k, s.v])); let backdrop = 'app';
 const frames = [document.getElementById('f-light'), document.getElementById('f-dark')];
@@ -82,28 +82,24 @@ const ratio = (a, b) => { const [x, y] = [lum(a), lum(b)].sort((p, q) => q - p);
 const mix = (a, b, t) => a.map((v, i) => v * t + b[i] * (1 - t));
 const rgbOf = el => (getComputedStyle(el).color.match(/[\d.]+/g) || [0, 0, 0]).slice(0, 3).map(Number);
 const varRgb = (doc, name) => { const d = doc.createElement('i'); d.style.color = `var(${name})`; doc.body.appendChild(d); const c = rgbOf(d); d.remove(); return c; };
-/* The real tokens differ between light and dark (the edge is much fainter on dark). The sliders set the LIGHT values (the numbers
-   in tokens.css); the dark preview scales each edge by the ratio the real dark tokens have to the light ones, so 'Today' is exactly today. */
-const alphaOf = (d, name) => { const e = d.createElement('i'); e.style.color = `var(${name})`; d.body.appendChild(e); const m = getComputedStyle(e).color.match(/[\d.]+/g) || []; e.remove(); return m.length > 3 ? +m[3] : 1; };
-let base = null;
-function readBase() {
-  const ds = frames.map(f => f.contentDocument);
-  if (ds.some(d => !d || !d.body)) return false;
-  const get = d => ({ top: alphaOf(d, '--s4-glass-edge-top'), side: alphaOf(d, '--s4-glass-edge-side'), bottom: alphaOf(d, '--s4-glass-edge-bottom'), line: alphaOf(d, '--s4-glass-edge-line') });
-  const [l, k] = ds.map(get);
-  base = { light: l, dark: k, rt: k.top / l.top, rs: k.side / l.side, rb: k.bottom / l.bottom };
-  return true;
+/* Units of the original playground, so the numbers you send round-trip: edge top T (0-100), sides S% of the top, bottom B.
+   Light: top = min(1, T x 0.023), bottom = B x 0.0032. Dark: top = T x 0.006, bottom = B x 0.002. The playground drew the edge as a
+   gradient ring (sides fading from S% to about 40% of that down the height); the real glass draws the sides as one even line, so the
+   side line is the gradient's average: x 0.745 light, x 0.81 dark. 'Today' (35 / 50% / 25) reproduces tokens.css exactly. */
+function edges(dark) {
+  const top = dark ? state.top * 0.006 : Math.min(1, state.top * 0.023);
+  const side = top * state.side / 100 * (dark ? 0.81 : 0.745);
+  const bottom = state.bottom * (dark ? 0.002 : 0.0032);
+  return { top, side, bottom };
 }
 function apply() {
-  if (!base && !readBase()) return;
   frames.forEach((f, i) => {
-    const d = f.contentDocument; if (!d || !d.documentElement) return;
-    const dark = i === 1, root = d.documentElement.style;
+    const d = f.contentDocument; if (!d || !d.documentElement || !d.body) return;
+    const dark = i === 1, root = d.documentElement.style, e = edges(dark);
     SL.forEach(s => { if (s.css) { const [n, v] = s.css(state[s.k]); root.setProperty(n, v); } });
-    const top = state.top / 100 * (dark ? base.rt : 1), side = state.side / 100 * (dark ? base.rs : 1), bottom = state.bottom / 100 * (dark ? base.rb : 1);
-    root.setProperty('--s4-glass-edge-top', `rgb(255 255 255 / ${top.toFixed(3)})`);
-    root.setProperty('--s4-glass-edge-side', `rgb(255 255 255 / ${side.toFixed(3)})`);
-    root.setProperty('--s4-glass-edge-bottom', dark ? `rgb(255 255 255 / ${bottom.toFixed(3)})` : `rgb(23 23 26 / ${bottom.toFixed(3)})`);
+    root.setProperty('--s4-glass-edge-top', `rgb(255 255 255 / ${e.top.toFixed(3)})`);
+    root.setProperty('--s4-glass-edge-side', `rgb(255 255 255 / ${e.side.toFixed(3)})`);
+    root.setProperty('--s4-glass-edge-bottom', dark ? `rgb(255 255 255 / ${e.bottom.toFixed(3)})` : `rgb(23 23 26 / ${e.bottom.toFixed(3)})`);
     d.querySelectorAll('[data-back]').forEach(el => { el.hidden = el.dataset.back !== backdrop; });
   });
   readout(); contrast();
@@ -123,7 +119,7 @@ function contrast() {
   document.getElementById('cr').innerHTML = out.join('');
 }
 function readout() {
-  document.getElementById('readout').textContent = `glass tint ${state.tint}% · floating button tint ${state.fab}% · blur ${state.blur}px · color boost ${state.sat}%\nbackdrop contrast ${state.contrast}% · brightness ${state.bright}%\nedge (light values; dark follows its own ratio): top ${state.top}%, sides ${state.side}%, bottom ${state.bottom}%, width ${state.width}px\nbehind: ${backdrop}`;
+  document.getElementById('readout').textContent = `glass tint ${state.tint}% · floating button tint ${state.fab}% · blur ${state.blur}px · color boost ${state.sat}%\nbackdrop contrast ${state.contrast}% · brightness ${state.bright}%\nsheen 0 · edge top ${state.top}, sides ${state.side}% of top, bottom ${state.bottom}, width ${state.width}px\nbehind: ${backdrop}`;
 }
 function build() {
   const box = document.getElementById('sliders');
