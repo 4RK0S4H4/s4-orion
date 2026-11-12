@@ -177,186 +177,12 @@
         }
       },
       "edge": {
-        "$description": "The glass edge (decision 0021, values corrected in 0027 to the owner's playground numbers: edge top 35, sides 50% of top, bottom 25; replaces the frost line of 0013/0016): light catches the top edge. Drawn as layered inset shadows so it follows the corner radius, never scrolls with content and needs no extra markup: a faint line all round (side), a brighter line along the top (top) and a faint return at the bottom (bottom). Full-width bars draw only one line on the edge that faces the content (line). All zero where glass is solid.",
+        "$description": "The glass edge (decisions 0021, 0027, 0031): light catches the top edge. Drawn as layered inset shadows so it follows the corner radius, never scrolls with content and needs no extra markup: a faint line all round (side), a brighter line along the top (top) and a faint return at the bottom (bottom). The colors come from the surface (glass tint, or a floating button's own color) moved toward white by `lift`; the alphas set the strengths. Full-width bars draw only one line on the edge that faces the content (line). All zero where glass is solid.",
         "width": {
           "$type": "dimension",
           "$value": {
             "value": 1,
             "unit": "px"
-          }
-        },
-        "top": {
-          "$type": "color",
-          "$description": "Extra light along the top edge (on top of the side line).",
-          "$value": {
-            "colorSpace": "srgb",
-            "components": [
-              1.0,
-              1.0,
-              1.0
-            ],
-            "alpha": 1.0,
-            "hex": "#ffffff"
-          },
-          "$extensions": {
-            "com.s4.modes": {
-              "dark": {
-                "colorSpace": "srgb",
-                "components": [
-                  1.0,
-                  1.0,
-                  1.0
-                ],
-                "alpha": 0.3,
-                "hex": "#ffffff"
-              },
-              "high-contrast": {
-                "colorSpace": "srgb",
-                "components": [
-                  1.0,
-                  1.0,
-                  1.0
-                ],
-                "alpha": 0,
-                "hex": "#ffffff"
-              },
-              "dark-high-contrast": {
-                "colorSpace": "srgb",
-                "components": [
-                  1.0,
-                  1.0,
-                  1.0
-                ],
-                "alpha": 0,
-                "hex": "#ffffff"
-              },
-              "reduced-transparency": {
-                "colorSpace": "srgb",
-                "components": [
-                  1.0,
-                  1.0,
-                  1.0
-                ],
-                "alpha": 0,
-                "hex": "#ffffff"
-              }
-            }
-          }
-        },
-        "side": {
-          "$type": "color",
-          "$description": "The faint line all round.",
-          "$value": {
-            "colorSpace": "srgb",
-            "components": [
-              1.0,
-              1.0,
-              1.0
-            ],
-            "alpha": 0.19,
-            "hex": "#ffffff"
-          },
-          "$extensions": {
-            "com.s4.modes": {
-              "dark": {
-                "colorSpace": "srgb",
-                "components": [
-                  1.0,
-                  1.0,
-                  1.0
-                ],
-                "alpha": 0.06,
-                "hex": "#ffffff"
-              },
-              "high-contrast": {
-                "colorSpace": "srgb",
-                "components": [
-                  1.0,
-                  1.0,
-                  1.0
-                ],
-                "alpha": 0,
-                "hex": "#ffffff"
-              },
-              "dark-high-contrast": {
-                "colorSpace": "srgb",
-                "components": [
-                  1.0,
-                  1.0,
-                  1.0
-                ],
-                "alpha": 0,
-                "hex": "#ffffff"
-              },
-              "reduced-transparency": {
-                "colorSpace": "srgb",
-                "components": [
-                  1.0,
-                  1.0,
-                  1.0
-                ],
-                "alpha": 0,
-                "hex": "#ffffff"
-              }
-            }
-          }
-        },
-        "bottom": {
-          "$type": "color",
-          "$description": "A faint return along the bottom edge.",
-          "$value": {
-            "colorSpace": "srgb",
-            "components": [
-              0.09019607843137255,
-              0.09019607843137255,
-              0.10196078431372549
-            ],
-            "alpha": 0.16,
-            "hex": "#17171a"
-          },
-          "$extensions": {
-            "com.s4.modes": {
-              "dark": {
-                "colorSpace": "srgb",
-                "components": [
-                  1.0,
-                  1.0,
-                  1.0
-                ],
-                "alpha": 0.1,
-                "hex": "#ffffff"
-              },
-              "high-contrast": {
-                "colorSpace": "srgb",
-                "components": [
-                  1.0,
-                  1.0,
-                  1.0
-                ],
-                "alpha": 0,
-                "hex": "#ffffff"
-              },
-              "dark-high-contrast": {
-                "colorSpace": "srgb",
-                "components": [
-                  1.0,
-                  1.0,
-                  1.0
-                ],
-                "alpha": 0,
-                "hex": "#ffffff"
-              },
-              "reduced-transparency": {
-                "colorSpace": "srgb",
-                "components": [
-                  1.0,
-                  1.0,
-                  1.0
-                ],
-                "alpha": 0,
-                "hex": "#ffffff"
-              }
-            }
           }
         },
         "line": {
@@ -426,19 +252,96 @@
           "$type": "number",
           "$value": 2,
           "$description": "Edge width multiplier on a large standard-density screen (a 2200px or wider display at under 1.5 device pixels per CSS pixel, e.g. 1440p and up)."
+        },
+        "top-alpha": {
+          "$type": "number",
+          "$value": 1.0,
+          "$description": "How strong the light line along the top edge is (0 to 1). Its color comes from the surface (see `lift`), never pure white.",
+          "$extensions": {
+            "com.s4.modes": {
+              "dark": 0.3,
+              "high-contrast": 0,
+              "dark-high-contrast": 0,
+              "reduced-transparency": 0
+            }
+          }
+        },
+        "side-alpha": {
+          "$type": "number",
+          "$value": 0.19,
+          "$description": "How strong the faint line all round is (0 to 1).",
+          "$extensions": {
+            "com.s4.modes": {
+              "dark": 0.06,
+              "high-contrast": 0,
+              "dark-high-contrast": 0,
+              "reduced-transparency": 0
+            }
+          }
+        },
+        "bottom-alpha": {
+          "$type": "number",
+          "$value": 0.16,
+          "$description": "How strong the faint return along the bottom edge is (0 to 1).",
+          "$extensions": {
+            "com.s4.modes": {
+              "dark": 0.1,
+              "high-contrast": 0,
+              "dark-high-contrast": 0,
+              "reduced-transparency": 0
+            }
+          }
+        },
+        "lift": {
+          "$type": "number",
+          "$value": 0.5,
+          "$description": "Decision 0031: the edge light is the surface's own color moved this far toward white (0 = the surface color, 1 = pure white). A pale glass gets a near-white line; a dark glass or a dark floating button gets a softer, lighter version of itself instead of a hard white line."
+        },
+        "bottom-lift": {
+          "$type": "number",
+          "$value": 0.55,
+          "$description": "How far the bottom return line moves from the surface color toward `bottom-target`."
+        },
+        "bottom-target": {
+          "$type": "color",
+          "$description": "The color the bottom return line moves toward: ink in light mode (a soft shade), white in dark mode.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "alpha": 1,
+            "hex": "#000000"
+          },
+          "$extensions": {
+            "com.s4.modes": {
+              "dark": {
+                "colorSpace": "srgb",
+                "components": [
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "alpha": 1,
+                "hex": "#ffffff"
+              }
+            }
+          }
         }
       },
       "glow": {
-        "$description": "Optional brighter surface near the edges (decision 0030). The glow follows the edge light: each side glows with its own edge color (top, side, bottom) scaled by `amount`, drawn inward over `size`. So a stronger bottom edge light gives a stronger bottom glow, and where the edge is zero (solid glass) so is the glow. Off by default (amount 0).",
+        "$description": "Optional brighter surface near the edges (decisions 0030, 0031). The glow follows the edge light: each side glows with its own edge color and alpha multiplied by `amount` (which may be above 1), drawn inward over `size`. So a stronger bottom edge light gives a stronger bottom glow, and where the edge is zero (solid glass) so is the glow. Off by default (amount 0).",
         "amount": {
           "$type": "number",
           "$value": 0,
-          "$description": "How much of each edge's light is carried inward as glow: 0 is off, 0.3 is subtle, 0.6 strong. Scales the alpha of the edge colors."
+          "$description": "How much of each edge's light is carried inward as glow: 0 is off, 1 repeats the edge's own strength, 2 doubles it (capped at fully opaque)."
         },
         "size": {
           "$type": "dimension",
           "$value": {
-            "value": 14,
+            "value": 16,
             "unit": "px"
           },
           "$description": "How far the glow reaches inward from each edge."

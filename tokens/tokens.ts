@@ -1131,39 +1131,6 @@ export const tokens = {
     "type": "dimension",
     "value": "1px"
   },
-  "--s4-glass-edge-top": {
-    "type": "color",
-    "value": "#ffffff",
-    "description": "Extra light along the top edge (on top of the side line).",
-    "modes": {
-      "dark": "rgb(255 255 255 / 0.3)",
-      "high-contrast": "rgb(255 255 255 / 0)",
-      "dark-high-contrast": "rgb(255 255 255 / 0)",
-      "reduced-transparency": "rgb(255 255 255 / 0)"
-    }
-  },
-  "--s4-glass-edge-side": {
-    "type": "color",
-    "value": "rgb(255 255 255 / 0.19)",
-    "description": "The faint line all round.",
-    "modes": {
-      "dark": "rgb(255 255 255 / 0.06)",
-      "high-contrast": "rgb(255 255 255 / 0)",
-      "dark-high-contrast": "rgb(255 255 255 / 0)",
-      "reduced-transparency": "rgb(255 255 255 / 0)"
-    }
-  },
-  "--s4-glass-edge-bottom": {
-    "type": "color",
-    "value": "rgb(23 23 26 / 0.16)",
-    "description": "A faint return along the bottom edge.",
-    "modes": {
-      "dark": "rgb(255 255 255 / 0.1)",
-      "high-contrast": "rgb(255 255 255 / 0)",
-      "dark-high-contrast": "rgb(255 255 255 / 0)",
-      "reduced-transparency": "rgb(255 255 255 / 0)"
-    }
-  },
   "--s4-glass-edge-line": {
     "type": "color",
     "value": "rgb(23 23 26 / 0.08)",
@@ -1185,14 +1152,66 @@ export const tokens = {
     "value": "2",
     "description": "Edge width multiplier on a large standard-density screen (a 2200px or wider display at under 1.5 device pixels per CSS pixel, e.g. 1440p and up)."
   },
+  "--s4-glass-edge-top-alpha": {
+    "type": "number",
+    "value": "1",
+    "description": "How strong the light line along the top edge is (0 to 1). Its color comes from the surface (see `lift`), never pure white.",
+    "modes": {
+      "dark": "0.3",
+      "high-contrast": "0",
+      "dark-high-contrast": "0",
+      "reduced-transparency": "0"
+    }
+  },
+  "--s4-glass-edge-side-alpha": {
+    "type": "number",
+    "value": "0.19",
+    "description": "How strong the faint line all round is (0 to 1).",
+    "modes": {
+      "dark": "0.06",
+      "high-contrast": "0",
+      "dark-high-contrast": "0",
+      "reduced-transparency": "0"
+    }
+  },
+  "--s4-glass-edge-bottom-alpha": {
+    "type": "number",
+    "value": "0.16",
+    "description": "How strong the faint return along the bottom edge is (0 to 1).",
+    "modes": {
+      "dark": "0.1",
+      "high-contrast": "0",
+      "dark-high-contrast": "0",
+      "reduced-transparency": "0"
+    }
+  },
+  "--s4-glass-edge-lift": {
+    "type": "number",
+    "value": "0.5",
+    "description": "Decision 0031: the edge light is the surface's own color moved this far toward white (0 = the surface color, 1 = pure white). A pale glass gets a near-white line; a dark glass or a dark floating button gets a softer, lighter version of itself instead of a hard white line."
+  },
+  "--s4-glass-edge-bottom-lift": {
+    "type": "number",
+    "value": "0.55",
+    "description": "How far the bottom return line moves from the surface color toward `bottom-target`."
+  },
+  "--s4-glass-edge-bottom-target": {
+    "type": "color",
+    "value": "#000000",
+    "description": "The color the bottom return line moves toward: ink in light mode (a soft shade), white in dark mode.",
+    "modes": {
+      "dark": "#ffffff",
+      "dark-high-contrast": "#ffffff"
+    }
+  },
   "--s4-glass-glow-amount": {
     "type": "number",
     "value": "0",
-    "description": "How much of each edge's light is carried inward as glow: 0 is off, 0.3 is subtle, 0.6 strong. Scales the alpha of the edge colors."
+    "description": "How much of each edge's light is carried inward as glow: 0 is off, 1 repeats the edge's own strength, 2 doubles it (capped at fully opaque)."
   },
   "--s4-glass-glow-size": {
     "type": "dimension",
-    "value": "14px",
+    "value": "16px",
     "description": "How far the glow reaches inward from each edge."
   },
   "--s4-icon-duo-opacity": {

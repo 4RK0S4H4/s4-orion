@@ -373,14 +373,17 @@ Light values are shown; a second value is dark mode. Color roles also change wit
 | `--s4-glass-item-fill` | 1 |  | How much of its own color an item (button, chip, text field) keeps on glass, 1 = fully (decision 0015: owner picked full fill; lower it to let the blurred backdrop tint items). |
 | `--s4-glass-item-outline` | rgb(255 255 255 / 0.28) | rgb(255 255 255 / 0.28) | The outline of an outline-only item on glass (outlined button, unselected chip): the glass's milky frost line, a little stronger than the edge (decision 0015). Zero in high contrast, where glass is solid and the item keeps its own outline. |
 | `--s4-glass-edge-width` | 1px |  |  |
-| `--s4-glass-edge-top` | #ffffff | rgb(255 255 255 / 0.3) | Extra light along the top edge (on top of the side line). |
-| `--s4-glass-edge-side` | rgb(255 255 255 / 0.19) | rgb(255 255 255 / 0.06) | The faint line all round. |
-| `--s4-glass-edge-bottom` | rgb(23 23 26 / 0.16) | rgb(255 255 255 / 0.1) | A faint return along the bottom edge. |
 | `--s4-glass-edge-line` | rgb(23 23 26 / 0.08) | rgb(255 255 255 / 0.08) | The single line full-width bars draw on their content-facing edge. |
 | `--s4-glass-edge-scale-standard` | 1.5 |  | Decision 0029: on a standard-density screen (under 1.5 device pixels per CSS pixel, e.g. a 1080p or 1440p monitor) the edge width is multiplied by this, so it stays visible. Retina and phone screens keep the width as it is. |
 | `--s4-glass-edge-scale-large` | 2 |  | Edge width multiplier on a large standard-density screen (a 2200px or wider display at under 1.5 device pixels per CSS pixel, e.g. 1440p and up). |
-| `--s4-glass-glow-amount` | 0 |  | How much of each edge's light is carried inward as glow: 0 is off, 0.3 is subtle, 0.6 strong. Scales the alpha of the edge colors. |
-| `--s4-glass-glow-size` | 14px |  | How far the glow reaches inward from each edge. |
+| `--s4-glass-edge-top-alpha` | 1 | 0.3 | How strong the light line along the top edge is (0 to 1). Its color comes from the surface (see `lift`), never pure white. |
+| `--s4-glass-edge-side-alpha` | 0.19 | 0.06 | How strong the faint line all round is (0 to 1). |
+| `--s4-glass-edge-bottom-alpha` | 0.16 | 0.1 | How strong the faint return along the bottom edge is (0 to 1). |
+| `--s4-glass-edge-lift` | 0.5 |  | Decision 0031: the edge light is the surface's own color moved this far toward white (0 = the surface color, 1 = pure white). A pale glass gets a near-white line; a dark glass or a dark floating button gets a softer, lighter version of itself instead of a hard white line. |
+| `--s4-glass-edge-bottom-lift` | 0.55 |  | How far the bottom return line moves from the surface color toward `bottom-target`. |
+| `--s4-glass-edge-bottom-target` | #000000 | #ffffff | The color the bottom return line moves toward: ink in light mode (a soft shade), white in dark mode. |
+| `--s4-glass-glow-amount` | 0 |  | How much of each edge's light is carried inward as glow: 0 is off, 1 repeats the edge's own strength, 2 doubles it (capped at fully opaque). |
+| `--s4-glass-glow-size` | 16px |  | How far the glow reaches inward from each edge. |
 
 ## Icons
 
