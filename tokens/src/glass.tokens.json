@@ -429,138 +429,19 @@
         }
       },
       "glow": {
-        "$description": "Optional brighter surface near the edges (decision 0028), drawn as inset box-shadows that follow the corner radius. Off by default (alpha 0); the owner turns it on from the Glass Playground. 'all' brightens the surface all round, 'top' only near the top edge (a sheen). Zero where glass is solid.",
-        "all": {
-          "$type": "color",
-          "$description": "White glow all round, brightest at the very edge and fading inward over `size`.",
-          "$value": {
-            "colorSpace": "srgb",
-            "components": [
-              1.0,
-              1.0,
-              1.0
-            ],
-            "alpha": 0,
-            "hex": "#ffffff"
-          },
-          "$extensions": {
-            "com.s4.modes": {
-              "dark": {
-                "colorSpace": "srgb",
-                "components": [
-                  1.0,
-                  1.0,
-                  1.0
-                ],
-                "alpha": 0,
-                "hex": "#ffffff"
-              },
-              "high-contrast": {
-                "colorSpace": "srgb",
-                "components": [
-                  1.0,
-                  1.0,
-                  1.0
-                ],
-                "alpha": 0,
-                "hex": "#ffffff"
-              },
-              "dark-high-contrast": {
-                "colorSpace": "srgb",
-                "components": [
-                  1.0,
-                  1.0,
-                  1.0
-                ],
-                "alpha": 0,
-                "hex": "#ffffff"
-              },
-              "reduced-transparency": {
-                "colorSpace": "srgb",
-                "components": [
-                  1.0,
-                  1.0,
-                  1.0
-                ],
-                "alpha": 0,
-                "hex": "#ffffff"
-              }
-            }
-          }
+        "$description": "Optional brighter surface near the edges (decision 0030). The glow follows the edge light: each side glows with its own edge color (top, side, bottom) scaled by `amount`, drawn inward over `size`. So a stronger bottom edge light gives a stronger bottom glow, and where the edge is zero (solid glass) so is the glow. Off by default (amount 0).",
+        "amount": {
+          "$type": "number",
+          "$value": 0,
+          "$description": "How much of each edge's light is carried inward as glow: 0 is off, 0.3 is subtle, 0.6 strong. Scales the alpha of the edge colors."
         },
         "size": {
           "$type": "dimension",
-          "$description": "How far the all-round glow reaches inward.",
-          "$value": {
-            "value": 12,
-            "unit": "px"
-          }
-        },
-        "top": {
-          "$type": "color",
-          "$description": "White sheen near the top edge only, fading downward over `top-size`.",
-          "$value": {
-            "colorSpace": "srgb",
-            "components": [
-              1.0,
-              1.0,
-              1.0
-            ],
-            "alpha": 0,
-            "hex": "#ffffff"
-          },
-          "$extensions": {
-            "com.s4.modes": {
-              "dark": {
-                "colorSpace": "srgb",
-                "components": [
-                  1.0,
-                  1.0,
-                  1.0
-                ],
-                "alpha": 0,
-                "hex": "#ffffff"
-              },
-              "high-contrast": {
-                "colorSpace": "srgb",
-                "components": [
-                  1.0,
-                  1.0,
-                  1.0
-                ],
-                "alpha": 0,
-                "hex": "#ffffff"
-              },
-              "dark-high-contrast": {
-                "colorSpace": "srgb",
-                "components": [
-                  1.0,
-                  1.0,
-                  1.0
-                ],
-                "alpha": 0,
-                "hex": "#ffffff"
-              },
-              "reduced-transparency": {
-                "colorSpace": "srgb",
-                "components": [
-                  1.0,
-                  1.0,
-                  1.0
-                ],
-                "alpha": 0,
-                "hex": "#ffffff"
-              }
-            }
-          }
-        },
-        "top-size": {
-          "$type": "dimension",
-          "$description": "How far the top sheen reaches down.",
           "$value": {
             "value": 14,
             "unit": "px"
-          }
+          },
+          "$description": "How far the glow reaches inward from each edge."
         }
       }
     }

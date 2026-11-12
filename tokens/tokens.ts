@@ -1185,37 +1185,15 @@ export const tokens = {
     "value": "2",
     "description": "Edge width multiplier on a large standard-density screen (a 2200px or wider display at under 1.5 device pixels per CSS pixel, e.g. 1440p and up)."
   },
-  "--s4-glass-glow-all": {
-    "type": "color",
-    "value": "rgb(255 255 255 / 0)",
-    "description": "White glow all round, brightest at the very edge and fading inward over `size`.",
-    "modes": {
-      "dark": "rgb(255 255 255 / 0)",
-      "high-contrast": "rgb(255 255 255 / 0)",
-      "dark-high-contrast": "rgb(255 255 255 / 0)",
-      "reduced-transparency": "rgb(255 255 255 / 0)"
-    }
+  "--s4-glass-glow-amount": {
+    "type": "number",
+    "value": "0",
+    "description": "How much of each edge's light is carried inward as glow: 0 is off, 0.3 is subtle, 0.6 strong. Scales the alpha of the edge colors."
   },
   "--s4-glass-glow-size": {
     "type": "dimension",
-    "value": "12px",
-    "description": "How far the all-round glow reaches inward."
-  },
-  "--s4-glass-glow-top": {
-    "type": "color",
-    "value": "rgb(255 255 255 / 0)",
-    "description": "White sheen near the top edge only, fading downward over `top-size`.",
-    "modes": {
-      "dark": "rgb(255 255 255 / 0)",
-      "high-contrast": "rgb(255 255 255 / 0)",
-      "dark-high-contrast": "rgb(255 255 255 / 0)",
-      "reduced-transparency": "rgb(255 255 255 / 0)"
-    }
-  },
-  "--s4-glass-glow-top-size": {
-    "type": "dimension",
     "value": "14px",
-    "description": "How far the top sheen reaches down."
+    "description": "How far the glow reaches inward from each edge."
   },
   "--s4-icon-duo-opacity": {
     "type": "number",

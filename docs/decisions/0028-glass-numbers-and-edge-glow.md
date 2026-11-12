@@ -15,6 +15,8 @@ contrast and brightness 100%, sheen 0, **edge top 50, sides 25% of top, bottom 5
    the Glass Playground (Edge Glow, Top Sheen); the live contrast pills include the glow, since brightening the glass lowers
    light text on dark mode.
 
+Superseded in part by [0030](0030-glow-follows-the-edge-light.md): the all-round glow and top sheen became one glow that follows the edge light.
+
 Lab simplification (2026-11-12): one slider each for Edge Glow and Top Sheen (reach fixed at 14px and 18px in the lab; the
 `-size` tokens stay for apps that want to change them), one Edge Width on Monitors slider (the large-screen multiplier is a
 third more), and a plain-words description under every control.

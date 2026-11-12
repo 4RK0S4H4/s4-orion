@@ -66,19 +66,18 @@ const SL = [
   { k: 'bottom', label: 'Edge Line, Bottom', desc: 'Strength of the faint line along the bottom edge.', min: 0, max: 100, step: 1, v: 50, fmt: v => v },
   { k: 'width', label: 'Edge Width', desc: 'Thickness of the edge line on phones and retina screens.', min: 0, max: 3, step: 0.5, v: 1, fmt: v => v + 'px', css: v => ['--s4-glass-edge-width', v + 'px'] },
   { k: 'scaleStd', label: 'Edge Width on Monitors', desc: 'Multiplier for the edge on 1080p and 1440p monitors, where 1px looks thin. Larger monitors get a third more.', min: 1, max: 3, step: 0.25, v: 1.5, fmt: v => '\u00d7' + v, css: v => ['--s4-glass-edge-scale-standard', v] },
-  { k: 'glow', label: 'Edge Glow', desc: 'Makes the glass itself brighter toward all its edges, like light gathering at the rim, fading inward. 0 is off.', min: 0, max: 100, step: 1, v: 0, fmt: v => v },
-  { k: 'sheen', label: 'Top Sheen', desc: 'Makes the glass brighter toward its top edge only, like a highlight from above. 0 is off.', min: 0, max: 100, step: 1, v: 0, fmt: v => v },
+  { k: 'glow', label: 'Edge Glow', desc: 'Spreads the edge light inward as a glow. Each side glows as much as its own edge light: stronger bottom edge light, stronger bottom glow. In light mode the bottom line is a soft dark line, so its glow is a soft shade. 0 is off.', min: 0, max: 100, step: 1, v: 0, fmt: v => v },
   { k: 'contrast', label: 'Backdrop Contrast', desc: 'Squashes what is behind the glass toward gray so text stays readable. 100% is off (today).', min: 40, max: 100, step: 5, v: 100, fmt: v => v + '%', css: v => ['--s4-glass-backdrop-contrast-float', v / 100] },
   { k: 'bright', label: 'Backdrop Brightness', desc: 'Dims or brightens what is behind the glass. 100% is off (today).', min: 60, max: 120, step: 5, v: 100, fmt: v => v + '%', css: v => ['--s4-glass-backdrop-brightness-float', v / 100] }
 ];
-const GLOW_REACH = 14, SHEEN_REACH = 18;   /* fixed: one control each is enough */
-const D = { glow: 0, sheen: 0, scaleStd: 1.5 };
+const GLOW_REACH = 14;   /* fixed: one control is enough */
+const D = { glow: 0, scaleStd: 1.5 };
 const TODAY = { tint: 75, fab: 75, blur: 8, sat: 150, contrast: 100, bright: 100, top: 50, side: 25, bottom: 50, width: 1, ...D };
 const PRE = {
   'Today': TODAY,
-  'Edge Glow': { ...TODAY, glow: 35 },
-  'Top Sheen': { ...TODAY, sheen: 45 },
-  'Glow and Sheen': { ...TODAY, glow: 25, sheen: 40 },
+  'Edge Glow': { ...TODAY, glow: 40 },
+  'Bottom Heavy Glow': { ...TODAY, top: 25, side: 20, bottom: 90, glow: 45 },
+  'Top Heavy Glow': { ...TODAY, top: 70, side: 25, bottom: 15, glow: 45 },
   'Clearer': { ...TODAY, tint: 55, blur: 14, sat: 160 },
   'Frosted': { ...TODAY, tint: 84, blur: 24, sat: 130 },
   'No Edge': { ...TODAY, top: 0, side: 0, bottom: 0, width: 0 }
@@ -100,8 +99,7 @@ function edges(dark) {
   const bottom = state.bottom * (dark ? 0.002 : 0.0032);
   return { top, side, bottom };
 }
-const glowAlpha = dark => state.glow / 100 * (dark ? 0.2 : 0.6);
-const sheenAlpha = dark => state.sheen / 100 * (dark ? 0.25 : 0.7);
+const glowAmount = () => (state.glow / 100 * 0.6).toFixed(3);
 function apply() {
   frames.forEach((f, i) => {
     const d = f.contentDocument; if (!d || !d.documentElement || !d.body) return;
@@ -110,10 +108,10 @@ function apply() {
     root.setProperty('--s4-glass-edge-top', `rgb(255 255 255 / ${e.top.toFixed(3)})`);
     root.setProperty('--s4-glass-edge-side', `rgb(255 255 255 / ${e.side.toFixed(3)})`);
     root.setProperty('--s4-glass-glow-size', GLOW_REACH + 'px');
-    root.setProperty('--s4-glass-glow-top-size', SHEEN_REACH + 'px');
     root.setProperty('--s4-glass-edge-scale-large', (state.scaleStd * 4 / 3).toFixed(2));
-    root.setProperty('--s4-glass-glow-all', `rgb(255 255 255 / ${glowAlpha(dark).toFixed(3)})`);
-    root.setProperty('--s4-glass-glow-top', `rgb(255 255 255 / ${sheenAlpha(dark).toFixed(3)})`);
+    root.setProperty('--s4-glass-glow-amount', glowAmount());
+    root.setProperty('--s4-glass-edge-top', `rgb(255 255 255 / ${e.top.toFixed(3)})`);
+    root.setProperty('--s4-glass-edge-side', `rgb(255 255 255 / ${e.side.toFixed(3)})`);
     root.setProperty('--s4-glass-edge-bottom', dark ? `rgb(255 255 255 / ${e.bottom.toFixed(3)})` : `rgb(23 23 26 / ${e.bottom.toFixed(3)})`);
     d.querySelectorAll('[data-back]').forEach(el => { el.hidden = el.dataset.back !== backdrop; });
   });
@@ -126,7 +124,8 @@ function contrast() {
     const c = state.contrast / 100, b = state.bright / 100, filt = v => Math.min(255, Math.max(0, ((v - 127.5) * c + 127.5) * b));
     const lo = filt(0), hi = filt(255);
     const tint = varRgb(d, '--md-sys-color-surface-container'), text = varRgb(d, '--md-sys-color-on-surface');
-    const ga = Math.max(glowAlpha(i === 1), sheenAlpha(i === 1)), lift = c => mix([255, 255, 255], c, ga);
+    const e = edges(i === 1), amt = +glowAmount(), wa = amt * Math.max(e.top, e.side, i === 1 ? e.bottom : 0), ia = i === 1 ? 0 : amt * e.bottom;
+    const lift = c => mix([255, 255, 255], mix([23, 23, 26], c, ia), wa);
     const t = state.tint / 100, r = Math.min(ratio(text, lift(mix(tint, [lo, lo, lo], t))), ratio(text, lift(mix(tint, [hi, hi, hi], t))));
     const pf = varRgb(d, '--md-sys-color-primary-container'), tf = varRgb(d, '--md-sys-color-on-primary-container'), t2 = state.fab / 100;
     const rf = Math.min(ratio(tf, lift(mix(pf, [lo, lo, lo], t2))), ratio(tf, lift(mix(pf, [hi, hi, hi], t2))));
@@ -136,7 +135,7 @@ function contrast() {
 }
 function tier() { const d = frames[0].contentDocument; if (!d || !d.documentElement) return ''; const v = getComputedStyle(d.documentElement).getPropertyValue('--_edge-scale').trim(); return v ? ' · this screen: edge ×' + v + ' = ' + (state.width * v).toFixed(2).replace(/\.?0+$/, '') + 'px' : ''; }
 function readout() {
-  document.getElementById('readout').textContent = `glass tint ${state.tint}% · floating button tint ${state.fab}% · blur ${state.blur}px · color boost ${state.sat}%\nbackdrop contrast ${state.contrast}% · brightness ${state.bright}%\ntop sheen ${state.sheen} · edge glow ${state.glow} · edge top ${state.top}, sides ${state.side}% of top, bottom ${state.bottom}, width ${state.width}px (monitors ×${state.scaleStd})${tier()}\nbehind: ${backdrop}`;
+  document.getElementById('readout').textContent = `glass tint ${state.tint}% · floating button tint ${state.fab}% · blur ${state.blur}px · color boost ${state.sat}%\nbackdrop contrast ${state.contrast}% · brightness ${state.bright}%\nedge glow ${state.glow} (follows the edge light) · edge top ${state.top}, sides ${state.side}% of top, bottom ${state.bottom}, width ${state.width}px (monitors ×${state.scaleStd})${tier()}\nbehind: ${backdrop}`;
 }
 function build() {
   const box = document.getElementById('sliders');

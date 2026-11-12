@@ -17,6 +17,7 @@ The first version of S4 Orion, a leaner rebuild of S4 Material 1.3 on Material 3
 - No sharp corners in hover, focus and press layers (lists 16, segments 12, table rows rounded).
 - Glass edge corrected to the owner's playground numbers (top 80.5% / 21%, sides 30% / 8.5%, bottom 8% / 5%, light / dark; decision 0027).
 - Glass numbers updated to the owner's latest (edge top 50, sides 25% of top, bottom 50, FAB tint 75%); optional edge glow and top sheen tokens (off by default; decision 0028).
+- Optional edge glow follows the edge light per side (`--s4-glass-glow-amount`, `--s4-glass-glow-size`; replaces the all-round glow and sheen tokens; decision 0030).
 - Glass edge width follows the screen: x1.5 on standard-density monitors, x2 on large ones (decision 0029).
 - FABs are glass tinted with their own color (`--s4-glass-tint-opacity-fab`, 90%); `check-glass` proves 3:1.
 - Icon sets: Solar (default), Phosphor Duotone, Phosphor Bold Duotone; `S4.icon.use(id)`.
