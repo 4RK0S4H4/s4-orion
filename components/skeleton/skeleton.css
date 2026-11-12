@@ -1,0 +1,20 @@
+/* Skeleton (S4 Orion addition): a quiet placeholder while content loads. Same shape and size as what will replace it.
+   <div class="s4-skeleton" style="height: 12rem"></div>                     block
+   <div class="s4-skeleton" data-shape="text"></div>                         one line of text (width from the parent)
+   <div class="s4-skeleton" data-shape="circle" style="width: 2.5rem"></div> avatar
+   <div class="s4-skeleton" data-shape="pill" style="width: 6rem"></div>     chip or button
+   Mark the loading region aria-busy="true". The pulse is opacity only and stops under reduced motion. */
+@layer s4.components {
+  .s4-skeleton {
+    display: block;
+    min-height: var(--s4-space-3);
+    border-radius: var(--md-sys-shape-corner-medium);
+    background: var(--md-sys-color-surface-container-high);
+    animation: s4-skeleton-pulse 1.4s ease-in-out infinite alternate;
+  }
+  .s4-skeleton[data-shape="text"] { height: 1em; min-height: 0; border-radius: var(--md-sys-shape-corner-full); font-size: var(--md-sys-typescale-body-large-size); }
+  .s4-skeleton[data-shape="pill"] { height: var(--s4-space-10); border-radius: var(--md-sys-shape-corner-full); }
+  .s4-skeleton[data-shape="circle"] { aspect-ratio: 1; border-radius: var(--md-sys-shape-corner-full); }
+  @keyframes s4-skeleton-pulse { from { opacity: 1; } to { opacity: 0.5; } }
+  @media (prefers-reduced-motion: reduce) { .s4-skeleton { animation: none; } }
+}

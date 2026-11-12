@@ -941,14 +941,14 @@
      Every interactive S4 component is listed here once, so hover, focus and press look identical everywhere.
      A component can tint its layer with --_state-color (defaults to the content color).
      Table rows draw their own layer on the cells (an absolutely positioned ::before on a <tr> breaks table layout). */
-  :where(.s4-button, .s4-icon-button, .s4-fab, .s4-chip, .s4-menu-item, .s4-tab, .s4-swatch, .s4-segment,
+  :where(.s4-button, .s4-icon-button, .s4-fab, .s4-chip, .s4-menu-item, .s4-tab, .s4-swatch, .s4-segment, .s4-page, .s4-breadcrumb-link,
          a.s4-list-item, button.s4-list-item, label.s4-list-item, .s4-list-item[tabindex],
          a.s4-card, button.s4-card, .s4-nav-item) {
     position: relative;
     isolation: isolate;
     -webkit-tap-highlight-color: transparent;
   }
-  :where(.s4-button, .s4-icon-button, .s4-fab, .s4-chip, .s4-menu-item, .s4-tab, .s4-swatch, .s4-segment,
+  :where(.s4-button, .s4-icon-button, .s4-fab, .s4-chip, .s4-menu-item, .s4-tab, .s4-swatch, .s4-segment, .s4-page, .s4-breadcrumb-link,
          a.s4-list-item, button.s4-list-item, label.s4-list-item, .s4-list-item[tabindex],
          a.s4-card, button.s4-card)::before {
     content: "";
@@ -962,27 +962,27 @@
     transition: opacity var(--md-sys-motion-spring-fast-effects-duration) var(--md-sys-motion-spring-fast-effects);
   }
   @media (hover: hover) {
-    :where(.s4-button, .s4-icon-button, .s4-fab, .s4-chip, .s4-menu-item, .s4-tab, .s4-swatch, .s4-segment,
+    :where(.s4-button, .s4-icon-button, .s4-fab, .s4-chip, .s4-menu-item, .s4-tab, .s4-swatch, .s4-segment, .s4-page, .s4-breadcrumb-link,
            a.s4-list-item, button.s4-list-item, label.s4-list-item, .s4-list-item[tabindex],
            a.s4-card, button.s4-card):hover::before { opacity: var(--md-sys-state-hover-state-layer-opacity); }
   }
-  :where(.s4-button, .s4-icon-button, .s4-fab, .s4-chip, .s4-menu-item, .s4-tab, .s4-swatch, .s4-segment,
+  :where(.s4-button, .s4-icon-button, .s4-fab, .s4-chip, .s4-menu-item, .s4-tab, .s4-swatch, .s4-segment, .s4-page, .s4-breadcrumb-link,
          a.s4-list-item, button.s4-list-item, label.s4-list-item, .s4-list-item[tabindex],
          a.s4-card, button.s4-card):focus-visible::before,
   label.s4-list-item:has(:focus-visible)::before { opacity: var(--md-sys-state-focus-state-layer-opacity); }
-  :where(.s4-button, .s4-icon-button, .s4-fab, .s4-chip, .s4-menu-item, .s4-tab, .s4-swatch, .s4-segment,
+  :where(.s4-button, .s4-icon-button, .s4-fab, .s4-chip, .s4-menu-item, .s4-tab, .s4-swatch, .s4-segment, .s4-page, .s4-breadcrumb-link,
          a.s4-list-item, button.s4-list-item, label.s4-list-item, .s4-list-item[tabindex],
          a.s4-card, button.s4-card):active::before { opacity: var(--md-sys-state-pressed-state-layer-opacity); }
-  :where(.s4-button, .s4-icon-button, .s4-fab, .s4-chip, .s4-menu-item, .s4-tab, .s4-swatch, .s4-segment,
+  :where(.s4-button, .s4-icon-button, .s4-fab, .s4-chip, .s4-menu-item, .s4-tab, .s4-swatch, .s4-segment, .s4-page, .s4-breadcrumb-link,
          a.s4-list-item, button.s4-list-item, label.s4-list-item, .s4-list-item[tabindex],
          a.s4-card, button.s4-card):is(:disabled, [aria-disabled="true"]) { cursor: default; pointer-events: none; }
-  :where(.s4-button, .s4-icon-button, .s4-fab, .s4-chip, .s4-menu-item, .s4-tab, .s4-swatch, .s4-segment,
+  :where(.s4-button, .s4-icon-button, .s4-fab, .s4-chip, .s4-menu-item, .s4-tab, .s4-swatch, .s4-segment, .s4-page, .s4-breadcrumb-link,
          a.s4-list-item, button.s4-list-item, label.s4-list-item, .s4-list-item[tabindex],
          a.s4-card, button.s4-card):is(:disabled, [aria-disabled="true"])::before { display: none; }
 
   /* Windows high contrast and other forced-color modes: drop decorative layers, keep real borders and focus. */
   @media (forced-colors: active) {
-    :where(.s4-button, .s4-icon-button, .s4-fab, .s4-chip, .s4-menu-item, .s4-tab, .s4-swatch, .s4-segment,
+    :where(.s4-button, .s4-icon-button, .s4-fab, .s4-chip, .s4-menu-item, .s4-tab, .s4-swatch, .s4-segment, .s4-page, .s4-breadcrumb-link,
            a.s4-list-item, button.s4-list-item, label.s4-list-item, .s4-list-item[tabindex], a.s4-card, button.s4-card)::before { display: none; }
     :where(:focus-visible) { outline-color: Highlight; }
   }
@@ -2800,27 +2800,7 @@
   label.s4-list-item:has(input:disabled) { pointer-events: none; }
   label.s4-list-item:has(input:disabled)::before { display: none; }
 
-  /* ---------- avatar: 40 circle with initials or a photo ---------- */
-  .s4-avatar {
-    display: inline-grid;
-    flex: none;
-    place-items: center;
-    width: var(--s4-size-avatar);
-    height: var(--s4-size-avatar);
-    overflow: hidden;
-    border-radius: var(--md-sys-shape-corner-full);
-    background: var(--md-sys-color-primary-container);
-    color: var(--md-sys-color-on-primary-container);
-    font-family: var(--md-sys-typescale-title-medium-font);
-    font-size: var(--md-sys-typescale-title-medium-size);
-    line-height: 1;
-    letter-spacing: 0;
-    font-weight: var(--md-sys-typescale-title-medium-weight);
-    text-transform: uppercase;
-    user-select: none;
-  }
-  .s4-avatar > img { width: 100%; height: 100%; object-fit: cover; }
-  .s4-avatar > .s4-icon { --s4-icon-size: var(--s4-size-icon); }
+  /* the avatar circle lives in avatar/avatar.css */
 
   @media (forced-colors: active) {
     :is(a, button, label).s4-list-item::before,
@@ -2870,6 +2850,242 @@
     margin-block: var(--s4-divider-inset, var(--s4-space-2));
   }
   .s4-divider[data-orientation="vertical"][data-inset="start"] { margin-block-end: 0; }
+}
+
+/* ---- avatar/avatar.css ---- */
+/* Avatar (S4 Orion addition; the circle moved here from list.css)
+   <span class="s4-avatar">MC</span>                                 initials (one or two letters)
+   <span class="s4-avatar"><img src="…" alt="Maya Chen"></span>      photo
+   <span class="s4-avatar"><span class="s4-icon" data-icon="person"></span></span>
+   <span class="s4-avatar" data-size="xs|s|m|l|xl" data-status="online|busy|away">…</span>
+   <div class="s4-avatar-group"> <span class="s4-avatar">…</span> … <span class="s4-avatar" data-more>+3</span> </div>
+   Default 40. Sizes: xs 24, s 32, m 40, l 56, xl 80. Filled with primary-container; data-tone picks another container role.
+   data-status adds a small dot at the bottom end; its label must be said in text elsewhere (aria-label on the avatar). */
+@layer s4.components {
+  .s4-avatar {
+    --_size: var(--s4-size-avatar);
+    --_bg: var(--md-sys-color-primary-container);
+    --_fg: var(--md-sys-color-on-primary-container);
+    --_type: var(--md-sys-typescale-title-medium-size);
+    position: relative;
+    display: inline-grid;
+    flex: none;
+    place-items: center;
+    width: var(--_size);
+    height: var(--_size);
+    border-radius: var(--md-sys-shape-corner-full);
+    background: var(--_bg);
+    color: var(--_fg);
+    font-family: var(--md-sys-typescale-title-medium-font);
+    font-size: var(--_type);
+    line-height: 1;
+    letter-spacing: 0;
+    font-weight: var(--md-sys-typescale-title-medium-weight);
+    text-transform: uppercase;
+    user-select: none;
+    vertical-align: middle;
+    --s4-icon-size: calc(var(--_size) * 0.55);
+  }
+  .s4-avatar > img { width: 100%; height: 100%; border-radius: inherit; object-fit: cover; }
+  .s4-avatar[data-size="xs"] { --_size: var(--s4-space-6); --_type: var(--md-sys-typescale-label-small-size); }
+  .s4-avatar[data-size="s"] { --_size: var(--s4-space-8); --_type: var(--md-sys-typescale-label-large-size); }
+  .s4-avatar[data-size="l"] { --_size: calc(var(--s4-space-10) + var(--s4-space-4)); --_type: var(--md-sys-typescale-title-large-size); }
+  .s4-avatar[data-size="xl"] { --_size: calc(var(--s4-space-12) + var(--s4-space-8)); --_type: var(--md-sys-typescale-headline-small-size); }
+  .s4-avatar[data-tone="secondary"] { --_bg: var(--md-sys-color-secondary-container); --_fg: var(--md-sys-color-on-secondary-container); }
+  .s4-avatar[data-tone="tertiary"] { --_bg: var(--md-sys-color-tertiary-container); --_fg: var(--md-sys-color-on-tertiary-container); }
+  .s4-avatar[data-tone="neutral"] { --_bg: var(--md-sys-color-surface-container-highest); --_fg: var(--md-sys-color-on-surface-variant); }
+
+  /* status dot: a filled circle cut out of the avatar by a surface-colored ring */
+  .s4-avatar[data-status]::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: max(var(--s4-space-2), calc(var(--_size) * 0.28));
+    height: max(var(--s4-space-2), calc(var(--_size) * 0.28));
+    border-radius: var(--md-sys-shape-corner-full);
+    background: var(--md-sys-color-on-surface-variant);
+    box-shadow: 0 0 0 2px var(--md-sys-color-surface);
+  }
+  .s4-avatar[data-status="online"]::after { background: var(--md-sys-color-primary); }
+  .s4-avatar[data-status="busy"]::after { background: var(--md-sys-color-error); }
+
+  /* overlapping group */
+  .s4-avatar-group { display: inline-flex; align-items: center; padding-inline-start: var(--s4-space-2); }
+  .s4-avatar-group > .s4-avatar { margin-inline-start: calc(var(--s4-space-2) * -1); box-shadow: 0 0 0 2px var(--md-sys-color-surface); }
+  .s4-avatar[data-more] { --_bg: var(--md-sys-color-surface-container-highest); --_fg: var(--md-sys-color-on-surface); --_type: var(--md-sys-typescale-label-large-size); text-transform: none; }
+
+  @media (forced-colors: active) { .s4-avatar { border: 1px solid CanvasText; } }
+}
+
+/* ---- accordion/accordion.css ---- */
+/* Accordion (S4 Orion addition): sections that open and close. Built on native <details>, so it works without JS.
+   <div class="s4-accordion">
+     <details class="s4-accordion-item" name="faq" open>
+       <summary>What is autopay?<span class="s4-icon" data-icon="chevron-down"></span></summary>
+       <div class="s4-accordion-body">Pays the bill from your default account on its due date.</div>
+     </details>
+     …
+   </div>
+   Items are filled rounded rows 2dp apart (surface-container-low); the open one rises to surface-container. Give every
+   <details> the same name="…" for "only one open at a time". The chevron turns (transform), the body fades in (opacity). */
+@layer s4.components {
+  .s4-accordion { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+  .s4-accordion-item {
+    --_bg: var(--md-sys-color-surface-container-low);
+    border-radius: var(--md-sys-shape-corner-large);
+    background: var(--_bg);
+    color: var(--md-sys-color-on-surface);
+    overflow: clip;
+  }
+  .s4-accordion-item[open] { --_bg: var(--md-sys-color-surface-container); }
+  .s4-accordion-item > summary {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--s4-space-4);
+    min-height: calc(var(--s4-space-12) + var(--s4-space-2));
+    padding: var(--s4-space-2) var(--s4-space-4) var(--s4-space-2) var(--s4-space-4);
+    list-style: none;
+    cursor: pointer;
+    font-family: var(--md-sys-typescale-title-medium-font);
+    font-size: var(--md-sys-typescale-title-medium-size);
+    line-height: var(--md-sys-typescale-title-medium-line-height);
+    font-weight: var(--md-sys-typescale-title-medium-weight);
+    -webkit-tap-highlight-color: transparent;
+  }
+  .s4-accordion-item > summary::-webkit-details-marker { display: none; }
+  .s4-accordion-item > summary::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: currentColor;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--md-sys-motion-spring-fast-effects-duration) var(--md-sys-motion-spring-fast-effects);
+  }
+  @media (hover: hover) { .s4-accordion-item > summary:hover::before { opacity: var(--md-sys-state-hover-state-layer-opacity); } }
+  .s4-accordion-item > summary:focus-visible::before { opacity: var(--md-sys-state-focus-state-layer-opacity); }
+  .s4-accordion-item > summary:active::before { opacity: var(--md-sys-state-pressed-state-layer-opacity); }
+  .s4-accordion-item > summary > .s4-icon {
+    color: var(--md-sys-color-on-surface-variant);
+    transition: transform var(--md-sys-motion-spring-fast-spatial-duration) var(--md-sys-motion-spring-fast-spatial);
+  }
+  .s4-accordion-item[open] > summary > .s4-icon { transform: rotate(180deg); }
+  .s4-accordion-body {
+    padding: 0 var(--s4-space-4) var(--s4-space-4);
+    color: var(--md-sys-color-on-surface-variant);
+    font-family: var(--md-sys-typescale-body-large-font);
+    font-size: var(--md-sys-typescale-body-large-size);
+    line-height: var(--md-sys-typescale-body-large-line-height);
+  }
+  .s4-accordion-item[open] > .s4-accordion-body { animation: s4-accordion-in var(--md-sys-motion-spring-fast-effects-duration) var(--md-sys-motion-spring-fast-effects); }
+  @keyframes s4-accordion-in { from { opacity: 0; } }
+  @media (forced-colors: active) { .s4-accordion-item { border: 1px solid CanvasText; } .s4-accordion-item > summary::before { display: none; } }
+}
+
+/* ---- breadcrumbs/breadcrumbs.css ---- */
+/* Breadcrumbs (S4 Orion addition): where you are in a hierarchy.
+   <nav class="s4-breadcrumbs" aria-label="Breadcrumb">
+     <ol>
+       <li><a class="s4-breadcrumb-link" href="/">Home</a></li>
+       <li><a class="s4-breadcrumb-link" href="/bills">Bills</a></li>
+       <li aria-current="page">Electric Co.</li>
+     </ol>
+   </nav>
+   Links are pills with the shared state layer; the current page is plain text. Long trails wrap. */
+@layer s4.components {
+  .s4-breadcrumbs ol { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s4-space-1); margin: 0; padding: 0; list-style: none; }
+  .s4-breadcrumbs li { display: inline-flex; align-items: center; gap: var(--s4-space-1); min-width: 0; font-family: var(--md-sys-typescale-label-large-font); font-size: var(--md-sys-typescale-label-large-size); line-height: var(--md-sys-typescale-label-large-line-height); font-weight: var(--md-sys-typescale-label-large-weight); color: var(--md-sys-color-on-surface); }
+  .s4-breadcrumbs li + li::before { content: "\203A" / ""; color: var(--md-sys-color-on-surface-variant); }
+  .s4-breadcrumb-link, .s4-breadcrumbs li[aria-current] { display: inline-flex; align-items: center; min-height: var(--s4-space-8); padding: 0 var(--s4-space-3); border-radius: var(--md-sys-shape-corner-full); }
+  .s4-breadcrumb-link { background: var(--md-sys-color-surface-container-high); color: var(--md-sys-color-on-surface-variant); text-decoration: none; }
+  .s4-breadcrumb-link::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: var(--s4-size-touch-target); transform: translateY(-50%); }
+  @media (forced-colors: active) { .s4-breadcrumb-link { border: 1px solid LinkText; } }
+}
+
+/* ---- pagination/pagination.css ---- */
+/* Pagination (S4 Orion addition): move between pages of a long list or table.
+   <nav class="s4-pagination" aria-label="Pagination">
+     <a class="s4-page" href="?page=2" aria-label="Previous Page"><span class="s4-icon" data-icon="chevron-left"></span></a>
+     <a class="s4-page" href="?page=1">1</a>
+     <a class="s4-page" href="?page=2" aria-current="page">2</a>
+     <span class="s4-page-gap" aria-hidden="true">…</span>
+     <a class="s4-page" href="?page=9">9</a>
+     <a class="s4-page" href="?page=3" aria-label="Next Page"><span class="s4-icon" data-icon="chevron-right"></span></a>
+   </nav>
+   Circles, filled surface-container-high; the current page is filled inverse. Use <button> instead of <a> for in-page paging.
+   aria-disabled="true" on the previous or next at the ends. */
+@layer s4.components {
+  .s4-pagination { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: var(--s4-space-1); }
+  .s4-page {
+    --_bg: var(--md-sys-color-surface-container-high);
+    --_fg: var(--md-sys-color-on-surface);
+    display: inline-grid;
+    place-items: center;
+    min-width: var(--s4-space-10);
+    height: var(--s4-space-10);
+    padding: 0 var(--s4-space-2);
+    border: 0;
+    border-radius: var(--md-sys-shape-corner-full);
+    background: var(--_bg);
+    color: var(--_fg);
+    font-family: var(--md-sys-typescale-label-large-font);
+    font-size: var(--md-sys-typescale-label-large-size);
+    font-weight: var(--md-sys-typescale-label-large-weight);
+    font-variant-numeric: tabular-nums;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color var(--md-sys-motion-spring-fast-effects-duration) var(--md-sys-motion-spring-fast-effects), color var(--md-sys-motion-spring-fast-effects-duration) var(--md-sys-motion-spring-fast-effects);
+  }
+  .s4-page::after { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, var(--s4-size-touch-target)); height: max(100%, var(--s4-size-touch-target)); transform: translate(-50%, -50%); }
+  .s4-page[aria-current] { --_bg: var(--md-sys-color-inverse-surface); --_fg: var(--md-sys-color-inverse-on-surface); }
+  .s4-page[aria-disabled="true"] { --_fg: color-mix(in srgb, var(--md-sys-color-on-surface) calc(var(--md-sys-state-disabled-content-opacity) * 100%), transparent); --_bg: color-mix(in srgb, var(--md-sys-color-on-surface) calc(var(--md-sys-state-disabled-container-opacity) * 100%), transparent); }
+  .s4-page-gap { display: inline-grid; place-items: center; min-width: var(--s4-space-6); color: var(--md-sys-color-on-surface-variant); }
+  @media (forced-colors: active) { .s4-page { border: 1px solid ButtonText; } .s4-page[aria-current] { background: Highlight; color: HighlightText; } }
+}
+
+/* ---- stepper/stepper.css ---- */
+/* Stepper (S4 Orion addition): progress through a fixed sequence of steps, such as a checkout or setup.
+   <ol class="s4-stepper" aria-label="Setup Progress">
+     <li data-state="done"><span class="s4-step-dot"><span class="s4-icon" data-icon="check"></span></span><span class="s4-step-label">Account</span></li>
+     <li data-state="current" aria-current="step"><span class="s4-step-dot">2</span><span class="s4-step-label">Payment</span></li>
+     <li><span class="s4-step-dot">3</span><span class="s4-step-label">Review</span></li>
+   </ol>
+   Dots joined by a filled track. Done = inverse fill with a check, current = primary fill, upcoming = surface-container-high.
+   The label always names the step, and aria-current marks the one you are on. Stacks as a row of dots with the current
+   label under it below 600. */
+@layer s4.components {
+  .s4-stepper { display: flex; align-items: flex-start; margin: 0; padding: 0; list-style: none; gap: 0; }
+  .s4-stepper > li { position: relative; display: flex; flex: 1 1 0; flex-direction: column; align-items: center; gap: var(--s4-space-2); min-width: 0; text-align: center; }
+  .s4-stepper > li + li::before { content: ""; position: absolute; top: calc(var(--s4-space-4) - var(--s4-space-1) / 2); right: 50%; width: 100%; height: var(--s4-space-1); border-radius: var(--md-sys-shape-corner-full); background: var(--md-sys-color-surface-container-highest); z-index: 0; }
+  .s4-stepper > li[data-state="done"] + li::before, .s4-stepper > li[data-state="current"]::before { background: var(--md-sys-color-inverse-surface); }
+  .s4-stepper > li[data-state="current"]:first-child::before { display: none; }
+  .s4-step-dot {
+    position: relative;
+    z-index: 1;
+    display: inline-grid;
+    place-items: center;
+    width: var(--s4-space-8);
+    height: var(--s4-space-8);
+    border-radius: var(--md-sys-shape-corner-full);
+    background: var(--md-sys-color-surface-container-highest);
+    color: var(--md-sys-color-on-surface-variant);
+    font-family: var(--md-sys-typescale-label-large-font);
+    font-size: var(--md-sys-typescale-label-large-size);
+    font-weight: var(--md-sys-typescale-label-large-weight);
+    font-variant-numeric: tabular-nums;
+    --s4-icon-size: var(--s4-space-5);
+  }
+  .s4-stepper > li[data-state="done"] > .s4-step-dot { background: var(--md-sys-color-inverse-surface); color: var(--md-sys-color-inverse-on-surface); }
+  .s4-stepper > li[data-state="current"] > .s4-step-dot { background: var(--md-sys-color-primary); color: var(--md-sys-color-on-primary); }
+  .s4-step-label { font-family: var(--md-sys-typescale-label-large-font); font-size: var(--md-sys-typescale-label-medium-size); line-height: var(--md-sys-typescale-label-medium-line-height); color: var(--md-sys-color-on-surface-variant); overflow-wrap: anywhere; }
+  .s4-stepper > li[data-state="current"] > .s4-step-label { color: var(--md-sys-color-on-surface); font-weight: 600; }
+  @media (max-width: 599px) { .s4-stepper > li:not([data-state="current"]) > .s4-step-label { display: none; } }
+  @media (forced-colors: active) { .s4-step-dot { border: 1px solid CanvasText; } .s4-stepper > li[data-state="current"] > .s4-step-dot { background: Highlight; color: HighlightText; } }
 }
 
 /* ---- table/table.css ---- */
@@ -4508,6 +4724,88 @@
     .s4-progress-indicator { stroke: CanvasText; }
     .s4-progress-track { stroke: GrayText; }
   }
+}
+
+/* ---- banner/banner.css ---- */
+/* Banner (S4 Orion addition): a message that stays on the page until it is dealt with or dismissed. Not a toast (that is the snackbar).
+   <div class="s4-banner" role="status" data-tone="primary|secondary|tertiary|error">
+     <span class="s4-icon" data-icon="info"></span>
+     <p class="s4-banner-text">Your plan renews on Nov 28.</p>
+     <div class="s4-banner-actions"><button class="s4-button" data-variant="text" type="button">Manage</button></div>
+     <button class="s4-icon-button" type="button" data-dismiss aria-label="Dismiss"><span class="s4-icon" data-icon="close"></span></button>
+   </div>
+   Filled rounded box (surface-container-high by default; a tone uses its container role). Use role="alert" only for errors.
+   banner.js dismisses on [data-dismiss] (fades out, then hides) and fires s4-close. */
+@layer s4.components {
+  .s4-banner {
+    --_bg: var(--md-sys-color-surface-container-high);
+    --_fg: var(--md-sys-color-on-surface);
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--s4-space-2) var(--s4-space-3);
+    padding: var(--s4-space-3) var(--s4-space-3) var(--s4-space-3) var(--s4-space-4);
+    border-radius: var(--md-sys-shape-corner-large);
+    background: var(--_bg);
+    color: var(--_fg);
+    transition: opacity var(--md-sys-motion-spring-fast-effects-duration) var(--md-sys-motion-spring-fast-effects);
+  }
+  .s4-banner[data-tone="primary"] { --_bg: var(--md-sys-color-primary-container); --_fg: var(--md-sys-color-on-primary-container); }
+  .s4-banner[data-tone="secondary"] { --_bg: var(--md-sys-color-secondary-container); --_fg: var(--md-sys-color-on-secondary-container); }
+  .s4-banner[data-tone="tertiary"] { --_bg: var(--md-sys-color-tertiary-container); --_fg: var(--md-sys-color-on-tertiary-container); }
+  .s4-banner[data-tone="error"] { --_bg: var(--md-sys-color-error-container); --_fg: var(--md-sys-color-on-error-container); }
+  .s4-banner[data-closing] { opacity: 0; }
+  .s4-banner > .s4-icon { align-self: flex-start; margin-block: var(--s4-space-2); --s4-icon-size: var(--s4-size-icon); }
+  .s4-banner-text {
+    flex: 1 1 12rem;
+    min-width: 0;
+    margin: 0;
+    font-family: var(--md-sys-typescale-body-medium-font);
+    font-size: var(--md-sys-typescale-body-medium-size);
+    line-height: var(--md-sys-typescale-body-medium-line-height);
+  }
+  .s4-banner-actions { display: flex; gap: var(--s4-space-1); margin-inline-start: auto; }
+  .s4-banner :is(.s4-button[data-variant="text"], .s4-icon-button) { --_fg: currentColor; }
+  @media (forced-colors: active) { .s4-banner { border: 1px solid CanvasText; } }
+}
+
+/* ---- skeleton/skeleton.css ---- */
+/* Skeleton (S4 Orion addition): a quiet placeholder while content loads. Same shape and size as what will replace it.
+   <div class="s4-skeleton" style="height: 12rem"></div>                     block
+   <div class="s4-skeleton" data-shape="text"></div>                         one line of text (width from the parent)
+   <div class="s4-skeleton" data-shape="circle" style="width: 2.5rem"></div> avatar
+   <div class="s4-skeleton" data-shape="pill" style="width: 6rem"></div>     chip or button
+   Mark the loading region aria-busy="true". The pulse is opacity only and stops under reduced motion. */
+@layer s4.components {
+  .s4-skeleton {
+    display: block;
+    min-height: var(--s4-space-3);
+    border-radius: var(--md-sys-shape-corner-medium);
+    background: var(--md-sys-color-surface-container-high);
+    animation: s4-skeleton-pulse 1.4s ease-in-out infinite alternate;
+  }
+  .s4-skeleton[data-shape="text"] { height: 1em; min-height: 0; border-radius: var(--md-sys-shape-corner-full); font-size: var(--md-sys-typescale-body-large-size); }
+  .s4-skeleton[data-shape="pill"] { height: var(--s4-space-10); border-radius: var(--md-sys-shape-corner-full); }
+  .s4-skeleton[data-shape="circle"] { aspect-ratio: 1; border-radius: var(--md-sys-shape-corner-full); }
+  @keyframes s4-skeleton-pulse { from { opacity: 1; } to { opacity: 0.5; } }
+  @media (prefers-reduced-motion: reduce) { .s4-skeleton { animation: none; } }
+}
+
+/* ---- empty-state/empty-state.css ---- */
+/* Empty state (S4 Orion addition): what a list, table or search shows when there is nothing to show yet.
+   <div class="s4-empty">
+     <span class="s4-empty-icon"><span class="s4-icon" data-icon="search"></span></span>
+     <h2 class="s4-empty-title">No Results</h2>
+     <p class="s4-empty-text">Try a different word, or clear the search.</p>
+     <button class="s4-button" data-variant="tonal" type="button">Clear Search</button>
+   </div>
+   Centered, in the space the content would fill. Say what is missing and what to do next. The icon sits in a filled circle. */
+@layer s4.components {
+  .s4-empty { display: grid; justify-items: center; gap: var(--s4-space-3); padding: var(--s4-space-12) var(--s4-space-4); text-align: center; }
+  .s4-empty-icon { display: grid; place-items: center; width: calc(var(--s4-space-12) + var(--s4-space-8)); height: calc(var(--s4-space-12) + var(--s4-space-8)); border-radius: var(--md-sys-shape-corner-full); background: var(--md-sys-color-surface-container-high); color: var(--md-sys-color-on-surface-variant); --s4-icon-size: var(--s4-size-icon-large); }
+  .s4-empty-title { margin: var(--s4-space-2) 0 0; font-family: var(--md-sys-typescale-title-large-font); font-size: var(--md-sys-typescale-title-large-size); line-height: var(--md-sys-typescale-title-large-line-height); font-weight: var(--md-sys-typescale-title-large-weight); }
+  .s4-empty-text { margin: 0; max-width: 32ch; color: var(--md-sys-color-on-surface-variant); font-family: var(--md-sys-typescale-body-medium-font); font-size: var(--md-sys-typescale-body-medium-size); line-height: var(--md-sys-typescale-body-medium-line-height); }
+  .s4-empty > .s4-button { margin-top: var(--s4-space-2); }
 }
 
 /* ---- menu/menu.css ---- */

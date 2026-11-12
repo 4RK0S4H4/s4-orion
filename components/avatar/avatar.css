@@ -1,0 +1,64 @@
+/* Avatar (S4 Orion addition; the circle moved here from list.css)
+   <span class="s4-avatar">MC</span>                                 initials (one or two letters)
+   <span class="s4-avatar"><img src="…" alt="Maya Chen"></span>      photo
+   <span class="s4-avatar"><span class="s4-icon" data-icon="person"></span></span>
+   <span class="s4-avatar" data-size="xs|s|m|l|xl" data-status="online|busy|away">…</span>
+   <div class="s4-avatar-group"> <span class="s4-avatar">…</span> … <span class="s4-avatar" data-more>+3</span> </div>
+   Default 40. Sizes: xs 24, s 32, m 40, l 56, xl 80. Filled with primary-container; data-tone picks another container role.
+   data-status adds a small dot at the bottom end; its label must be said in text elsewhere (aria-label on the avatar). */
+@layer s4.components {
+  .s4-avatar {
+    --_size: var(--s4-size-avatar);
+    --_bg: var(--md-sys-color-primary-container);
+    --_fg: var(--md-sys-color-on-primary-container);
+    --_type: var(--md-sys-typescale-title-medium-size);
+    position: relative;
+    display: inline-grid;
+    flex: none;
+    place-items: center;
+    width: var(--_size);
+    height: var(--_size);
+    border-radius: var(--md-sys-shape-corner-full);
+    background: var(--_bg);
+    color: var(--_fg);
+    font-family: var(--md-sys-typescale-title-medium-font);
+    font-size: var(--_type);
+    line-height: 1;
+    letter-spacing: 0;
+    font-weight: var(--md-sys-typescale-title-medium-weight);
+    text-transform: uppercase;
+    user-select: none;
+    vertical-align: middle;
+    --s4-icon-size: calc(var(--_size) * 0.55);
+  }
+  .s4-avatar > img { width: 100%; height: 100%; border-radius: inherit; object-fit: cover; }
+  .s4-avatar[data-size="xs"] { --_size: var(--s4-space-6); --_type: var(--md-sys-typescale-label-small-size); }
+  .s4-avatar[data-size="s"] { --_size: var(--s4-space-8); --_type: var(--md-sys-typescale-label-large-size); }
+  .s4-avatar[data-size="l"] { --_size: calc(var(--s4-space-10) + var(--s4-space-4)); --_type: var(--md-sys-typescale-title-large-size); }
+  .s4-avatar[data-size="xl"] { --_size: calc(var(--s4-space-12) + var(--s4-space-8)); --_type: var(--md-sys-typescale-headline-small-size); }
+  .s4-avatar[data-tone="secondary"] { --_bg: var(--md-sys-color-secondary-container); --_fg: var(--md-sys-color-on-secondary-container); }
+  .s4-avatar[data-tone="tertiary"] { --_bg: var(--md-sys-color-tertiary-container); --_fg: var(--md-sys-color-on-tertiary-container); }
+  .s4-avatar[data-tone="neutral"] { --_bg: var(--md-sys-color-surface-container-highest); --_fg: var(--md-sys-color-on-surface-variant); }
+
+  /* status dot: a filled circle cut out of the avatar by a surface-colored ring */
+  .s4-avatar[data-status]::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: max(var(--s4-space-2), calc(var(--_size) * 0.28));
+    height: max(var(--s4-space-2), calc(var(--_size) * 0.28));
+    border-radius: var(--md-sys-shape-corner-full);
+    background: var(--md-sys-color-on-surface-variant);
+    box-shadow: 0 0 0 2px var(--md-sys-color-surface);
+  }
+  .s4-avatar[data-status="online"]::after { background: var(--md-sys-color-primary); }
+  .s4-avatar[data-status="busy"]::after { background: var(--md-sys-color-error); }
+
+  /* overlapping group */
+  .s4-avatar-group { display: inline-flex; align-items: center; padding-inline-start: var(--s4-space-2); }
+  .s4-avatar-group > .s4-avatar { margin-inline-start: calc(var(--s4-space-2) * -1); box-shadow: 0 0 0 2px var(--md-sys-color-surface); }
+  .s4-avatar[data-more] { --_bg: var(--md-sys-color-surface-container-highest); --_fg: var(--md-sys-color-on-surface); --_type: var(--md-sys-typescale-label-large-size); text-transform: none; }
+
+  @media (forced-colors: active) { .s4-avatar { border: 1px solid CanvasText; } }
+}

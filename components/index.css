@@ -20,6 +20,11 @@
 @import url("pane/pane.css");
 @import url("list/list.css");
 @import url("divider/divider.css");
+@import url("avatar/avatar.css");
+@import url("accordion/accordion.css");
+@import url("breadcrumbs/breadcrumbs.css");
+@import url("pagination/pagination.css");
+@import url("stepper/stepper.css");
 @import url("table/table.css");
 /* inputs */
 @import url("text-field/text-field.css");
@@ -33,6 +38,9 @@
 @import url("badge/badge.css");
 @import url("status/status.css");
 @import url("progress/progress.css");
+@import url("banner/banner.css");
+@import url("skeleton/skeleton.css");
+@import url("empty-state/empty-state.css");
 /* overlays */
 @import url("menu/menu.css");
 @import url("dialog/dialog.css");

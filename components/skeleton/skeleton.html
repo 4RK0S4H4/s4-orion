@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Skeleton · S4 Orion</title>
+<link rel="stylesheet" href="../index.css">
+<link rel="stylesheet" href="../_example/example.css">
+</head>
+<body>
+<header class="ex-bar"><h1><a href="../">Components</a> / Skeleton</h1></header>
+<main class="ex-main">
+  <p>A quiet placeholder while content loads.</p>
+
+  <section class="ex-sec">
+    <h2>Shapes</h2>
+    <p>Match the shape and size of what will replace them.</p>
+    <div class="ex-board col">
+      <div style="display: flex; gap: var(--s4-space-3); align-items: center; width: min(100%, 24rem)" aria-busy="true"><div class="s4-skeleton" data-shape="circle" style="width: var(--s4-space-10)"></div><div style="flex: 1; display: grid; gap: var(--s4-space-2)"><div class="s4-skeleton" data-shape="text" style="width: 70%"></div><div class="s4-skeleton" data-shape="text" style="width: 45%"></div></div><div class="s4-skeleton" data-shape="pill" style="width: var(--s4-space-16)"></div></div>
+      <div class="s4-skeleton" style="width: min(100%, 24rem); height: 7rem" aria-busy="true"></div>
+    </div>
+  </section>
+
+  <p class="ex-foot">Source: <code>components/skeleton/</code></p>
+</main>
+<script src="../assets/icons.js"></script>
+<script src="../core/core.js"></script>
+<script src="../button/button.js"></script>
+<script src="../icon-button/icon-button.js"></script>
+<script src="../_example/example.js"></script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>S4 Orion: Button Groups</title>
+<link rel="stylesheet" href="../components/orion.css?v=939676f">
+<style>
+body{margin:0;background:var(--md-sys-color-surface);color:var(--md-sys-color-on-surface)}
+h1,h2,p{margin:0}
+.bar{display:flex;align-items:center;padding:12px 24px;background:var(--md-sys-color-surface-container);border-bottom:1px solid var(--md-sys-color-outline-variant)}
+.bar h1{font-size:20px;line-height:28px;font-weight:500}
+.page{max-width:1100px;margin:0 auto;padding:24px 16px 64px;display:flex;flex-direction:column;gap:28px}
+.intro{max-width:80ch;color:var(--md-sys-color-on-surface-variant);display:flex;flex-direction:column;gap:12px}
+.sec > h2{font-size:24px;line-height:32px;font-weight:500;margin-bottom:6px}
+.sec > p{color:var(--md-sys-color-on-surface-variant);max-width:85ch;margin-bottom:16px}
+.cards{--rv-min:340px}
+.pv{display:grid;gap:16px;padding:16px;background:var(--md-sys-color-surface-container-low);border-radius:16px}
+.pv .cap{font:500 12px/16px Inter,system-ui,sans-serif;color:var(--md-sys-color-on-surface-variant)}
+
+/* option B: pill tray, no sliding (tabs slide; groups don't) */
+.q-b[data-connected]{border-radius:999px}
+.q-b[data-connected] > :is(.s4-button,.s4-icon-button){--_r:calc(var(--_h) / 2)}
+/* option C: separate pills, no tray */
+.q-c[data-connected]{background:transparent;padding:0;gap:8px}
+.q-c[data-connected] > :is(.s4-button,.s4-icon-button){--_r:calc(var(--_h) / 2);--_bg:var(--md-sys-color-surface-container-highest)}
+.q-c[data-connected] > :is(.s4-button,.s4-icon-button)[aria-pressed="true"]{--_bg:var(--md-sys-color-inverse-surface)}
+/* option D: separate soft segments */
+.q-d[data-connected]{background:transparent;padding:0;gap:8px}
+.q-d[data-connected] > :is(.s4-button,.s4-icon-button){--_r:var(--md-sys-shape-corner-medium);--_bg:var(--md-sys-color-surface-container-highest)}
+.q-d[data-connected] > :is(.s4-button,.s4-icon-button)[aria-pressed="true"]{--_bg:var(--md-sys-color-inverse-surface)}
+/* option E: one joined capsule, small rounded joins, the selected segment goes fully round */
+.q-e[data-connected]{background:transparent;padding:0;gap:2px}
+.q-e[data-connected] > :is(.s4-button,.s4-icon-button){--_r:var(--md-sys-shape-corner-small);--_bg:var(--md-sys-color-surface-container-highest)}
+.q-e[data-connected] > :is(.s4-button,.s4-icon-button):first-child{border-start-start-radius:calc(var(--_h) / 2);border-end-start-radius:calc(var(--_h) / 2)}
+.q-e[data-connected] > :is(.s4-button,.s4-icon-button):last-child{border-start-end-radius:calc(var(--_h) / 2);border-end-end-radius:calc(var(--_h) / 2)}
+.q-e[data-connected] > :is(.s4-button,.s4-icon-button)[aria-pressed="true"]{--_bg:var(--md-sys-color-inverse-surface);border-radius:calc(var(--_h) / 2)}
+</style>
+</head>
+<body>
+<div class="bar"><h1>S4 Orion: Button Groups</h1></div>
+<main class="page">
+  <div class="intro">
+    <p>A group of buttons where you pick a value (a view, a period, a contrast level). It should look like one group and stay rounded, and it should not look like tabs. Each card shows only the group: a single choice, a smaller size, and a multi-choice icon group. Tap them to try.</p>
+    <p>Tap the card above its preview to pick one; Other plus a note if none is right.</p>
+  </div>
+  <div id="sections"></div>
+</main>
+<footer style="padding:24px;text-align:center;font-size:12px;color:var(--md-sys-color-on-surface-variant)"><a href="../">S4 Orion</a> exploration</footer>
+<script src="../components/assets/m3color.js"></script>
+<script src="../components/assets/icons.js?v=0b2fd72"></script>
+<script src="../components/orion.js?v=b0a06f1"></script>
+<script src="lib/questions.js?v=4ce8056"></script>
+<script src="lib/review.js?v=2d9b250"></script>
+<script>
+const preview = cls => {
+  const el = document.createElement('div'); el.className = 'pv';
+  el.innerHTML = `
+  <span class="cap">One choice</span>
+  <div class="s4-button-group ${cls}" data-connected data-select="single" aria-label="View">
+    <button class="s4-button" type="button" aria-pressed="false">Day</button>
+    <button class="s4-button" type="button" aria-pressed="true">Week</button>
+    <button class="s4-button" type="button" aria-pressed="false">Month</button>
+  </div>
+  <span class="cap">Small, fits its content</span>
+  <div class="s4-button-group ${cls}" data-connected data-select="single" data-fit="content" aria-label="Contrast">
+    <button class="s4-button" data-size="xs" type="button" aria-pressed="true">Standard</button>
+    <button class="s4-button" data-size="xs" type="button" aria-pressed="false">Medium</button>
+    <button class="s4-button" data-size="xs" type="button" aria-pressed="false">High</button>
+  </div>
+  <span class="cap">Several choices, icons</span>
+  <div class="s4-button-group ${cls}" data-connected data-select="multi" data-fit="content" aria-label="Insert">
+    <button class="s4-icon-button" data-variant="tonal" type="button" aria-pressed="true" aria-label="Photos"><span class="s4-icon" data-icon="image"></span></button>
+    <button class="s4-icon-button" data-variant="tonal" type="button" aria-pressed="false" aria-label="Links"><span class="s4-icon" data-icon="link"></span></button>
+    <button class="s4-icon-button" data-variant="tonal" type="button" aria-pressed="false" aria-label="Places"><span class="s4-icon" data-icon="location"></span></button>
+  </div>`;
+  return el;
+};
+const OPTS = [
+  { k: 'A', cls: '', name: 'Rounded Tray', tag: 'Today', desc: 'One rounded-rectangle tray; separate rounded segments inside; the selected one is filled dark.' },
+  { k: 'B', cls: 'q-b', name: 'Pill Tray', desc: 'The same tray as a full pill with pill segments. Closest to tabs, but the selection does not slide.' },
+  { k: 'C', cls: 'q-c', name: 'Separate Pills', desc: 'No tray. A row of equal pills 8px apart; the selected one is filled dark. The group is read from the shared row.' },
+  { k: 'D', cls: 'q-d', name: 'Soft Segments', desc: 'No tray. Equal soft rounded rectangles (12px) 8px apart; the selected one is filled dark. Squarer than pills, so it reads as a different control from chips and tabs.' },
+  { k: 'E', cls: 'q-e', name: 'Joined Capsule', desc: 'Segments touch (2px apart) with fully round outer ends and small rounded joins; the selected segment turns into a full pill.' }
+];
+const sec = document.createElement('section'); sec.className = 'sec';
+sec.innerHTML = '<h2>Button Group</h2><p>All five stay filled and rounded.</p><div class="cards rv-group" role="radiogroup" aria-label="Button group"></div>';
+document.getElementById('sections').appendChild(sec);
+OPTS.forEach(o => sec.querySelector('.cards').appendChild(S4Review.card({ pick: 'group:' + o.k, letter: o.k, title: o.name, desc: o.desc, tag: o.tag || '', preview: preview(o.cls) })));
+S4Review.page('button-group');
+</script>
+</body>
+</html>

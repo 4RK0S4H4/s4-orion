@@ -1,0 +1,67 @@
+/* Accordion (S4 Orion addition): sections that open and close. Built on native <details>, so it works without JS.
+   <div class="s4-accordion">
+     <details class="s4-accordion-item" name="faq" open>
+       <summary>What is autopay?<span class="s4-icon" data-icon="chevron-down"></span></summary>
+       <div class="s4-accordion-body">Pays the bill from your default account on its due date.</div>
+     </details>
+     …
+   </div>
+   Items are filled rounded rows 2dp apart (surface-container-low); the open one rises to surface-container. Give every
+   <details> the same name="…" for "only one open at a time". The chevron turns (transform), the body fades in (opacity). */
+@layer s4.components {
+  .s4-accordion { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+  .s4-accordion-item {
+    --_bg: var(--md-sys-color-surface-container-low);
+    border-radius: var(--md-sys-shape-corner-large);
+    background: var(--_bg);
+    color: var(--md-sys-color-on-surface);
+    overflow: clip;
+  }
+  .s4-accordion-item[open] { --_bg: var(--md-sys-color-surface-container); }
+  .s4-accordion-item > summary {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--s4-space-4);
+    min-height: calc(var(--s4-space-12) + var(--s4-space-2));
+    padding: var(--s4-space-2) var(--s4-space-4) var(--s4-space-2) var(--s4-space-4);
+    list-style: none;
+    cursor: pointer;
+    font-family: var(--md-sys-typescale-title-medium-font);
+    font-size: var(--md-sys-typescale-title-medium-size);
+    line-height: var(--md-sys-typescale-title-medium-line-height);
+    font-weight: var(--md-sys-typescale-title-medium-weight);
+    -webkit-tap-highlight-color: transparent;
+  }
+  .s4-accordion-item > summary::-webkit-details-marker { display: none; }
+  .s4-accordion-item > summary::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: currentColor;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--md-sys-motion-spring-fast-effects-duration) var(--md-sys-motion-spring-fast-effects);
+  }
+  @media (hover: hover) { .s4-accordion-item > summary:hover::before { opacity: var(--md-sys-state-hover-state-layer-opacity); } }
+  .s4-accordion-item > summary:focus-visible::before { opacity: var(--md-sys-state-focus-state-layer-opacity); }
+  .s4-accordion-item > summary:active::before { opacity: var(--md-sys-state-pressed-state-layer-opacity); }
+  .s4-accordion-item > summary > .s4-icon {
+    color: var(--md-sys-color-on-surface-variant);
+    transition: transform var(--md-sys-motion-spring-fast-spatial-duration) var(--md-sys-motion-spring-fast-spatial);
+  }
+  .s4-accordion-item[open] > summary > .s4-icon { transform: rotate(180deg); }
+  .s4-accordion-body {
+    padding: 0 var(--s4-space-4) var(--s4-space-4);
+    color: var(--md-sys-color-on-surface-variant);
+    font-family: var(--md-sys-typescale-body-large-font);
+    font-size: var(--md-sys-typescale-body-large-size);
+    line-height: var(--md-sys-typescale-body-large-line-height);
+  }
+  .s4-accordion-item[open] > .s4-accordion-body { animation: s4-accordion-in var(--md-sys-motion-spring-fast-effects-duration) var(--md-sys-motion-spring-fast-effects); }
+  @keyframes s4-accordion-in { from { opacity: 0; } }
+  @media (forced-colors: active) { .s4-accordion-item { border: 1px solid CanvasText; } .s4-accordion-item > summary::before { display: none; } }
+}

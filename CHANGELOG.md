@@ -10,6 +10,16 @@ All notable changes to S4 Orion are recorded here. The format follows [Keep a Ch
 
 The first version of S4 Orion, a leaner rebuild of S4 Material 1.3 on Material 3 Expressive.
 
+### Changed and added (2026-11-11 to 11-12, decisions 0023 to 0025)
+
+- Nothing is outlined: chips, fields, checkboxes, radios, cards, buttons and the switch are filled (the `outlined` variants still work and draw filled). Small things are pills; inputs are medium-rounded (12). Checkboxes and radios are filled circles.
+- Button groups are one rounded tray with filled segments. Selects open the glass menu. Group legends sit inside the box.
+- No sharp corners in hover, focus and press layers (lists 16, segments 12, table rows rounded).
+- FABs are glass tinted with their own color (`--s4-glass-tint-opacity-fab`, 90%); `check-glass` proves 3:1.
+- Icon sets: Solar (default), Phosphor Duotone, Phosphor Bold Duotone; `S4.icon.use(id)`.
+- New components: avatar (moved from list), accordion, banner, skeleton, breadcrumbs, pagination, stepper, empty state (41 in all).
+- Demo is now Orion Showcase, a generic mobile app showing every element.
+
 ### Changed (glass from the playground, 2026-11-11, decision 0021)
 
 - Glass: tint 60% to 75%, blur 16px to 8px, saturate 120% to 150%, backdrop contrast/brightness filter removed (the tint alone keeps text at 5.5:1 or better over any backdrop).

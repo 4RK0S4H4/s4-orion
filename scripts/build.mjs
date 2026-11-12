@@ -85,10 +85,10 @@ const copies = {
 const refs = {};
 const GROUPS = [
   ['Actions', ['button', 'icon-button', 'button-group', 'fab']],
-  ['Navigation and shell', ['app', 'top-app-bar', 'nav-bar', 'nav-rail', 'tabs', 'toolbar', 'search']],
-  ['Containment and data', ['card', 'pane', 'list', 'table', 'divider']],
+  ['Navigation and shell', ['app', 'top-app-bar', 'nav-bar', 'nav-rail', 'tabs', 'toolbar', 'search', 'breadcrumbs', 'pagination', 'stepper']],
+  ['Containment and data', ['card', 'pane', 'list', 'table', 'divider', 'avatar', 'accordion', 'empty-state']],
   ['Inputs', ['text-field', 'chip', 'switch', 'checkbox', 'radio', 'slider', 'swatches']],
-  ['Feedback', ['badge', 'status', 'progress', 'snackbar', 'tooltip']],
+  ['Feedback', ['badge', 'status', 'progress', 'banner', 'skeleton', 'snackbar', 'tooltip']],
   ['Overlays', ['menu', 'dialog', 'sheet']],
 ];
 {

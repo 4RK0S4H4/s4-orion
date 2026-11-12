@@ -1,0 +1,39 @@
+/* Pagination (S4 Orion addition): move between pages of a long list or table.
+   <nav class="s4-pagination" aria-label="Pagination">
+     <a class="s4-page" href="?page=2" aria-label="Previous Page"><span class="s4-icon" data-icon="chevron-left"></span></a>
+     <a class="s4-page" href="?page=1">1</a>
+     <a class="s4-page" href="?page=2" aria-current="page">2</a>
+     <span class="s4-page-gap" aria-hidden="true">…</span>
+     <a class="s4-page" href="?page=9">9</a>
+     <a class="s4-page" href="?page=3" aria-label="Next Page"><span class="s4-icon" data-icon="chevron-right"></span></a>
+   </nav>
+   Circles, filled surface-container-high; the current page is filled inverse. Use <button> instead of <a> for in-page paging.
+   aria-disabled="true" on the previous or next at the ends. */
+@layer s4.components {
+  .s4-pagination { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: var(--s4-space-1); }
+  .s4-page {
+    --_bg: var(--md-sys-color-surface-container-high);
+    --_fg: var(--md-sys-color-on-surface);
+    display: inline-grid;
+    place-items: center;
+    min-width: var(--s4-space-10);
+    height: var(--s4-space-10);
+    padding: 0 var(--s4-space-2);
+    border: 0;
+    border-radius: var(--md-sys-shape-corner-full);
+    background: var(--_bg);
+    color: var(--_fg);
+    font-family: var(--md-sys-typescale-label-large-font);
+    font-size: var(--md-sys-typescale-label-large-size);
+    font-weight: var(--md-sys-typescale-label-large-weight);
+    font-variant-numeric: tabular-nums;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color var(--md-sys-motion-spring-fast-effects-duration) var(--md-sys-motion-spring-fast-effects), color var(--md-sys-motion-spring-fast-effects-duration) var(--md-sys-motion-spring-fast-effects);
+  }
+  .s4-page::after { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, var(--s4-size-touch-target)); height: max(100%, var(--s4-size-touch-target)); transform: translate(-50%, -50%); }
+  .s4-page[aria-current] { --_bg: var(--md-sys-color-inverse-surface); --_fg: var(--md-sys-color-inverse-on-surface); }
+  .s4-page[aria-disabled="true"] { --_fg: color-mix(in srgb, var(--md-sys-color-on-surface) calc(var(--md-sys-state-disabled-content-opacity) * 100%), transparent); --_bg: color-mix(in srgb, var(--md-sys-color-on-surface) calc(var(--md-sys-state-disabled-container-opacity) * 100%), transparent); }
+  .s4-page-gap { display: inline-grid; place-items: center; min-width: var(--s4-space-6); color: var(--md-sys-color-on-surface-variant); }
+  @media (forced-colors: active) { .s4-page { border: 1px solid ButtonText; } .s4-page[aria-current] { background: Highlight; color: HighlightText; } }
+}

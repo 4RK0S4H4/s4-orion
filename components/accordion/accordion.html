@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Accordion · S4 Orion</title>
+<link rel="stylesheet" href="../index.css">
+<link rel="stylesheet" href="../_example/example.css">
+</head>
+<body>
+<header class="ex-bar"><h1><a href="../">Components</a> / Accordion</h1></header>
+<main class="ex-main">
+  <p>Sections that open and close, built on native details.</p>
+
+  <section class="ex-sec">
+    <h2>Single open</h2>
+    <p>Items share a name, so opening one closes the others.</p>
+    <div class="ex-board">
+      <div class="s4-accordion" style="width: min(100%, 32rem)">
+        <details class="s4-accordion-item" name="faq" open><summary>What is autopay?<span class="s4-icon" data-icon="chevron-down"></span></summary><div class="s4-accordion-body">Pays the bill from your default account on its due date.</div></details>
+        <details class="s4-accordion-item" name="faq"><summary>Can I change the account?<span class="s4-icon" data-icon="chevron-down"></span></summary><div class="s4-accordion-body">Yes. Choose another account in Settings before the due date.</div></details>
+        <details class="s4-accordion-item" name="faq"><summary>What if a payment fails?<span class="s4-icon" data-icon="chevron-down"></span></summary><div class="s4-accordion-body">You get a notification and the bill moves to Overdue until it is paid.</div></details>
+      </div>
+    </div>
+  </section>
+
+  <p class="ex-foot">Source: <code>components/accordion/</code></p>
+</main>
+<script src="../assets/icons.js"></script>
+<script src="../core/core.js"></script>
+<script src="../button/button.js"></script>
+<script src="../icon-button/icon-button.js"></script>
+<script src="../_example/example.js"></script>
+</body>
+</html>

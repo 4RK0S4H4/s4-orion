@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Glass Playground frame</title>
+<script>(function(){var q=new URLSearchParams(location.search);document.documentElement.dataset.theme=q.get('theme')==='dark'?'dark':'light';})();</script>
+<link rel="stylesheet" href="../components/orion.css?v=939676f">
+<style>
+html,body{height:100%;margin:0;overflow:hidden;background:var(--md-sys-color-surface);color:var(--md-sys-color-on-surface)}
+.stage{position:relative;height:100%;overflow:hidden;font-family:Inter,system-ui,sans-serif}
+/* what sits behind the glass */
+.back{position:absolute;inset:0;padding:96px 12px 120px;display:flex;flex-direction:column;gap:10px}
+.back[hidden]{display:none}
+.hero{height:112px;border-radius:24px;padding:14px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-end;background:var(--md-sys-color-primary);color:var(--md-sys-color-on-primary)}
+.hero b{font-size:32px;font-weight:300;letter-spacing:-.03em}
+.row{display:flex;align-items:center;gap:12px;height:56px;padding:0 12px;border-radius:16px;background:var(--md-sys-color-surface-container-low)}
+.row i{width:34px;height:34px;border-radius:50%;flex:none}
+.row span{flex:1;font-size:15px;font-weight:500}
+.row u{width:54px;height:6px;border-radius:99px;background:var(--md-sys-color-surface-container-highest);overflow:hidden;text-decoration:none}
+.row u s{display:block;height:100%;background:var(--md-sys-color-primary)}
+.photo{position:absolute;inset:0;background:radial-gradient(40% 30% at 20% 18%,#ffb347 0 40%,transparent 70%),radial-gradient(45% 30% at 85% 40%,#ff4f7b 0 35%,transparent 70%),radial-gradient(50% 35% at 30% 75%,#2bc4a9 0 35%,transparent 70%),radial-gradient(40% 30% at 80% 92%,#4466ff 0 40%,transparent 70%),var(--md-sys-color-surface)}
+.text{position:absolute;inset:0;padding:96px 16px;font-size:15px;line-height:22px}
+/* glass pieces: the real layer, on absolutely placed elements */
+.g{position:absolute}
+.bar{top:0;left:0;right:0;height:80px;padding:34px 10px 0 18px;box-sizing:border-box;display:flex;align-items:center;gap:8px;font-size:17px;font-weight:600;box-shadow:inset 0 -1px 0 0 var(--s4-glass-edge-line)}
+.bar span{flex:1}
+.dialog{top:104px;left:16px;right:16px;border-radius:var(--md-sys-shape-corner-extra-large);padding:20px;display:grid;gap:8px}
+.dialog h2{margin:0;font-size:22px;line-height:28px;font-weight:400}
+.dialog p{margin:0;font-size:14px;line-height:20px}
+.dialog .acts{display:flex;justify-content:flex-end;gap:8px;margin-top:8px}
+.menu{top:268px;left:16px;width:196px;padding:6px;border-radius:var(--md-sys-shape-corner-extra-large);display:flex;flex-direction:column}
+.menu a{display:flex;align-items:center;height:42px;padding:0 14px;border-radius:999px;font-size:15px;color:inherit;text-decoration:none}
+.menu a.on{background:color-mix(in srgb,currentColor 9%,transparent)}
+.fabs{right:16px;bottom:112px;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+.nav{left:12px;right:12px;bottom:20px;height:72px;border-radius:var(--md-sys-shape-corner-extra-large);padding:0 8px;display:flex;align-items:center;justify-content:space-around;font-size:11px}
+.nav > span{display:grid;justify-items:center;gap:2px;width:70px;padding:8px 0;border-radius:999px}
+.nav > span.on{background:var(--md-sys-color-secondary-container);color:var(--md-sys-color-on-secondary-container);font-weight:600}
+.nav .s4-icon{--s4-icon-size:22px}
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="back" data-back="app"><div class="hero"><span>Focus Today</span><b>2h 15m</b></div>
+    <div class="row"><i style="background:#c2410c"></i><span>Fix checkout on Safari</span><u><s style="width:30%"></s></u></div>
+    <div class="row"><i style="background:#2f5bea"></i><span>Write launch notes</span><u><s style="width:80%"></s></u></div>
+    <div class="row"><i style="background:#15803d"></i><span>Pick hero photo</span><u><s style="width:50%"></s></u></div>
+    <div class="row"><i style="background:#7c3aed"></i><span>Plan launch email</span><u><s style="width:10%"></s></u></div>
+    <div class="row"><i style="background:#b45309"></i><span>Update pricing table</span><u><s style="width:100%"></s></u></div>
+    <div class="row"><i style="background:#0e7490"></i><span>Accessibility pass</span><u><s style="width:45%"></s></u></div>
+    <div class="row"><i style="background:#be185d"></i><span>Redirect old URLs</span><u><s style="width:20%"></s></u></div>
+  </div>
+  <div class="photo" data-back="photo" hidden></div>
+  <div class="text" data-back="text" hidden>Launch week checklist. Confirm the pricing table matches the billing system. Ship the Safari checkout fix before Thursday. Write the launch notes and send them to Maya for review. Pick the hero photo with Rina. Plan the email with Jonah and schedule it for Friday morning. Run the accessibility pass on all twelve pages. Redirect old URLs and test the sitemap. Update the help center articles. Brief support on the new plans. Prepare the rollback plan. Check analytics events on the new pages. Confirm the press kit links. Archive the old brand assets. Celebrate. Launch week checklist. Confirm the pricing table matches the billing system. Ship the Safari checkout fix before Thursday. Write the launch notes.</div>
+
+  <header class="g bar s4-glass"><span>Today</span><button class="s4-icon-button" type="button" aria-label="More options"><span class="s4-icon" data-icon="more-vert"></span></button></header>
+
+  <section class="g dialog s4-glass" aria-label="Example dialog">
+    <h2>Delete this note?</h2>
+    <p>It moves to Trash and is deleted after 30 days.</p>
+    <div class="acts"><button class="s4-button" data-variant="text" type="button">Cancel</button><button class="s4-button" type="button">Delete</button></div>
+  </section>
+
+  <div class="g menu s4-glass" aria-label="Example menu"><a href="#" class="on">Rename</a><a href="#">Move to…</a><a href="#">Archive</a></div>
+
+  <div class="g fabs">
+    <button class="s4-fab" data-color="secondary-container" type="button"><span class="s4-icon" data-icon="camera"></span></button>
+    <button class="s4-fab" type="button"><span class="s4-icon" data-icon="edit"></span><span class="s4-fab-label">Compose</span></button>
+    <button class="s4-fab" data-color="tertiary-container" type="button" aria-label="Add"><span class="s4-icon" data-icon="add"></span></button>
+  </div>
+
+  <nav class="g nav s4-glass" aria-label="Example navigation">
+    <span class="on"><span class="s4-icon" data-icon="home"></span>Today</span>
+    <span><span class="s4-icon" data-icon="dashboard"></span>Projects</span>
+    <span><span class="s4-icon" data-icon="calendar"></span>Calendar</span>
+    <span><span class="s4-icon" data-icon="chat"></span>Inbox</span>
+  </nav>
+</div>
+<script src="../components/assets/icons.js?v=0b2fd72"></script>
+<script src="../components/orion.js?v=b0a06f1"></script>
+</body>
+</html>

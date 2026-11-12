@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Avatar · S4 Orion</title>
+<link rel="stylesheet" href="../index.css">
+<link rel="stylesheet" href="../_example/example.css">
+</head>
+<body>
+<header class="ex-bar"><h1><a href="../">Components</a> / Avatar</h1></header>
+<main class="ex-main">
+  <p>A person or thing as a small circle: initials, a photo or an icon.</p>
+
+  <section class="ex-sec">
+    <h2>Sizes</h2>
+    <p>xs 24, s 32, m 40 (default), l 56, xl 80.</p>
+    <div class="ex-board">
+      <span class="s4-avatar" data-size="xs">MC</span><span class="s4-avatar" data-size="s">MC</span><span class="s4-avatar">MC</span><span class="s4-avatar" data-size="l">MC</span><span class="s4-avatar" data-size="xl">MC</span>
+    </div>
+  </section>
+
+  <section class="ex-sec">
+    <h2>Tones, icon and status</h2>
+    <p>Primary container by default; a tone swaps the role. A status dot goes at the bottom end.</p>
+    <div class="ex-board">
+      <span class="s4-avatar">JW</span><span class="s4-avatar" data-tone="secondary">PN</span><span class="s4-avatar" data-tone="tertiary">SO</span><span class="s4-avatar" data-tone="neutral"><span class="s4-icon" data-icon="person"></span></span><span class="s4-avatar" data-status="online" aria-label="Maya Chen, online">MC</span><span class="s4-avatar" data-status="busy" aria-label="Sam Ortiz, busy">SO</span>
+    </div>
+  </section>
+
+  <section class="ex-sec">
+    <h2>Group</h2>
+    <p>Overlapping, with a count for the rest.</p>
+    <div class="ex-board">
+      <div class="s4-avatar-group"><span class="s4-avatar">MC</span><span class="s4-avatar" data-tone="secondary">JW</span><span class="s4-avatar" data-tone="tertiary">PN</span><span class="s4-avatar" data-more>+4</span></div>
+    </div>
+  </section>
+
+  <p class="ex-foot">Source: <code>components/avatar/</code></p>
+</main>
+<script src="../assets/icons.js"></script>
+<script src="../core/core.js"></script>
+<script src="../button/button.js"></script>
+<script src="../icon-button/icon-button.js"></script>
+<script src="../_example/example.js"></script>
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>S4 Orion: Glass Playground</title>
+<style>
+:root{--b:#1d4ed8;--bg:#f5f7ff;--card:#fff;--ink:#14182b;--ink2:#4a5170;--line:#c9d1f5;--soft:#e8edff}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/22px Inter,system-ui,sans-serif}
+h1,h2,p{margin:0}
+.bar{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;padding:12px 20px;background:var(--card);border-bottom:1px solid var(--line)}
+.bar h1{font-size:20px;line-height:28px;color:var(--b);margin-right:auto}
+main{max-width:1400px;margin:0 auto;padding:20px 16px 64px;display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start}
+.frames{flex:999 1 640px;min-width:0;display:flex;flex-wrap:wrap;gap:20px;justify-content:center}
+figure{margin:0;display:grid;gap:6px;justify-items:center}
+figcaption{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--b)}
+iframe{width:340px;max-width:100%;height:680px;border:0;border-radius:32px;background:#fff;box-shadow:0 0 0 6px #dfe5fb}
+aside{flex:1 1 320px;max-width:440px;background:var(--card);border-radius:20px;padding:18px;display:grid;gap:14px}
+aside p{color:var(--ink2);font-size:13px;line-height:18px}
+.lab{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink2)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+button{font:inherit}
+.chip{border:0;cursor:pointer;height:34px;padding:0 14px;border-radius:999px;background:var(--soft);color:var(--ink);font-size:13px;font-weight:600}
+.chip[aria-pressed=true]{background:var(--b);color:#fff}
+.sl{display:grid;gap:2px}
+.sl span{display:flex;justify-content:space-between;font-size:13px}
+.sl b{font-weight:600}
+.sl output{color:var(--ink2);font-variant-numeric:tabular-nums}
+input[type=range]{width:100%;accent-color:var(--b);height:28px;margin:0}
+.read{display:grid;gap:6px}
+pre{margin:0;padding:12px;border-radius:12px;background:var(--soft);font:12px/1.5 ui-monospace,Menlo,monospace;white-space:pre-wrap}
+.cr{display:flex;flex-wrap:wrap;gap:6px;font-size:13px}
+.pill{padding:2px 10px;border-radius:999px;background:var(--soft);font-weight:600}
+.pill.ok{background:#d9f5e1;color:#14532d}.pill.bad{background:#fde1df;color:#7f1d1d}
+.copy{border:0;cursor:pointer;height:40px;border-radius:999px;background:var(--b);color:#fff;font-weight:600}
+</style>
+</head>
+<body>
+<div class="bar"><h1>S4 Orion: Glass Playground</h1></div>
+<main>
+  <section class="frames" aria-label="Previews">
+    <figure><figcaption>Light</figcaption><iframe id="f-light" title="Light preview" src="glass-playground-frame.html?theme=light"></iframe></figure>
+    <figure><figcaption>Dark</figcaption><iframe id="f-dark" title="Dark preview" src="glass-playground-frame.html?theme=dark"></iframe></figure>
+  </section>
+  <aside aria-label="Glass controls">
+    <p>The previews use the real Orion glass layer: top bar, dialog, menu, floating buttons and navigation bar. Move the sliders; both previews follow. Today's values are decision 0021 (tint 75%, blur 8px, color boost 150%). Send me the numbers at the bottom.</p>
+
+    <div><div class="lab">Presets</div><div class="chips" id="presets"></div></div>
+    <div><div class="lab">Behind the glass</div><div class="chips" id="back"></div></div>
+    <div id="sliders" style="display:grid;gap:10px"></div>
+
+    <div class="read"><div class="lab">Contrast guarantee</div><div class="cr" id="cr"></div><p>Worst case: pure black or pure white directly behind the glass, after the backdrop filter and tint. Text needs 4.5:1; the floating button's icon needs 3:1.</p></div>
+    <div class="read"><div class="lab">Send me these numbers</div><pre id="readout"></pre><button class="copy" type="button" id="copy">Copy Settings</button></div>
+  </aside>
+</main>
+<script>
+const SL = [
+  { k: 'tint', label: 'Glass Tint (opacity)', min: 0, max: 100, step: 1, v: 75, fmt: v => v + '%', css: v => ['--s4-glass-tint-opacity-float', v / 100] },
+  { k: 'fab', label: 'Floating Button Tint', min: 50, max: 100, step: 1, v: 90, fmt: v => v + '%', css: v => ['--s4-glass-tint-opacity-fab', v / 100] },
+  { k: 'blur', label: 'Blur', min: 0, max: 40, step: 1, v: 8, fmt: v => v + 'px', css: v => ['--s4-glass-blur-float', v + 'px'] },
+  { k: 'sat', label: 'Color Boost', min: 100, max: 220, step: 5, v: 150, fmt: v => v + '%', css: v => ['--s4-glass-saturation-float', v / 100] },
+  { k: 'contrast', label: 'Backdrop Contrast', min: 40, max: 100, step: 5, v: 100, fmt: v => v + '%', css: v => ['--s4-glass-backdrop-contrast-float', v / 100] },
+  { k: 'bright', label: 'Backdrop Brightness', min: 60, max: 120, step: 5, v: 100, fmt: v => v + '%', css: v => ['--s4-glass-backdrop-brightness-float', v / 100] },
+  { k: 'top', label: 'Edge Light, Top', min: 0, max: 100, step: 1, v: 62, fmt: v => v + '%' },
+  { k: 'side', label: 'Edge Light, Sides', min: 0, max: 100, step: 1, v: 32, fmt: v => v + '%' },
+  { k: 'bottom', label: 'Edge, Bottom', min: 0, max: 40, step: 1, v: 7, fmt: v => v + '%' },
+  { k: 'width', label: 'Edge Width', min: 0, max: 3, step: 0.5, v: 1, fmt: v => v + 'px', css: v => ['--s4-glass-edge-width', v + 'px'] }
+];
+const PRE = {
+  'Today (0021)': { tint: 75, fab: 90, blur: 8, sat: 150, contrast: 100, bright: 100, top: 62, side: 32, bottom: 7, width: 1 },
+  'Clearer': { tint: 55, fab: 85, blur: 14, sat: 160, contrast: 100, bright: 100, top: 70, side: 40, bottom: 8, width: 1 },
+  'Frosted': { tint: 84, fab: 92, blur: 24, sat: 130, contrast: 100, bright: 100, top: 50, side: 28, bottom: 6, width: 1 },
+  'Thick Rim': { tint: 70, fab: 90, blur: 10, sat: 150, contrast: 100, bright: 100, top: 85, side: 60, bottom: 14, width: 2 },
+  'No Edge': { tint: 75, fab: 90, blur: 8, sat: 150, contrast: 100, bright: 100, top: 0, side: 0, bottom: 0, width: 0 },
+  'Soft Edge': { tint: 75, fab: 90, blur: 8, sat: 150, contrast: 100, bright: 100, top: 40, side: 20, bottom: 4, width: 1 }
+};
+const state = Object.fromEntries(SL.map(s => [s.k, s.v])); let backdrop = 'app';
+const frames = [document.getElementById('f-light'), document.getElementById('f-dark')];
+const lum = c => { const [r, g, b] = c.map(v => { v /= 255; return v <= .04045 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4; }); return .2126 * r + .7152 * g + .0722 * b; };
+const ratio = (a, b) => { const [x, y] = [lum(a), lum(b)].sort((p, q) => q - p); return (x + .05) / (y + .05); };
+const mix = (a, b, t) => a.map((v, i) => v * t + b[i] * (1 - t));
+const rgbOf = el => (getComputedStyle(el).color.match(/[\d.]+/g) || [0, 0, 0]).slice(0, 3).map(Number);
+const varRgb = (doc, name) => { const d = doc.createElement('i'); d.style.color = `var(${name})`; doc.body.appendChild(d); const c = rgbOf(d); d.remove(); return c; };
+function apply() {
+  frames.forEach((f, i) => {
+    const d = f.contentDocument; if (!d || !d.documentElement) return;
+    const dark = i === 1, root = d.documentElement.style;
+    SL.forEach(s => { if (s.css) { const [n, v] = s.css(state[s.k]); root.setProperty(n, v); } });
+    root.setProperty('--s4-glass-edge-top', `rgb(255 255 255 / ${state.top / 100})`);
+    root.setProperty('--s4-glass-edge-side', `rgb(255 255 255 / ${state.side / 100 * (dark ? .5 : 1)})`);
+    root.setProperty('--s4-glass-edge-bottom', dark ? `rgb(255 255 255 / ${state.bottom / 100 * .4})` : `rgb(23 23 26 / ${state.bottom / 100})`);
+    root.setProperty('--s4-glass-edge-line', dark ? 'rgb(255 255 255 / .08)' : 'rgb(23 23 26 / .08)');
+    d.querySelectorAll('[data-back]').forEach(el => { el.hidden = el.dataset.back !== backdrop; });
+  });
+  readout(); contrast();
+}
+function contrast() {
+  const out = [];
+  frames.forEach((f, i) => {
+    const d = f.contentDocument; if (!d || !d.body) return;
+    const c = state.contrast / 100, b = state.bright / 100, filt = v => Math.min(255, Math.max(0, ((v - 127.5) * c + 127.5) * b));
+    const lo = filt(0), hi = filt(255);
+    const tint = varRgb(d, '--md-sys-color-surface-container'), text = varRgb(d, '--md-sys-color-on-surface');
+    const t = state.tint / 100, r = Math.min(ratio(text, mix(tint, [lo, lo, lo], t)), ratio(text, mix(tint, [hi, hi, hi], t)));
+    const pf = varRgb(d, '--md-sys-color-primary-container'), tf = varRgb(d, '--md-sys-color-on-primary-container'), t2 = state.fab / 100;
+    const rf = Math.min(ratio(tf, mix(pf, [lo, lo, lo], t2)), ratio(tf, mix(pf, [hi, hi, hi], t2)));
+    out.push(`<span class="pill ${r >= 4.5 ? 'ok' : 'bad'}">${i ? 'Dark' : 'Light'} text ${r.toFixed(2)}:1</span><span class="pill ${rf >= 3 ? 'ok' : 'bad'}">${i ? 'Dark' : 'Light'} floating icon ${rf.toFixed(2)}:1</span>`);
+  });
+  document.getElementById('cr').innerHTML = out.join('');
+}
+function readout() {
+  document.getElementById('readout').textContent = `glass tint ${state.tint}% · floating button tint ${state.fab}% · blur ${state.blur}px · color boost ${state.sat}%\nbackdrop contrast ${state.contrast}% · brightness ${state.bright}%\nedge: top ${state.top}%, sides ${state.side}%, bottom ${state.bottom}%, width ${state.width}px\nbehind: ${backdrop}`;
+}
+function build() {
+  const box = document.getElementById('sliders');
+  SL.forEach(s => {
+    const el = document.createElement('label'); el.className = 'sl';
+    el.innerHTML = `<span><b>${s.label}</b><output></output></span><input type="range" min="${s.min}" max="${s.max}" step="${s.step}" value="${s.v}" aria-label="${s.label}">`;
+    const inp = el.querySelector('input'), out = el.querySelector('output');
+    s.sync = () => { inp.value = state[s.k]; out.textContent = s.fmt(state[s.k]); };
+    inp.addEventListener('input', () => { state[s.k] = +inp.value; s.sync(); apply(); });
+    s.sync(); box.appendChild(el);
+  });
+  const pr = document.getElementById('presets');
+  Object.keys(PRE).forEach(n => { const b = document.createElement('button'); b.type = 'button'; b.className = 'chip'; b.textContent = n; b.onclick = () => { Object.assign(state, PRE[n]); SL.forEach(s => s.sync()); apply(); }; pr.appendChild(b); });
+  const bk = document.getElementById('back');
+  [['app', 'App'], ['photo', 'Colorful'], ['text', 'Text']].forEach(([v, n]) => { const b = document.createElement('button'); b.type = 'button'; b.className = 'chip'; b.textContent = n; b.setAttribute('aria-pressed', v === backdrop); b.onclick = () => { backdrop = v; bk.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b)); apply(); }; bk.appendChild(b); });
+  document.getElementById('copy').onclick = e => { const t = document.getElementById('readout').textContent; const done = () => { e.target.textContent = 'Copied'; setTimeout(() => e.target.textContent = 'Copy Settings', 1500); }; navigator.clipboard ? navigator.clipboard.writeText(t).then(done, done) : done(); };
+}
+build();
+frames.forEach(f => f.addEventListener('load', () => setTimeout(apply, 200)));
+</script>
+</body>
+</html>

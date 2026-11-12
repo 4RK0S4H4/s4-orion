@@ -235,27 +235,7 @@
   label.s4-list-item:has(input:disabled) { pointer-events: none; }
   label.s4-list-item:has(input:disabled)::before { display: none; }
 
-  /* ---------- avatar: 40 circle with initials or a photo ---------- */
-  .s4-avatar {
-    display: inline-grid;
-    flex: none;
-    place-items: center;
-    width: var(--s4-size-avatar);
-    height: var(--s4-size-avatar);
-    overflow: hidden;
-    border-radius: var(--md-sys-shape-corner-full);
-    background: var(--md-sys-color-primary-container);
-    color: var(--md-sys-color-on-primary-container);
-    font-family: var(--md-sys-typescale-title-medium-font);
-    font-size: var(--md-sys-typescale-title-medium-size);
-    line-height: 1;
-    letter-spacing: 0;
-    font-weight: var(--md-sys-typescale-title-medium-weight);
-    text-transform: uppercase;
-    user-select: none;
-  }
-  .s4-avatar > img { width: 100%; height: 100%; object-fit: cover; }
-  .s4-avatar > .s4-icon { --s4-icon-size: var(--s4-size-icon); }
+  /* the avatar circle lives in avatar/avatar.css */
 
   @media (forced-colors: active) {
     :is(a, button, label).s4-list-item::before,

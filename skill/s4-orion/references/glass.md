@@ -51,6 +51,8 @@ else glass (a custom floating panel), add `class="s4-glass"`. To keep one elemen
 Glass has **no shadow**: the transparency itself says what is in front. The only edge is the edge light (decision 0021, replacing the frost line of 0013/0016): 1px, light catching the top edge and fading down the sides, with a faint return at the bottom (`--s4-glass-edge-top`, `-side`, `-bottom`; light: white 62% over white 32%, a dark 7% bottom; dark: white 13% over white 6%). It is drawn with inset shadows, so it follows the corners and stays put when a menu or dialog scrolls. Floating surfaces (toolbar, menu, dialog, phone bottom sheet) get it all the way round; full-width and docked ones (top app bar, nav bar, docked toolbar, rail, side sheet, wide bottom sheet) get one line (`--s4-glass-edge-line`) only on the edge that faces the content. Over plain white content in light mode the glass can look flat; that is accepted.
 
 ## Items on glass
+Floating action buttons are glass too (decision 0025): tinted with their own color at `--s4-glass-tint-opacity-fab` (90%), icon and label keep 3:1 over any backdrop (`scripts/check-glass.mjs`).
+
 Controls inside a glass surface (a dialog's fields, a menu's chips) stay your UI: they keep their own color at full fill (`--s4-glass-item-fill: 1`; lower it to let the blurred backdrop tint them) and drop their outlines, so the glass supplies the depth and the items stay clean (decision 0015).
 - No outline at rest on text fields and the switch. Focus, error and disabled keep theirs, because they carry meaning; hover draws none on glass.
 - An item that is only an outline with no fill (outlined button, unselected chip) keeps one, drawn as the frost line (`--s4-glass-item-outline`, white at 28%). Error-colored outlines stay.

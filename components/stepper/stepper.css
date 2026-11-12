@@ -1,0 +1,38 @@
+/* Stepper (S4 Orion addition): progress through a fixed sequence of steps, such as a checkout or setup.
+   <ol class="s4-stepper" aria-label="Setup Progress">
+     <li data-state="done"><span class="s4-step-dot"><span class="s4-icon" data-icon="check"></span></span><span class="s4-step-label">Account</span></li>
+     <li data-state="current" aria-current="step"><span class="s4-step-dot">2</span><span class="s4-step-label">Payment</span></li>
+     <li><span class="s4-step-dot">3</span><span class="s4-step-label">Review</span></li>
+   </ol>
+   Dots joined by a filled track. Done = inverse fill with a check, current = primary fill, upcoming = surface-container-high.
+   The label always names the step, and aria-current marks the one you are on. Stacks as a row of dots with the current
+   label under it below 600. */
+@layer s4.components {
+  .s4-stepper { display: flex; align-items: flex-start; margin: 0; padding: 0; list-style: none; gap: 0; }
+  .s4-stepper > li { position: relative; display: flex; flex: 1 1 0; flex-direction: column; align-items: center; gap: var(--s4-space-2); min-width: 0; text-align: center; }
+  .s4-stepper > li + li::before { content: ""; position: absolute; top: calc(var(--s4-space-4) - var(--s4-space-1) / 2); right: 50%; width: 100%; height: var(--s4-space-1); border-radius: var(--md-sys-shape-corner-full); background: var(--md-sys-color-surface-container-highest); z-index: 0; }
+  .s4-stepper > li[data-state="done"] + li::before, .s4-stepper > li[data-state="current"]::before { background: var(--md-sys-color-inverse-surface); }
+  .s4-stepper > li[data-state="current"]:first-child::before { display: none; }
+  .s4-step-dot {
+    position: relative;
+    z-index: 1;
+    display: inline-grid;
+    place-items: center;
+    width: var(--s4-space-8);
+    height: var(--s4-space-8);
+    border-radius: var(--md-sys-shape-corner-full);
+    background: var(--md-sys-color-surface-container-highest);
+    color: var(--md-sys-color-on-surface-variant);
+    font-family: var(--md-sys-typescale-label-large-font);
+    font-size: var(--md-sys-typescale-label-large-size);
+    font-weight: var(--md-sys-typescale-label-large-weight);
+    font-variant-numeric: tabular-nums;
+    --s4-icon-size: var(--s4-space-5);
+  }
+  .s4-stepper > li[data-state="done"] > .s4-step-dot { background: var(--md-sys-color-inverse-surface); color: var(--md-sys-color-inverse-on-surface); }
+  .s4-stepper > li[data-state="current"] > .s4-step-dot { background: var(--md-sys-color-primary); color: var(--md-sys-color-on-primary); }
+  .s4-step-label { font-family: var(--md-sys-typescale-label-large-font); font-size: var(--md-sys-typescale-label-medium-size); line-height: var(--md-sys-typescale-label-medium-line-height); color: var(--md-sys-color-on-surface-variant); overflow-wrap: anywhere; }
+  .s4-stepper > li[data-state="current"] > .s4-step-label { color: var(--md-sys-color-on-surface); font-weight: 600; }
+  @media (max-width: 599px) { .s4-stepper > li:not([data-state="current"]) > .s4-step-label { display: none; } }
+  @media (forced-colors: active) { .s4-step-dot { border: 1px solid CanvasText; } .s4-stepper > li[data-state="current"] > .s4-step-dot { background: Highlight; color: HighlightText; } }
+}

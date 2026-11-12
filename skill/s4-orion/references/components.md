@@ -6,10 +6,10 @@ Every component has a live reference page at https://4rk0s4h4.github.io/s4-orion
 ## Contents
 
 - **Actions:** [button](#button), [icon-button](#icon-button), [button-group](#button-group), [fab](#fab)
-- **Navigation and shell:** [app](#app), [top-app-bar](#top-app-bar), [nav-bar](#nav-bar), [nav-rail](#nav-rail), [tabs](#tabs), [toolbar](#toolbar), [search](#search)
-- **Containment and data:** [card](#card), [pane](#pane), [list](#list), [table](#table), [divider](#divider)
+- **Navigation and shell:** [app](#app), [top-app-bar](#top-app-bar), [nav-bar](#nav-bar), [nav-rail](#nav-rail), [tabs](#tabs), [toolbar](#toolbar), [search](#search), [breadcrumbs](#breadcrumbs), [pagination](#pagination), [stepper](#stepper)
+- **Containment and data:** [card](#card), [pane](#pane), [list](#list), [table](#table), [divider](#divider), [avatar](#avatar), [accordion](#accordion), [empty-state](#empty-state)
 - **Inputs:** [text-field](#text-field), [chip](#chip), [switch](#switch), [checkbox](#checkbox), [radio](#radio), [slider](#slider), [swatches](#swatches)
-- **Feedback:** [badge](#badge), [status](#status), [progress](#progress), [snackbar](#snackbar), [tooltip](#tooltip)
+- **Feedback:** [badge](#badge), [status](#status), [progress](#progress), [banner](#banner), [skeleton](#skeleton), [snackbar](#snackbar), [tooltip](#tooltip)
 - **Overlays:** [menu](#menu), [dialog](#dialog), [sheet](#sheet)
 
 <a id="button"></a>
@@ -572,6 +572,107 @@ wraps the whole bar. The clear button is a real button with a label. Forced colo
 
 ---
 
+<a id="breadcrumbs"></a>
+
+## Breadcrumbs
+
+Where you are in a hierarchy. Links are pills; the current page is plain text.
+
+```html
+<nav class="s4-breadcrumbs" aria-label="Breadcrumb">
+  <ol>
+    <li><a class="s4-breadcrumb-link" href="/">Home</a></li>
+    <li aria-current="page">Electric Co.</li>
+  </ol>
+</nav>
+```
+
+| Attribute | Values | Default |
+|---|---|---|
+| `aria-current="page"` | on the last `<li>` | — |
+
+**When to use what:** Use on desktop and tablet for deep hierarchies. On phones prefer a back button in the top app bar.
+
+**Do**
+- Keep labels short; use the page title as the last item.
+
+**Don't**
+- Don't use as primary navigation.
+- Don't include the current page as a link.
+
+**Accessibility:** A `<nav>` with a label, an ordered list and `aria-current="page"` on the last item. The separators are decorative.
+
+**Tokens:** surface-container roles, `on-surface`, `on-surface-variant`, shape `full` and `large`, spacing `--s4-space-*`, spring tokens. No outlines (decision 0023).
+
+---
+
+<a id="pagination"></a>
+
+## Pagination
+
+Move between pages of a long list or table. Circles, filled; the current page is filled inverse.
+
+```html
+<nav class="s4-pagination" aria-label="Pagination">
+  <a class="s4-page" href="?page=1" aria-label="Previous Page"><span class="s4-icon" data-icon="chevron-left"></span></a>
+  <a class="s4-page" href="?page=2" aria-current="page">2</a>
+  <a class="s4-page" href="?page=3">3</a>
+</nav>
+```
+
+| Attribute | Values | Default |
+|---|---|---|
+| `aria-current` | on the current page | — |
+| `aria-disabled="true"` | previous or next at the ends | — |
+
+**When to use what:** Use for long, ordered data that people jump around in. For feeds use load more or infinite scroll.
+
+**Do**
+- Show the first, last and the pages around the current one.
+
+**Don't**
+- Don't show every page number of a long set.
+
+**Accessibility:** A `<nav>` with a label; icon items need `aria-label`; the current page has `aria-current="page"`.
+
+**Tokens:** surface-container roles, `on-surface`, `on-surface-variant`, shape `full` and `large`, spacing `--s4-space-*`, spring tokens. No outlines (decision 0023).
+
+---
+
+<a id="stepper"></a>
+
+## Stepper
+
+Progress through a fixed sequence of steps, such as a checkout or setup. Dots joined by a filled track.
+
+```html
+<ol class="s4-stepper" aria-label="Setup Progress">
+  <li data-state="done"><span class="s4-step-dot"><span class="s4-icon" data-icon="check"></span></span><span class="s4-step-label">Account</span></li>
+  <li data-state="current" aria-current="step"><span class="s4-step-dot">2</span><span class="s4-step-label">Payment</span></li>
+  <li><span class="s4-step-dot">3</span><span class="s4-step-label">Review</span></li>
+</ol>
+```
+
+| Attribute | Values | Default |
+|---|---|---|
+| `data-state` | `done`, `current` (upcoming has none) | upcoming |
+| `aria-current="step"` | on the current step | — |
+
+**When to use what:** Use for two to six steps that happen in order. For loose sections use tabs or an accordion.
+
+**Do**
+- Name every step; on phones only the current label shows.
+
+**Don't**
+- Don't use for more than six steps.
+- Don't let the color be the only difference: done steps show a check.
+
+**Accessibility:** An ordered list; the current step has `aria-current="step"`. The labels carry the meaning.
+
+**Tokens:** surface-container roles, `on-surface`, `on-surface-variant`, shape `full` and `large`, spacing `--s4-space-*`, spring tokens. No outlines (decision 0023).
+
+---
+
 <a id="card"></a>
 
 ## Card
@@ -868,6 +969,110 @@ use the list's `data-dividers` instead.
 `aria-hidden="true"`. The line is a real border, so it survives forced-colors mode.
 
 **Tokens:** `--s4-size-divider`, `--md-sys-color-outline-variant`, `--s4-space-2`, `--s4-space-4`, `--s4-space-6`.
+
+---
+
+<a id="avatar"></a>
+
+## Avatar
+
+A person or thing as a circle: initials, a photo or an icon. Moved out of the list so it works anywhere.
+
+```html
+<span class="s4-avatar">MC</span>
+<span class="s4-avatar" data-size="l" data-status="online" aria-label="Maya Chen, online">MC</span>
+<div class="s4-avatar-group"><span class="s4-avatar">MC</span><span class="s4-avatar" data-more>+4</span></div>
+```
+
+| Attribute | Values | Default |
+|---|---|---|
+| `data-size` | `xs` 24, `s` 32, `m` 40, `l` 56, `xl` 80 | `m` |
+| `data-tone` | `secondary`, `tertiary`, `neutral` | primary container |
+| `data-status` | `online`, `busy`, `away` | none |
+| `data-more` | the "+3" overflow avatar of a group | — |
+
+**When to use what:** Initials when there is no photo; an icon for a thing or a generic user. Use the group for collaborators.
+
+**Do**
+- Give a photo an `alt` with the name; give a status avatar an `aria-label` that says the status.
+
+**Don't**
+- Don't rely on the status dot alone: say the status in text somewhere near.
+- Don't put more than five avatars in a group; add the +N avatar.
+
+**Accessibility:** Initials are text; photos need `alt`. The status dot is decorative, so put the status in `aria-label`.
+
+**Tokens:** surface-container roles, `on-surface`, `on-surface-variant`, shape `full` and `large`, spacing `--s4-space-*`, spring tokens. No outlines (decision 0023).
+
+---
+
+<a id="accordion"></a>
+
+## Accordion
+
+Sections that open and close. Built on native `<details>`, so it needs no JavaScript.
+
+```html
+<div class="s4-accordion">
+  <details class="s4-accordion-item" name="faq" open>
+    <summary>What is autopay?<span class="s4-icon" data-icon="chevron-down"></span></summary>
+    <div class="s4-accordion-body">Pays the bill on its due date.</div>
+  </details>
+</div>
+```
+
+| Attribute | Values | Default |
+|---|---|---|
+| `name` on every `<details>` | a shared string: only one stays open | independent |
+| `open` | starts expanded | closed |
+
+**When to use what:** Use for FAQs, settings groups and long forms split into parts. For switching between views use tabs.
+
+**Do**
+- Keep titles short and in Title Case; body text in sentences.
+- Put the most important item first and open.
+
+**Don't**
+- Don't nest accordions.
+- Don't hide content people need to compare side by side.
+
+**Accessibility:** `<summary>` is a native disclosure button: Space and Enter toggle it and screen readers announce expanded or collapsed. The chevron is decorative.
+
+**Tokens:** surface-container roles, `on-surface`, `on-surface-variant`, shape `full` and `large`, spacing `--s4-space-*`, spring tokens. No outlines (decision 0023).
+
+---
+
+<a id="empty-state"></a>
+
+## Empty State
+
+What a list, table or search shows when there is nothing to show yet.
+
+```html
+<div class="s4-empty">
+  <span class="s4-empty-icon"><span class="s4-icon" data-icon="search"></span></span>
+  <h2 class="s4-empty-title">No Results</h2>
+  <p class="s4-empty-text">Try a different word, or clear the search.</p>
+  <button class="s4-button" data-variant="tonal" type="button">Clear Search</button>
+</div>
+```
+
+| Attribute | Values | Default |
+|---|---|---|
+
+
+**When to use what:** Use for first use, no results, and cleared lists. Pair a first-use empty state with the one action that fills it.
+
+**Do**
+- Say what is missing and the next step in one sentence.
+
+**Don't**
+- Don't blame the user or apologize.
+- Don't show an empty state while loading; use a skeleton.
+
+**Accessibility:** The icon is decorative; the title is the heading for the region.
+
+**Tokens:** surface-container roles, `on-surface`, `on-surface-variant`, shape `full` and `large`, spacing `--s4-space-*`, spring tokens. No outlines (decision 0023).
 
 ---
 
@@ -1316,6 +1521,73 @@ the indicator in CanvasText.
 **Tokens:** `--md-sys-color-primary`, `--md-sys-color-secondary-container`, `--s4-space-1` (thickness and gap),
 `--s4-space-10` (circular size), `--md-sys-shape-corner-full`, `--s4-motion-spring-spatial-calm` (value changes),
 `--md-sys-motion-spring-slow-effects` (indeterminate easing per segment).
+
+---
+
+<a id="banner"></a>
+
+## Banner
+
+A message that stays on the page until it is handled or dismissed. Not a toast; that is the snackbar.
+
+```html
+<div class="s4-banner" role="status" data-tone="error">
+  <span class="s4-icon" data-icon="warning"></span>
+  <p class="s4-banner-text">One payment failed.</p>
+  <div class="s4-banner-actions"><button class="s4-button" data-variant="text" type="button">Update Card</button></div>
+  <button class="s4-icon-button" type="button" data-dismiss aria-label="Dismiss"><span class="s4-icon" data-icon="close"></span></button>
+</div>
+```
+
+| Attribute | Values | Default |
+|---|---|---|
+| `data-tone` | `primary`, `secondary`, `tertiary`, `error` | neutral |
+| `data-dismiss` | on a button inside: fades the banner out and fires `s4-close` | — |
+
+**When to use what:** Use a banner for something that affects the whole page or account and stays true until acted on. Use a snackbar for the result of an action.
+
+**Do**
+- Say what happened and what to do, with one text button for the fix.
+
+**Don't**
+- Don't stack more than one banner.
+- Don't use `role="alert"` unless it is an error that needs attention now.
+
+**Accessibility:** `role="status"` is announced politely; `role="alert"` interrupts. The dismiss button needs an `aria-label`.
+
+**Tokens:** surface-container roles, `on-surface`, `on-surface-variant`, shape `full` and `large`, spacing `--s4-space-*`, spring tokens. No outlines (decision 0023).
+
+---
+
+<a id="skeleton"></a>
+
+## Skeleton
+
+A quiet placeholder while content loads. Same shape and size as what will replace it. The pulse is opacity only.
+
+```html
+<div aria-busy="true">
+  <div class="s4-skeleton" data-shape="text" style="width: 70%"></div>
+  <div class="s4-skeleton" style="height: 7rem"></div>
+</div>
+```
+
+| Attribute | Values | Default |
+|---|---|---|
+| `data-shape` | `text`, `pill`, `circle` | block with medium corners |
+
+**When to use what:** Use a skeleton when the layout is known and the content takes more than about a second. Use progress when you can show how far along it is.
+
+**Do**
+- Set `aria-busy="true"` on the region and remove it when the content arrives.
+
+**Don't**
+- Don't show skeletons for less than a second; it flickers.
+- Don't animate anything but opacity.
+
+**Accessibility:** The pulse stops under `prefers-reduced-motion`. Skeletons carry no text; the busy region tells screen readers loading is happening.
+
+**Tokens:** surface-container roles, `on-surface`, `on-surface-variant`, shape `full` and `large`, spacing `--s4-space-*`, spring tokens. No outlines (decision 0023).
 
 ---
 

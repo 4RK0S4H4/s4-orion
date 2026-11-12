@@ -1,0 +1,15 @@
+/* Empty state (S4 Orion addition): what a list, table or search shows when there is nothing to show yet.
+   <div class="s4-empty">
+     <span class="s4-empty-icon"><span class="s4-icon" data-icon="search"></span></span>
+     <h2 class="s4-empty-title">No Results</h2>
+     <p class="s4-empty-text">Try a different word, or clear the search.</p>
+     <button class="s4-button" data-variant="tonal" type="button">Clear Search</button>
+   </div>
+   Centered, in the space the content would fill. Say what is missing and what to do next. The icon sits in a filled circle. */
+@layer s4.components {
+  .s4-empty { display: grid; justify-items: center; gap: var(--s4-space-3); padding: var(--s4-space-12) var(--s4-space-4); text-align: center; }
+  .s4-empty-icon { display: grid; place-items: center; width: calc(var(--s4-space-12) + var(--s4-space-8)); height: calc(var(--s4-space-12) + var(--s4-space-8)); border-radius: var(--md-sys-shape-corner-full); background: var(--md-sys-color-surface-container-high); color: var(--md-sys-color-on-surface-variant); --s4-icon-size: var(--s4-size-icon-large); }
+  .s4-empty-title { margin: var(--s4-space-2) 0 0; font-family: var(--md-sys-typescale-title-large-font); font-size: var(--md-sys-typescale-title-large-size); line-height: var(--md-sys-typescale-title-large-line-height); font-weight: var(--md-sys-typescale-title-large-weight); }
+  .s4-empty-text { margin: 0; max-width: 32ch; color: var(--md-sys-color-on-surface-variant); font-family: var(--md-sys-typescale-body-medium-font); font-size: var(--md-sys-typescale-body-medium-size); line-height: var(--md-sys-typescale-body-medium-line-height); }
+  .s4-empty > .s4-button { margin-top: var(--s4-space-2); }
+}

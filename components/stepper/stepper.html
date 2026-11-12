@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Stepper · S4 Orion</title>
+<link rel="stylesheet" href="../index.css">
+<link rel="stylesheet" href="../_example/example.css">
+</head>
+<body>
+<header class="ex-bar"><h1><a href="../">Components</a> / Stepper</h1></header>
+<main class="ex-main">
+  <p>Progress through a fixed sequence of steps.</p>
+
+  <section class="ex-sec">
+    <h2>Steps</h2>
+    <p>Done steps are dark with a check, the current step is the primary color.</p>
+    <div class="ex-board">
+      <ol class="s4-stepper" aria-label="Setup Progress" style="width: min(100%, 36rem)"><li data-state="done"><span class="s4-step-dot"><span class="s4-icon" data-icon="check"></span></span><span class="s4-step-label">Account</span></li><li data-state="current" aria-current="step"><span class="s4-step-dot">2</span><span class="s4-step-label">Payment</span></li><li><span class="s4-step-dot">3</span><span class="s4-step-label">Review</span></li><li><span class="s4-step-dot">4</span><span class="s4-step-label">Done</span></li></ol>
+    </div>
+  </section>
+
+  <p class="ex-foot">Source: <code>components/stepper/</code></p>
+</main>
+<script src="../assets/icons.js"></script>
+<script src="../core/core.js"></script>
+<script src="../button/button.js"></script>
+<script src="../icon-button/icon-button.js"></script>
+<script src="../_example/example.js"></script>
+</body>
+</html>

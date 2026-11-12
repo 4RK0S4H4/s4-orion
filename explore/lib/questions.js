@@ -176,4 +176,12 @@ window.S4_REVIEW_DEMOS = [
         options: [{ v: 'A', label: 'Solar Bold Duotone (today)' }, { v: 'B', label: 'Phosphor Duotone' }, { v: 'C', label: 'Phosphor Bold Duotone' }, { v: 'Other', label: 'Describe in notes' }] }
     ]
   }
+  ,
+  {
+    id: 'button-group', title: 'Button Groups', href: 'explore/review-button-group.html',
+    questions: [
+      { id: 'group', label: 'Button group', help: 'A group where you pick a value. Rounded, filled, and not tabs.',
+        options: [{ v: 'A', label: 'Rounded Tray (today)' }, { v: 'B', label: 'Pill Tray' }, { v: 'C', label: 'Separate Pills' }, { v: 'D', label: 'Soft Segments' }, { v: 'E', label: 'Joined Capsule' }, { v: 'Other', label: 'Describe in notes' }] }
+    ]
+  }
 ];

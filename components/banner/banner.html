@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Banner · S4 Orion</title>
+<link rel="stylesheet" href="../index.css">
+<link rel="stylesheet" href="../_example/example.css">
+</head>
+<body>
+<header class="ex-bar"><h1><a href="../">Components</a> / Banner</h1></header>
+<main class="ex-main">
+  <p>A message that stays on the page until it is handled or dismissed.</p>
+
+  <section class="ex-sec">
+    <h2>Tones</h2>
+    <p>Neutral by default; a tone uses a container role. Errors use role="alert".</p>
+    <div class="ex-board col">
+      <div class="s4-banner" role="status" style="width: 100%"><span class="s4-icon" data-icon="info"></span><p class="s4-banner-text">Your plan renews on Nov 28.</p><div class="s4-banner-actions"><button class="s4-button" data-variant="text" type="button">Manage</button></div><button class="s4-icon-button" type="button" data-dismiss aria-label="Dismiss"><span class="s4-icon" data-icon="close"></span></button></div>
+      <div class="s4-banner" role="status" data-tone="primary" style="width: 100%"><span class="s4-icon" data-icon="sparkle"></span><p class="s4-banner-text">Autopay is on for 3 bills.</p></div>
+      <div class="s4-banner" role="alert" data-tone="error" style="width: 100%"><span class="s4-icon" data-icon="warning"></span><p class="s4-banner-text">One payment failed. Update your card to try again.</p><div class="s4-banner-actions"><button class="s4-button" data-variant="text" type="button">Update Card</button></div></div>
+    </div>
+  </section>
+
+  <p class="ex-foot">Source: <code>components/banner/</code></p>
+</main>
+<script src="../assets/icons.js"></script>
+<script src="../core/core.js"></script>
+<script src="../button/button.js"></script>
+<script src="../icon-button/icon-button.js"></script>
+<script src="../banner/banner.js"></script>
+<script src="../_example/example.js"></script>
+</body>
+</html>

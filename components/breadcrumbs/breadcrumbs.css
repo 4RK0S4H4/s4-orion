@@ -1,0 +1,18 @@
+/* Breadcrumbs (S4 Orion addition): where you are in a hierarchy.
+   <nav class="s4-breadcrumbs" aria-label="Breadcrumb">
+     <ol>
+       <li><a class="s4-breadcrumb-link" href="/">Home</a></li>
+       <li><a class="s4-breadcrumb-link" href="/bills">Bills</a></li>
+       <li aria-current="page">Electric Co.</li>
+     </ol>
+   </nav>
+   Links are pills with the shared state layer; the current page is plain text. Long trails wrap. */
+@layer s4.components {
+  .s4-breadcrumbs ol { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s4-space-1); margin: 0; padding: 0; list-style: none; }
+  .s4-breadcrumbs li { display: inline-flex; align-items: center; gap: var(--s4-space-1); min-width: 0; font-family: var(--md-sys-typescale-label-large-font); font-size: var(--md-sys-typescale-label-large-size); line-height: var(--md-sys-typescale-label-large-line-height); font-weight: var(--md-sys-typescale-label-large-weight); color: var(--md-sys-color-on-surface); }
+  .s4-breadcrumbs li + li::before { content: "\203A" / ""; color: var(--md-sys-color-on-surface-variant); }
+  .s4-breadcrumb-link, .s4-breadcrumbs li[aria-current] { display: inline-flex; align-items: center; min-height: var(--s4-space-8); padding: 0 var(--s4-space-3); border-radius: var(--md-sys-shape-corner-full); }
+  .s4-breadcrumb-link { background: var(--md-sys-color-surface-container-high); color: var(--md-sys-color-on-surface-variant); text-decoration: none; }
+  .s4-breadcrumb-link::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: var(--s4-size-touch-target); transform: translateY(-50%); }
+  @media (forced-colors: active) { .s4-breadcrumb-link { border: 1px solid LinkText; } }
+}

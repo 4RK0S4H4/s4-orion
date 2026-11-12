@@ -8,7 +8,7 @@
 (function (k) { try { var t = JSON.parse(localStorage.getItem(k) || 'null'); if (t && t.mode && t.mode !== 'system') document.documentElement.dataset.theme = t.mode; } catch (e) {} })('orion-showcase-theme');
 </script>
 <link rel="preload" href="inter-variable.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="orion.css?v=6a73284">
+<link rel="stylesheet" href="orion.css?v=6c9e988">
 <link rel="stylesheet" href="demo.css">
 </head>
 <body>
@@ -74,10 +74,10 @@
             <li data-tag="recent"><button class="s4-list-item" type="button"><span class="s4-list-leading"><span class="s4-avatar">SO</span></span><span class="s4-list-content"><span class="s4-list-headline">Budget draft</span><span class="s4-list-supporting">Sam Ortiz · Sun</span></span><span class="s4-list-trailing"><span class="s4-status">Recent</span></span></button></li>
             <li data-tag="shared"><button class="s4-list-item" type="button"><span class="s4-list-leading"><span class="s4-avatar">LF</span></span><span class="s4-list-content"><span class="s4-list-headline">Photo album</span><span class="s4-list-supporting">Lena Fischer · Oct 28</span></span><span class="s4-list-trailing"><span class="s4-status" data-tone="primary">Shared</span></span></button></li>
           </ul>
-          <div id="note-empty" class="demo-empty" hidden>
-            <span class="s4-icon" data-icon="search"></span>
-            <h2 class="s4-title-large">Nothing Found</h2>
-            <p class="s4-body-medium s4-on-surface-variant">Try a different word or clear the search.</p>
+          <div id="note-empty" class="s4-empty" hidden>
+            <span class="s4-empty-icon"><span class="s4-icon" data-icon="search"></span></span>
+            <h2 class="s4-empty-title">Nothing Found</h2>
+            <p class="s4-empty-text">Try a different word, or clear the search.</p>
           </div>
         </div>
         <button class="s4-fab" data-fixed data-sheet="new-note" type="button"><span class="s4-icon" data-icon="add"></span><span class="s4-fab-label">New Note</span></button>
@@ -160,6 +160,31 @@
               <div class="s4-tab-panel" role="tabpanel" id="panel-a" aria-labelledby="tab-a"><p class="s4-body-medium">A short summary of everything in this space.</p></div>
               <div class="s4-tab-panel" role="tabpanel" id="panel-b" aria-labelledby="tab-b" hidden><p class="s4-body-medium">Recent edits and comments show up here.</p></div>
               <div class="s4-tab-panel" role="tabpanel" id="panel-c" aria-labelledby="tab-c" hidden><p class="s4-body-medium">Attachments and shared files live here.</p></div>
+            </div>
+          </section>
+
+          <section class="s4-pane" aria-labelledby="h-msg">
+            <h2 class="s4-pane-title" id="h-msg">Banner, Avatars and Loading</h2>
+            <div class="s4-stack">
+              <div class="s4-banner" role="status" data-tone="primary"><span class="s4-icon" data-icon="info"></span><p class="s4-banner-text">Your plan renews on Nov 28.</p><div class="s4-banner-actions"><button class="s4-button" data-variant="text" type="button">Manage</button></div><button class="s4-icon-button" type="button" data-dismiss aria-label="Dismiss"><span class="s4-icon" data-icon="close"></span></button></div>
+              <div class="s4-row">
+                <div class="s4-avatar-group"><span class="s4-avatar">MC</span><span class="s4-avatar" data-tone="secondary">JW</span><span class="s4-avatar" data-tone="tertiary">PN</span><span class="s4-avatar" data-more>+4</span></div>
+                <span class="s4-avatar" data-size="l" data-status="online" aria-label="Maya Chen, online">MC</span>
+              </div>
+              <div class="demo-skel" aria-busy="true"><span class="s4-skeleton" data-shape="circle" style="width: var(--s4-space-10)"></span><div class="demo-skel-lines"><span class="s4-skeleton" data-shape="text" style="width: 70%"></span><span class="s4-skeleton" data-shape="text" style="width: 45%"></span></div></div>
+            </div>
+          </section>
+
+          <section class="s4-pane" aria-labelledby="h-nav">
+            <h2 class="s4-pane-title" id="h-nav">Steps, Pages and Sections</h2>
+            <div class="s4-stack">
+              <nav class="s4-breadcrumbs" aria-label="Breadcrumb"><ol><li><a class="s4-breadcrumb-link" href="#home">Home</a></li><li><a class="s4-breadcrumb-link" href="#controls">Controls</a></li><li aria-current="page">Steps</li></ol></nav>
+              <ol class="s4-stepper" aria-label="Setup Progress"><li data-state="done"><span class="s4-step-dot"><span class="s4-icon" data-icon="check"></span></span><span class="s4-step-label">Account</span></li><li data-state="current" aria-current="step"><span class="s4-step-dot">2</span><span class="s4-step-label">Payment</span></li><li><span class="s4-step-dot">3</span><span class="s4-step-label">Review</span></li></ol>
+              <nav class="s4-pagination" aria-label="Pagination"><a class="s4-page" href="#controls" aria-label="Previous Page"><span class="s4-icon" data-icon="chevron-left"></span></a><a class="s4-page" href="#controls">1</a><a class="s4-page" href="#controls" aria-current="page">2</a><a class="s4-page" href="#controls">3</a><span class="s4-page-gap" aria-hidden="true">…</span><a class="s4-page" href="#controls">9</a><a class="s4-page" href="#controls" aria-label="Next Page"><span class="s4-icon" data-icon="chevron-right"></span></a></nav>
+              <div class="s4-accordion">
+                <details class="s4-accordion-item" name="demo-faq" open><summary>What is a space?<span class="s4-icon" data-icon="chevron-down"></span></summary><div class="s4-accordion-body">A space keeps related notes together.</div></details>
+                <details class="s4-accordion-item" name="demo-faq"><summary>Can I share a space?<span class="s4-icon" data-icon="chevron-down"></span></summary><div class="s4-accordion-body">Yes. Invite people from the share button.</div></details>
+              </div>
             </div>
           </section>
 
@@ -390,7 +415,7 @@
 
 <script src="icons.js"></script>
 <script>if (/[?&]scrub\b/.test(location.search)) document.write('<script src="../explore/lib/scrub.js"><\/script>');</script>
-<script src="orion.js?v=bf6b1ca"></script>
+<script src="orion.js?v=b0a06f1"></script>
 <script>S4.theme.restore('orion-showcase-theme', { mode: 'system' }); S4.icon.restore('orion-showcase-icons');</script>
 <script src="demo.js"></script>
 </body>

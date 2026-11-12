@@ -3,6 +3,8 @@
 .demo-pad-bottom { padding-bottom: var(--s4-space-16); }
 .demo-cards { --s4-min: 220px; }
 .demo-icon-row { gap: var(--s4-space-4); }
+.demo-skel { display: flex; align-items: center; gap: var(--s4-space-3); }
+.demo-skel-lines { flex: 1; display: grid; gap: var(--s4-space-2); }
 .demo-top { margin-top: var(--s4-space-4); }
 .demo-form { display: grid; gap: var(--s4-space-4); max-width: 35rem; }
 .demo-empty { display: grid; justify-items: center; gap: var(--s4-space-3); text-align: center; padding-block: var(--s4-space-12); }

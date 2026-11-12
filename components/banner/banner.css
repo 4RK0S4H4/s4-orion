@@ -1,0 +1,41 @@
+/* Banner (S4 Orion addition): a message that stays on the page until it is dealt with or dismissed. Not a toast (that is the snackbar).
+   <div class="s4-banner" role="status" data-tone="primary|secondary|tertiary|error">
+     <span class="s4-icon" data-icon="info"></span>
+     <p class="s4-banner-text">Your plan renews on Nov 28.</p>
+     <div class="s4-banner-actions"><button class="s4-button" data-variant="text" type="button">Manage</button></div>
+     <button class="s4-icon-button" type="button" data-dismiss aria-label="Dismiss"><span class="s4-icon" data-icon="close"></span></button>
+   </div>
+   Filled rounded box (surface-container-high by default; a tone uses its container role). Use role="alert" only for errors.
+   banner.js dismisses on [data-dismiss] (fades out, then hides) and fires s4-close. */
+@layer s4.components {
+  .s4-banner {
+    --_bg: var(--md-sys-color-surface-container-high);
+    --_fg: var(--md-sys-color-on-surface);
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--s4-space-2) var(--s4-space-3);
+    padding: var(--s4-space-3) var(--s4-space-3) var(--s4-space-3) var(--s4-space-4);
+    border-radius: var(--md-sys-shape-corner-large);
+    background: var(--_bg);
+    color: var(--_fg);
+    transition: opacity var(--md-sys-motion-spring-fast-effects-duration) var(--md-sys-motion-spring-fast-effects);
+  }
+  .s4-banner[data-tone="primary"] { --_bg: var(--md-sys-color-primary-container); --_fg: var(--md-sys-color-on-primary-container); }
+  .s4-banner[data-tone="secondary"] { --_bg: var(--md-sys-color-secondary-container); --_fg: var(--md-sys-color-on-secondary-container); }
+  .s4-banner[data-tone="tertiary"] { --_bg: var(--md-sys-color-tertiary-container); --_fg: var(--md-sys-color-on-tertiary-container); }
+  .s4-banner[data-tone="error"] { --_bg: var(--md-sys-color-error-container); --_fg: var(--md-sys-color-on-error-container); }
+  .s4-banner[data-closing] { opacity: 0; }
+  .s4-banner > .s4-icon { align-self: flex-start; margin-block: var(--s4-space-2); --s4-icon-size: var(--s4-size-icon); }
+  .s4-banner-text {
+    flex: 1 1 12rem;
+    min-width: 0;
+    margin: 0;
+    font-family: var(--md-sys-typescale-body-medium-font);
+    font-size: var(--md-sys-typescale-body-medium-size);
+    line-height: var(--md-sys-typescale-body-medium-line-height);
+  }
+  .s4-banner-actions { display: flex; gap: var(--s4-space-1); margin-inline-start: auto; }
+  .s4-banner :is(.s4-button[data-variant="text"], .s4-icon-button) { --_fg: currentColor; }
+  @media (forced-colors: active) { .s4-banner { border: 1px solid CanvasText; } }
+}
