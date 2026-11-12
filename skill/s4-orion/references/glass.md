@@ -29,7 +29,7 @@ above content. Content itself is always solid.
 background-color: color-mix(in srgb, var(--s4-glass-tint-float) 75%, transparent);   /* surface-container */
 backdrop-filter: blur(8px) saturate(1.5);                                            /* no backdrop dimming needed at 75% */
 box-shadow: inset 0 1px 0 var(--_edge-hi),                                   /* the edge light: bright along the top, */
-            inset 0 -1px 0 var(--_edge-lo),                                /* a faint return at the bottom, */
+            inset 0 -1px 0 var(--_edge-hi),                                /* a faint return at the bottom, */
             inset 0 0 0 1px var(--_edge-hi);                                  /* a faint line all round; no shadow */
 ```
 
@@ -51,7 +51,7 @@ else glass (a custom floating panel), add `class="s4-glass"`. To keep one elemen
 Glass has **no shadow**: the transparency itself says what is in front. The only edge is the edge light (decision 0021, replacing the frost line of 0013/0016): 1px, light catching the top edge and fading down the sides, with a faint return at the bottom (`--s4-glass-edge-top`, `-side`, `-bottom`; light: white 62% over white 32%, a dark 7% bottom; dark: white 13% over white 6%). It is drawn with inset shadows, so it follows the corners and stays put when a menu or dialog scrolls. Floating surfaces (toolbar, menu, dialog, phone bottom sheet) get it all the way round; full-width and docked ones (top app bar, nav bar, docked toolbar, rail, side sheet, wide bottom sheet) get one line (`--s4-glass-edge-line`) only on the edge that faces the content. Over plain white content in light mode the glass can look flat; that is accepted.
 
 ## Items on glass
-The edge color depends on the surface (decision 0031): `--_edge-hi` is the surface color (glass tint, or a floating button's own color) moved toward white by `--s4-glass-edge-lift` (0.5), `--_edge-lo` is it moved toward black (white in dark mode) for the bottom return; the alphas `--s4-glass-edge-top-alpha`, `-side-alpha`, `-bottom-alpha` set the strengths. A dark floating button therefore gets a soft lighter version of itself, never a hard white line.
+The edge color depends on the surface (decision 0031): `--_edge-hi` is the surface color (glass tint, or a floating button's own color) moved toward white by `--s4-glass-edge-lift` (0.5), the top and the bottom edge are lit the same (decision 0033: an unevenly lit edge made pale surfaces look like raised buttons); the alphas `--s4-glass-edge-top-alpha`, `-side-alpha`, `-bottom-alpha` set the strengths. A dark floating button therefore gets a soft lighter version of itself, never a hard white line.
 
 The edge width scales with the screen (decision 0029): the token `--s4-glass-edge-width` (1px) is the retina and phone width; standard-density monitors multiply it by `--s4-glass-edge-scale-standard` (1.5) and large ones by `--s4-glass-edge-scale-large` (2).
 

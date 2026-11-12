@@ -188,7 +188,7 @@
         }
       },
       "edge": {
-        "$description": "The glass edge (decisions 0021, 0027, 0031): light catches the top edge. Drawn as layered inset shadows so it follows the corner radius, never scrolls with content and needs no extra markup: a faint line all round (side), a brighter line along the top (top) and a faint return at the bottom (bottom). The colors come from the surface (glass tint, or a floating button's own color) moved toward white by `lift`; the alphas set the strengths. Full-width bars draw only one line on the edge that faces the content (line). All zero where glass is solid.",
+        "$description": "The glass edge (decisions 0021, 0027, 0031, 0033): light catches the top and the bottom edge equally. Drawn as layered inset shadows so it follows the corner radius, never scrolls with content and needs no extra markup: a faint line all round (side), a brighter line along the top (top) and along the bottom (bottom). The color comes from the surface (glass tint, or a floating button's own color) moved toward white by `lift`; the alphas set the strengths. Full-width bars draw only one line on the edge that faces the content (line). All zero where glass is solid.",
         "width": {
           "$type": "dimension",
           "$value": {
@@ -292,11 +292,11 @@
         },
         "bottom-alpha": {
           "$type": "number",
-          "$value": 0.16,
-          "$description": "How strong the faint return along the bottom edge is (0 to 1).",
+          "$value": 1.0,
+          "$description": "How strong the light line along the bottom edge is (0 to 1). Lit like the top (decision 0033), in the same surface-based color, so a surface looks evenly lit and not raised.",
           "$extensions": {
             "com.s4.modes": {
-              "dark": 0.1,
+              "dark": 0.3,
               "high-contrast": 0,
               "dark-high-contrast": 0,
               "reduced-transparency": 0
@@ -307,39 +307,6 @@
           "$type": "number",
           "$value": 0.5,
           "$description": "Decision 0031: the edge light is the surface's own color moved this far toward white (0 = the surface color, 1 = pure white). A pale glass gets a near-white line; a dark glass or a dark floating button gets a softer, lighter version of itself instead of a hard white line."
-        },
-        "bottom-lift": {
-          "$type": "number",
-          "$value": 0.55,
-          "$description": "How far the bottom return line moves from the surface color toward `bottom-target`."
-        },
-        "bottom-target": {
-          "$type": "color",
-          "$description": "The color the bottom return line moves toward: ink in light mode (a soft shade), white in dark mode.",
-          "$value": {
-            "colorSpace": "srgb",
-            "components": [
-              0.0,
-              0.0,
-              0.0
-            ],
-            "alpha": 1,
-            "hex": "#000000"
-          },
-          "$extensions": {
-            "com.s4.modes": {
-              "dark": {
-                "colorSpace": "srgb",
-                "components": [
-                  1.0,
-                  1.0,
-                  1.0
-                ],
-                "alpha": 1,
-                "hex": "#ffffff"
-              }
-            }
-          }
         }
       },
       "glow": {
