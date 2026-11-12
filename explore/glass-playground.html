@@ -26,6 +26,7 @@ button{font:inherit}
 .sl{display:grid;gap:2px}
 .sl span{display:flex;justify-content:space-between;font-size:13px}
 .sl b{font-weight:600}
+.sl small{font-size:12px;line-height:16px;color:var(--ink2)}
 .sl output{color:var(--ink2);font-variant-numeric:tabular-nums}
 input[type=range]{width:100%;accent-color:var(--b);height:28px;margin:0}
 .read{display:grid;gap:6px}
@@ -44,7 +45,7 @@ pre{margin:0;padding:12px;border-radius:12px;background:var(--soft);font:12px/1.
     <figure><figcaption>Dark</figcaption><iframe id="f-dark" title="Dark preview" src="glass-playground-frame.html?theme=dark"></iframe></figure>
   </section>
   <aside aria-label="Glass controls">
-    <p>The previews use the real Orion glass layer: top bar, dialog, menu, floating buttons and navigation bar. Move the sliders; both previews follow. Today's values are your latest numbers: tint 75%, floating buttons 75%, blur 8px, color boost 150%, no sheen, edge top 50, sides 25% of top, bottom 50, width 1px. The edge uses the same units as the first playground, so numbers you send round-trip. New: Edge Glow brightens the surface itself toward the edges (all round), Top Sheen only toward the top edge. Send me the numbers at the bottom.</p>
+    <p>The previews use the real Orion glass layer: top bar, dialog, menu, floating buttons and navigation bar. Move a slider and both previews follow. Today is your latest set. Send me the numbers at the bottom.</p>
 
     <div><div class="lab">Presets</div><div class="chips" id="presets"></div></div>
     <div><div class="lab">Behind the glass</div><div class="chips" id="back"></div></div>
@@ -56,30 +57,28 @@ pre{margin:0;padding:12px;border-radius:12px;background:var(--soft);font:12px/1.
 </main>
 <script>
 const SL = [
-  { k: 'tint', label: 'Glass Tint (opacity)', min: 0, max: 100, step: 1, v: 75, fmt: v => v + '%', css: v => ['--s4-glass-tint-opacity-float', v / 100] },
-  { k: 'fab', label: 'Floating Button Tint', min: 50, max: 100, step: 1, v: 90, fmt: v => v + '%', css: v => ['--s4-glass-tint-opacity-fab', v / 100] },
-  { k: 'blur', label: 'Blur', min: 0, max: 40, step: 1, v: 8, fmt: v => v + 'px', css: v => ['--s4-glass-blur-float', v + 'px'] },
-  { k: 'sat', label: 'Color Boost', min: 100, max: 220, step: 5, v: 150, fmt: v => v + '%', css: v => ['--s4-glass-saturation-float', v / 100] },
-  { k: 'contrast', label: 'Backdrop Contrast', min: 40, max: 100, step: 5, v: 100, fmt: v => v + '%', css: v => ['--s4-glass-backdrop-contrast-float', v / 100] },
-  { k: 'bright', label: 'Backdrop Brightness', min: 60, max: 120, step: 5, v: 100, fmt: v => v + '%', css: v => ['--s4-glass-backdrop-brightness-float', v / 100] },
-  { k: 'top', label: 'Edge, Top', min: 0, max: 100, step: 1, v: 35, fmt: v => v },
-  { k: 'side', label: 'Edge on the Sides (% of top)', min: 0, max: 100, step: 1, v: 50, fmt: v => v + '%' },
-  { k: 'bottom', label: 'Edge, Bottom', min: 0, max: 100, step: 1, v: 25, fmt: v => v },
-  { k: 'glow', label: 'Edge Glow (brighter surface near the edges)', min: 0, max: 100, step: 1, v: 0, fmt: v => v },
-  { k: 'glowSize', label: 'Edge Glow Reach', min: 2, max: 40, step: 1, v: 12, fmt: v => v + 'px', css: v => ['--s4-glass-glow-size', v + 'px'] },
-  { k: 'sheen', label: 'Top Sheen (brighter near the top edge)', min: 0, max: 100, step: 1, v: 0, fmt: v => v },
-  { k: 'sheenSize', label: 'Top Sheen Reach', min: 2, max: 60, step: 1, v: 14, fmt: v => v + 'px', css: v => ['--s4-glass-glow-top-size', v + 'px'] },
-  { k: 'scaleStd', label: 'Edge Width Multiplier, Standard Screens (1080p, 1440p)', min: 1, max: 3, step: 0.25, v: 1.5, fmt: v => '×' + v, css: v => ['--s4-glass-edge-scale-standard', v] },
-  { k: 'scaleLarge', label: 'Edge Width Multiplier, Large Standard Screens', min: 1, max: 4, step: 0.25, v: 2, fmt: v => '×' + v, css: v => ['--s4-glass-edge-scale-large', v] },
-  { k: 'width', label: 'Edge Width (retina and phones)', min: 0, max: 3, step: 0.5, v: 1, fmt: v => v + 'px', css: v => ['--s4-glass-edge-width', v + 'px'] }
+  { k: 'tint', label: 'Glass Tint', desc: 'How solid the frosted layer is. Lower lets more of the page behind show through; 100% is a solid surface.', min: 0, max: 100, step: 1, v: 75, fmt: v => v + '%', css: v => ['--s4-glass-tint-opacity-float', v / 100] },
+  { k: 'fab', label: 'Floating Button Tint', desc: 'The same, for floating buttons. They are tinted with their own color instead of the surface color.', min: 50, max: 100, step: 1, v: 75, fmt: v => v + '%', css: v => ['--s4-glass-tint-opacity-fab', v / 100] },
+  { k: 'blur', label: 'Blur', desc: 'How much the page behind the glass is blurred.', min: 0, max: 40, step: 1, v: 8, fmt: v => v + 'px', css: v => ['--s4-glass-blur-float', v + 'px'] },
+  { k: 'sat', label: 'Color Boost', desc: 'How vivid the blurred colors behind the glass look.', min: 100, max: 220, step: 5, v: 150, fmt: v => v + '%', css: v => ['--s4-glass-saturation-float', v / 100] },
+  { k: 'top', label: 'Edge Light, Top', desc: 'Brightness of the thin light line along the top edge, like light catching the rim.', min: 0, max: 100, step: 1, v: 50, fmt: v => v },
+  { k: 'side', label: 'Edge Light, Sides', desc: 'How much of that light runs down the sides, as a share of the top line.', min: 0, max: 100, step: 1, v: 25, fmt: v => v + '%' },
+  { k: 'bottom', label: 'Edge Line, Bottom', desc: 'Strength of the faint line along the bottom edge.', min: 0, max: 100, step: 1, v: 50, fmt: v => v },
+  { k: 'width', label: 'Edge Width', desc: 'Thickness of the edge line on phones and retina screens.', min: 0, max: 3, step: 0.5, v: 1, fmt: v => v + 'px', css: v => ['--s4-glass-edge-width', v + 'px'] },
+  { k: 'scaleStd', label: 'Edge Width on Monitors', desc: 'Multiplier for the edge on 1080p and 1440p monitors, where 1px looks thin. Larger monitors get a third more.', min: 1, max: 3, step: 0.25, v: 1.5, fmt: v => '\u00d7' + v, css: v => ['--s4-glass-edge-scale-standard', v] },
+  { k: 'glow', label: 'Edge Glow', desc: 'Makes the glass itself brighter toward all its edges, like light gathering at the rim, fading inward. 0 is off.', min: 0, max: 100, step: 1, v: 0, fmt: v => v },
+  { k: 'sheen', label: 'Top Sheen', desc: 'Makes the glass brighter toward its top edge only, like a highlight from above. 0 is off.', min: 0, max: 100, step: 1, v: 0, fmt: v => v },
+  { k: 'contrast', label: 'Backdrop Contrast', desc: 'Squashes what is behind the glass toward gray so text stays readable. 100% is off (today).', min: 40, max: 100, step: 5, v: 100, fmt: v => v + '%', css: v => ['--s4-glass-backdrop-contrast-float', v / 100] },
+  { k: 'bright', label: 'Backdrop Brightness', desc: 'Dims or brightens what is behind the glass. 100% is off (today).', min: 60, max: 120, step: 5, v: 100, fmt: v => v + '%', css: v => ['--s4-glass-backdrop-brightness-float', v / 100] }
 ];
-const D = { glow: 0, glowSize: 12, sheen: 0, sheenSize: 14, scaleStd: 1.5, scaleLarge: 2 };
+const GLOW_REACH = 14, SHEEN_REACH = 18;   /* fixed: one control each is enough */
+const D = { glow: 0, sheen: 0, scaleStd: 1.5 };
 const TODAY = { tint: 75, fab: 75, blur: 8, sat: 150, contrast: 100, bright: 100, top: 50, side: 25, bottom: 50, width: 1, ...D };
 const PRE = {
   'Today': TODAY,
-  'Edge Glow': { ...TODAY, glow: 35, glowSize: 14 },
-  'Top Sheen': { ...TODAY, sheen: 45, sheenSize: 18 },
-  'Glow and Sheen': { ...TODAY, glow: 25, glowSize: 12, sheen: 40, sheenSize: 18 },
+  'Edge Glow': { ...TODAY, glow: 35 },
+  'Top Sheen': { ...TODAY, sheen: 45 },
+  'Glow and Sheen': { ...TODAY, glow: 25, sheen: 40 },
   'Clearer': { ...TODAY, tint: 55, blur: 14, sat: 160 },
   'Frosted': { ...TODAY, tint: 84, blur: 24, sat: 130 },
   'No Edge': { ...TODAY, top: 0, side: 0, bottom: 0, width: 0 }
@@ -110,6 +109,9 @@ function apply() {
     SL.forEach(s => { if (s.css) { const [n, v] = s.css(state[s.k]); root.setProperty(n, v); } });
     root.setProperty('--s4-glass-edge-top', `rgb(255 255 255 / ${e.top.toFixed(3)})`);
     root.setProperty('--s4-glass-edge-side', `rgb(255 255 255 / ${e.side.toFixed(3)})`);
+    root.setProperty('--s4-glass-glow-size', GLOW_REACH + 'px');
+    root.setProperty('--s4-glass-glow-top-size', SHEEN_REACH + 'px');
+    root.setProperty('--s4-glass-edge-scale-large', (state.scaleStd * 4 / 3).toFixed(2));
     root.setProperty('--s4-glass-glow-all', `rgb(255 255 255 / ${glowAlpha(dark).toFixed(3)})`);
     root.setProperty('--s4-glass-glow-top', `rgb(255 255 255 / ${sheenAlpha(dark).toFixed(3)})`);
     root.setProperty('--s4-glass-edge-bottom', dark ? `rgb(255 255 255 / ${e.bottom.toFixed(3)})` : `rgb(23 23 26 / ${e.bottom.toFixed(3)})`);
@@ -134,13 +136,13 @@ function contrast() {
 }
 function tier() { const d = frames[0].contentDocument; if (!d || !d.documentElement) return ''; const v = getComputedStyle(d.documentElement).getPropertyValue('--_edge-scale').trim(); return v ? ' · this screen: edge ×' + v + ' = ' + (state.width * v).toFixed(2).replace(/\.?0+$/, '') + 'px' : ''; }
 function readout() {
-  document.getElementById('readout').textContent = `glass tint ${state.tint}% · floating button tint ${state.fab}% · blur ${state.blur}px · color boost ${state.sat}%\nbackdrop contrast ${state.contrast}% · brightness ${state.bright}%\nsheen ${state.sheen} (${state.sheenSize}px) · edge glow ${state.glow} (${state.glowSize}px) · edge top ${state.top}, sides ${state.side}% of top, bottom ${state.bottom}, width ${state.width}px (×${state.scaleStd} on standard screens, ×${state.scaleLarge} on large ones)${tier()}\nbehind: ${backdrop}`;
+  document.getElementById('readout').textContent = `glass tint ${state.tint}% · floating button tint ${state.fab}% · blur ${state.blur}px · color boost ${state.sat}%\nbackdrop contrast ${state.contrast}% · brightness ${state.bright}%\ntop sheen ${state.sheen} · edge glow ${state.glow} · edge top ${state.top}, sides ${state.side}% of top, bottom ${state.bottom}, width ${state.width}px (monitors ×${state.scaleStd})${tier()}\nbehind: ${backdrop}`;
 }
 function build() {
   const box = document.getElementById('sliders');
   SL.forEach(s => {
     const el = document.createElement('label'); el.className = 'sl';
-    el.innerHTML = `<span><b>${s.label}</b><output></output></span><input type="range" min="${s.min}" max="${s.max}" step="${s.step}" value="${s.v}" aria-label="${s.label}">`;
+    el.innerHTML = `<span><b>${s.label}</b><output></output></span><small>${s.desc}</small><input type="range" min="${s.min}" max="${s.max}" step="${s.step}" value="${s.v}" aria-label="${s.label}">`;
     const inp = el.querySelector('input'), out = el.querySelector('output');
     s.sync = () => { inp.value = state[s.k]; out.textContent = s.fmt(state[s.k]); };
     inp.addEventListener('input', () => { state[s.k] = +inp.value; s.sync(); apply(); });
