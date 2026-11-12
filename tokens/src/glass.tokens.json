@@ -29,7 +29,7 @@
           "$description": "Decision 0021: 75%, picked by the owner in the Glass Playground (was 0.6)."
         },
         "fab": {
-          "$value": 0.9,
+          "$value": 0.75,
           "$extensions": {
             "com.s4.modes": {
               "high-contrast": 1,
@@ -37,7 +37,7 @@
               "reduced-transparency": 1
             }
           },
-          "$description": "Decision 0025: a floating action button is glass tinted with its own color. 90% so its icon and label keep at least 3:1 over a pure black or white backdrop for every seed (check-glass.mjs; the opaque FAB pair itself is only 4.5:1 in the worst schemes, so 4.5:1 can't hold under any translucency). Over a normal backdrop it is much higher."
+          "$description": "Decision 0028: the owner's pick, the same 75% as the other glass. A floating action button is glass tinted with its own color. The icon keeps 4.5:1 or better in monochrome; with a seed the opaque FAB color pair is only 4.5:1 in the worst schemes, so over pure black or white directly behind it a few seeds drop to about 2.3:1 (scripts/check-glass.mjs reports it)."
         },
         "fill": {
           "$value": 0.56,
@@ -195,7 +195,7 @@
               1.0,
               1.0
             ],
-            "alpha": 0.805,
+            "alpha": 1.0,
             "hex": "#ffffff"
           },
           "$extensions": {
@@ -207,7 +207,7 @@
                   1.0,
                   1.0
                 ],
-                "alpha": 0.21,
+                "alpha": 0.3,
                 "hex": "#ffffff"
               },
               "high-contrast": {
@@ -253,7 +253,7 @@
               1.0,
               1.0
             ],
-            "alpha": 0.3,
+            "alpha": 0.19,
             "hex": "#ffffff"
           },
           "$extensions": {
@@ -265,7 +265,7 @@
                   1.0,
                   1.0
                 ],
-                "alpha": 0.085,
+                "alpha": 0.06,
                 "hex": "#ffffff"
               },
               "high-contrast": {
@@ -311,7 +311,7 @@
               0.09019607843137255,
               0.10196078431372549
             ],
-            "alpha": 0.08,
+            "alpha": 0.16,
             "hex": "#17171a"
           },
           "$extensions": {
@@ -323,7 +323,7 @@
                   1.0,
                   1.0
                 ],
-                "alpha": 0.05,
+                "alpha": 0.1,
                 "hex": "#ffffff"
               },
               "high-contrast": {
@@ -415,6 +415,141 @@
                 "hex": "#ffffff"
               }
             }
+          }
+        }
+      },
+      "glow": {
+        "$description": "Optional brighter surface near the edges (decision 0028), drawn as inset box-shadows that follow the corner radius. Off by default (alpha 0); the owner turns it on from the Glass Playground. 'all' brightens the surface all round, 'top' only near the top edge (a sheen). Zero where glass is solid.",
+        "all": {
+          "$type": "color",
+          "$description": "White glow all round, brightest at the very edge and fading inward over `size`.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "alpha": 0,
+            "hex": "#ffffff"
+          },
+          "$extensions": {
+            "com.s4.modes": {
+              "dark": {
+                "colorSpace": "srgb",
+                "components": [
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "alpha": 0,
+                "hex": "#ffffff"
+              },
+              "high-contrast": {
+                "colorSpace": "srgb",
+                "components": [
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "alpha": 0,
+                "hex": "#ffffff"
+              },
+              "dark-high-contrast": {
+                "colorSpace": "srgb",
+                "components": [
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "alpha": 0,
+                "hex": "#ffffff"
+              },
+              "reduced-transparency": {
+                "colorSpace": "srgb",
+                "components": [
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "alpha": 0,
+                "hex": "#ffffff"
+              }
+            }
+          }
+        },
+        "size": {
+          "$type": "dimension",
+          "$description": "How far the all-round glow reaches inward.",
+          "$value": {
+            "value": 12,
+            "unit": "px"
+          }
+        },
+        "top": {
+          "$type": "color",
+          "$description": "White sheen near the top edge only, fading downward over `top-size`.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "alpha": 0,
+            "hex": "#ffffff"
+          },
+          "$extensions": {
+            "com.s4.modes": {
+              "dark": {
+                "colorSpace": "srgb",
+                "components": [
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "alpha": 0,
+                "hex": "#ffffff"
+              },
+              "high-contrast": {
+                "colorSpace": "srgb",
+                "components": [
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "alpha": 0,
+                "hex": "#ffffff"
+              },
+              "dark-high-contrast": {
+                "colorSpace": "srgb",
+                "components": [
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "alpha": 0,
+                "hex": "#ffffff"
+              },
+              "reduced-transparency": {
+                "colorSpace": "srgb",
+                "components": [
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "alpha": 0,
+                "hex": "#ffffff"
+              }
+            }
+          }
+        },
+        "top-size": {
+          "$type": "dimension",
+          "$description": "How far the top sheen reaches down.",
+          "$value": {
+            "value": 14,
+            "unit": "px"
           }
         }
       }

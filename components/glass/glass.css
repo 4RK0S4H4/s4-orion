@@ -32,7 +32,9 @@
     box-shadow:
       inset 0 var(--s4-glass-edge-width) 0 0 var(--s4-glass-edge-top),
       inset 0 calc(-1 * var(--s4-glass-edge-width)) 0 0 var(--s4-glass-edge-bottom),
-      inset 0 0 0 var(--s4-glass-edge-width) var(--s4-glass-edge-side);
+      inset 0 0 0 var(--s4-glass-edge-width) var(--s4-glass-edge-side),
+      inset 0 0 var(--s4-glass-glow-size) var(--s4-glass-glow-all),
+      inset 0 var(--s4-glass-glow-top-size) var(--s4-glass-glow-top-size) calc(-1 * var(--s4-glass-glow-top-size)) var(--s4-glass-glow-top);
     -webkit-backdrop-filter: blur(var(--s4-glass-blur-float)) saturate(var(--s4-glass-saturation-float)) contrast(var(--s4-glass-backdrop-contrast-float)) brightness(var(--s4-glass-backdrop-brightness-float));
     backdrop-filter: blur(var(--s4-glass-blur-float)) saturate(var(--s4-glass-saturation-float)) contrast(var(--s4-glass-backdrop-contrast-float)) brightness(var(--s4-glass-backdrop-brightness-float));
   }
@@ -53,7 +55,9 @@
     box-shadow:
       inset 0 var(--s4-glass-edge-width) 0 0 var(--s4-glass-edge-top),
       inset 0 calc(-1 * var(--s4-glass-edge-width)) 0 0 var(--s4-glass-edge-bottom),
-      inset 0 0 0 var(--s4-glass-edge-width) var(--s4-glass-edge-side);
+      inset 0 0 0 var(--s4-glass-edge-width) var(--s4-glass-edge-side),
+      inset 0 0 var(--s4-glass-glow-size) var(--s4-glass-glow-all),
+      inset 0 var(--s4-glass-glow-top-size) var(--s4-glass-glow-top-size) calc(-1 * var(--s4-glass-glow-top-size)) var(--s4-glass-glow-top);
     -webkit-backdrop-filter: blur(var(--s4-glass-blur-float)) saturate(var(--s4-glass-saturation-float)) contrast(var(--s4-glass-backdrop-contrast-float)) brightness(var(--s4-glass-backdrop-brightness-float));
     backdrop-filter: blur(var(--s4-glass-blur-float)) saturate(var(--s4-glass-saturation-float)) contrast(var(--s4-glass-backdrop-contrast-float)) brightness(var(--s4-glass-backdrop-brightness-float));
   }

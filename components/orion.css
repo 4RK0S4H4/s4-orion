@@ -197,7 +197,7 @@
     --s4-glass-tint-float: var(--md-sys-color-surface-container);
     --s4-glass-tint-fill: var(--md-sys-color-surface-container-highest);
     --s4-glass-tint-opacity-float: 0.75;
-    --s4-glass-tint-opacity-fab: 0.9;
+    --s4-glass-tint-opacity-fab: 0.75;
     --s4-glass-tint-opacity-fill: 0.56;
     --s4-glass-tint-opacity-medium-contrast: 0.86;
     --s4-glass-blur-float: 8px;
@@ -208,10 +208,14 @@
     --s4-glass-item-fill: 1;
     --s4-glass-item-outline: rgb(255 255 255 / 0.28);
     --s4-glass-edge-width: 1px;
-    --s4-glass-edge-top: rgb(255 255 255 / 0.805);
-    --s4-glass-edge-side: rgb(255 255 255 / 0.3);
-    --s4-glass-edge-bottom: rgb(23 23 26 / 0.08);
+    --s4-glass-edge-top: #ffffff;
+    --s4-glass-edge-side: rgb(255 255 255 / 0.19);
+    --s4-glass-edge-bottom: rgb(23 23 26 / 0.16);
     --s4-glass-edge-line: rgb(23 23 26 / 0.08);
+    --s4-glass-glow-all: rgb(255 255 255 / 0);
+    --s4-glass-glow-size: 12px;
+    --s4-glass-glow-top: rgb(255 255 255 / 0);
+    --s4-glass-glow-top-size: 14px;
     --s4-icon-duo-opacity: 0.8;
     --s4-motion-spring-fast-spatial-calm-stiffness: 1400;
     --s4-motion-spring-fast-spatial-calm-damping: 1;
@@ -380,10 +384,12 @@
       --s4-glass-backdrop-contrast-float: 1;
       --s4-glass-backdrop-brightness-float: 1;
       --s4-glass-item-outline: rgb(255 255 255 / 0.28);
-      --s4-glass-edge-top: rgb(255 255 255 / 0.21);
-      --s4-glass-edge-side: rgb(255 255 255 / 0.085);
-      --s4-glass-edge-bottom: rgb(255 255 255 / 0.05);
+      --s4-glass-edge-top: rgb(255 255 255 / 0.3);
+      --s4-glass-edge-side: rgb(255 255 255 / 0.06);
+      --s4-glass-edge-bottom: rgb(255 255 255 / 0.1);
       --s4-glass-edge-line: rgb(255 255 255 / 0.08);
+      --s4-glass-glow-all: rgb(255 255 255 / 0);
+      --s4-glass-glow-top: rgb(255 255 255 / 0);
       --s4-icon-duo-opacity: 0.65;
     }
     }
@@ -442,10 +448,12 @@
     --s4-glass-backdrop-contrast-float: 1;
     --s4-glass-backdrop-brightness-float: 1;
     --s4-glass-item-outline: rgb(255 255 255 / 0.28);
-    --s4-glass-edge-top: rgb(255 255 255 / 0.21);
-    --s4-glass-edge-side: rgb(255 255 255 / 0.085);
-    --s4-glass-edge-bottom: rgb(255 255 255 / 0.05);
+    --s4-glass-edge-top: rgb(255 255 255 / 0.3);
+    --s4-glass-edge-side: rgb(255 255 255 / 0.06);
+    --s4-glass-edge-bottom: rgb(255 255 255 / 0.1);
     --s4-glass-edge-line: rgb(255 255 255 / 0.08);
+    --s4-glass-glow-all: rgb(255 255 255 / 0);
+    --s4-glass-glow-top: rgb(255 255 255 / 0);
     --s4-icon-duo-opacity: 0.65;
   }
   @media (prefers-contrast: more) {
@@ -508,6 +516,8 @@
       --s4-glass-edge-side: rgb(255 255 255 / 0);
       --s4-glass-edge-bottom: rgb(255 255 255 / 0);
       --s4-glass-edge-line: rgb(255 255 255 / 0);
+      --s4-glass-glow-all: rgb(255 255 255 / 0);
+      --s4-glass-glow-top: rgb(255 255 255 / 0);
     }
     }
   :where(:root[data-contrast="high"]) {
@@ -569,6 +579,8 @@
     --s4-glass-edge-side: rgb(255 255 255 / 0);
     --s4-glass-edge-bottom: rgb(255 255 255 / 0);
     --s4-glass-edge-line: rgb(255 255 255 / 0);
+    --s4-glass-glow-all: rgb(255 255 255 / 0);
+    --s4-glass-glow-top: rgb(255 255 255 / 0);
   }
   @media (prefers-color-scheme: dark) and (prefers-contrast: more) {
     :where(:root:not([data-theme="light"]):not([data-contrast])) {
@@ -632,6 +644,8 @@
       --s4-glass-edge-side: rgb(255 255 255 / 0);
       --s4-glass-edge-bottom: rgb(255 255 255 / 0);
       --s4-glass-edge-line: rgb(255 255 255 / 0);
+      --s4-glass-glow-all: rgb(255 255 255 / 0);
+      --s4-glass-glow-top: rgb(255 255 255 / 0);
       --s4-icon-duo-opacity: 0.65;
     }
     }
@@ -697,6 +711,8 @@
       --s4-glass-edge-side: rgb(255 255 255 / 0);
       --s4-glass-edge-bottom: rgb(255 255 255 / 0);
       --s4-glass-edge-line: rgb(255 255 255 / 0);
+      --s4-glass-glow-all: rgb(255 255 255 / 0);
+      --s4-glass-glow-top: rgb(255 255 255 / 0);
       --s4-icon-duo-opacity: 0.65;
     }
     }
@@ -762,6 +778,8 @@
       --s4-glass-edge-side: rgb(255 255 255 / 0);
       --s4-glass-edge-bottom: rgb(255 255 255 / 0);
       --s4-glass-edge-line: rgb(255 255 255 / 0);
+      --s4-glass-glow-all: rgb(255 255 255 / 0);
+      --s4-glass-glow-top: rgb(255 255 255 / 0);
       --s4-icon-duo-opacity: 0.65;
     }
     }
@@ -826,6 +844,8 @@
     --s4-glass-edge-side: rgb(255 255 255 / 0);
     --s4-glass-edge-bottom: rgb(255 255 255 / 0);
     --s4-glass-edge-line: rgb(255 255 255 / 0);
+    --s4-glass-glow-all: rgb(255 255 255 / 0);
+    --s4-glass-glow-top: rgb(255 255 255 / 0);
     --s4-icon-duo-opacity: 0.65;
   }
   @media (prefers-reduced-motion: reduce) {
@@ -857,6 +877,8 @@
       --s4-glass-edge-side: rgb(255 255 255 / 0);
       --s4-glass-edge-bottom: rgb(255 255 255 / 0);
       --s4-glass-edge-line: rgb(255 255 255 / 0);
+      --s4-glass-glow-all: rgb(255 255 255 / 0);
+      --s4-glass-glow-top: rgb(255 255 255 / 0);
     }
     }
   :where(:root[data-glass="off"]) {
@@ -869,6 +891,8 @@
     --s4-glass-edge-side: rgb(255 255 255 / 0);
     --s4-glass-edge-bottom: rgb(255 255 255 / 0);
     --s4-glass-edge-line: rgb(255 255 255 / 0);
+    --s4-glass-glow-all: rgb(255 255 255 / 0);
+    --s4-glass-glow-top: rgb(255 255 255 / 0);
   }
   @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
     :where(:root) {
@@ -881,6 +905,8 @@
       --s4-glass-edge-side: rgb(255 255 255 / 0);
       --s4-glass-edge-bottom: rgb(255 255 255 / 0);
       --s4-glass-edge-line: rgb(255 255 255 / 0);
+      --s4-glass-glow-all: rgb(255 255 255 / 0);
+      --s4-glass-glow-top: rgb(255 255 255 / 0);
     }
     }
 }
@@ -5179,7 +5205,9 @@
     box-shadow:
       inset 0 var(--s4-glass-edge-width) 0 0 var(--s4-glass-edge-top),
       inset 0 calc(-1 * var(--s4-glass-edge-width)) 0 0 var(--s4-glass-edge-bottom),
-      inset 0 0 0 var(--s4-glass-edge-width) var(--s4-glass-edge-side);
+      inset 0 0 0 var(--s4-glass-edge-width) var(--s4-glass-edge-side),
+      inset 0 0 var(--s4-glass-glow-size) var(--s4-glass-glow-all),
+      inset 0 var(--s4-glass-glow-top-size) var(--s4-glass-glow-top-size) calc(-1 * var(--s4-glass-glow-top-size)) var(--s4-glass-glow-top);
     -webkit-backdrop-filter: blur(var(--s4-glass-blur-float)) saturate(var(--s4-glass-saturation-float)) contrast(var(--s4-glass-backdrop-contrast-float)) brightness(var(--s4-glass-backdrop-brightness-float));
     backdrop-filter: blur(var(--s4-glass-blur-float)) saturate(var(--s4-glass-saturation-float)) contrast(var(--s4-glass-backdrop-contrast-float)) brightness(var(--s4-glass-backdrop-brightness-float));
   }
@@ -5200,7 +5228,9 @@
     box-shadow:
       inset 0 var(--s4-glass-edge-width) 0 0 var(--s4-glass-edge-top),
       inset 0 calc(-1 * var(--s4-glass-edge-width)) 0 0 var(--s4-glass-edge-bottom),
-      inset 0 0 0 var(--s4-glass-edge-width) var(--s4-glass-edge-side);
+      inset 0 0 0 var(--s4-glass-edge-width) var(--s4-glass-edge-side),
+      inset 0 0 var(--s4-glass-glow-size) var(--s4-glass-glow-all),
+      inset 0 var(--s4-glass-glow-top-size) var(--s4-glass-glow-top-size) calc(-1 * var(--s4-glass-glow-top-size)) var(--s4-glass-glow-top);
     -webkit-backdrop-filter: blur(var(--s4-glass-blur-float)) saturate(var(--s4-glass-saturation-float)) contrast(var(--s4-glass-backdrop-contrast-float)) brightness(var(--s4-glass-backdrop-brightness-float));
     backdrop-filter: blur(var(--s4-glass-blur-float)) saturate(var(--s4-glass-saturation-float)) contrast(var(--s4-glass-backdrop-contrast-float)) brightness(var(--s4-glass-backdrop-brightness-float));
   }

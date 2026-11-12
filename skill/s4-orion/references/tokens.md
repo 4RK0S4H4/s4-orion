@@ -362,7 +362,7 @@ Light values are shown; a second value is dark mode. Color roles also change wit
 | `--s4-glass-tint-float` | var(--md-sys-color-surface-container) |  | App bars over scrolled content, nav bar, nav rail, toolbars, menus, sheets, dialogs, rich tooltips. |
 | `--s4-glass-tint-fill` | var(--md-sys-color-surface-container-highest) |  | Tonal fills inside a glass surface (no blur of their own). |
 | `--s4-glass-tint-opacity-float` | 0.75 |  | Decision 0021: 75%, picked by the owner in the Glass Playground (was 0.6). |
-| `--s4-glass-tint-opacity-fab` | 0.9 |  | Decision 0025: a floating action button is glass tinted with its own color. 90% so its icon and label keep at least 3:1 over a pure black or white backdrop for every seed (check-glass.mjs; the opaque FAB pair itself is only 4.5:1 in the worst schemes, so 4.5:1 can't hold under any translucency). Over a normal backdrop it is much higher. |
+| `--s4-glass-tint-opacity-fab` | 0.75 |  | Decision 0028: the owner's pick, the same 75% as the other glass. A floating action button is glass tinted with its own color. The icon keeps 4.5:1 or better in monochrome; with a seed the opaque FAB color pair is only 4.5:1 in the worst schemes, so over pure black or white directly behind it a few seeds drop to about 2.3:1 (scripts/check-glass.mjs reports it). |
 | `--s4-glass-tint-opacity-fill` | 0.56 | 0.64 |  |
 | `--s4-glass-tint-opacity-medium-contrast` | 0.86 |  | Float tint when the app runs at medium contrast (contrast level 0.5). |
 | `--s4-glass-blur-float` | 8px |  | Backdrop blur radius. Decision 0021: 8px (owner's playground pick; was 16px). |
@@ -373,10 +373,14 @@ Light values are shown; a second value is dark mode. Color roles also change wit
 | `--s4-glass-item-fill` | 1 |  | How much of its own color an item (button, chip, text field) keeps on glass, 1 = fully (decision 0015: owner picked full fill; lower it to let the blurred backdrop tint items). |
 | `--s4-glass-item-outline` | rgb(255 255 255 / 0.28) | rgb(255 255 255 / 0.28) | The outline of an outline-only item on glass (outlined button, unselected chip): the glass's milky frost line, a little stronger than the edge (decision 0015). Zero in high contrast, where glass is solid and the item keeps its own outline. |
 | `--s4-glass-edge-width` | 1px |  |  |
-| `--s4-glass-edge-top` | rgb(255 255 255 / 0.805) | rgb(255 255 255 / 0.21) | Extra light along the top edge (on top of the side line). |
-| `--s4-glass-edge-side` | rgb(255 255 255 / 0.3) | rgb(255 255 255 / 0.085) | The faint line all round. |
-| `--s4-glass-edge-bottom` | rgb(23 23 26 / 0.08) | rgb(255 255 255 / 0.05) | A faint return along the bottom edge. |
+| `--s4-glass-edge-top` | #ffffff | rgb(255 255 255 / 0.3) | Extra light along the top edge (on top of the side line). |
+| `--s4-glass-edge-side` | rgb(255 255 255 / 0.19) | rgb(255 255 255 / 0.06) | The faint line all round. |
+| `--s4-glass-edge-bottom` | rgb(23 23 26 / 0.16) | rgb(255 255 255 / 0.1) | A faint return along the bottom edge. |
 | `--s4-glass-edge-line` | rgb(23 23 26 / 0.08) | rgb(255 255 255 / 0.08) | The single line full-width bars draw on their content-facing edge. |
+| `--s4-glass-glow-all` | rgb(255 255 255 / 0) | rgb(255 255 255 / 0) | White glow all round, brightest at the very edge and fading inward over `size`. |
+| `--s4-glass-glow-size` | 12px |  | How far the all-round glow reaches inward. |
+| `--s4-glass-glow-top` | rgb(255 255 255 / 0) | rgb(255 255 255 / 0) | White sheen near the top edge only, fading downward over `top-size`. |
+| `--s4-glass-glow-top-size` | 14px |  | How far the top sheen reaches down. |
 
 ## Icons
 
