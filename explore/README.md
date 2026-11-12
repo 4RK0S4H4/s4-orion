@@ -16,7 +16,7 @@ reviewed, and they save answers in the browser so several labs can be worked thr
 | `review-direction.html` | Superseded by [0023](../docs/decisions/0023-filled-and-pills.md): the owner kept the current direction, filled and pills (it restyles the old demo and no longer fits the new one) |
 | `review-icon-set.html` | Open: icon set (Solar Bold Duotone today, Phosphor Duotone, Phosphor Bold Duotone); also switchable live in the showcase, Settings, Icon Style |
 | `glass-playground.html` | Tool, not a quiz: tune the real glass (tint, blur, boost, edge, floating button tint) over three backdrops, with the live contrast guarantee; send the numbers back |
-| `review-button-group.html` | Open: five rounded button group looks (rounded tray today, pill tray, separate pills, soft segments, joined capsule) |
+| `review-button-group.html` | Answered: E, Joined Capsule ([0026](../docs/decisions/0026-joined-capsule-and-accurate-glass-lab.md)) |
 | `style2.html` | Open: button groups, sliders, phone sheets and glass edge looks |
 | `style.html` | Open: alternative looks (less Material) for text fields, checkboxes, tables and tab headers |
 | `icons.html` | Open: plain or boxed glyphs for add, close, check and menu (Solar Bold Duotone either way) |

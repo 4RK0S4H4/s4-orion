@@ -44,7 +44,7 @@ pre{margin:0;padding:12px;border-radius:12px;background:var(--soft);font:12px/1.
     <figure><figcaption>Dark</figcaption><iframe id="f-dark" title="Dark preview" src="glass-playground-frame.html?theme=dark"></iframe></figure>
   </section>
   <aside aria-label="Glass controls">
-    <p>The previews use the real Orion glass layer: top bar, dialog, menu, floating buttons and navigation bar. Move the sliders; both previews follow. Today's values are decision 0021 (tint 75%, blur 8px, color boost 150%). Send me the numbers at the bottom.</p>
+    <p>The previews use the real Orion glass layer: top bar, dialog, menu, floating buttons and navigation bar. Move the sliders; both previews follow. Today's values are the real tokens (decision 0021 and 0025: tint 75%, floating buttons 90%, blur 8px, color boost 150%, edge 62 / 32 / 7%). The edge sliders are the light values; dark scales them to its own, fainter tokens. Send me the numbers at the bottom.</p>
 
     <div><div class="lab">Presets</div><div class="chips" id="presets"></div></div>
     <div><div class="lab">Behind the glass</div><div class="chips" id="back"></div></div>
@@ -82,15 +82,28 @@ const ratio = (a, b) => { const [x, y] = [lum(a), lum(b)].sort((p, q) => q - p);
 const mix = (a, b, t) => a.map((v, i) => v * t + b[i] * (1 - t));
 const rgbOf = el => (getComputedStyle(el).color.match(/[\d.]+/g) || [0, 0, 0]).slice(0, 3).map(Number);
 const varRgb = (doc, name) => { const d = doc.createElement('i'); d.style.color = `var(${name})`; doc.body.appendChild(d); const c = rgbOf(d); d.remove(); return c; };
+/* The real tokens differ between light and dark (the edge is much fainter on dark). The sliders set the LIGHT values (the numbers
+   in tokens.css); the dark preview scales each edge by the ratio the real dark tokens have to the light ones, so 'Today' is exactly today. */
+const alphaOf = (d, name) => { const e = d.createElement('i'); e.style.color = `var(${name})`; d.body.appendChild(e); const m = getComputedStyle(e).color.match(/[\d.]+/g) || []; e.remove(); return m.length > 3 ? +m[3] : 1; };
+let base = null;
+function readBase() {
+  const ds = frames.map(f => f.contentDocument);
+  if (ds.some(d => !d || !d.body)) return false;
+  const get = d => ({ top: alphaOf(d, '--s4-glass-edge-top'), side: alphaOf(d, '--s4-glass-edge-side'), bottom: alphaOf(d, '--s4-glass-edge-bottom'), line: alphaOf(d, '--s4-glass-edge-line') });
+  const [l, k] = ds.map(get);
+  base = { light: l, dark: k, rt: k.top / l.top, rs: k.side / l.side, rb: k.bottom / l.bottom };
+  return true;
+}
 function apply() {
+  if (!base && !readBase()) return;
   frames.forEach((f, i) => {
     const d = f.contentDocument; if (!d || !d.documentElement) return;
     const dark = i === 1, root = d.documentElement.style;
     SL.forEach(s => { if (s.css) { const [n, v] = s.css(state[s.k]); root.setProperty(n, v); } });
-    root.setProperty('--s4-glass-edge-top', `rgb(255 255 255 / ${state.top / 100})`);
-    root.setProperty('--s4-glass-edge-side', `rgb(255 255 255 / ${state.side / 100 * (dark ? .5 : 1)})`);
-    root.setProperty('--s4-glass-edge-bottom', dark ? `rgb(255 255 255 / ${state.bottom / 100 * .4})` : `rgb(23 23 26 / ${state.bottom / 100})`);
-    root.setProperty('--s4-glass-edge-line', dark ? 'rgb(255 255 255 / .08)' : 'rgb(23 23 26 / .08)');
+    const top = state.top / 100 * (dark ? base.rt : 1), side = state.side / 100 * (dark ? base.rs : 1), bottom = state.bottom / 100 * (dark ? base.rb : 1);
+    root.setProperty('--s4-glass-edge-top', `rgb(255 255 255 / ${top.toFixed(3)})`);
+    root.setProperty('--s4-glass-edge-side', `rgb(255 255 255 / ${side.toFixed(3)})`);
+    root.setProperty('--s4-glass-edge-bottom', dark ? `rgb(255 255 255 / ${bottom.toFixed(3)})` : `rgb(23 23 26 / ${bottom.toFixed(3)})`);
     d.querySelectorAll('[data-back]').forEach(el => { el.hidden = el.dataset.back !== backdrop; });
   });
   readout(); contrast();
@@ -110,7 +123,7 @@ function contrast() {
   document.getElementById('cr').innerHTML = out.join('');
 }
 function readout() {
-  document.getElementById('readout').textContent = `glass tint ${state.tint}% · floating button tint ${state.fab}% · blur ${state.blur}px · color boost ${state.sat}%\nbackdrop contrast ${state.contrast}% · brightness ${state.bright}%\nedge: top ${state.top}%, sides ${state.side}%, bottom ${state.bottom}%, width ${state.width}px\nbehind: ${backdrop}`;
+  document.getElementById('readout').textContent = `glass tint ${state.tint}% · floating button tint ${state.fab}% · blur ${state.blur}px · color boost ${state.sat}%\nbackdrop contrast ${state.contrast}% · brightness ${state.bright}%\nedge (light values; dark follows its own ratio): top ${state.top}%, sides ${state.side}%, bottom ${state.bottom}%, width ${state.width}px\nbehind: ${backdrop}`;
 }
 function build() {
   const box = document.getElementById('sliders');
