@@ -69,9 +69,11 @@ const SL = [
   { k: 'glowSize', label: 'Edge Glow Reach', min: 2, max: 40, step: 1, v: 12, fmt: v => v + 'px', css: v => ['--s4-glass-glow-size', v + 'px'] },
   { k: 'sheen', label: 'Top Sheen (brighter near the top edge)', min: 0, max: 100, step: 1, v: 0, fmt: v => v },
   { k: 'sheenSize', label: 'Top Sheen Reach', min: 2, max: 60, step: 1, v: 14, fmt: v => v + 'px', css: v => ['--s4-glass-glow-top-size', v + 'px'] },
-  { k: 'width', label: 'Edge Width', min: 0, max: 3, step: 0.5, v: 1, fmt: v => v + 'px', css: v => ['--s4-glass-edge-width', v + 'px'] }
+  { k: 'scaleStd', label: 'Edge Width Multiplier, Standard Screens (1080p, 1440p)', min: 1, max: 3, step: 0.25, v: 1.5, fmt: v => '×' + v, css: v => ['--s4-glass-edge-scale-standard', v] },
+  { k: 'scaleLarge', label: 'Edge Width Multiplier, Large Standard Screens', min: 1, max: 4, step: 0.25, v: 2, fmt: v => '×' + v, css: v => ['--s4-glass-edge-scale-large', v] },
+  { k: 'width', label: 'Edge Width (retina and phones)', min: 0, max: 3, step: 0.5, v: 1, fmt: v => v + 'px', css: v => ['--s4-glass-edge-width', v + 'px'] }
 ];
-const D = { glow: 0, glowSize: 12, sheen: 0, sheenSize: 14 };
+const D = { glow: 0, glowSize: 12, sheen: 0, sheenSize: 14, scaleStd: 1.5, scaleLarge: 2 };
 const TODAY = { tint: 75, fab: 75, blur: 8, sat: 150, contrast: 100, bright: 100, top: 50, side: 25, bottom: 50, width: 1, ...D };
 const PRE = {
   'Today': TODAY,
@@ -130,8 +132,9 @@ function contrast() {
   });
   document.getElementById('cr').innerHTML = out.join('');
 }
+function tier() { const d = frames[0].contentDocument; if (!d || !d.documentElement) return ''; const v = getComputedStyle(d.documentElement).getPropertyValue('--_edge-scale').trim(); return v ? ' · this screen: edge ×' + v + ' = ' + (state.width * v).toFixed(2).replace(/\.?0+$/, '') + 'px' : ''; }
 function readout() {
-  document.getElementById('readout').textContent = `glass tint ${state.tint}% · floating button tint ${state.fab}% · blur ${state.blur}px · color boost ${state.sat}%\nbackdrop contrast ${state.contrast}% · brightness ${state.bright}%\nsheen ${state.sheen} (${state.sheenSize}px) · edge glow ${state.glow} (${state.glowSize}px) · edge top ${state.top}, sides ${state.side}% of top, bottom ${state.bottom}, width ${state.width}px\nbehind: ${backdrop}`;
+  document.getElementById('readout').textContent = `glass tint ${state.tint}% · floating button tint ${state.fab}% · blur ${state.blur}px · color boost ${state.sat}%\nbackdrop contrast ${state.contrast}% · brightness ${state.bright}%\nsheen ${state.sheen} (${state.sheenSize}px) · edge glow ${state.glow} (${state.glowSize}px) · edge top ${state.top}, sides ${state.side}% of top, bottom ${state.bottom}, width ${state.width}px (×${state.scaleStd} on standard screens, ×${state.scaleLarge} on large ones)${tier()}\nbehind: ${backdrop}`;
 }
 function build() {
   const box = document.getElementById('sliders');

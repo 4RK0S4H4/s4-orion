@@ -377,6 +377,8 @@ Light values are shown; a second value is dark mode. Color roles also change wit
 | `--s4-glass-edge-side` | rgb(255 255 255 / 0.19) | rgb(255 255 255 / 0.06) | The faint line all round. |
 | `--s4-glass-edge-bottom` | rgb(23 23 26 / 0.16) | rgb(255 255 255 / 0.1) | A faint return along the bottom edge. |
 | `--s4-glass-edge-line` | rgb(23 23 26 / 0.08) | rgb(255 255 255 / 0.08) | The single line full-width bars draw on their content-facing edge. |
+| `--s4-glass-edge-scale-standard` | 1.5 |  | Decision 0029: on a standard-density screen (under 1.5 device pixels per CSS pixel, e.g. a 1080p or 1440p monitor) the edge width is multiplied by this, so it stays visible. Retina and phone screens keep the width as it is. |
+| `--s4-glass-edge-scale-large` | 2 |  | Edge width multiplier on a large standard-density screen (a 2200px or wider display at under 1.5 device pixels per CSS pixel, e.g. 1440p and up). |
 | `--s4-glass-glow-all` | rgb(255 255 255 / 0) | rgb(255 255 255 / 0) | White glow all round, brightest at the very edge and fading inward over `size`. |
 | `--s4-glass-glow-size` | 12px |  | How far the all-round glow reaches inward. |
 | `--s4-glass-glow-top` | rgb(255 255 255 / 0) | rgb(255 255 255 / 0) | White sheen near the top edge only, fading downward over `top-size`. |

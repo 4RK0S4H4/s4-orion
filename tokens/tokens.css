@@ -209,6 +209,8 @@
     --s4-glass-edge-side: rgb(255 255 255 / 0.19);
     --s4-glass-edge-bottom: rgb(23 23 26 / 0.16);
     --s4-glass-edge-line: rgb(23 23 26 / 0.08);
+    --s4-glass-edge-scale-standard: 1.5;
+    --s4-glass-edge-scale-large: 2;
     --s4-glass-glow-all: rgb(255 255 255 / 0);
     --s4-glass-glow-size: 12px;
     --s4-glass-glow-top: rgb(255 255 255 / 0);

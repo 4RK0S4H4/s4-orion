@@ -416,6 +416,16 @@
               }
             }
           }
+        },
+        "scale-standard": {
+          "$type": "number",
+          "$value": 1.5,
+          "$description": "Decision 0029: on a standard-density screen (under 1.5 device pixels per CSS pixel, e.g. a 1080p or 1440p monitor) the edge width is multiplied by this, so it stays visible. Retina and phone screens keep the width as it is."
+        },
+        "scale-large": {
+          "$type": "number",
+          "$value": 2,
+          "$description": "Edge width multiplier on a large standard-density screen (a 2200px or wider display at under 1.5 device pixels per CSS pixel, e.g. 1440p and up)."
         }
       },
       "glow": {
