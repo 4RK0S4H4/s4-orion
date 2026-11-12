@@ -17,6 +17,7 @@ The first version of S4 Orion, a leaner rebuild of S4 Material 1.3 on Material 3
 - No sharp corners in hover, focus and press layers (lists 16, segments 12, table rows rounded).
 - Glass edge corrected to the owner's playground numbers (top 80.5% / 21%, sides 30% / 8.5%, bottom 8% / 5%, light / dark; decision 0027).
 - Glass numbers updated to the owner's latest (edge top 50, sides 25% of top, bottom 50, FAB tint 75%); optional edge glow and top sheen tokens (off by default; decision 0028).
+- Glass edge calibrated to the iOS tab bar (rim top and bottom 1.0 light / 0.55 dark, none on the sides, glow 0.5 over 12px) with a plain fallback where color-mix math is unsupported (decision 0034).
 - Top and bottom glass edges are lit equally (no dark bottom line; tokens `bottom-lift` and `bottom-target` removed; decision 0033).
 - Floating buttons with a `data-color` use a 90% tint (`--s4-glass-tint-opacity-fab-color`); the default FAB keeps 75% (decision 0032).
 - Glass edge light takes its color from the surface (`--s4-glass-edge-lift`; tokens `-top/-side/-bottom` became `-top-alpha/-side-alpha/-bottom-alpha`), the glow is stronger (decision 0031).

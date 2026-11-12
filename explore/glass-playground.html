@@ -45,7 +45,7 @@ pre{margin:0;padding:12px;border-radius:12px;background:var(--soft);font:12px/1.
     <figure><figcaption>Dark</figcaption><iframe id="f-dark" title="Dark preview" src="glass-playground-frame.html?theme=dark"></iframe></figure>
   </section>
   <aside aria-label="Glass controls">
-    <p>The previews use the real Orion glass layer: top bar, dialog, menu, floating buttons and navigation bar. Move a slider and both previews follow. Today is your latest set; the edge light color now comes from each surface instead of pure white. Send me the numbers at the bottom.</p>
+    <p>The previews use the real Orion glass layer: top bar, dialog, menu, floating buttons and navigation bar. Move a slider and both previews follow. Today matches the iOS tab bar you sent: a thin light rim on the top and bottom that fades around the curves, none on the sides, and a surface that is a little lighter near those edges. Send me the numbers at the bottom.</p>
 
     <div><div class="lab">Presets</div><div class="chips" id="presets"></div></div>
     <div><div class="lab">Behind the glass</div><div class="chips" id="back"></div></div>
@@ -71,17 +71,18 @@ const SL = [
   { k: 'contrast', label: 'Backdrop Contrast', desc: 'Squashes what is behind the glass toward gray so text stays readable. 100% is off (today).', min: 40, max: 100, step: 5, v: 100, fmt: v => v + '%', css: v => ['--s4-glass-backdrop-contrast-float', v / 100] },
   { k: 'bright', label: 'Backdrop Brightness', desc: 'Dims or brightens what is behind the glass. 100% is off (today).', min: 60, max: 120, step: 5, v: 100, fmt: v => v + '%', css: v => ['--s4-glass-backdrop-brightness-float', v / 100] }
 ];
-const GLOW_REACH = 16;   /* fixed: one control is enough */
-const D = { glow: 0, scaleStd: 1.5, lift: 50 };
-const TODAY = { tint: 75, fab: 75, blur: 8, sat: 150, contrast: 100, bright: 100, top: 50, side: 25, bottom: 50, width: 1, ...D };
+const GLOW_REACH = 12;   /* fixed: one control is enough */
+const D = { glow: 25, scaleStd: 1.5, lift: 50 };
+const TODAY = { tint: 75, fab: 75, blur: 8, sat: 150, contrast: 100, bright: 100, top: 92, side: 0, bottom: 92, width: 1, ...D, glow: 25 };
 const PRE = {
-  'Today': TODAY,
-  'Edge Glow': { ...TODAY, glow: 40 },
-  'Bottom Heavy Glow': { ...TODAY, top: 25, side: 20, bottom: 90, glow: 45 },
-  'Top Heavy Glow': { ...TODAY, top: 70, side: 25, bottom: 15, glow: 45 },
+  'Today (iOS-like)': TODAY,
+  'Previous': { ...TODAY, top: 50, side: 25, bottom: 50, glow: 0 },
+  'More Glow': { ...TODAY, glow: 40 },
+  'Bottom Heavy': { ...TODAY, top: 40, bottom: 95, glow: 30 },
+  'Top Heavy': { ...TODAY, top: 95, bottom: 40, glow: 30 },
   'Clearer': { ...TODAY, tint: 55, blur: 14, sat: 160 },
   'Frosted': { ...TODAY, tint: 84, blur: 24, sat: 130 },
-  'No Edge': { ...TODAY, top: 0, side: 0, bottom: 0, width: 0 }
+  'No Edge': { ...TODAY, top: 0, side: 0, bottom: 0, width: 0, glow: 0 }
 };
 const state = Object.fromEntries(SL.map(s => [s.k, s.v])); let backdrop = 'app';
 const frames = [document.getElementById('f-light'), document.getElementById('f-dark')];

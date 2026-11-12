@@ -188,7 +188,7 @@
         }
       },
       "edge": {
-        "$description": "The glass edge (decisions 0021, 0027, 0031, 0033): light catches the top and the bottom edge equally. Drawn as layered inset shadows so it follows the corner radius, never scrolls with content and needs no extra markup: a faint line all round (side), a brighter line along the top (top) and along the bottom (bottom). The color comes from the surface (glass tint, or a floating button's own color) moved toward white by `lift`; the alphas set the strengths. Full-width bars draw only one line on the edge that faces the content (line). All zero where glass is solid.",
+        "$description": "The glass edge (decisions 0021, 0027, 0031, 0033, 0034), calibrated against the iOS tab bar: a thin light rim along the top and the bottom that fades out around the curves and is absent on the sides, in the surface's own color lifted toward white (`lift`). The rim is a crescent drawn with an inset shadow that is offset up or down, so it follows the corner radius and is brightest on the flat part and the start of the curve. All zero where glass is solid.",
         "width": {
           "$type": "dimension",
           "$value": {
@@ -270,7 +270,7 @@
           "$description": "How strong the light line along the top edge is (0 to 1). Its color comes from the surface (see `lift`), never pure white.",
           "$extensions": {
             "com.s4.modes": {
-              "dark": 0.3,
+              "dark": 0.55,
               "high-contrast": 0,
               "dark-high-contrast": 0,
               "reduced-transparency": 0
@@ -279,11 +279,11 @@
         },
         "side-alpha": {
           "$type": "number",
-          "$value": 0.19,
+          "$value": 0.0,
           "$description": "How strong the faint line all round is (0 to 1).",
           "$extensions": {
             "com.s4.modes": {
-              "dark": 0.06,
+              "dark": 0.0,
               "high-contrast": 0,
               "dark-high-contrast": 0,
               "reduced-transparency": 0
@@ -296,7 +296,7 @@
           "$description": "How strong the light line along the bottom edge is (0 to 1). Lit like the top (decision 0033), in the same surface-based color, so a surface looks evenly lit and not raised.",
           "$extensions": {
             "com.s4.modes": {
-              "dark": 0.3,
+              "dark": 0.55,
               "high-contrast": 0,
               "dark-high-contrast": 0,
               "reduced-transparency": 0
@@ -310,16 +310,16 @@
         }
       },
       "glow": {
-        "$description": "Optional brighter surface near the edges (decisions 0030, 0031). The glow follows the edge light: each side glows with its own edge color and alpha multiplied by `amount` (which may be above 1), drawn inward over `size`. So a stronger bottom edge light gives a stronger bottom glow, and where the edge is zero (solid glass) so is the glow. Off by default (amount 0).",
+        "$description": "The surface itself is a little lighter near the top and bottom edges and fades to its normal tone inside (decisions 0030, 0034; iOS: about +5% over 8 to 10px). Each side's glow is its edge color and alpha times `amount`, so it vanishes where the edge does. 0 is off.",
         "amount": {
           "$type": "number",
-          "$value": 0,
+          "$value": 0.5,
           "$description": "How much of each edge's light is carried inward as glow: 0 is off, 1 repeats the edge's own strength, 2 doubles it (capped at fully opaque)."
         },
         "size": {
           "$type": "dimension",
           "$value": {
-            "value": 16,
+            "value": 12,
             "unit": "px"
           },
           "$description": "How far the glow reaches inward from each edge."

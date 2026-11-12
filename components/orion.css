@@ -213,11 +213,11 @@
     --s4-glass-edge-scale-standard: 1.5;
     --s4-glass-edge-scale-large: 2;
     --s4-glass-edge-top-alpha: 1;
-    --s4-glass-edge-side-alpha: 0.19;
+    --s4-glass-edge-side-alpha: 0;
     --s4-glass-edge-bottom-alpha: 1;
     --s4-glass-edge-lift: 0.5;
-    --s4-glass-glow-amount: 0;
-    --s4-glass-glow-size: 16px;
+    --s4-glass-glow-amount: 0.5;
+    --s4-glass-glow-size: 12px;
     --s4-icon-duo-opacity: 0.8;
     --s4-motion-spring-fast-spatial-calm-stiffness: 1400;
     --s4-motion-spring-fast-spatial-calm-damping: 1;
@@ -387,9 +387,9 @@
       --s4-glass-backdrop-brightness-float: 1;
       --s4-glass-item-outline: rgb(255 255 255 / 0.28);
       --s4-glass-edge-line: rgb(255 255 255 / 0.08);
-      --s4-glass-edge-top-alpha: 0.3;
-      --s4-glass-edge-side-alpha: 0.06;
-      --s4-glass-edge-bottom-alpha: 0.3;
+      --s4-glass-edge-top-alpha: 0.55;
+      --s4-glass-edge-side-alpha: 0;
+      --s4-glass-edge-bottom-alpha: 0.55;
       --s4-icon-duo-opacity: 0.65;
     }
     }
@@ -449,9 +449,9 @@
     --s4-glass-backdrop-brightness-float: 1;
     --s4-glass-item-outline: rgb(255 255 255 / 0.28);
     --s4-glass-edge-line: rgb(255 255 255 / 0.08);
-    --s4-glass-edge-top-alpha: 0.3;
-    --s4-glass-edge-side-alpha: 0.06;
-    --s4-glass-edge-bottom-alpha: 0.3;
+    --s4-glass-edge-top-alpha: 0.55;
+    --s4-glass-edge-side-alpha: 0;
+    --s4-glass-edge-bottom-alpha: 0.55;
     --s4-icon-duo-opacity: 0.65;
   }
   @media (prefers-contrast: more) {
@@ -5199,15 +5199,33 @@
        a brighter top line over a faint line all round, with a faint return at the bottom. Inset shadows follow the corner
        radius, never scroll with the content of a scrolling menu or dialog, and need no extra element. */
     box-shadow:
-      inset 0 calc(var(--s4-glass-edge-width) * var(--_edge-scale)) 0 0 color-mix(in srgb, var(--_edge-hi) calc(var(--s4-glass-edge-top-alpha) * 100%), transparent),
-      inset 0 calc(-1 * var(--s4-glass-edge-width) * var(--_edge-scale)) 0 0 color-mix(in srgb, var(--_edge-hi) calc(var(--s4-glass-edge-bottom-alpha) * 100%), transparent),
+      inset 0 calc(var(--s4-glass-edge-width) * var(--_edge-scale)) calc(var(--s4-glass-edge-width) * var(--_edge-scale)) 0 rgb(255 255 255 / var(--s4-glass-edge-top-alpha)),
+      inset 0 calc(-1 * var(--s4-glass-edge-width) * var(--_edge-scale)) calc(var(--s4-glass-edge-width) * var(--_edge-scale)) 0 rgb(255 255 255 / var(--s4-glass-edge-bottom-alpha)),
+      inset 0 0 0 calc(var(--s4-glass-edge-width) * var(--_edge-scale)) rgb(255 255 255 / var(--s4-glass-edge-side-alpha));
+    -webkit-backdrop-filter: blur(var(--s4-glass-blur-float)) saturate(var(--s4-glass-saturation-float)) contrast(var(--s4-glass-backdrop-contrast-float)) brightness(var(--s4-glass-backdrop-brightness-float));
+    backdrop-filter: blur(var(--s4-glass-blur-float)) saturate(var(--s4-glass-saturation-float)) contrast(var(--s4-glass-backdrop-contrast-float)) brightness(var(--s4-glass-backdrop-brightness-float));
+  }
+  /* the surface-colored rim and the glow need color-mix with calc() and min() percentages; where a browser lacks them the plain white rim above is used */
+  @supports (color: color-mix(in oklab, red, white calc(50% * 1))) and (color: color-mix(in srgb, red min(100%, calc(1 * 100%)), transparent)) {
+    :where(.s4-glass,
+         .s4-top-app-bar[data-scrolled],
+         .s4-nav-bar,
+         .s4-nav-rail:is([data-modal], [data-overlay]),
+         .s4-toolbar,
+         .s4-menu,
+         .s4-dialog,
+         .s4-bottom-sheet,
+         .s4-side-sheet,
+         .s4-rich-tooltip) {
+      box-shadow:
+      inset 0 calc(var(--s4-glass-edge-width) * var(--_edge-scale)) calc(var(--s4-glass-edge-width) * var(--_edge-scale)) 0 color-mix(in srgb, var(--_edge-hi) calc(var(--s4-glass-edge-top-alpha) * 100%), transparent),
+      inset 0 calc(-1 * var(--s4-glass-edge-width) * var(--_edge-scale)) calc(var(--s4-glass-edge-width) * var(--_edge-scale)) 0 color-mix(in srgb, var(--_edge-hi) calc(var(--s4-glass-edge-bottom-alpha) * 100%), transparent),
       inset 0 0 0 calc(var(--s4-glass-edge-width) * var(--_edge-scale)) color-mix(in srgb, var(--_edge-hi) calc(var(--s4-glass-edge-side-alpha) * 100%), transparent),
       inset 0 var(--s4-glass-glow-size) var(--s4-glass-glow-size) calc(-1 * var(--s4-glass-glow-size)) color-mix(in srgb, var(--_edge-hi) min(100%, calc(var(--s4-glass-edge-top-alpha) * var(--s4-glass-glow-amount) * 100%)), transparent),
       inset 0 calc(-1 * var(--s4-glass-glow-size)) var(--s4-glass-glow-size) calc(-1 * var(--s4-glass-glow-size)) color-mix(in srgb, var(--_edge-hi) min(100%, calc(var(--s4-glass-edge-bottom-alpha) * var(--s4-glass-glow-amount) * 100%)), transparent),
       inset var(--s4-glass-glow-size) 0 var(--s4-glass-glow-size) calc(-1 * var(--s4-glass-glow-size)) color-mix(in srgb, var(--_edge-hi) min(100%, calc(var(--s4-glass-edge-side-alpha) * var(--s4-glass-glow-amount) * 100%)), transparent),
       inset calc(-1 * var(--s4-glass-glow-size)) 0 var(--s4-glass-glow-size) calc(-1 * var(--s4-glass-glow-size)) color-mix(in srgb, var(--_edge-hi) min(100%, calc(var(--s4-glass-edge-side-alpha) * var(--s4-glass-glow-amount) * 100%)), transparent);
-    -webkit-backdrop-filter: blur(var(--s4-glass-blur-float)) saturate(var(--s4-glass-saturation-float)) contrast(var(--s4-glass-backdrop-contrast-float)) brightness(var(--s4-glass-backdrop-brightness-float));
-    backdrop-filter: blur(var(--s4-glass-blur-float)) saturate(var(--s4-glass-saturation-float)) contrast(var(--s4-glass-backdrop-contrast-float)) brightness(var(--s4-glass-backdrop-brightness-float));
+    }
   }
   /* full-width bars and docked surfaces touch the screen edges, so they draw a single line only on the edge that faces the content
      (a line along the screen edge reads as a box around the bar, especially on a phone) */
@@ -5226,15 +5244,23 @@
     --_glass-tint: var(--s4-glass-tint-opacity-fab);
     background-color: color-mix(in srgb, var(--_bg) calc(var(--_glass-tint) * 100%), transparent);
     box-shadow:
-      inset 0 calc(var(--s4-glass-edge-width) * var(--_edge-scale)) 0 0 color-mix(in srgb, var(--_edge-hi) calc(var(--s4-glass-edge-top-alpha) * 100%), transparent),
-      inset 0 calc(-1 * var(--s4-glass-edge-width) * var(--_edge-scale)) 0 0 color-mix(in srgb, var(--_edge-hi) calc(var(--s4-glass-edge-bottom-alpha) * 100%), transparent),
+      inset 0 calc(var(--s4-glass-edge-width) * var(--_edge-scale)) calc(var(--s4-glass-edge-width) * var(--_edge-scale)) 0 rgb(255 255 255 / var(--s4-glass-edge-top-alpha)),
+      inset 0 calc(-1 * var(--s4-glass-edge-width) * var(--_edge-scale)) calc(var(--s4-glass-edge-width) * var(--_edge-scale)) 0 rgb(255 255 255 / var(--s4-glass-edge-bottom-alpha)),
+      inset 0 0 0 calc(var(--s4-glass-edge-width) * var(--_edge-scale)) rgb(255 255 255 / var(--s4-glass-edge-side-alpha));
+    -webkit-backdrop-filter: blur(var(--s4-glass-blur-float)) saturate(var(--s4-glass-saturation-float)) contrast(var(--s4-glass-backdrop-contrast-float)) brightness(var(--s4-glass-backdrop-brightness-float));
+    backdrop-filter: blur(var(--s4-glass-blur-float)) saturate(var(--s4-glass-saturation-float)) contrast(var(--s4-glass-backdrop-contrast-float)) brightness(var(--s4-glass-backdrop-brightness-float));
+  }
+  @supports (color: color-mix(in oklab, red, white calc(50% * 1))) and (color: color-mix(in srgb, red min(100%, calc(1 * 100%)), transparent)) {
+    :where(.s4-fab:not([data-glass="off"])) {
+      box-shadow:
+      inset 0 calc(var(--s4-glass-edge-width) * var(--_edge-scale)) calc(var(--s4-glass-edge-width) * var(--_edge-scale)) 0 color-mix(in srgb, var(--_edge-hi) calc(var(--s4-glass-edge-top-alpha) * 100%), transparent),
+      inset 0 calc(-1 * var(--s4-glass-edge-width) * var(--_edge-scale)) calc(var(--s4-glass-edge-width) * var(--_edge-scale)) 0 color-mix(in srgb, var(--_edge-hi) calc(var(--s4-glass-edge-bottom-alpha) * 100%), transparent),
       inset 0 0 0 calc(var(--s4-glass-edge-width) * var(--_edge-scale)) color-mix(in srgb, var(--_edge-hi) calc(var(--s4-glass-edge-side-alpha) * 100%), transparent),
       inset 0 var(--s4-glass-glow-size) var(--s4-glass-glow-size) calc(-1 * var(--s4-glass-glow-size)) color-mix(in srgb, var(--_edge-hi) min(100%, calc(var(--s4-glass-edge-top-alpha) * var(--s4-glass-glow-amount) * 100%)), transparent),
       inset 0 calc(-1 * var(--s4-glass-glow-size)) var(--s4-glass-glow-size) calc(-1 * var(--s4-glass-glow-size)) color-mix(in srgb, var(--_edge-hi) min(100%, calc(var(--s4-glass-edge-bottom-alpha) * var(--s4-glass-glow-amount) * 100%)), transparent),
       inset var(--s4-glass-glow-size) 0 var(--s4-glass-glow-size) calc(-1 * var(--s4-glass-glow-size)) color-mix(in srgb, var(--_edge-hi) min(100%, calc(var(--s4-glass-edge-side-alpha) * var(--s4-glass-glow-amount) * 100%)), transparent),
       inset calc(-1 * var(--s4-glass-glow-size)) 0 var(--s4-glass-glow-size) calc(-1 * var(--s4-glass-glow-size)) color-mix(in srgb, var(--_edge-hi) min(100%, calc(var(--s4-glass-edge-side-alpha) * var(--s4-glass-glow-amount) * 100%)), transparent);
-    -webkit-backdrop-filter: blur(var(--s4-glass-blur-float)) saturate(var(--s4-glass-saturation-float)) contrast(var(--s4-glass-backdrop-contrast-float)) brightness(var(--s4-glass-backdrop-brightness-float));
-    backdrop-filter: blur(var(--s4-glass-blur-float)) saturate(var(--s4-glass-saturation-float)) contrast(var(--s4-glass-backdrop-contrast-float)) brightness(var(--s4-glass-backdrop-brightness-float));
+    }
   }
   :where(.s4-fab[data-color]:not([data-glass="off"])) { --_glass-tint: var(--s4-glass-tint-opacity-fab-color); }   /* decision 0032 */
   :where(:root[data-contrast="high"]) :where(.s4-fab) { background-color: var(--_bg); box-shadow: var(--_elevation); -webkit-backdrop-filter: none; backdrop-filter: none; }

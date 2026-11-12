@@ -210,11 +210,11 @@
     --s4-glass-edge-scale-standard: 1.5;
     --s4-glass-edge-scale-large: 2;
     --s4-glass-edge-top-alpha: 1;
-    --s4-glass-edge-side-alpha: 0.19;
+    --s4-glass-edge-side-alpha: 0;
     --s4-glass-edge-bottom-alpha: 1;
     --s4-glass-edge-lift: 0.5;
-    --s4-glass-glow-amount: 0;
-    --s4-glass-glow-size: 16px;
+    --s4-glass-glow-amount: 0.5;
+    --s4-glass-glow-size: 12px;
     --s4-icon-duo-opacity: 0.8;
     --s4-motion-spring-fast-spatial-calm-stiffness: 1400;
     --s4-motion-spring-fast-spatial-calm-damping: 1;
@@ -384,9 +384,9 @@
       --s4-glass-backdrop-brightness-float: 1;
       --s4-glass-item-outline: rgb(255 255 255 / 0.28);
       --s4-glass-edge-line: rgb(255 255 255 / 0.08);
-      --s4-glass-edge-top-alpha: 0.3;
-      --s4-glass-edge-side-alpha: 0.06;
-      --s4-glass-edge-bottom-alpha: 0.3;
+      --s4-glass-edge-top-alpha: 0.55;
+      --s4-glass-edge-side-alpha: 0;
+      --s4-glass-edge-bottom-alpha: 0.55;
       --s4-icon-duo-opacity: 0.65;
     }
     }
@@ -446,9 +446,9 @@
     --s4-glass-backdrop-brightness-float: 1;
     --s4-glass-item-outline: rgb(255 255 255 / 0.28);
     --s4-glass-edge-line: rgb(255 255 255 / 0.08);
-    --s4-glass-edge-top-alpha: 0.3;
-    --s4-glass-edge-side-alpha: 0.06;
-    --s4-glass-edge-bottom-alpha: 0.3;
+    --s4-glass-edge-top-alpha: 0.55;
+    --s4-glass-edge-side-alpha: 0;
+    --s4-glass-edge-bottom-alpha: 0.55;
     --s4-icon-duo-opacity: 0.65;
   }
   @media (prefers-contrast: more) {
