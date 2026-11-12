@@ -365,6 +365,7 @@ Light values are shown; a second value is dark mode. Color roles also change wit
 | `--s4-glass-tint-opacity-fab` | 0.75 |  | Decision 0028: the owner's pick, the same 75% as the other glass. A floating action button is glass tinted with its own color. The icon keeps 4.5:1 or better in monochrome; with a seed the opaque FAB color pair is only 4.5:1 in the worst schemes, so over pure black or white directly behind it a few seeds drop to about 2.3:1 (scripts/check-glass.mjs reports it). |
 | `--s4-glass-tint-opacity-fill` | 0.56 | 0.64 |  |
 | `--s4-glass-tint-opacity-medium-contrast` | 0.86 |  | Float tint when the app runs at medium contrast (contrast level 0.5). |
+| `--s4-glass-tint-opacity-fab-color` | 0.9 |  | Decision 0032: floating buttons in a color other than the default (secondary, tertiary, primary, or a container of those) are tinted 90%. Their own color pair is lower contrast than the default's, and at 75% the page checker found labels at 2.9:1 and 3.6:1 over a pure black or white backdrop. The default FAB keeps the owner's 75%. |
 | `--s4-glass-blur-float` | 8px |  | Backdrop blur radius. Decision 0021: 8px (owner's playground pick; was 16px). |
 | `--s4-glass-saturation-float` | 1.5 |  | saturate() on the backdrop. Decision 0021: 150% (owner's playground pick; was 120% in 0014). |
 | `--s4-glass-backdrop-contrast-float` | 1 | 1 | contrast() on the backdrop. 1 (off) since decision 0021: the 75% tint alone keeps on-surface text at 4.5:1 or better over pure black or white (check-glass). Lower it below 1 only if the tint is lowered. |

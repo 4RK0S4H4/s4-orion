@@ -58,7 +58,7 @@ pre{margin:0;padding:12px;border-radius:12px;background:var(--soft);font:12px/1.
 <script>
 const SL = [
   { k: 'tint', label: 'Glass Tint', desc: 'How solid the frosted layer is. Lower lets more of the page behind show through; 100% is a solid surface.', min: 0, max: 100, step: 1, v: 75, fmt: v => v + '%', css: v => ['--s4-glass-tint-opacity-float', v / 100] },
-  { k: 'fab', label: 'Floating Button Tint', desc: 'The same, for floating buttons. They are tinted with their own color instead of the surface color.', min: 50, max: 100, step: 1, v: 75, fmt: v => v + '%', css: v => ['--s4-glass-tint-opacity-fab', v / 100] },
+  { k: 'fab', label: 'Floating Button Tint', desc: 'The same, for the default floating button. They are tinted with their own color instead of the surface color. Floating buttons in other colors stay at 90% or higher so their labels remain readable.', min: 50, max: 100, step: 1, v: 75, fmt: v => v + '%', css: v => ['--s4-glass-tint-opacity-fab', v / 100] },
   { k: 'blur', label: 'Blur', desc: 'How much the page behind the glass is blurred.', min: 0, max: 40, step: 1, v: 8, fmt: v => v + 'px', css: v => ['--s4-glass-blur-float', v + 'px'] },
   { k: 'sat', label: 'Color Boost', desc: 'How vivid the blurred colors behind the glass look.', min: 100, max: 220, step: 5, v: 150, fmt: v => v + '%', css: v => ['--s4-glass-saturation-float', v / 100] },
   { k: 'top', label: 'Edge Light, Top', desc: 'Brightness of the thin light line along the top edge, like light catching the rim.', min: 0, max: 100, step: 1, v: 50, fmt: v => v },
@@ -108,6 +108,7 @@ function apply() {
     SL.forEach(s => { if (s.css) { const [n, v] = s.css(state[s.k]); root.setProperty(n, v); } });
     root.setProperty('--s4-glass-edge-top-alpha', e.top.toFixed(3));
     root.setProperty('--s4-glass-edge-side-alpha', e.side.toFixed(3));
+    root.setProperty('--s4-glass-tint-opacity-fab-color', Math.max(state.fab, 90) / 100);
     root.setProperty('--s4-glass-glow-size', GLOW_REACH + 'px');
     root.setProperty('--s4-glass-edge-scale-large', (state.scaleStd * 4 / 3).toFixed(2));
     root.setProperty('--s4-glass-glow-amount', glowAmount());

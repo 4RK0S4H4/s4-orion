@@ -76,6 +76,7 @@
     -webkit-backdrop-filter: blur(var(--s4-glass-blur-float)) saturate(var(--s4-glass-saturation-float)) contrast(var(--s4-glass-backdrop-contrast-float)) brightness(var(--s4-glass-backdrop-brightness-float));
     backdrop-filter: blur(var(--s4-glass-blur-float)) saturate(var(--s4-glass-saturation-float)) contrast(var(--s4-glass-backdrop-contrast-float)) brightness(var(--s4-glass-backdrop-brightness-float));
   }
+  :where(.s4-fab[data-color]:not([data-glass="off"])) { --_glass-tint: var(--s4-glass-tint-opacity-fab-color); }   /* decision 0032 */
   :where(:root[data-contrast="high"]) :where(.s4-fab) { background-color: var(--_bg); box-shadow: var(--_elevation); -webkit-backdrop-filter: none; backdrop-filter: none; }
   @media (prefers-reduced-transparency: reduce) {
     :where(.s4-fab) { background-color: var(--_bg); box-shadow: var(--_elevation); -webkit-backdrop-filter: none; backdrop-filter: none; }

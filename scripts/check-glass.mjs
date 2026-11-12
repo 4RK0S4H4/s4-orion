@@ -37,20 +37,21 @@ for (const mode of ['light', 'dark']) {
   worstAll = Math.min(worstAll, worst.r);
   /* floating action buttons are glass tinted with their own color (decision 0025): icon and label in the FAB's on-color */
   const fabPairs = [['primary-container', 'on-primary-container'], ['secondary-container', 'on-secondary-container'], ['tertiary-container', 'on-tertiary-container'], ['primary', 'on-primary'], ['secondary', 'on-secondary'], ['tertiary', 'on-tertiary']];
-  const tf = val('--s4-glass-tint-opacity-fab', mode);
+  const tfDefault = val('--s4-glass-tint-opacity-fab', mode), tfColor = val('--s4-glass-tint-opacity-fab-color', mode);
   let fabWorst = { r: Infinity }, fabMono = Infinity, fabMonoDefault = Infinity;
   for (const [seed, variants] of seeds) for (const v of variants) {
     const s = M3.scheme(seed, v, mode === 'dark', 0);
     for (const [bg, fg] of fabPairs) {
+      const tf = bg === 'primary-container' ? tfDefault : tfColor;   /* the default FAB, or a data-color FAB */
       const tint = rgb(s[bg]), text = rgb(s[fg]);
       const r = Math.min(ratio(text, mix(tint, [lo, lo, lo], tf)), ratio(text, mix(tint, [hi, hi, hi], tf)));
       if (seed === '#000000') fabMono = Math.min(fabMono, r);
       if (r < fabWorst.r) fabWorst = { r, seed, v, pair: bg };
       if (seed === '#000000' && bg === 'primary-container') fabMonoDefault = Math.min(fabMonoDefault, r);
-      if (seed === '#000000' && bg === 'primary-container' && r < 3) { failures++; console.error(`  x ${mode}: monochrome ${fg} on ${bg} FAB glass is ${r.toFixed(2)}:1`); }
+      if (seed === '#000000' && r < 3) { failures++; console.error(`  x ${mode}: monochrome ${fg} on ${bg} FAB glass is ${r.toFixed(2)}:1`); }
     }
   }
-  console.log(`FAB glass ${mode} (tint ${tf}): default FAB in monochrome ${fabMonoDefault.toFixed(2)}:1 (any monochrome FAB color ${fabMono.toFixed(2)}:1), worst ${fabWorst.r.toFixed(2)}:1 (${fabWorst.seed} ${fabWorst.v} ${fabWorst.pair}, owner's 75%; the default monochrome FAB must keep 3:1) over ${seeds.reduce((n, x) => n + x[1].length, 0)} schemes x ${fabPairs.length} colors`);
+  console.log(`FAB glass ${mode} (tint ${tfDefault}, other colors ${tfColor}): default FAB in monochrome ${fabMonoDefault.toFixed(2)}:1 (any monochrome FAB color ${fabMono.toFixed(2)}:1), worst ${fabWorst.r.toFixed(2)}:1 (${fabWorst.seed} ${fabWorst.v} ${fabWorst.pair}, owner's 75%; every monochrome FAB must keep 3:1) over ${seeds.reduce((n, x) => n + x[1].length, 0)} schemes x ${fabPairs.length} colors`);
   console.log(`Glass ${mode}: tint ${t}, backdrop contrast ${c} brightness ${b} -> worst ${worst.r.toFixed(2)}:1 (${worst.seed} ${worst.v}) over 97 schemes`);
 }
 if (failures) { console.error(`${failures} scheme(s) below 4.5:1. Raise the tint or the backdrop compression in tokens/src/glass.tokens.json.`); process.exit(1); }

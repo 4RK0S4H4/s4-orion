@@ -197,6 +197,7 @@
     --s4-glass-tint-opacity-fab: 0.75;
     --s4-glass-tint-opacity-fill: 0.56;
     --s4-glass-tint-opacity-medium-contrast: 0.86;
+    --s4-glass-tint-opacity-fab-color: 0.9;
     --s4-glass-blur-float: 8px;
     --s4-glass-saturation-float: 1.5;
     --s4-glass-backdrop-contrast-float: 1;
@@ -508,6 +509,7 @@
       --s4-glass-tint-opacity-float: 1;
       --s4-glass-tint-opacity-fab: 1;
       --s4-glass-tint-opacity-fill: 1;
+      --s4-glass-tint-opacity-fab-color: 1;
       --s4-glass-blur-float: 0px;
       --s4-glass-item-outline: rgb(255 255 255 / 0);
       --s4-glass-edge-line: rgb(255 255 255 / 0);
@@ -569,6 +571,7 @@
     --s4-glass-tint-opacity-float: 1;
     --s4-glass-tint-opacity-fab: 1;
     --s4-glass-tint-opacity-fill: 1;
+    --s4-glass-tint-opacity-fab-color: 1;
     --s4-glass-blur-float: 0px;
     --s4-glass-item-outline: rgb(255 255 255 / 0);
     --s4-glass-edge-line: rgb(255 255 255 / 0);
@@ -630,6 +633,7 @@
       --s4-glass-tint-opacity-float: 1;
       --s4-glass-tint-opacity-fab: 1;
       --s4-glass-tint-opacity-fill: 1;
+      --s4-glass-tint-opacity-fab-color: 1;
       --s4-glass-blur-float: 0px;
       --s4-glass-backdrop-contrast-float: 1;
       --s4-glass-backdrop-brightness-float: 1;
@@ -696,6 +700,7 @@
       --s4-glass-tint-opacity-float: 1;
       --s4-glass-tint-opacity-fab: 1;
       --s4-glass-tint-opacity-fill: 1;
+      --s4-glass-tint-opacity-fab-color: 1;
       --s4-glass-blur-float: 0px;
       --s4-glass-backdrop-contrast-float: 1;
       --s4-glass-backdrop-brightness-float: 1;
@@ -762,6 +767,7 @@
       --s4-glass-tint-opacity-float: 1;
       --s4-glass-tint-opacity-fab: 1;
       --s4-glass-tint-opacity-fill: 1;
+      --s4-glass-tint-opacity-fab-color: 1;
       --s4-glass-blur-float: 0px;
       --s4-glass-backdrop-contrast-float: 1;
       --s4-glass-backdrop-brightness-float: 1;
@@ -827,6 +833,7 @@
     --s4-glass-tint-opacity-float: 1;
     --s4-glass-tint-opacity-fab: 1;
     --s4-glass-tint-opacity-fill: 1;
+    --s4-glass-tint-opacity-fab-color: 1;
     --s4-glass-blur-float: 0px;
     --s4-glass-backdrop-contrast-float: 1;
     --s4-glass-backdrop-brightness-float: 1;
@@ -861,6 +868,7 @@
       --s4-glass-tint-opacity-float: 1;
       --s4-glass-tint-opacity-fab: 1;
       --s4-glass-tint-opacity-fill: 1;
+      --s4-glass-tint-opacity-fab-color: 1;
       --s4-glass-blur-float: 0px;
       --s4-glass-item-outline: rgb(255 255 255 / 0);
       --s4-glass-edge-line: rgb(255 255 255 / 0);
@@ -873,6 +881,7 @@
     --s4-glass-tint-opacity-float: 1;
     --s4-glass-tint-opacity-fab: 1;
     --s4-glass-tint-opacity-fill: 1;
+    --s4-glass-tint-opacity-fab-color: 1;
     --s4-glass-blur-float: 0px;
     --s4-glass-item-outline: rgb(255 255 255 / 0);
     --s4-glass-edge-line: rgb(255 255 255 / 0);
@@ -885,6 +894,7 @@
       --s4-glass-tint-opacity-float: 1;
       --s4-glass-tint-opacity-fab: 1;
       --s4-glass-tint-opacity-fill: 1;
+      --s4-glass-tint-opacity-fab-color: 1;
       --s4-glass-blur-float: 0px;
       --s4-glass-item-outline: rgb(255 255 255 / 0);
       --s4-glass-edge-line: rgb(255 255 255 / 0);

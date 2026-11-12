@@ -1073,6 +1073,16 @@ export const tokens = {
     "value": "0.86",
     "description": "Float tint when the app runs at medium contrast (contrast level 0.5)."
   },
+  "--s4-glass-tint-opacity-fab-color": {
+    "type": "number",
+    "value": "0.9",
+    "description": "Decision 0032: floating buttons in a color other than the default (secondary, tertiary, primary, or a container of those) are tinted 90%. Their own color pair is lower contrast than the default's, and at 75% the page checker found labels at 2.9:1 and 3.6:1 over a pure black or white backdrop. The default FAB keeps the owner's 75%.",
+    "modes": {
+      "high-contrast": "1",
+      "dark-high-contrast": "1",
+      "reduced-transparency": "1"
+    }
+  },
   "--s4-glass-blur-float": {
     "type": "dimension",
     "value": "8px",
