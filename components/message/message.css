@@ -1,0 +1,87 @@
+/* Messages: a conversation (chat, comments, an assistant). S4 addition.
+   <ol class="s4-thread" aria-label="Conversation">
+     <li class="s4-thread-day">Today</li>
+     <li class="s4-message"><p>Can you send the invoice?</p><span class="s4-message-meta">Maya · 9:41</span></li>
+     <li class="s4-message" data-from="me"><p>Sent it a minute ago.</p><span class="s4-message-meta">9:42</span></li>
+   </ol>
+   <form class="s4-composer s4-glass">…text field (no label, aria-label on the textarea)… <button class="s4-icon-button" data-variant="filled">send</button></form>
+   Theirs: surface-container-high, on the start side. Mine (data-from="me"): primary, on the end side. Bubbles are
+   content (solid); the composer floats over the thread above the nav bar, so it is glass. */
+@layer s4.components {
+  .s4-thread {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--s4-space-1);
+  }
+  .s4-thread-day {
+    align-self: center;
+    padding-block: var(--s4-space-4) var(--s4-space-2);
+    color: var(--md-sys-color-on-surface-variant);
+    font-family: var(--md-sys-typescale-label-medium-font);
+    font-size: var(--md-sys-typescale-label-medium-size);
+    line-height: var(--md-sys-typescale-label-medium-line-height);
+    letter-spacing: var(--md-sys-typescale-label-medium-tracking);
+    font-weight: var(--md-sys-typescale-label-medium-weight);
+  }
+  .s4-message {
+    --_bg: var(--md-sys-color-surface-container-high);
+    --_fg: var(--md-sys-color-on-surface);
+    --_meta: var(--md-sys-color-on-surface-variant);
+    align-self: flex-start;
+    max-inline-size: min(80%, var(--s4-layout-content-reading));
+    display: flex;
+    flex-direction: column;
+    gap: var(--s4-space-1);
+    padding: var(--s4-space-2) var(--s4-space-4);
+    border-radius: var(--md-sys-shape-corner-large);
+    border-end-start-radius: var(--md-sys-shape-corner-small);
+    background: var(--_bg);
+    color: var(--_fg);
+    font-family: var(--md-sys-typescale-body-large-font);
+    font-size: var(--md-sys-typescale-body-large-size);
+    line-height: var(--md-sys-typescale-body-large-line-height);
+    letter-spacing: var(--md-sys-typescale-body-large-tracking);
+    overflow-wrap: anywhere;
+  }
+  .s4-message > p { margin: 0; }
+  .s4-message[data-from="me"] {
+    --_bg: var(--md-sys-color-primary);
+    --_fg: var(--md-sys-color-on-primary);
+    --_meta: var(--md-sys-color-on-primary);
+    align-self: flex-end;
+    border-end-start-radius: var(--md-sys-shape-corner-large);
+    border-end-end-radius: var(--md-sys-shape-corner-small);
+  }
+  /* a new speaker gets a little more room */
+  .s4-message:not([data-from="me"]) + .s4-message[data-from="me"],
+  .s4-message[data-from="me"] + .s4-message:not([data-from="me"]) { margin-block-start: var(--s4-space-2); }
+  .s4-message-meta {
+    color: var(--_meta);
+    font-family: var(--md-sys-typescale-label-small-font);
+    font-size: var(--md-sys-typescale-label-small-size);
+    line-height: var(--md-sys-typescale-label-small-line-height);
+    letter-spacing: var(--md-sys-typescale-label-small-tracking);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* the composer: sticks to the bottom of the screen, above the nav bar */
+  .s4-composer {
+    position: sticky;
+    inset-block-end: calc(var(--s4-app-inset-bottom, 0px) + var(--s4-space-2));
+    z-index: var(--s4-z-sticky);
+    display: flex;
+    align-items: flex-end;
+    gap: var(--s4-space-2);
+    margin-block-start: var(--s4-space-4);
+    padding: var(--s4-space-2);
+    border-radius: var(--md-sys-shape-corner-extra-large);
+    background: var(--md-sys-color-surface-container);
+  }
+  .s4-composer > .s4-text-field { flex: 1; min-inline-size: 0; }
+  @media (forced-colors: active) {
+    .s4-message, .s4-composer { border: 1px solid CanvasText; }
+  }
+}

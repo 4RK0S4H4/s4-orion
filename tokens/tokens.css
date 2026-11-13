@@ -298,6 +298,8 @@
     --s4-layout-pane-gap: var(--s4-space-6);
     --s4-layout-gap: var(--s4-space-4);
     --s4-layout-content-max: 1200px;
+    --s4-layout-content-reading: 720px;
+    --s4-layout-content-wide: 1600px;
     --s4-layout-list-width: 360px;
     --s4-layout-inspector-width: 400px;
     --s4-breakpoint-medium: 600px;

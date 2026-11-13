@@ -1,0 +1,95 @@
+/* Prose: long-form text (articles, help pages, release notes, legal, AI answers). S4 addition.
+   <article class="s4-prose">…plain h1-h4, p, ul/ol, blockquote, code, pre, a, hr, figure, table…</article>
+   The one place bare elements get styled, and only inside .s4-prose. Body-large text, about 70 characters a line,
+   headings on the M3 type scale (emphasized), links underlined in primary. Put it in a data-width="reading" page. */
+@layer s4.components {
+  .s4-prose {
+    max-inline-size: 70ch;
+    color: var(--md-sys-color-on-surface);
+    font-family: var(--md-sys-typescale-body-large-font);
+    font-size: var(--md-sys-typescale-body-large-size);
+    line-height: calc(var(--md-sys-typescale-body-large-line-height) + var(--s4-space-1));
+    letter-spacing: var(--md-sys-typescale-body-large-tracking);
+    overflow-wrap: break-word;
+  }
+  .s4-prose > * { margin-block: 0; }
+  .s4-prose > * + * { margin-block-start: var(--s4-space-4); }
+  .s4-prose :where(h1, h2, h3, h4) { color: var(--md-sys-color-on-surface); text-wrap: balance; }
+  .s4-prose > :where(h1, h2, h3, h4) + * { margin-block-start: var(--s4-space-2); }
+  .s4-prose h1 {
+    font-family: var(--md-sys-typescale-headline-large-font);
+    font-size: var(--md-sys-typescale-headline-large-size);
+    line-height: var(--md-sys-typescale-headline-large-line-height);
+    letter-spacing: var(--md-sys-typescale-headline-large-tracking);
+    font-weight: var(--md-sys-typescale-emphasized-headline-large-weight);
+  }
+  .s4-prose h2 {
+    margin-block-start: var(--s4-space-8);
+    font-family: var(--md-sys-typescale-headline-small-font);
+    font-size: var(--md-sys-typescale-headline-small-size);
+    line-height: var(--md-sys-typescale-headline-small-line-height);
+    letter-spacing: var(--md-sys-typescale-headline-small-tracking);
+    font-weight: var(--md-sys-typescale-emphasized-headline-small-weight);
+  }
+  .s4-prose h3 {
+    margin-block-start: var(--s4-space-6);
+    font-family: var(--md-sys-typescale-title-large-font);
+    font-size: var(--md-sys-typescale-title-large-size);
+    line-height: var(--md-sys-typescale-title-large-line-height);
+    letter-spacing: var(--md-sys-typescale-title-large-tracking);
+    font-weight: var(--md-sys-typescale-emphasized-title-large-weight);
+  }
+  .s4-prose h4 {
+    margin-block-start: var(--s4-space-6);
+    font-family: var(--md-sys-typescale-title-medium-font);
+    font-size: var(--md-sys-typescale-title-medium-size);
+    line-height: var(--md-sys-typescale-title-medium-line-height);
+    letter-spacing: var(--md-sys-typescale-title-medium-tracking);
+    font-weight: var(--md-sys-typescale-emphasized-title-medium-weight);
+  }
+  .s4-prose :where(ul, ol) { padding-inline-start: var(--s4-space-6); }
+  .s4-prose li + li { margin-block-start: var(--s4-space-2); }
+  .s4-prose li::marker { color: var(--md-sys-color-on-surface-variant); }
+  .s4-prose a { color: var(--md-sys-color-primary); text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
+  .s4-prose a:hover { text-decoration-thickness: 2px; }
+  .s4-prose :where(strong, b) { font-weight: var(--md-sys-typescale-emphasized-body-large-weight); }
+  .s4-prose blockquote {
+    margin-inline: 0;
+    padding: var(--s4-space-3) var(--s4-space-4);
+    border-radius: var(--md-sys-shape-corner-large);
+    background: var(--md-sys-color-surface-container-low);
+    color: var(--md-sys-color-on-surface-variant);
+  }
+  .s4-prose :where(code, kbd, samp) {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.9em;
+    padding: 0.1em 0.35em;
+    border-radius: var(--md-sys-shape-corner-extra-small);
+    background: var(--md-sys-color-surface-container-high);
+  }
+  .s4-prose pre {
+    padding: var(--s4-space-4);
+    overflow-x: auto;
+    border-radius: var(--md-sys-shape-corner-large);
+    background: var(--md-sys-color-surface-container-high);
+    font-size: var(--md-sys-typescale-body-medium-size);
+    line-height: var(--md-sys-typescale-body-medium-line-height);
+  }
+  .s4-prose pre code { padding: 0; background: none; font-size: inherit; }
+  .s4-prose hr { border: 0; border-block-start: var(--s4-size-divider) solid var(--md-sys-color-outline-variant); margin-block: var(--s4-space-8); }
+  .s4-prose :where(img, video) { border-radius: var(--md-sys-shape-corner-large); }
+  .s4-prose figure { margin-inline: 0; }
+  .s4-prose figcaption {
+    margin-block-start: var(--s4-space-2);
+    color: var(--md-sys-color-on-surface-variant);
+    font-size: var(--md-sys-typescale-body-small-size);
+    line-height: var(--md-sys-typescale-body-small-line-height);
+  }
+  /* a lead paragraph under the title */
+  .s4-prose .s4-prose-lead {
+    color: var(--md-sys-color-on-surface-variant);
+    font-size: var(--md-sys-typescale-title-large-size);
+    line-height: var(--md-sys-typescale-title-large-line-height);
+  }
+  @media (forced-colors: active) { .s4-prose :where(blockquote, pre) { border: 1px solid CanvasText; } }
+}

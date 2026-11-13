@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tool · S4 Orion Template</title>
+<!-- Template: Tool. For calculators, converters, generators and editors: one screen, no navigation, inputs in the main pane and the result in a sticky supporting pane. -->
+<script>(function (k) { try { var t = JSON.parse(localStorage.getItem(k) || 'null'); if (t && t.mode && t.mode !== 'system') document.documentElement.dataset.theme = t.mode; } catch (e) {} })('orion-template-theme');</script>
+<link rel="preload" href="../components/assets/inter-variable.woff2?v=2edaa7b" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../components/orion.css?v=6958b53">
+</head>
+<body>
+<div class="s4-app">
+  <div class="s4-app-body">
+    <header class="s4-top-app-bar">
+      <div class="s4-app-bar-title-group"><h1 class="s4-app-bar-title">Loan Calculator</h1></div>
+      <div class="s4-app-bar-actions"><button class="s4-icon-button" type="button" aria-label="Reset" data-tooltip="Reset" id="reset"><span class="s4-icon" data-icon="refresh"></span></button></div>
+    </header>
+    <main class="s4-content">
+      <div class="s4-split" data-layout="supporting">
+        <section class="s4-split-pane s4-stack" aria-label="Inputs">
+          <section class="s4-pane" aria-labelledby="loan-h">
+            <h2 class="s4-pane-title" id="loan-h">Loan</h2>
+            <div class="s4-text-field"><span class="s4-text-field-affix" data-prefix>$</span><input id="amount" inputmode="decimal" value="25,000"><label for="amount">Amount</label></div>
+            <div class="s4-text-field"><input id="rate" inputmode="decimal" value="6.5"><label for="rate">Interest Rate</label><span class="s4-text-field-affix" data-suffix>%</span></div>
+            <label class="s4-body-medium s4-on-surface-variant" for="years">Term: <span id="years-out" class="s4-num">5 years</span></label>
+            <div class="s4-slider" data-stops><input type="range" id="years" min="1" max="10" value="5"></div>
+          </section>
+          <section class="s4-pane" aria-labelledby="opt-h">
+            <h2 class="s4-pane-title" id="opt-h">Payments</h2>
+            <div class="s4-button-group" data-connected data-select="single" aria-label="Payment Frequency" id="freq">
+              <button class="s4-button" data-variant="tonal" type="button" value="12" aria-pressed="true">Monthly</button>
+              <button class="s4-button" data-variant="tonal" type="button" value="26">Every 2 Weeks</button>
+            </div>
+          </section>
+        </section>
+        <aside class="s4-split-pane" data-sticky aria-label="Result">
+          <section class="s4-pane" data-color="high">
+            <div class="s4-stat"><span class="s4-stat-label">Each Payment</span><span class="s4-stat-value" id="pay">$489.15</span><span class="s4-stat-meta" id="pay-meta">60 monthly payments</span></div>
+            <dl class="s4-dl">
+              <div class="s4-dl-row"><dt>Total Interest</dt><dd id="interest">$4,349.00</dd></div>
+              <div class="s4-dl-row"><dt>Total Paid</dt><dd id="total">$29,349.00</dd></div>
+            </dl>
+            <button class="s4-button" data-variant="tonal" type="button" id="copy"><span class="s4-icon" data-icon="copy"></span>Copy Result</button>
+          </section>
+        </aside>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="../components/assets/icons.js?v=f8aa430"></script>
+<script src="../components/orion.js?v=b83af66"></script>
+<script>S4.theme.restore('orion-template-theme', { mode: 'system' });
+var $ = function (id) { return document.getElementById(id); };
+var money = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
+var per = 12;
+function calc() {
+  var p = parseFloat($('amount').value.replace(/[^0-9.]/g, '')) || 0, r = (parseFloat($('rate').value) || 0) / 100 / per;
+  var y = +$('years').value, n = y * per, pay = r ? p * r / (1 - Math.pow(1 + r, -n)) : p / n;
+  $('years-out').textContent = y + (y === 1 ? ' year' : ' years');
+  $('pay').textContent = money.format(pay || 0);
+  $('pay-meta').textContent = n + (per === 12 ? ' monthly' : ' biweekly') + ' payments';
+  $('interest').textContent = money.format(Math.max(0, pay * n - p));
+  $('total').textContent = money.format(pay * n);
+}
+['amount', 'rate', 'years'].forEach(function (id) { $(id).addEventListener('input', calc); });
+$('freq').addEventListener('s4-change', function (e) { per = +e.detail.value; calc(); });
+$('reset').addEventListener('click', function () { $('amount').value = '25,000'; $('rate').value = '6.5'; $('years').value = 5; $('years').dispatchEvent(new Event('input')); calc(); });
+$('copy').addEventListener('click', function () { navigator.clipboard && navigator.clipboard.writeText($('pay').textContent); S4.snackbar({ text: 'Result copied' }); });
+calc();</script>
+</body>
+</html>

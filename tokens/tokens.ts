@@ -1576,6 +1576,16 @@ export const tokens = {
     "type": "dimension",
     "value": "1200px"
   },
+  "--s4-layout-content-reading": {
+    "type": "dimension",
+    "value": "720px",
+    "description": "Width cap for reading and single-column pages (articles, forms, settings, sign-in): about 75 characters of body-large."
+  },
+  "--s4-layout-content-wide": {
+    "type": "dimension",
+    "value": "1600px",
+    "description": "Width cap for wide pages (tables, boards, editors) on large and extra-large windows."
+  },
   "--s4-layout-list-width": {
     "type": "dimension",
     "value": "360px"

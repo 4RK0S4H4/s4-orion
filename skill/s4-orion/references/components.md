@@ -6,8 +6,9 @@ Every component has a live reference page at https://4rk0s4h4.github.io/s4-orion
 ## Contents
 
 - **Actions:** [button](#button), [icon-button](#icon-button), [button-group](#button-group), [fab](#fab)
-- **Navigation and shell:** [app](#app), [top-app-bar](#top-app-bar), [nav-bar](#nav-bar), [nav-rail](#nav-rail), [tabs](#tabs), [toolbar](#toolbar), [search](#search), [breadcrumbs](#breadcrumbs), [pagination](#pagination), [stepper](#stepper)
-- **Containment and data:** [card](#card), [pane](#pane), [list](#list), [table](#table), [divider](#divider), [avatar](#avatar), [accordion](#accordion), [empty-state](#empty-state)
+- **Navigation and shell:** [app](#app), [layout](#layout), [top-app-bar](#top-app-bar), [nav-bar](#nav-bar), [nav-rail](#nav-rail), [tabs](#tabs), [toolbar](#toolbar), [search](#search), [breadcrumbs](#breadcrumbs), [pagination](#pagination), [stepper](#stepper)
+- **Containment and data:** [card](#card), [pane](#pane), [list](#list), [table](#table), [stat](#stat), [description-list](#description-list), [divider](#divider), [avatar](#avatar), [accordion](#accordion), [empty-state](#empty-state)
+- **Content:** [prose](#prose), [message](#message)
 - **Inputs:** [text-field](#text-field), [chip](#chip), [switch](#switch), [checkbox](#checkbox), [radio](#radio), [slider](#slider), [swatches](#swatches)
 - **Feedback:** [badge](#badge), [status](#status), [progress](#progress), [banner](#banner), [skeleton](#skeleton), [snackbar](#snackbar), [tooltip](#tooltip)
 - **Overlays:** [menu](#menu), [dialog](#dialog), [sheet](#sheet)
@@ -265,6 +266,76 @@ side you're heading, spatial spring for movement, effects for fades), scrolls to
 
 **Tokens:** `--s4-layout-margin-compact`, `--s4-layout-margin`, `--s4-layout-content-max`, `--s4-size-nav-bar`,
 `--s4-z-navigation`, `--s4-motion-pattern-shared-axis-distance`, `--md-sys-motion-spring-spatial`, `--md-sys-motion-spring-effects`.
+
+---
+
+<a id="layout"></a>
+
+## Layout
+
+S4 addition, from the M3 canonical layouts. Page widths for different kinds of screens, and the two-pane layouts most
+apps need: **list-detail** (mail, contacts, bills, any CRUD app) and **supporting pane** (a document or form with
+context beside it). Works inside an [app shell](#app); window classes are container queries on `.s4-app`.
+
+```html
+<!-- page width: on the content, or on one view -->
+<main class="s4-content" data-width="reading">…</main>
+<section class="s4-view" data-view="settings" data-width="reading">…</section>
+
+<!-- list-detail -->
+<div class="s4-split" id="inbox">
+  <section class="s4-split-pane" aria-label="Messages">
+    <ul class="s4-list" role="listbox" aria-label="Messages">…rows with data-split-open…</ul>
+  </section>
+  <section class="s4-split-pane" data-sticky aria-label="Message">
+    <button class="s4-button" data-variant="text" type="button" data-split-back><span class="s4-icon" data-icon="back"></span>Inbox</button>
+    …detail…
+  </section>
+</div>
+
+<!-- supporting pane -->
+<div class="s4-split" data-layout="supporting">
+  <section class="s4-split-pane">…main…</section>
+  <aside class="s4-split-pane" data-sticky>…context…</aside>
+</div>
+```
+
+| Part / attribute | Values | Default |
+|---|---|---|
+| `data-width` on `.s4-content` or `.s4-view` | `reading` (720: articles, forms, settings, sign-in), `wide` (1600: tables, boards, editors), `full` (no cap, content only) | 1200 |
+| `.s4-split` | grid of two `.s4-split-pane`s, 24 apart | — |
+| `data-layout` | `list-detail`, `supporting` | `list-detail` |
+| `data-open` (split) | list-detail under 840: the detail replaces the list | absent (list shown) |
+| `[data-split-open]` / `[data-split-back]` | inside the split: set / clear `data-open`; back buttons hide from 840 | — |
+| `data-sticky` (pane) | from 840 the pane stays in view under the top app bar and scrolls inside itself | — |
+| `--s4-split-list`, `--s4-split-support` | column widths | 360, 400 |
+
+| Window | list-detail | supporting |
+|---|---|---|
+| < 840 | one pane at a time; opening adds a history entry so the phone's Back returns to the list | supporting pane stacks under the main pane |
+| ≥ 840 | list 360 + detail | main + 400 supporting pane |
+
+**Behaviour (`layout.js`):** clicks on `[data-split-open]` / `[data-split-back]` toggle `data-open`, run the shared
+axis (spatial movement, effects fade) when one pane replaces the other, and fire `s4-toggle { open }` on the split.
+`S4.split.open(split, true|false)` does it from code, e.g. on a listbox's `s4-change`.
+
+**When to use what:** list-detail when people pick one item from many and act on it; supporting pane when one main
+thing needs context (a form with a summary, an article with related links); plain views when screens are siblings.
+Pick the page width by content: reading for text and forms, default for dashboards, wide for tables.
+
+**Do**
+- On wide screens, select the first item so the detail pane is never empty (or show an [empty state](#empty-state)).
+- Give each pane a name (`aria-label` or a heading).
+
+**Don't**
+- Don't nest splits.
+- Don't add your own `position: fixed` panes; `data-sticky` already keeps a pane in view.
+
+**Accessibility:** panes are landmarks or labelled sections; the hidden pane under 840 is `display: none`, so it leaves
+the accessibility tree; Back (browser or button) returns focus to the list's page.
+
+**Tokens:** `--s4-layout-content-reading`, `--s4-layout-content-wide`, `--s4-layout-list-width`,
+`--s4-layout-inspector-width`, `--s4-layout-pane-gap`, `--s4-size-top-app-bar`, `--s4-motion-pattern-shared-axis-distance`.
 
 ---
 
@@ -935,6 +1006,87 @@ checked rows.
 
 ---
 
+<a id="stat"></a>
+
+## Stat
+
+S4 addition. One number people check: revenue, steps, open tickets, balance. A label, a big emphasized number and an
+optional change or note. The loudest thing on a dashboard should be the numbers, not the boxes around them.
+
+```html
+<section class="s4-pane" aria-label="Key Numbers">
+  <div class="s4-stat-row">
+    <div class="s4-stat">
+      <span class="s4-stat-label">Revenue</span>
+      <span class="s4-stat-value">$48.2K</span>
+      <span class="s4-stat-meta"><span class="s4-status" data-tone="primary">+8%</span>vs. September</span>
+    </div>
+    <div class="s4-stat"><span class="s4-stat-label">Open Invoices</span><span class="s4-stat-value">14</span><span class="s4-stat-meta">3 overdue</span></div>
+  </div>
+</section>
+```
+
+| Part / attribute | Values | Default |
+|---|---|---|
+| `.s4-stat-label` | label-large, on-surface-variant, Title Case | — |
+| `.s4-stat-value` | display-small, emphasized weight, tabular figures | — |
+| `.s4-stat-meta` | body-small, on-surface-variant; holds a `.s4-status` for the change | — |
+| `data-size="small"` | value on headline-small, for dense dashboards | — |
+| `.s4-stat-row` | as many stats per row as fit, at least two on a phone; `--s4-stat-min` sets the column floor | 160 |
+
+**Do**
+- Put several stats in one pane with an `.s4-stat-row`, not one pane per number.
+- Round to what people need ("$48.2K", "11 mo"); show the exact value in the detail.
+- Show the change as a status with a word or a sign ("+12%"), never color alone.
+
+**Don't**
+- Don't use a stat for something people don't track over time; use a [description list](#description-list).
+- Don't put more than four or five stats in a row.
+
+**Accessibility:** plain text in reading order (label, value, change). A pane holding stats gets an `aria-label`.
+
+**Tokens:** `--md-sys-typescale-display-small-*`, `--md-sys-typescale-emphasized-display-small-weight`,
+`--md-sys-typescale-label-large-*`, `--md-sys-typescale-body-small-*`, `--md-sys-color-on-surface(-variant)`.
+
+---
+
+<a id="description-list"></a>
+
+## Description List
+
+S4 addition. Labelled values on a detail screen: an order's date, total and status; a contact's email and phone.
+
+```html
+<dl class="s4-dl">
+  <div class="s4-dl-row"><dt>Vendor</dt><dd>Iron Mountain</dd></div>
+  <div class="s4-dl-row"><dt>Amount</dt><dd>$1,240.00</dd></div>
+  <div class="s4-dl-row"><dt>Status</dt><dd><span class="s4-status" data-tone="error">Overdue</span></dd></div>
+</dl>
+<dl class="s4-dl" data-layout="stacked">…</dl>
+```
+
+| Part / attribute | Values | Default |
+|---|---|---|
+| `.s4-dl-row` | one label and its value, at least 48 tall, a divider between rows | — |
+| `dt` | body-medium, on-surface-variant, Title Case | — |
+| `dd` | body-large, end-aligned, tabular figures; may hold a status, link or icon button | — |
+| `data-layout="stacked"` | label above value (long values, narrow panes) | side by side, wraps when tight |
+
+**Do**
+- Put it in a [pane](#pane) or the detail pane of a [list-detail layout](#layout).
+- Keep labels short ("Due Date", not "The date this bill is due").
+
+**Don't**
+- Don't use it for things people compare across many items; that's a [table](#table).
+- Don't make rows clickable; use a [list](#list) for things that open.
+
+**Accessibility:** a real `<dl>`; the `div` wrappers are allowed by HTML. Forced colors draw the dividers.
+
+**Tokens:** `--md-sys-color-outline-variant`, `--md-sys-typescale-body-medium-*`, `--md-sys-typescale-body-large-*`,
+`--s4-size-touch-target`, `--s4-size-divider`.
+
+---
+
 <a id="divider"></a>
 
 ## Divider
@@ -1073,6 +1225,96 @@ What a list, table or search shows when there is nothing to show yet.
 **Accessibility:** The icon is decorative; the title is the heading for the region.
 
 **Tokens:** surface-container roles, `on-surface`, `on-surface-variant`, shape `full` and `large`, spacing `--s4-space-*`, spring tokens. No outlines (decision 0023).
+
+---
+
+<a id="prose"></a>
+
+## Prose
+
+S4 addition. Long-form text: articles, help pages, release notes, terms, AI answers. The one place plain HTML elements
+(`h2`, `p`, `ul`, `blockquote`, `pre`) get styled, and only inside `.s4-prose`.
+
+```html
+<main class="s4-content" data-width="reading">
+  <article class="s4-prose">
+    <h1>Getting Paid Faster</h1>
+    <p class="s4-prose-lead">Three habits that cut the time between invoice and payment.</p>
+    <h2>Send Invoices the Same Day</h2>
+    <p>Clients pay in the order invoices arrive. <a href="#">See the data</a>.</p>
+    <ul><li>…</li></ul>
+    <blockquote>…</blockquote>
+    <pre><code>…</code></pre>
+  </article>
+</main>
+```
+
+| Element | Look |
+|---|---|
+| text | body-large, line height +4, about 70 characters a line |
+| `h1` / `h2` / `h3` / `h4` | headline-large / headline-small / title-large / title-medium, emphasized weight, Title Case |
+| `.s4-prose-lead` | the intro paragraph, title-large size, on-surface-variant |
+| `a` | primary, underlined |
+| `blockquote`, `pre` | surface-container-low / -high, large corners |
+| `code`, `kbd` | monospace on surface-container-high |
+| `hr`, `figure`, `figcaption`, `img` | divider; captions body-small; images with large corners |
+
+**Do**
+- Use real heading levels in order; the look follows the level.
+- Use a `data-width="reading"` page so the measure stays comfortable on desktop.
+
+**Don't**
+- Don't put app UI (lists of records, forms) inside prose; those are components.
+
+**Accessibility:** links are underlined (not color alone); text meets AA in every mode.
+
+**Tokens:** `--md-sys-typescale-*`, `--md-sys-color-primary`, `--md-sys-color-surface-container-low/-high`,
+`--md-sys-shape-corner-large`, `--s4-size-divider`.
+
+---
+
+<a id="message"></a>
+
+## Messages
+
+S4 addition. A conversation: chat, support threads, comments, an AI assistant. Bubbles are solid content; the composer
+floats at the bottom over the thread, so it is glass.
+
+```html
+<ol class="s4-thread" aria-label="Conversation with Maya Chen">
+  <li class="s4-thread-day">Today</li>
+  <li class="s4-message"><p>Can you send the invoice?</p><span class="s4-message-meta">Maya · 9:41</span></li>
+  <li class="s4-message" data-from="me"><p>Sent it a minute ago.</p><span class="s4-message-meta">9:42</span></li>
+</ol>
+<form class="s4-composer s4-glass">
+  <button class="s4-icon-button" type="button" aria-label="Attach File"><span class="s4-icon" data-icon="attach"></span></button>
+  <div class="s4-text-field"><textarea rows="1" aria-label="Message" placeholder="Message"></textarea></div>
+  <button class="s4-icon-button" data-variant="filled" type="submit" aria-label="Send"><span class="s4-icon" data-icon="send"></span></button>
+</form>
+```
+
+| Part / attribute | Values | Default |
+|---|---|---|
+| `.s4-thread` | the conversation, oldest first | — |
+| `.s4-thread-day` | a day divider ("Today"), label-medium, centered | — |
+| `.s4-message` | a bubble: body-large, large corners, a small corner on the speaker's side | theirs: surface-container-high, start side |
+| `data-from="me"` | primary, on-primary, end side | — |
+| `.s4-message-meta` | sender and time, label-small | — |
+| `.s4-composer` | sticks to the bottom above the nav bar; add `s4-glass` | surface-container |
+
+**Do**
+- Put assistant answers with headings or lists in a `.s4-prose` inside the bubble, or full width without a bubble.
+- Keep the composer's text field label-less with an `aria-label`; the send button is the one filled control.
+
+**Don't**
+- Don't color bubbles per person; mine and theirs is the only distinction.
+- Don't make the thread its own scroll box; the window scrolls and the composer sticks.
+
+**Accessibility:** an ordered list with an `aria-label`; announce new messages with an `aria-live="polite"` region if
+they arrive while the person reads. Sender names are text, not only avatars.
+
+**Tokens:** `--md-sys-color-primary`, `--md-sys-color-surface-container-high`, `--md-sys-shape-corner-large`,
+`--md-sys-shape-corner-small`, `--md-sys-shape-corner-extra-large`, `--s4-app-inset-bottom`, `--s4-z-sticky`.
 
 ---
 

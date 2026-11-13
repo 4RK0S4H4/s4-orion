@@ -264,6 +264,8 @@ Light values are shown; a second value is dark mode. Color roles also change wit
 | `--s4-layout-pane-gap` | var(--s4-space-6) |  |  |
 | `--s4-layout-gap` | var(--s4-space-4) |  | Default gap between items in a grid or stack. |
 | `--s4-layout-content-max` | 1200px |  |  |
+| `--s4-layout-content-reading` | 720px |  | Width cap for reading and single-column pages (articles, forms, settings, sign-in): about 75 characters of body-large. |
+| `--s4-layout-content-wide` | 1600px |  | Width cap for wide pages (tables, boards, editors) on large and extra-large windows. |
 | `--s4-layout-list-width` | 360px |  |  |
 | `--s4-layout-inspector-width` | 400px |  |  |
 

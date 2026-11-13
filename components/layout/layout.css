@@ -1,0 +1,60 @@
+/* Layout: page widths and the M3 canonical layouts (list-detail, supporting pane).
+   Page widths (on .s4-content, or on one .s4-view):
+     data-width="reading"   720 cap: articles, forms, settings, sign-in
+     data-width="wide"      1600 cap: tables, boards, editors
+     data-width="full"      no cap
+   Canonical layouts (inside an .s4-app; window classes are container queries on it):
+     <div class="s4-split" data-layout="list-detail">           (the default layout)
+       <section class="s4-split-pane">…list…</section>
+       <section class="s4-split-pane" data-sticky>…detail…</section>
+     </div>
+     list-detail: under 840 one pane at a time (data-open on the split shows the detail); from 840 the list is a 360
+       column and the detail fills the rest. [data-split-open] / [data-split-back] are wired by layout.js.
+     supporting:  the main pane plus a 400 supporting pane; under 840 the supporting pane stacks below.
+     data-sticky on a pane keeps it in view beside a long neighbour from 840 (it scrolls inside itself if taller).
+   Public knobs: --s4-split-list (list column), --s4-split-support (supporting column). */
+@layer s4.components {
+  /* ---------- page widths ---------- */
+  .s4-content[data-width="reading"] { --s4-content-max: var(--s4-layout-content-reading); }
+  .s4-content[data-width="wide"] { --s4-content-max: var(--s4-layout-content-wide); }
+  .s4-content[data-width="full"] { --s4-content-max: none; }
+  .s4-view[data-width="reading"] { max-inline-size: var(--s4-layout-content-reading); margin-inline: auto; }
+  .s4-view[data-width="wide"] { max-inline-size: var(--s4-layout-content-wide); margin-inline: auto; }
+
+  /* ---------- canonical layouts ---------- */
+  .s4-split {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--s4-layout-pane-gap);
+    align-items: start;
+  }
+  .s4-split > .s4-split-pane { min-inline-size: 0; }
+
+  /* expanded and up: side by side */
+  @container s4-app (width >= 840px) {
+    .s4-split:not([data-layout="supporting"]) {
+      grid-template-columns: minmax(0, var(--s4-split-list, var(--s4-layout-list-width))) minmax(0, 1fr);
+    }
+    .s4-split[data-layout="supporting"] {
+      grid-template-columns: minmax(0, 1fr) minmax(0, var(--s4-split-support, var(--s4-layout-inspector-width)));
+    }
+    .s4-split > .s4-split-pane[data-sticky] {
+      position: sticky;
+      inset-block-start: calc(var(--s4-size-top-app-bar) + var(--s4-space-2));
+      max-block-size: calc(100dvh - var(--s4-size-top-app-bar) - var(--s4-space-6));
+      overflow: auto;
+      overscroll-behavior: contain;
+    }
+    /* the back button only makes sense when one pane is shown at a time */
+    .s4-split:not([data-layout="supporting"]) [data-split-back],
+    .s4-split:not([data-layout="supporting"]) :has(> [data-split-back]:only-child) { display: none; }
+  }
+}
+/* compact and medium: list-detail shows one pane at a time. In the utilities layer so a utility class on a pane
+   (.s4-stack, .s4-row) can't show a pane that should be hidden. */
+@layer s4.utilities {
+  @container s4-app (width < 840px) {
+    .s4-split:not([data-layout="supporting"]):not([data-open]) > .s4-split-pane + .s4-split-pane { display: none; }
+    .s4-split:not([data-layout="supporting"])[data-open] > .s4-split-pane:first-child { display: none; }
+  }
+}

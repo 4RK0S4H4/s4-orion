@@ -55,3 +55,22 @@ S4.register('swatches', function (scope) {
     });
   });
 });
+
+/* Theme controls without app code: a connected button group with data-theme-mode (values system|light|dark) or
+   data-theme-contrast (values 0|0.5|1) calls S4.theme when picked and follows S4.theme() (restored or changed elsewhere). */
+S4.register('theme-controls', function (scope) {
+  S4.util.all(scope, '[data-theme-mode], [data-theme-contrast]').forEach(function (g) {
+    if (!S4.util.once(g, 'themectl')) return;
+    var key = g.hasAttribute('data-theme-mode') ? 'mode' : 'contrast';
+    function reflect() {
+      var t = S4.theme(), cur = key === 'mode' ? (t.mode || 'system') : +(t.contrast || 0);
+      g.querySelectorAll('[value]').forEach(function (b) { b.setAttribute('aria-pressed', String(key === 'mode' ? b.value === cur : +b.value === cur)); });
+    }
+    g.addEventListener('s4-change', function (e) {
+      if (e.target !== g || !e.detail || e.detail.value == null) return;
+      var o = {}; o[key] = key === 'mode' ? e.detail.value : +e.detail.value; S4.theme(o);
+    });
+    document.addEventListener('s4-theme', reflect);
+    reflect();
+  });
+});

@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sign In · S4 Orion Template</title>
+<!-- S4 Orion template (copy orion.css, orion.js, icons.js, m3color.js and inter-variable.woff2 next to it). Sign In. For sign-in, sign-up, onboarding and any one-task screen with no navigation: a centered pane on a reading-width page. -->
+<script>(function (k) { try { var t = JSON.parse(localStorage.getItem(k) || 'null'); if (t && t.mode && t.mode !== 'system') document.documentElement.dataset.theme = t.mode; } catch (e) {} })('orion-template-theme');</script>
+<link rel="preload" href="inter-variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="orion.css">
+<style>
+  .auth { min-block-size: 100dvh; display: grid; align-content: center; }
+  .auth-brand { display: grid; justify-items: center; gap: var(--s4-space-2); text-align: center; padding-block-end: var(--s4-space-6); }
+  .auth-brand .s4-icon { --s4-icon-size: var(--s4-size-icon-large); }
+  .auth-alt { text-align: center; }
+</style>
+</head>
+<body>
+<div class="s4-app">
+  <div class="s4-app-body">
+    <main class="s4-content auth" data-width="reading">
+      <div class="auth-brand">
+        <span class="s4-empty-icon"><span class="s4-icon" data-icon="sparkle"></span></span>
+        <h1 class="s4-headline-medium s4-emphasized" style="margin:0">Welcome Back</h1>
+        <p class="s4-body-medium s4-on-surface-variant" style="margin:0">Sign in to pick up where you left off.</p>
+      </div>
+      <form class="s4-pane" id="signin" novalidate>
+        <div class="s4-text-field"><span class="s4-icon" data-icon="mail"></span><input id="email" type="email" autocomplete="email" required><label for="email">Email</label></div>
+        <div class="s4-text-field"><span class="s4-icon" data-icon="lock"></span><input id="pw" type="password" autocomplete="current-password" required><label for="pw">Password</label>
+          <button class="s4-icon-button" type="button" aria-label="Show Password" id="pw-toggle"><span class="s4-icon" data-icon="visible"></span></button></div>
+        <div class="s4-row" style="justify-content: space-between">
+          <label class="s4-checkbox"><input type="checkbox" checked><span class="s4-checkbox-box"></span>Keep Me Signed In</label>
+          <a class="s4-button" data-variant="text" href="#reset">Forgot Password?</a>
+        </div>
+        <button class="s4-button" data-size="m" type="submit">Sign In</button>
+        <div class="s4-divider" role="separator"></div>
+        <button class="s4-button" data-variant="tonal" data-size="m" type="button"><span class="s4-icon" data-icon="key"></span>Sign In With a Passkey</button>
+      </form>
+      <p class="auth-alt s4-body-medium">New here? <a class="s4-button" data-variant="text" href="#signup">Create an Account</a></p>
+    </main>
+  </div>
+</div>
+<script src="icons.js"></script>
+<script src="orion.js"></script>
+<script>S4.theme.restore('orion-template-theme', { mode: 'system' });
+var form = document.getElementById('signin');
+document.getElementById('pw-toggle').addEventListener('click', function () {
+  var pw = document.getElementById('pw'), show = pw.type === 'password';
+  pw.type = show ? 'text' : 'password';
+  this.setAttribute('aria-label', show ? 'Hide Password' : 'Show Password');
+  this.querySelector('.s4-icon').setAttribute('data-icon', show ? 'hidden' : 'visible'); S4.init(this);
+});
+form.addEventListener('submit', function (e) {
+  e.preventDefault();
+  var email = document.getElementById('email'), field = email.closest('.s4-text-field');
+  if (!email.value || !email.checkValidity()) { field.setAttribute('data-error', 'Enter the email you signed up with.'); email.focus(); return; }
+  field.removeAttribute('data-error');
+  S4.snackbar({ text: 'Signed in' });
+});</script>
+</body>
+</html>

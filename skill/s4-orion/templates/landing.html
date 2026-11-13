@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Landing Page · S4 Orion Template</title>
+<!-- S4 Orion template (copy orion.css, orion.js, icons.js, m3color.js and inter-variable.woff2 next to it). Landing Page. For a product, app or project home page: a hero, features, a short FAQ and a call to action. No app shell; a top bar with links. -->
+<script>(function (k) { try { var t = JSON.parse(localStorage.getItem(k) || 'null'); if (t && t.mode && t.mode !== 'system') document.documentElement.dataset.theme = t.mode; } catch (e) {} })('orion-template-theme');</script>
+<link rel="preload" href="inter-variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="orion.css">
+<style>
+  .lp { display: grid; gap: var(--s4-space-16); padding-block: var(--s4-space-8) var(--s4-space-16); }
+  .lp-hero { display: grid; justify-items: start; gap: var(--s4-space-4); padding-block: var(--s4-space-8); }
+  .lp-hero h1 { margin: 0; max-inline-size: 16ch; font-family: var(--md-sys-typescale-display-large-font); font-size: clamp(var(--md-sys-typescale-display-small-size), 8vw, var(--md-sys-typescale-display-large-size)); line-height: 1.08; letter-spacing: var(--md-sys-typescale-display-large-tracking); font-weight: var(--md-sys-typescale-emphasized-display-large-weight); text-wrap: balance; }
+  .lp-hero p { margin: 0; max-inline-size: 48ch; }
+  .lp-h2 { margin: 0 0 var(--s4-space-6); }
+  .lp-feature .s4-icon { --s4-icon-size: var(--s4-size-icon-large); }
+  .lp-cta { display: grid; justify-items: center; gap: var(--s4-space-4); text-align: center; }
+  .lp-foot { text-align: center; }
+</style>
+</head>
+<body>
+<div class="s4-app">
+  <div class="s4-app-body">
+    <header class="s4-top-app-bar">
+      <div class="s4-app-bar-title-group"><span class="s4-app-bar-title">Ledgerly</span></div>
+      <div class="s4-app-bar-actions">
+        <a class="s4-button" data-variant="text" href="#features">Features</a>
+        <a class="s4-button" href="#start">Get Started</a>
+      </div>
+    </header>
+    <main class="s4-content lp">
+      <section class="lp-hero">
+        <span class="s4-status" data-tone="primary">New: Bank Sync</span>
+        <h1>Bills Paid on Time, Without Thinking</h1>
+        <p class="s4-title-large s4-on-surface-variant">Ledgerly collects your bills, reminds you before they’re due and pays them in one tap.</p>
+        <div class="s4-row"><a class="s4-button" data-size="m" href="#start">Try It Free</a><a class="s4-button" data-variant="tonal" data-size="m" href="#features">See How It Works</a></div>
+      </section>
+      <section id="features" aria-labelledby="f-h">
+        <h2 class="lp-h2 s4-headline-medium s4-emphasized" id="f-h">Everything in One Place</h2>
+        <div class="s4-grid" style="--s4-min: 240px">
+          <article class="s4-card lp-feature"><div class="s4-card-body"><span class="s4-icon" data-icon="bills"></span><h3 class="s4-card-title">All Your Bills</h3><p class="s4-card-supporting">Forward an email or snap a photo; we read the amount and due date.</p></div></article>
+          <article class="s4-card lp-feature"><div class="s4-card-body"><span class="s4-icon" data-icon="notifications"></span><h3 class="s4-card-title">Gentle Reminders</h3><p class="s4-card-supporting">A nudge three days before, and one on the day. Never a late fee again.</p></div></article>
+          <article class="s4-card lp-feature"><div class="s4-card-body"><span class="s4-icon" data-icon="security"></span><h3 class="s4-card-title">Bank-Grade Security</h3><p class="s4-card-supporting">Read-only access, encrypted at rest, and you can disconnect any time.</p></div></article>
+        </div>
+      </section>
+      <section aria-labelledby="faq-h">
+        <h2 class="lp-h2 s4-headline-medium s4-emphasized" id="faq-h">Questions</h2>
+        <div class="s4-accordion">
+          <details class="s4-accordion-item" name="faq" open><summary>Is there a free plan?<span class="s4-icon" data-icon="chevron-down"></span></summary><div class="s4-accordion-body">Yes. Up to ten bills a month are free, forever.</div></details>
+          <details class="s4-accordion-item" name="faq"><summary>Which banks work?<span class="s4-icon" data-icon="chevron-down"></span></summary><div class="s4-accordion-body">Over 10,000 banks in the US, UK and EU.</div></details>
+          <details class="s4-accordion-item" name="faq"><summary>Can I cancel any time?<span class="s4-icon" data-icon="chevron-down"></span></summary><div class="s4-accordion-body">Yes, from Settings, in two taps.</div></details>
+        </div>
+      </section>
+      <section class="s4-pane lp-cta" id="start" data-color="high" aria-labelledby="cta-h">
+        <h2 class="s4-headline-small s4-emphasized" id="cta-h" style="margin:0">Start Paying Bills the Easy Way</h2>
+        <p class="s4-body-large s4-on-surface-variant" style="margin:0">Free for your first ten bills. No card needed.</p>
+        <a class="s4-button" data-size="m" href="#signup">Create an Account</a>
+      </section>
+      <footer class="lp-foot s4-body-small s4-on-surface-variant">© 2026 Ledgerly · Icons by 480 Design (CC BY 4.0)</footer>
+    </main>
+  </div>
+</div>
+<script src="icons.js"></script>
+<script src="orion.js"></script>
+<script>S4.theme.restore('orion-template-theme', { mode: 'system' });</script>
+</body>
+</html>

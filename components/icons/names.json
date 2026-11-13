@@ -75,7 +75,22 @@
         "camera": "camera",
         "image": "gallery",
         "play": "play",
-        "pause": "pause"
+        "pause": "pause",
+        "send": "plain",
+        "attach": "paperclip",
+        "inbox": "inbox",
+        "archive": "archive",
+        "login": "login-2",
+        "key": "key",
+        "security": "shield-check",
+        "cart": "cart-large-minimalistic",
+        "globe": "globe",
+        "help": "question-circle",
+        "code": "code",
+        "list": "list",
+        "book": "book-minimalistic",
+        "tune": "tuning-2",
+        "mic": "microphone"
       }
     },
     "phosphor-duotone": {
@@ -151,7 +166,22 @@
         "camera": "camera",
         "image": "image",
         "play": "play",
-        "pause": "pause"
+        "pause": "pause",
+        "send": "paper-plane-tilt",
+        "attach": "paperclip",
+        "inbox": "tray",
+        "archive": "archive",
+        "login": "sign-in",
+        "key": "key",
+        "security": "shield-check",
+        "cart": "shopping-cart",
+        "globe": "globe",
+        "help": "question",
+        "code": "code",
+        "list": "list-bullets",
+        "book": "book-open",
+        "tune": "sliders-horizontal",
+        "mic": "microphone"
       }
     },
     "phosphor-bold-duotone": {
@@ -227,7 +257,22 @@
         "camera": "camera",
         "image": "image",
         "play": "play",
-        "pause": "pause"
+        "pause": "pause",
+        "send": "paper-plane-tilt",
+        "attach": "paperclip",
+        "inbox": "tray",
+        "archive": "archive",
+        "login": "sign-in",
+        "key": "key",
+        "security": "shield-check",
+        "cart": "shopping-cart",
+        "globe": "globe",
+        "help": "question",
+        "code": "code",
+        "list": "list-bullets",
+        "book": "book-open",
+        "tune": "sliders-horizontal",
+        "mic": "microphone"
       }
     }
   }

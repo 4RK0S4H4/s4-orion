@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Settings · S4 Orion Template</title>
+<!-- Template: Settings. For any app’s settings: grouped switches, choices and the theme controls, on a reading-width page, with a danger zone last. -->
+<script>(function (k) { try { var t = JSON.parse(localStorage.getItem(k) || 'null'); if (t && t.mode && t.mode !== 'system') document.documentElement.dataset.theme = t.mode; } catch (e) {} })('orion-template-theme');</script>
+<link rel="preload" href="../components/assets/inter-variable.woff2?v=2edaa7b" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../components/orion.css?v=6958b53">
+</head>
+<body>
+<div class="s4-app">
+  <div class="s4-app-body">
+    <header class="s4-top-app-bar">
+      <button class="s4-icon-button" type="button" aria-label="Back"><span class="s4-icon" data-icon="back"></span></button>
+      <div class="s4-app-bar-title-group"><h1 class="s4-app-bar-title">Settings</h1></div>
+    </header>
+    <main class="s4-content" data-width="reading">
+      <div class="s4-stack">
+        <section class="s4-pane" aria-labelledby="look-h">
+          <h2 class="s4-pane-title" id="look-h">Appearance</h2>
+          <p class="s4-pane-supporting">Applies to this device.</p>
+          <div class="s4-button-group" data-connected data-select="single" data-theme-mode aria-label="Theme">
+            <button class="s4-button" data-variant="tonal" type="button" value="light"><span class="s4-icon" data-icon="light-mode"></span>Light</button>
+            <button class="s4-button" data-variant="tonal" type="button" value="system" aria-pressed="true">System</button>
+            <button class="s4-button" data-variant="tonal" type="button" value="dark"><span class="s4-icon" data-icon="dark-mode"></span>Dark</button>
+          </div>
+          <div class="s4-button-group" data-connected data-select="single" data-theme-contrast aria-label="Contrast">
+            <button class="s4-button" data-variant="tonal" type="button" value="0" aria-pressed="true">Standard</button>
+            <button class="s4-button" data-variant="tonal" type="button" value="0.5">Medium</button>
+            <button class="s4-button" data-variant="tonal" type="button" value="1">High</button>
+          </div>
+          <div class="s4-swatches" data-theme-seed aria-label="Theme Color">
+            <button class="s4-swatch" type="button" data-seed="#000000" aria-label="Mono"></button>
+            <button class="s4-swatch" type="button" data-seed="#4f46e5" aria-label="Indigo"></button>
+            <button class="s4-swatch" type="button" data-seed="#00796b" aria-label="Teal"></button>
+            <button class="s4-swatch" type="button" data-seed="#c2410c" aria-label="Orange"></button>
+          </div>
+        </section>
+        <ul class="s4-list" data-style="segmented" aria-label="Notifications">
+          <li class="s4-list-subheader">Notifications</li>
+          <li><label class="s4-list-item"><span class="s4-list-leading"><span class="s4-icon" data-icon="notifications"></span></span><span class="s4-list-content"><span class="s4-list-headline">Push Notifications</span><span class="s4-list-supporting">Replies and mentions</span></span><span class="s4-list-trailing"><span class="s4-switch"><input type="checkbox" role="switch" checked><span class="s4-switch-track"><span class="s4-switch-handle"></span></span></span></span></label></li>
+          <li><label class="s4-list-item"><span class="s4-list-leading"><span class="s4-icon" data-icon="mail"></span></span><span class="s4-list-content"><span class="s4-list-headline">Weekly Email</span><span class="s4-list-supporting">A summary every Monday</span></span><span class="s4-list-trailing"><span class="s4-switch"><input type="checkbox" role="switch"><span class="s4-switch-track"><span class="s4-switch-handle"></span></span></span></span></label></li>
+        </ul>
+        <ul class="s4-list" data-style="segmented" aria-label="Account">
+          <li class="s4-list-subheader">Account</li>
+          <li><a class="s4-list-item" href="#profile"><span class="s4-list-leading"><span class="s4-icon" data-icon="account"></span></span><span class="s4-list-content"><span class="s4-list-headline">Profile</span><span class="s4-list-supporting">Name, photo and email</span></span><span class="s4-list-trailing"><span class="s4-icon" data-icon="chevron-right"></span></span></a></li>
+          <li><a class="s4-list-item" href="#security"><span class="s4-list-leading"><span class="s4-icon" data-icon="security"></span></span><span class="s4-list-content"><span class="s4-list-headline">Password and Security</span><span class="s4-list-supporting">Two-step sign-in is on</span></span><span class="s4-list-trailing"><span class="s4-icon" data-icon="chevron-right"></span></span></a></li>
+          <li><a class="s4-list-item" href="#language"><span class="s4-list-leading"><span class="s4-icon" data-icon="globe"></span></span><span class="s4-list-content"><span class="s4-list-headline">Language</span></span><span class="s4-list-trailing"><span class="s4-list-supporting">English</span><span class="s4-icon" data-icon="chevron-right"></span></span></a></li>
+        </ul>
+        <section class="s4-pane" aria-labelledby="data-h">
+          <h2 class="s4-pane-title" id="data-h">Storage</h2>
+          <p class="s4-pane-supporting">2.4 GB of 5 GB used.</p>
+          <div class="s4-progress" data-value="0.48" aria-label="Storage Used"></div>
+          <div class="s4-row"><button class="s4-button" data-variant="tonal" type="button"><span class="s4-icon" data-icon="download"></span>Export Data</button></div>
+        </section>
+        <section class="s4-pane" data-color="error" aria-labelledby="danger-h">
+          <h2 class="s4-pane-title" id="danger-h">Delete Account</h2>
+          <p class="s4-pane-supporting">This deletes your account and everything in it. You can’t undo this.</p>
+          <div class="s4-row"><button class="s4-button" data-color="error" type="button" data-dialog="confirm-delete">Delete Account</button></div>
+        </section>
+      </div>
+    </main>
+  </div>
+</div>
+<dialog class="s4-dialog" id="confirm-delete" aria-labelledby="cd-h">
+  <span class="s4-icon s4-dialog-icon" data-icon="delete"></span>
+  <h2 class="s4-dialog-headline" id="cd-h">Delete your account?</h2>
+  <div class="s4-dialog-content">Everything in it is deleted for good.</div>
+  <div class="s4-dialog-actions"><button class="s4-button" data-variant="text" data-close="cancel" type="button">Cancel</button><button class="s4-button" data-variant="text" data-color="error" data-close="delete" type="button">Delete</button></div>
+</dialog>
+<script src="../components/assets/icons.js?v=f8aa430"></script>
+<script src="../components/orion.js?v=b83af66"></script>
+<script>S4.theme.restore('orion-template-theme', { mode: 'system' });</script>
+</body>
+</html>

@@ -18,9 +18,22 @@ S4.register('nav-rail', function (scope) {
       if (label) toggle.setAttribute('aria-label', label);
     }
 
+    /* data-expand="auto": expanded on large windows (1200 and up, M3 Expressive), collapsed below, until the person
+       uses the toggle (their choice then sticks for the page's life) */
+    var chosen = false;
+    if (rail.dataset.expand === 'auto' && window.ResizeObserver) {
+      var host = rail.closest('.s4-app') || document.documentElement;
+      new ResizeObserver(function () {
+        if (chosen) return;
+        var wide = host.clientWidth >= (parseFloat(S4.util.css('--s4-breakpoint-large')) || 1200);
+        if (wide !== rail.hasAttribute('data-expanded')) { rail.toggleAttribute('data-expanded', wide); sync(); }
+      }).observe(host);
+    }
+
     rail.addEventListener('click', function (e) {
       if (e.defaultPrevented) return;
       if (toggle && e.target.closest('[data-rail-toggle]') === toggle) {
+        chosen = true;
         rail.toggleAttribute('data-expanded');
         sync();
         /* labels and FAB text change place: fade them in rather than letting them jump */

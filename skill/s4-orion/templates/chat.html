@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Chat · S4 Orion Template</title>
+<!-- S4 Orion template (copy orion.css, orion.js, icons.js, m3color.js and inter-variable.woff2 next to it). Chat. For messaging, support, comments and AI assistants: a thread of bubbles with a glass composer stuck above the nav bar. -->
+<script>(function (k) { try { var t = JSON.parse(localStorage.getItem(k) || 'null'); if (t && t.mode && t.mode !== 'system') document.documentElement.dataset.theme = t.mode; } catch (e) {} })('orion-template-theme');</script>
+<link rel="preload" href="inter-variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="orion.css">
+</head>
+<body>
+<div class="s4-app">
+  <nav class="s4-nav-rail" aria-label="Main"><div class="s4-nav-rail-items">
+    <a class="s4-nav-item" href="#chats" data-view="chats" aria-current="page"><span class="s4-nav-indicator"><span class="s4-icon" data-icon="chat"></span></span><span class="s4-nav-label">Chats</span></a>
+    <a class="s4-nav-item" href="#people" data-view="people"><span class="s4-nav-indicator"><span class="s4-icon" data-icon="people"></span></span><span class="s4-nav-label">People</span></a>
+    <a class="s4-nav-item" href="#settings" data-view="settings"><span class="s4-nav-indicator"><span class="s4-icon" data-icon="settings"></span></span><span class="s4-nav-label">Settings</span></a>
+  </div></nav>
+  <div class="s4-app-body">
+    <header class="s4-top-app-bar">
+      <button class="s4-icon-button" type="button" aria-label="Back"><span class="s4-icon" data-icon="back"></span></button>
+      <div class="s4-app-bar-title-group"><h1 class="s4-app-bar-title">Maya Chen</h1><p class="s4-app-bar-subtitle">Online</p></div>
+      <div class="s4-app-bar-actions"><button class="s4-icon-button" type="button" aria-label="Call" data-tooltip="Call"><span class="s4-icon" data-icon="phone"></span></button></div>
+    </header>
+    <main class="s4-content" data-width="reading">
+      <section class="s4-view" data-view="chats" data-title="Maya Chen">
+        <ol class="s4-thread" id="thread" aria-label="Conversation with Maya Chen" aria-live="polite">
+          <li class="s4-thread-day">Yesterday</li>
+          <li class="s4-message"><p>Did the photos from the offsite come through?</p><span class="s4-message-meta">Maya · 18:02</span></li>
+          <li class="s4-message" data-from="me"><p>Yes, all 48. Putting the best ones in the deck tonight.</p><span class="s4-message-meta">18:10</span></li>
+          <li class="s4-thread-day">Today</li>
+          <li class="s4-message"><p>Can you send the October invoice before Friday?</p><span class="s4-message-meta">Maya · 9:41</span></li>
+          <li class="s4-message"><p>Finance closes the month early this time.</p><span class="s4-message-meta">Maya · 9:41</span></li>
+          <li class="s4-message" data-from="me"><p>Sent it a minute ago. It’s the one ending 4412.</p><span class="s4-message-meta">9:42</span></li>
+          <li class="s4-message"><div class="s4-prose"><p>Perfect. For next month:</p><ul><li>Same address</li><li>Add the PO number</li></ul></div><span class="s4-message-meta">Maya · 9:44</span></li>
+        </ol>
+        <form class="s4-composer s4-glass" id="composer">
+          <button class="s4-icon-button" type="button" aria-label="Attach File"><span class="s4-icon" data-icon="attach"></span></button>
+          <div class="s4-text-field"><textarea id="msg" rows="1" aria-label="Message" placeholder="Message"></textarea></div>
+          <button class="s4-icon-button" data-variant="filled" type="submit" aria-label="Send"><span class="s4-icon" data-icon="send"></span></button>
+        </form>
+      </section>
+      <section class="s4-view" data-view="people" data-title="People" hidden><div class="s4-empty"><span class="s4-empty-icon"><span class="s4-icon" data-icon="people"></span></span><h2 class="s4-empty-title">No Contacts Yet</h2><p class="s4-empty-text">Invite someone to start a conversation.</p></div></section>
+      <section class="s4-view" data-view="settings" data-title="Settings" hidden><div class="s4-empty"><span class="s4-empty-icon"><span class="s4-icon" data-icon="settings"></span></span><h2 class="s4-empty-title">Settings</h2><p class="s4-empty-text">See the Settings template.</p></div></section>
+    </main>
+  </div>
+  <nav class="s4-nav-bar" aria-label="Main">
+    <a class="s4-nav-item" href="#chats" data-view="chats" aria-current="page"><span class="s4-nav-indicator"><span class="s4-icon" data-icon="chat"></span></span><span class="s4-nav-label">Chats</span></a>
+    <a class="s4-nav-item" href="#people" data-view="people"><span class="s4-nav-indicator"><span class="s4-icon" data-icon="people"></span></span><span class="s4-nav-label">People</span></a>
+    <a class="s4-nav-item" href="#settings" data-view="settings"><span class="s4-nav-indicator"><span class="s4-icon" data-icon="settings"></span></span><span class="s4-nav-label">Settings</span></a>
+  </nav>
+</div>
+<script src="icons.js"></script>
+<script src="orion.js"></script>
+<script>S4.theme.restore('orion-template-theme', { mode: 'system' });
+document.getElementById('composer').addEventListener('submit', function (e) {
+  e.preventDefault();
+  var box = document.getElementById('msg'), text = box.value.trim(); if (!text) return;
+  var li = document.createElement('li'); li.className = 's4-message'; li.dataset.from = 'me';
+  var p = document.createElement('p'); p.textContent = text; li.appendChild(p);
+  var m = document.createElement('span'); m.className = 's4-message-meta'; m.textContent = 'Now'; li.appendChild(m);
+  document.getElementById('thread').appendChild(li); box.value = ''; box.dispatchEvent(new Event('input'));
+  S4.motion.animate(li, [{ opacity: 0, transform: 'translateY(10px)' }, { opacity: 1, transform: 'none' }], 'spatial', { fill: 'none' });
+  window.scrollTo({ top: document.body.scrollHeight });
+});
+document.getElementById('msg').addEventListener('keydown', function (e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); this.form.requestSubmit(); } });
+window.scrollTo({ top: document.body.scrollHeight });</script>
+</body>
+</html>

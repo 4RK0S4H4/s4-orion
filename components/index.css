@@ -9,6 +9,7 @@
 @import url("fab/fab.css");
 /* navigation and shell */
 @import url("app/app.css");
+@import url("layout/layout.css");
 @import url("top-app-bar/top-app-bar.css");
 @import url("nav-bar/nav-bar.css");
 @import url("nav-rail/nav-rail.css");
@@ -26,6 +27,10 @@
 @import url("pagination/pagination.css");
 @import url("stepper/stepper.css");
 @import url("table/table.css");
+@import url("stat/stat.css");
+@import url("description-list/description-list.css");
+@import url("message/message.css");
+@import url("prose/prose.css");
 /* inputs */
 @import url("text-field/text-field.css");
 @import url("switch/switch.css");

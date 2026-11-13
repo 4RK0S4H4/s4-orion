@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dashboard · S4 Orion Template</title>
+<!-- Template: Dashboard. For analytics, finance, admin and status apps: a few numbers people check, a trend, a short
+     list of what needs attention, and a detailed table one tap away. -->
+<script>(function (k) { try { var t = JSON.parse(localStorage.getItem(k) || 'null'); if (t && t.mode && t.mode !== 'system') document.documentElement.dataset.theme = t.mode; } catch (e) {} })('orion-template-theme');</script>
+<link rel="preload" href="../components/assets/inter-variable.woff2?v=2edaa7b" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../components/orion.css?v=6958b53">
+<style>
+  /* the app's own layout: tokens only */
+  .dash-grid { display: grid; gap: var(--s4-layout-gap); }
+  @container s4-app (width >= 840px) { .dash-grid { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); } }
+  .dash-chart { display: flex; align-items: flex-end; gap: var(--s4-space-2); block-size: calc(var(--s4-size-button-large) * 2); padding-block-start: var(--s4-space-4); }
+  .dash-bar { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: var(--s4-space-1); block-size: 100%; }
+  .dash-bar > i { inline-size: 100%; max-inline-size: var(--s4-size-button-medium); block-size: var(--h); border-radius: var(--md-sys-shape-corner-small); background: var(--md-sys-color-surface-container-highest); }
+  .dash-bar[aria-current] > i { background: var(--md-sys-color-primary); }
+  .dash-bar > span { color: var(--md-sys-color-on-surface-variant); font-size: var(--md-sys-typescale-label-small-size); line-height: var(--md-sys-typescale-label-small-line-height); }
+</style>
+</head>
+<body>
+<div class="s4-app">
+  <nav class="s4-nav-rail" aria-label="Main" data-expand="auto">
+    <div class="s4-nav-rail-header">
+      <button class="s4-icon-button" type="button" data-rail-toggle aria-expanded="false" aria-label="Expand Navigation" data-label-expand="Expand Navigation" data-label-collapse="Collapse Navigation"><span class="s4-icon" data-icon="menu"></span></button>
+    </div>
+    <div class="s4-nav-rail-items">
+      <a class="s4-nav-item" href="#overview" data-view="overview" aria-current="page"><span class="s4-nav-indicator"><span class="s4-icon" data-icon="dashboard"></span></span><span class="s4-nav-label">Overview</span></a>
+      <a class="s4-nav-item" href="#reports" data-view="reports"><span class="s4-nav-indicator"><span class="s4-icon" data-icon="chart"></span></span><span class="s4-nav-label">Reports</span></a>
+      <a class="s4-nav-item" href="#accounts" data-view="accounts"><span class="s4-nav-indicator"><span class="s4-icon" data-icon="wallet"></span></span><span class="s4-nav-label">Accounts</span></a>
+    </div>
+  </nav>
+  <div class="s4-app-body">
+    <header class="s4-top-app-bar">
+      <div class="s4-app-bar-title-group"><h1 class="s4-app-bar-title">Overview</h1></div>
+      <div class="s4-app-bar-actions">
+        <button class="s4-icon-button" type="button" aria-label="Export" data-tooltip="Export"><span class="s4-icon" data-icon="export"></span></button>
+        <button class="s4-icon-button" type="button" aria-label="More" data-menu="dash-more"><span class="s4-icon" data-icon="more-vert"></span></button>
+      </div>
+    </header>
+    <main class="s4-content">
+      <section class="s4-view" data-view="overview" data-title="Overview">
+        <div class="s4-page-header">
+          <h2 class="s4-headline-small">October</h2>
+          <div class="s4-button-group" data-connected data-select="single" aria-label="Period">
+            <button class="s4-button" data-variant="tonal" type="button" value="week">Week</button>
+            <button class="s4-button" data-variant="tonal" type="button" value="month" aria-pressed="true">Month</button>
+            <button class="s4-button" data-variant="tonal" type="button" value="year">Year</button>
+          </div>
+        </div>
+        <div class="s4-stack">
+          <section class="s4-pane" aria-label="Key Numbers">
+            <div class="s4-stat-row">
+              <div class="s4-stat"><span class="s4-stat-label">Revenue</span><span class="s4-stat-value">$48.2K</span><span class="s4-stat-meta"><span class="s4-status" data-tone="primary">+8%</span>vs. September</span></div>
+              <div class="s4-stat"><span class="s4-stat-label">Spent</span><span class="s4-stat-value">$31.7K</span><span class="s4-stat-meta"><span class="s4-status" data-tone="error">+12%</span>vs. September</span></div>
+              <div class="s4-stat"><span class="s4-stat-label">Open Invoices</span><span class="s4-stat-value">14</span><span class="s4-stat-meta">3 overdue</span></div>
+              <div class="s4-stat"><span class="s4-stat-label">Runway</span><span class="s4-stat-value">11 mo</span><span class="s4-stat-meta">At this month’s burn</span></div>
+            </div>
+          </section>
+          <div class="dash-grid">
+            <section class="s4-pane" aria-labelledby="trend-h">
+              <h3 class="s4-pane-title" id="trend-h">Revenue by Month</h3>
+              <p class="s4-pane-supporting">Thousands of dollars, this year.</p>
+              <div class="dash-chart" role="img" aria-label="Revenue by month: May 31K, June 35K, July 33K, August 40K, September 44K, October 48K">
+                <div class="dash-bar" style="--h: 62%"><i></i><span>May</span></div>
+                <div class="dash-bar" style="--h: 70%"><i></i><span>Jun</span></div>
+                <div class="dash-bar" style="--h: 66%"><i></i><span>Jul</span></div>
+                <div class="dash-bar" style="--h: 80%"><i></i><span>Aug</span></div>
+                <div class="dash-bar" style="--h: 88%"><i></i><span>Sep</span></div>
+                <div class="dash-bar" style="--h: 96%" aria-current="true"><i></i><span>Oct</span></div>
+              </div>
+            </section>
+            <section class="s4-pane" aria-labelledby="attn-h">
+              <h3 class="s4-pane-title" id="attn-h">Needs Attention</h3>
+              <ul class="s4-list">
+                <li><a class="s4-list-item" href="#reports"><span class="s4-list-leading"><span class="s4-icon" data-icon="warning"></span></span><span class="s4-list-content"><span class="s4-list-headline">Northwind invoice</span><span class="s4-list-supporting">12 days overdue</span></span><span class="s4-list-trailing"><span class="s4-list-amount">$2,400</span></span></a></li>
+                <li><a class="s4-list-item" href="#reports"><span class="s4-list-leading"><span class="s4-icon" data-icon="card"></span></span><span class="s4-list-content"><span class="s4-list-headline">Card ending 4412</span><span class="s4-list-supporting">Expires next month</span></span><span class="s4-list-trailing"><span class="s4-icon" data-icon="chevron-right"></span></span></a></li>
+                <li><a class="s4-list-item" href="#reports"><span class="s4-list-leading"><span class="s4-icon" data-icon="document"></span></span><span class="s4-list-content"><span class="s4-list-headline">Q3 report</span><span class="s4-list-supporting">Ready to review</span></span><span class="s4-list-trailing"><span class="s4-icon" data-icon="chevron-right"></span></span></a></li>
+              </ul>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <section class="s4-view" data-view="reports" data-title="Reports" hidden>
+        <div class="s4-page-header"><h2 class="s4-headline-small">Invoices</h2><button class="s4-button" data-variant="tonal" type="button"><span class="s4-icon" data-icon="filter"></span>Filter</button></div>
+        <div class="s4-table-wrap" data-sticky>
+          <table class="s4-table">
+            <caption class="s4-visually-hidden">Invoices</caption>
+            <thead><tr>
+              <th scope="col" data-primary aria-sort="none"><button type="button" class="s4-table-sort">Client<span class="s4-icon" data-icon="chevron-down"></span></button></th>
+              <th scope="col">Status</th>
+              <th scope="col" aria-sort="none"><button type="button" class="s4-table-sort">Due<span class="s4-icon" data-icon="chevron-down"></span></button></th>
+              <th scope="col" class="num" aria-sort="none"><button type="button" class="s4-table-sort">Amount<span class="s4-icon" data-icon="chevron-down"></span></button></th>
+            </tr></thead>
+            <tbody>
+              <tr><td>Northwind</td><td><span class="s4-status" data-tone="error">Overdue</span></td><td data-value="2026-10-01">Oct 1</td><td class="num" data-value="2400">$2,400.00</td></tr>
+              <tr><td>Contoso</td><td><span class="s4-status" data-tone="tertiary">Due</span></td><td data-value="2026-11-20">Nov 20</td><td class="num" data-value="5120">$5,120.00</td></tr>
+              <tr><td>Fabrikam</td><td><span class="s4-status">Paid</span></td><td data-value="2026-10-15">Oct 15</td><td class="num" data-value="860">$860.00</td></tr>
+              <tr><td>Tailspin</td><td><span class="s4-status" data-tone="tertiary">Due</span></td><td data-value="2026-11-28">Nov 28</td><td class="num" data-value="1975.5">$1,975.50</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="s4-view" data-view="accounts" data-title="Accounts" hidden>
+        <div class="s4-empty">
+          <span class="s4-empty-icon"><span class="s4-icon" data-icon="wallet"></span></span>
+          <h2 class="s4-empty-title">No Accounts Yet</h2>
+          <p class="s4-empty-text">Connect a bank account to see balances here.</p>
+          <button class="s4-button" type="button">Connect Account</button>
+        </div>
+      </section>
+    </main>
+  </div>
+  <nav class="s4-nav-bar" aria-label="Main">
+    <a class="s4-nav-item" href="#overview" data-view="overview" aria-current="page"><span class="s4-nav-indicator"><span class="s4-icon" data-icon="dashboard"></span></span><span class="s4-nav-label">Overview</span></a>
+    <a class="s4-nav-item" href="#reports" data-view="reports"><span class="s4-nav-indicator"><span class="s4-icon" data-icon="chart"></span></span><span class="s4-nav-label">Reports</span></a>
+    <a class="s4-nav-item" href="#accounts" data-view="accounts"><span class="s4-nav-indicator"><span class="s4-icon" data-icon="wallet"></span></span><span class="s4-nav-label">Accounts</span></a>
+  </nav>
+</div>
+<div class="s4-menu" id="dash-more" aria-label="More">
+  <button class="s4-menu-item" type="button"><span class="s4-icon" data-icon="refresh"></span>Refresh</button>
+  <button class="s4-menu-item" type="button"><span class="s4-icon" data-icon="settings"></span>Settings</button>
+</div>
+<script src="../components/assets/icons.js?v=f8aa430"></script>
+<script src="../components/orion.js?v=b83af66"></script>
+<script>S4.theme.restore('orion-template-theme', { mode: 'system' });</script>
+</body>
+</html>

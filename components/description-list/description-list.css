@@ -1,0 +1,47 @@
+/* Description list: labelled values on a detail screen (Due Date: Oct 28). S4 addition.
+   <dl class="s4-dl">
+     <div class="s4-dl-row"><dt>Vendor</dt><dd>Iron Mountain</dd></div>
+     <div class="s4-dl-row"><dt>Amount</dt><dd class="s4-num">$1,240.00</dd></div>
+   </dl>
+   Default: label left, value right, 48 tall rows with a divider between. data-layout="stacked": label above value
+   (long values, narrow panes). Values may hold a status, a link or an icon button. */
+@layer s4.components {
+  .s4-dl { margin: 0; display: flex; flex-direction: column; }
+  .s4-dl-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--s4-space-1) var(--s4-space-4);
+    min-block-size: var(--s4-size-touch-target);
+    padding-block: var(--s4-space-2);
+    box-sizing: border-box;
+  }
+  .s4-dl-row + .s4-dl-row { border-block-start: var(--s4-size-divider) solid var(--md-sys-color-outline-variant); }
+  .s4-dl dt {
+    color: var(--md-sys-color-on-surface-variant);
+    font-family: var(--md-sys-typescale-body-medium-font);
+    font-size: var(--md-sys-typescale-body-medium-size);
+    line-height: var(--md-sys-typescale-body-medium-line-height);
+    letter-spacing: var(--md-sys-typescale-body-medium-tracking);
+  }
+  .s4-dl dd {
+    margin: 0;
+    min-inline-size: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--s4-space-2);
+    text-align: end;
+    color: var(--md-sys-color-on-surface);
+    font-family: var(--md-sys-typescale-body-large-font);
+    font-size: var(--md-sys-typescale-body-large-size);
+    line-height: var(--md-sys-typescale-body-large-line-height);
+    letter-spacing: var(--md-sys-typescale-body-large-tracking);
+    font-variant-numeric: tabular-nums;
+  }
+  .s4-dl[data-layout="stacked"] .s4-dl-row { flex-direction: column; align-items: stretch; justify-content: center; }
+  .s4-dl[data-layout="stacked"] dd { justify-content: flex-start; text-align: start; }
+  @media (forced-colors: active) { .s4-dl-row + .s4-dl-row { border-block-start-color: CanvasText; } }
+}

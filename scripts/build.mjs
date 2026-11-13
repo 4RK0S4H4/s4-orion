@@ -64,7 +64,8 @@ const demoCss = cssSkill.replace('url("assets/inter-variable.woff2")', 'url("int
 if (existsSync(join(root, 'demo/index.html'))) { outputs['demo/orion.css'] = demoCss; outputs['demo/orion.js'] = js; }
 /* cache-busting: every local asset a page loads with ?v=... gets its version from the file's content, so a changed file is a new URL
    and phones never need a hard refresh (the HTML pages themselves are opened through links that carry the commit, see CLAUDE.md) */
-const pages = ['index.html', 'demo/index.html', 'tokens/index.html'].concat(existsSync(join(root, 'explore')) ? readdirSync(join(root, 'explore')).filter((f) => f.endsWith('.html')).map((f) => 'explore/' + f) : []).filter((f) => existsSync(join(root, f)));
+const htmlIn = (d) => (existsSync(join(root, d)) ? readdirSync(join(root, d)).filter((f) => f.endsWith('.html')).map((f) => d + '/' + f) : []);
+const pages = ['index.html', 'demo/index.html', 'tokens/index.html'].concat(htmlIn('explore'), htmlIn('templates')).filter((f) => existsSync(join(root, f)));
 const fileText = (rel) => (rel in outputs ? outputs[rel] : existsSync(join(root, rel)) ? readFileSync(join(root, rel)) : null);
 for (const page of pages) {
   const dir = page.includes('/') ? page.slice(0, page.lastIndexOf('/')) : '';
@@ -81,12 +82,22 @@ const copies = {
   'skill/s4-orion/assets/inter-variable.woff2': 'components/assets/inter-variable.woff2',
   'demo/icons.js': 'components/assets/icons.js',
 };
+/* ---------- templates: starter pages for each kind of app, copied into the skill with flat asset paths ---------- */
+for (const page of htmlIn('templates')) {
+  const name = page.split('/').pop();
+  if (name === 'index.html') continue;
+  const src = page in outputs ? outputs[page] : readFileSync(join(root, page), 'utf8');
+  outputs['skill/s4-orion/templates/' + name] = src
+    .replace(/(?:\.\.\/components\/(?:assets\/)?)([\w.-]+)\?v=[\w.-]*/g, '$1')
+    .replace(/<!-- Template: /, '<!-- S4 Orion template (copy orion.css, orion.js, icons.js, m3color.js and inter-variable.woff2 next to it). ');
+}
 /* ---------- skill references (generated, so they can't drift from the repo) ---------- */
 const refs = {};
 const GROUPS = [
   ['Actions', ['button', 'icon-button', 'button-group', 'fab']],
-  ['Navigation and shell', ['app', 'top-app-bar', 'nav-bar', 'nav-rail', 'tabs', 'toolbar', 'search', 'breadcrumbs', 'pagination', 'stepper']],
-  ['Containment and data', ['card', 'pane', 'list', 'table', 'divider', 'avatar', 'accordion', 'empty-state']],
+  ['Navigation and shell', ['app', 'layout', 'top-app-bar', 'nav-bar', 'nav-rail', 'tabs', 'toolbar', 'search', 'breadcrumbs', 'pagination', 'stepper']],
+  ['Containment and data', ['card', 'pane', 'list', 'table', 'stat', 'description-list', 'divider', 'avatar', 'accordion', 'empty-state']],
+  ['Content', ['prose', 'message']],
   ['Inputs', ['text-field', 'chip', 'switch', 'checkbox', 'radio', 'slider', 'swatches']],
   ['Feedback', ['badge', 'status', 'progress', 'banner', 'skeleton', 'snackbar', 'tooltip']],
   ['Overlays', ['menu', 'dialog', 'sheet']],
@@ -144,7 +155,7 @@ if (CHECK) {
   console.log(`Bundle up to date: ${imports.length} stylesheets, ${jsOrder.length} scripts.`);
 } else {
   mkdirSync(skillAssets, { recursive: true }); mkdirSync(join(root, 'skill/s4-orion/references'), { recursive: true });
-  for (const [f, c] of Object.entries(outputs)) writeFileSync(join(root, f), c);
+  for (const [f, c] of Object.entries(outputs)) { mkdirSync(dirname(join(root, f)), { recursive: true }); writeFileSync(join(root, f), c); }
   for (const [to, from] of Object.entries(copies)) copyFileSync(join(root, from), join(root, to));
   const kb = (s) => (Buffer.byteLength(s) / 1024).toFixed(0) + ' KB';
   console.log(`Built components/orion.css (${kb(cssRepo)}) and orion.js (${kb(js)}) from ${imports.length} stylesheets and ${jsOrder.length} scripts; copied assets to skill/s4-orion/assets/`);

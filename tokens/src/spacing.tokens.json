@@ -228,7 +228,7 @@
           "value": 240,
           "unit": "px"
         },
-        "$description": "Expanded navigation rail (M3 Expressive allows 220\u2013360)."
+        "$description": "Expanded navigation rail (M3 Expressive allows 220–360)."
       },
       "toolbar": {
         "$value": {
@@ -271,7 +271,7 @@
       },
       "margin": {
         "$value": "{s4.space.6}",
-        "$description": "Side margin from medium windows (\u2265 600)."
+        "$description": "Side margin from medium windows (≥ 600)."
       },
       "pane-gap": {
         "$value": "{s4.space.6}"
@@ -285,6 +285,20 @@
           "value": 1200,
           "unit": "px"
         }
+      },
+      "content-reading": {
+        "$value": {
+          "value": 720,
+          "unit": "px"
+        },
+        "$description": "Width cap for reading and single-column pages (articles, forms, settings, sign-in): about 75 characters of body-large."
+      },
+      "content-wide": {
+        "$value": {
+          "value": 1600,
+          "unit": "px"
+        },
+        "$description": "Width cap for wide pages (tables, boards, editors) on large and extra-large windows."
       },
       "list-width": {
         "$value": {
