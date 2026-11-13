@@ -82,7 +82,6 @@
   @container s4-app (width >= 600px) {
     .s4-content { --_margin: var(--s4-layout-margin); }
     /* the bar's title and icons line up with the 24dp content margin (the bar's own inset is 8 + the slot's 8) */
-    .s4-app-body > .s4-top-app-bar { padding-inline: var(--s4-space-4); }
   }
   /* expanded (>= 840): rail at the left, nav bar hidden; the rail takes the left safe area */
   @container s4-app (width >= 840px) {

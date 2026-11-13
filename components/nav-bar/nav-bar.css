@@ -6,7 +6,7 @@
      </a>
      … 3 to 5 items (a or button)
    </nav>
-   Floating (decision 0038): the bar is invisible and every item is its own glass button; the current one is filled dark like a selected segment. Each item: icon with a label-medium label under it. The current item has
+   80dp floating pill (decision 0038) on surface-container, always glass (glass.css). Each item: icon with a label-medium label under it. The current item has
    aria-current="page": a rounded secondary-container highlight covers its icon and label and slides and resizes from the
    previous item to it (nav-bar.js; without JS each current item shows a 56x32 pill around the icon).
    From 600 wide the items sit horizontally (icon beside label inside a 40dp pill), as M3 Expressive does on medium windows.
@@ -18,11 +18,12 @@
     display: flex;
     justify-content: center;
     min-block-size: var(--s4-size-nav-bar);
-    /* decision 0038: the bar itself is invisible; each item is its own floating glass button inset from the screen edges */
-    gap: var(--s4-space-2);
+    /* decision 0038: the bar floats, a full pill inset from the screen edges and the home indicator */
     margin: 0 max(var(--s4-space-2), env(safe-area-inset-right, 0px)) calc(var(--s4-space-2) + env(safe-area-inset-bottom, 0px)) max(var(--s4-space-2), env(safe-area-inset-left, 0px));
-    background: none;
-    pointer-events: none;
+    padding-inline: var(--s4-space-2);
+    border-radius: var(--md-sys-shape-corner-full);
+    background: var(--md-sys-color-surface-container);
+    color: var(--md-sys-color-on-surface-variant);
   }
 
   /* ---------- the navigation item (also used by .s4-nav-rail) ---------- */
@@ -160,16 +161,9 @@
   /* ---------- items in the bar ---------- */
   .s4-nav-bar > .s4-nav-item {
     flex: 1 1 0;
-    block-size: calc(var(--s4-size-nav-bar) - var(--s4-space-2));
-    padding: var(--s4-space-2) var(--s4-space-1);
-    border-radius: var(--md-sys-shape-corner-full);
-    background: var(--md-sys-color-surface-container);   /* solid where glass is off */
-    pointer-events: auto;
+    block-size: var(--s4-size-nav-bar);
+    padding: var(--s4-space-3) var(--s4-space-1) var(--s4-space-4);
   }
-  .s4-nav-bar > .s4-nav-item[aria-current]:not([aria-current="false"]) { background: var(--md-sys-color-inverse-surface); }
-  .s4-nav-bar:has(> .s4-nav-pill) > .s4-nav-item[aria-current]:not([aria-current="false"]) { --_fg: var(--md-sys-color-inverse-on-surface); --_icon-fg: var(--md-sys-color-inverse-on-surface); }
-  /* the sliding pill and the per-item indicator are replaced by the item itself being the highlighted button */
-  .s4-nav-bar > .s4-nav-pill, .s4-nav-bar .s4-nav-indicator::after { display: none; }
 
   /* ---------- medium (>= 600): horizontal items, the pill wraps icon and label ---------- */
   @container s4-nav-bar (width >= 600px) {
@@ -195,7 +189,7 @@
   }
 
   @media (forced-colors: active) {
-    .s4-nav-bar > .s4-nav-item { border: 1px solid CanvasText; }
+    .s4-nav-bar { border: 1px solid CanvasText; }
     .s4-nav-indicator::before { display: none; }
     .s4-nav-item[aria-current]:not([aria-current="false"]) .s4-nav-indicator::after, .s4-nav-pill { background: Highlight; forced-color-adjust: none; }
     .s4-nav-item[aria-current]:not([aria-current="false"]) .s4-nav-indicator { color: HighlightText; forced-color-adjust: none; }

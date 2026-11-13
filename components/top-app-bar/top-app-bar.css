@@ -10,8 +10,9 @@
    Small (default): 64dp, title-large title. Medium (112, 136 with a subtitle) and large (120, 152) put a bigger headline
    under the 64dp row; it collapses on scroll: the bar sticks with a negative top so only the 64dp row stays, and
    top-app-bar.js slides that row down as the headline scrolls away, then fades a small title into it.
-   The bar floats (decision 0038): inset 8dp from the top and the sides, rounded, always glass (glass.css), and content
-   scrolls under it. top-app-bar.js still sets data-scrolled. Sticks to the top of its scroll container; clears the notch.
+   The bar floats (decision 0038), like iOS: no bar behind it, just separate glass buttons inset 8dp from the top and the
+   sides: a round leading button, a title pill and an actions pill (the medium and large headline stays plain text under
+   the row). Content scrolls under and between them. top-app-bar.js still sets data-scrolled. Sticks to the top of its scroll container; clears the notch.
    Every child that isn't the title group or the actions is the leading (navigation) slot. */
 @layer s4.components {
   .s4-top-app-bar {
@@ -33,14 +34,25 @@
     flex: none;
     block-size: var(--_h);
     margin: var(--_top) max(var(--_gap), env(safe-area-inset-right, 0px)) 0 max(var(--_gap), env(safe-area-inset-left, 0px));
-    padding-inline: var(--s4-space-2);
-    border-radius: var(--md-sys-shape-corner-extra-large);
-    background: var(--_bg);
+    column-gap: var(--s4-space-2);
+    background: none;                          /* decision 0038: the bar itself is invisible, its parts are floating glass buttons */
+    pointer-events: none;
     color: var(--md-sys-color-on-surface);
-    transition: background-color var(--md-sys-motion-spring-effects-duration) var(--md-sys-motion-spring-effects);
   }
-  /* a small bar is a full pill; the taller medium and large bars keep a large radius */
-  .s4-top-app-bar:not([data-size]) { border-radius: var(--md-sys-shape-corner-full); }
+  /* the parts that float as glass (glass.css): the leading button is a circle, the title and the actions are pills.
+     In the medium and large bars the headline under the row is plain text, only the row floats. */
+  .s4-top-app-bar:not([data-size]) > *,
+  .s4-top-app-bar[data-size] > :not(.s4-app-bar-title-group, .s4-app-bar-collapsed-title) {
+    --_part: calc(var(--_row) - var(--s4-space-2));
+    block-size: var(--_part);
+    align-self: center;
+    border-radius: var(--md-sys-shape-corner-full);
+    background: var(--md-sys-color-surface-container);   /* solid where glass is off */
+    pointer-events: auto;
+  }
+  .s4-top-app-bar > :not(.s4-app-bar-title-group, .s4-app-bar-actions, .s4-app-bar-collapsed-title) { inline-size: var(--_part, var(--_row)); }
+  .s4-top-app-bar > .s4-app-bar-actions { padding-inline: var(--s4-space-1); }
+  .s4-top-app-bar:not([data-size]) > .s4-app-bar-title-group { align-items: center; text-align: center; padding-inline: var(--s4-space-4); }
 
   .s4-top-app-bar > * { grid-area: lead; color: var(--md-sys-color-on-surface); }
   .s4-top-app-bar > .s4-app-bar-title-group { grid-area: title; }
