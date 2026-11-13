@@ -30,7 +30,7 @@
     overflow-y: auto;
     overscroll-behavior: contain;
     scrollbar-width: none;
-    background: var(--md-sys-color-surface);
+    background: var(--md-sys-color-surface-container);
     color: var(--md-sys-color-on-surface-variant);
     transition:
       inline-size var(--md-sys-motion-spring-spatial-duration) var(--md-sys-motion-spring-spatial),

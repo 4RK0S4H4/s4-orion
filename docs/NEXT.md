@@ -2,6 +2,8 @@
 
 ## NOW (2026-11-11): Orion stays M3 Expressive, with the new glass and simpler motion
 
+**2026-11-13 ([0038](decisions/0038-everything-floating.md)):** top bar, nav bar and rail now float (always-glass, inset, rounded). Awaiting the owner's iPhone check of the demo.
+
 **2026-11-13 ([0037](decisions/0037-glow-shade-flip.md)):** the glass edge glow flips to an edge shade at OKLCH lightness 0.6 (hard step, grays included); glow and shade share top/bottom geometry and strength in both modes. Awaiting the owner's iPhone check in the Glass Playground (`explore/glass-playground.html`).
 
 The owner decided: **keep S4 Orion as built** (M3 Expressive base, decisions 0001-0019); from the Claude Design drafts

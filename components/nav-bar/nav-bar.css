@@ -6,19 +6,22 @@
      </a>
      … 3 to 5 items (a or button)
    </nav>
-   80dp bar on surface-container. Each item: icon with a label-medium label under it. The current item has
+   80dp floating pill (decision 0038) on surface-container, always glass (glass.css). Each item: icon with a label-medium label under it. The current item has
    aria-current="page": a rounded secondary-container highlight covers its icon and label and slides and resizes from the
    previous item to it (nav-bar.js; without JS each current item shows a 56x32 pill around the icon).
    From 600 wide the items sit horizontally (icon beside label inside a 40dp pill), as M3 Expressive does on medium windows.
-   Inside .s4-app the bar sticks to the bottom and pads for the home indicator. The badge slot is .s4-badge in the indicator. */
+   Inside .s4-app the bar sticks to the bottom, 8dp above the screen edge and clear of the home indicator. The badge slot is .s4-badge in the indicator. */
 @layer s4.components {
   .s4-nav-bar {
     position: relative;   /* anchors the sliding pill; the app shell and fixed bars override it */
     container: s4-nav-bar / inline-size;
     display: flex;
     justify-content: center;
-    min-block-size: calc(var(--s4-size-nav-bar) + env(safe-area-inset-bottom, 0px));
-    padding: 0 env(safe-area-inset-right, 0px) env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
+    min-block-size: var(--s4-size-nav-bar);
+    /* decision 0038: the bar floats, a full pill inset from the screen edges and the home indicator */
+    margin: 0 max(var(--s4-space-2), env(safe-area-inset-right, 0px)) calc(var(--s4-space-2) + env(safe-area-inset-bottom, 0px)) max(var(--s4-space-2), env(safe-area-inset-left, 0px));
+    padding-inline: var(--s4-space-2);
+    border-radius: var(--md-sys-shape-corner-full);
     background: var(--md-sys-color-surface-container);
     color: var(--md-sys-color-on-surface-variant);
   }
@@ -186,7 +189,7 @@
   }
 
   @media (forced-colors: active) {
-    .s4-nav-bar { border-block-start: 1px solid CanvasText; }
+    .s4-nav-bar { border: 1px solid CanvasText; }
     .s4-nav-indicator::before { display: none; }
     .s4-nav-item[aria-current]:not([aria-current="false"]) .s4-nav-indicator::after, .s4-nav-pill { background: Highlight; forced-color-adjust: none; }
     .s4-nav-item[aria-current]:not([aria-current="false"]) .s4-nav-indicator { color: HighlightText; forced-color-adjust: none; }

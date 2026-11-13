@@ -19,9 +19,9 @@
   @media (resolution < 1.5dppx) { :root { --_edge-scale: var(--s4-glass-edge-scale-standard); } }
   @media (resolution < 1.5dppx) and (min-device-width: 2200px) { :root { --_edge-scale: var(--s4-glass-edge-scale-large); } }
   :where(.s4-glass,
-         .s4-top-app-bar[data-scrolled],
+         .s4-top-app-bar,
          .s4-nav-bar,
-         .s4-nav-rail:is([data-modal], [data-overlay]),
+         .s4-nav-rail,
          .s4-toolbar,
          .s4-menu,
          .s4-dialog,
@@ -47,9 +47,9 @@
      The glow flips to an ink shade on light surfaces (decision 0037) and needs relative colors; without them the white glow stays. */
   @supports (color: color-mix(in oklab, red, white calc(50% * 1))) and (color: color-mix(in srgb, red min(100%, calc(1 * 100%)), transparent)) {
     :where(.s4-glass,
-         .s4-top-app-bar[data-scrolled],
+         .s4-top-app-bar,
          .s4-nav-bar,
-         .s4-nav-rail:is([data-modal], [data-overlay]),
+         .s4-nav-rail,
          .s4-toolbar,
          .s4-menu,
          .s4-dialog,
@@ -68,9 +68,9 @@
   }
   @supports (color: oklch(from red calc(1 - l) c h)) and (color: color-mix(in oklab, red, white calc(50% * 1))) {
     :where(.s4-glass,
-         .s4-top-app-bar[data-scrolled],
+         .s4-top-app-bar,
          .s4-nav-bar,
-         .s4-nav-rail:is([data-modal], [data-overlay]),
+         .s4-nav-rail,
          .s4-toolbar,
          .s4-menu,
          .s4-dialog,
@@ -89,9 +89,7 @@
   }
   /* full-width bars and docked surfaces touch the screen edges, so they draw a single line only on the edge that faces the content
      (a line along the screen edge reads as a box around the bar, especially on a phone) */
-  :where(.s4-top-app-bar[data-scrolled]) { box-shadow: inset 0 calc(-1 * var(--s4-glass-edge-width) * var(--_edge-scale)) 0 0 var(--s4-glass-edge-line); }
-  :where(.s4-nav-bar, .s4-toolbar[data-type="docked"]) { box-shadow: inset 0 calc(var(--s4-glass-edge-width) * var(--_edge-scale)) 0 0 var(--s4-glass-edge-line); }
-  :where(.s4-nav-rail:is([data-modal], [data-overlay])) { box-shadow: inset calc(-1 * var(--s4-glass-edge-width) * var(--_edge-scale)) 0 0 0 var(--s4-glass-edge-line); }
+  :where(.s4-toolbar[data-type="docked"]) { box-shadow: inset 0 calc(var(--s4-glass-edge-width) * var(--_edge-scale)) 0 0 var(--s4-glass-edge-line); }
   :where(.s4-side-sheet) { box-shadow: inset calc(var(--s4-glass-edge-width) * var(--_edge-scale)) 0 0 0 var(--s4-glass-edge-line); }
   @media (min-width: 600px) { :where(.s4-bottom-sheet) { box-shadow: inset 0 calc(var(--s4-glass-edge-width) * var(--_edge-scale)) 0 0 var(--s4-glass-edge-line); } }
 
@@ -147,7 +145,7 @@
   :where(.s4-toolbar[data-color="vibrant"]) { --_surface: var(--md-sys-color-primary-container); background-color: color-mix(in srgb, var(--md-sys-color-primary-container) calc(var(--_glass-tint) * 100%), transparent); }
 
   /* medium contrast: firmer glass (high contrast is already solid through the tokens) */
-  :where(:root[data-contrast="medium"]) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip) {
+  :where(:root[data-contrast="medium"]) :where(.s4-glass, .s4-top-app-bar, .s4-nav-bar, .s4-nav-rail, .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip) {
     --_glass-tint: var(--s4-glass-tint-opacity-medium-contrast);
   }
 
@@ -165,12 +163,12 @@
   :where([data-glass="off"]) { --_glass-tint: 1; box-shadow: revert-layer; -webkit-backdrop-filter: none; backdrop-filter: none; }
 
   /* solid fallbacks (high contrast, reduced transparency, no backdrop-filter): back to the component's own box-shadow (flat since 0017) */
-  :where(:root[data-contrast="high"]) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip) { box-shadow: revert-layer; }
+  :where(:root[data-contrast="high"]) :where(.s4-glass, .s4-top-app-bar, .s4-nav-bar, .s4-nav-rail, .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip) { box-shadow: revert-layer; }
   @media (prefers-reduced-transparency: reduce) {
-    :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip) { box-shadow: revert-layer; }
+    :where(.s4-glass, .s4-top-app-bar, .s4-nav-bar, .s4-nav-rail, .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip) { box-shadow: revert-layer; }
   }
   @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-    :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip) { box-shadow: revert-layer; }
+    :where(.s4-glass, .s4-top-app-bar, .s4-nav-bar, .s4-nav-rail, .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip) { box-shadow: revert-layer; }
   }
 
   /* ITEMS ON GLASS (decision 0015). The app's own UI stays the main thing on the depth the glass gives:
@@ -179,25 +177,25 @@
      - only an item that is just an outline with no fill (outlined button, unselected chip) keeps one, drawn as the frost line.
      Skipped wherever the glass is solid: high contrast and data-glass="off" are excluded in the selector, the two blocks after it
      hand everything back to the components for reduced transparency and for browsers without backdrop-filter. */
-  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-chip, .s4-button:not([data-variant="text"])) { background: color-mix(in srgb, var(--_bg) calc(var(--s4-glass-item-fill) * 100%), transparent); }
-  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-text-field)::before { background: color-mix(in srgb, var(--_bg) calc(var(--s4-glass-item-fill) * 100%), transparent); }
-  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-text-field:not(:focus-within, [data-error], :has([aria-invalid="true"]), :has(> :is(input, select, textarea):disabled))) { --_outline: transparent; }
-  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-switch:not(:has(> input:checked))) { --_border: transparent; }
-  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-chip:not([aria-pressed="true"], [data-elevated], :disabled, [aria-disabled="true"]), .s4-button[data-variant="outlined"]:not([data-color], [aria-pressed="true"], :disabled, [aria-disabled="true"])) { --_outline: var(--s4-glass-item-outline); }
+  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar, .s4-nav-bar, .s4-nav-rail, .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-chip, .s4-button:not([data-variant="text"])) { background: color-mix(in srgb, var(--_bg) calc(var(--s4-glass-item-fill) * 100%), transparent); }
+  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar, .s4-nav-bar, .s4-nav-rail, .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-text-field)::before { background: color-mix(in srgb, var(--_bg) calc(var(--s4-glass-item-fill) * 100%), transparent); }
+  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar, .s4-nav-bar, .s4-nav-rail, .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-text-field:not(:focus-within, [data-error], :has([aria-invalid="true"]), :has(> :is(input, select, textarea):disabled))) { --_outline: transparent; }
+  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar, .s4-nav-bar, .s4-nav-rail, .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-switch:not(:has(> input:checked))) { --_border: transparent; }
+  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar, .s4-nav-bar, .s4-nav-rail, .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-chip:not([aria-pressed="true"], [data-elevated], :disabled, [aria-disabled="true"]), .s4-button[data-variant="outlined"]:not([data-color], [aria-pressed="true"], :disabled, [aria-disabled="true"])) { --_outline: var(--s4-glass-item-outline); }
 
   @media (prefers-reduced-transparency: reduce) {
-  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-chip, .s4-button:not([data-variant="text"])), :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-text-field)::before { background: revert-layer; }
-  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-text-field:not(:focus-within, [data-error], :has([aria-invalid="true"]), :has(> :is(input, select, textarea):disabled))), :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-chip:not([aria-pressed="true"], [data-elevated], :disabled, [aria-disabled="true"]), .s4-button[data-variant="outlined"]:not([data-color], [aria-pressed="true"], :disabled, [aria-disabled="true"])) { --_outline: revert-layer; }
-  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-switch:not(:has(> input:checked))) { --_border: revert-layer; }
+  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar, .s4-nav-bar, .s4-nav-rail, .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-chip, .s4-button:not([data-variant="text"])), :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar, .s4-nav-bar, .s4-nav-rail, .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-text-field)::before { background: revert-layer; }
+  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar, .s4-nav-bar, .s4-nav-rail, .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-text-field:not(:focus-within, [data-error], :has([aria-invalid="true"]), :has(> :is(input, select, textarea):disabled))), :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar, .s4-nav-bar, .s4-nav-rail, .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-chip:not([aria-pressed="true"], [data-elevated], :disabled, [aria-disabled="true"]), .s4-button[data-variant="outlined"]:not([data-color], [aria-pressed="true"], :disabled, [aria-disabled="true"])) { --_outline: revert-layer; }
+  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar, .s4-nav-bar, .s4-nav-rail, .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-switch:not(:has(> input:checked))) { --_border: revert-layer; }
   }
   @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-chip, .s4-button:not([data-variant="text"])), :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-text-field)::before { background: revert-layer; }
-  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-text-field:not(:focus-within, [data-error], :has([aria-invalid="true"]), :has(> :is(input, select, textarea):disabled))), :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-chip:not([aria-pressed="true"], [data-elevated], :disabled, [aria-disabled="true"]), .s4-button[data-variant="outlined"]:not([data-color], [aria-pressed="true"], :disabled, [aria-disabled="true"])) { --_outline: revert-layer; }
-  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-switch:not(:has(> input:checked))) { --_border: revert-layer; }
+  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar, .s4-nav-bar, .s4-nav-rail, .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-chip, .s4-button:not([data-variant="text"])), :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar, .s4-nav-bar, .s4-nav-rail, .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-text-field)::before { background: revert-layer; }
+  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar, .s4-nav-bar, .s4-nav-rail, .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-text-field:not(:focus-within, [data-error], :has([aria-invalid="true"]), :has(> :is(input, select, textarea):disabled))), :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar, .s4-nav-bar, .s4-nav-rail, .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-chip:not([aria-pressed="true"], [data-elevated], :disabled, [aria-disabled="true"]), .s4-button[data-variant="outlined"]:not([data-color], [aria-pressed="true"], :disabled, [aria-disabled="true"])) { --_outline: revert-layer; }
+  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar, .s4-nav-bar, .s4-nav-rail, .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-switch:not(:has(> input:checked))) { --_border: revert-layer; }
   }
 
   @media (forced-colors: active) {
-    :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip) {
+    :where(.s4-glass, .s4-top-app-bar, .s4-nav-bar, .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip) {
       background-image: none; -webkit-backdrop-filter: none; backdrop-filter: none; border: 1px solid CanvasText;
     }
   }

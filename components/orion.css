@@ -1519,9 +1519,11 @@
     grid-column: 1;
     grid-row: 1 / -1;
     position: sticky;
-    top: 0;
+    top: var(--s4-space-2);
     align-self: start;
-    block-size: 100dvh;
+    block-size: calc(100dvh - 2 * var(--s4-space-2));
+    margin: var(--s4-space-2) 0 var(--s4-space-2) var(--s4-space-2);   /* decision 0038: the rail floats too */
+    border-radius: var(--md-sys-shape-corner-extra-large);
     z-index: var(--s4-z-navigation);
   }
   .s4-app > .s4-app-body {
@@ -1535,7 +1537,7 @@
     grid-column: 1 / -1;
     grid-row: 2;
     position: sticky;
-    bottom: 0;
+    bottom: 0;   /* the bar's own margin keeps the floating gap */
     z-index: var(--s4-z-navigation);
   }
 
@@ -1562,16 +1564,14 @@
     .s4-app > .s4-nav-rail { display: none; }
     /* the nav bar already pads for the home indicator, so content only needs to clear the bar itself, which it does by
        being in flow; floating things (FAB, floating toolbar) read the inset to sit above the bar */
-    .s4-app:has(> .s4-nav-bar) > * { --s4-app-inset-bottom: calc(var(--s4-size-nav-bar) + env(safe-area-inset-bottom, 0px)); }
+    .s4-app:has(> .s4-nav-bar) > * { --s4-app-inset-bottom: calc(var(--s4-size-nav-bar) + 2 * var(--s4-space-2) + env(safe-area-inset-bottom, 0px)); }   /* the floating bar plus its gaps */
     .s4-app:has(> .s4-nav-bar) .s4-content { padding-block-end: var(--s4-space-6); }
   }
   /* medium and up: 24 margins */
   @container s4-app (width >= 600px) {
     .s4-content { --_margin: var(--s4-layout-margin); }
     /* the bar's title and icons line up with the 24dp content margin (the bar's own inset is 8 + the slot's 8) */
-    .s4-app-body > .s4-top-app-bar {
-      padding-inline: max(var(--s4-space-4), env(safe-area-inset-left, 0px)) max(var(--s4-space-4), env(safe-area-inset-right, 0px));
-    }
+    .s4-app-body > .s4-top-app-bar { padding-inline: var(--s4-space-4); }
   }
   /* expanded (>= 840): rail at the left, nav bar hidden; the rail takes the left safe area */
   @container s4-app (width >= 840px) {
@@ -1619,18 +1619,20 @@
    Small (default): 64dp, title-large title. Medium (112, 136 with a subtitle) and large (120, 152) put a bigger headline
    under the 64dp row; it collapses on scroll: the bar sticks with a negative top so only the 64dp row stays, and
    top-app-bar.js slides that row down as the headline scrolls away, then fades a small title into it.
-   At rest the bar is surface; when content scrolls under it top-app-bar.js sets data-scrolled and it takes
-   surface-container (glass.css turns that into glass). Sticks to the top of its scroll container; pads for the notch.
+   The bar floats (decision 0038): inset 8dp from the top and the sides, rounded, always glass (glass.css), and content
+   scrolls under it. top-app-bar.js still sets data-scrolled. Sticks to the top of its scroll container; clears the notch.
    Every child that isn't the title group or the actions is the leading (navigation) slot. */
 @layer s4.components {
   .s4-top-app-bar {
     --_row: var(--s4-size-top-app-bar);
     --_h: var(--_row);                         /* full height without the status-bar inset */
-    --_bg: var(--md-sys-color-surface);
+    --_bg: var(--md-sys-color-surface-container);
+    --_gap: var(--s4-space-2);                   /* decision 0038: the bar floats, this far from the screen edges */
+    --_top: calc(var(--_gap) + env(safe-area-inset-top, 0px));
     --_offset: 0px;                            /* set by JS: how far the 64dp row has followed the scroll */
     --_p: 0;                                   /* set by JS: collapse progress 0..1 */
     position: sticky;
-    top: calc(var(--_row) - var(--_h));
+    top: calc(var(--_row) - var(--_h) + var(--_top));
     z-index: var(--s4-z-app-bar);
     display: grid;
     grid-template-columns: auto minmax(0, 1fr) auto;
@@ -1638,17 +1640,16 @@
     grid-template-areas: "lead title actions";
     align-items: center;
     flex: none;
-    block-size: calc(var(--_h) + env(safe-area-inset-top, 0px));
-    padding:
-      env(safe-area-inset-top, 0px)
-      max(var(--s4-space-2), env(safe-area-inset-right, 0px))
-      0
-      max(var(--s4-space-2), env(safe-area-inset-left, 0px));
+    block-size: var(--_h);
+    margin: var(--_top) max(var(--_gap), env(safe-area-inset-right, 0px)) 0 max(var(--_gap), env(safe-area-inset-left, 0px));
+    padding-inline: var(--s4-space-2);
+    border-radius: var(--md-sys-shape-corner-extra-large);
     background: var(--_bg);
     color: var(--md-sys-color-on-surface);
     transition: background-color var(--md-sys-motion-spring-effects-duration) var(--md-sys-motion-spring-effects);
   }
-  .s4-top-app-bar[data-scrolled] { --_bg: var(--md-sys-color-surface-container); }
+  /* a small bar is a full pill; the taller medium and large bars keep a large radius */
+  .s4-top-app-bar:not([data-size]) { border-radius: var(--md-sys-shape-corner-full); }
 
   .s4-top-app-bar > * { grid-area: lead; color: var(--md-sys-color-on-surface); }
   .s4-top-app-bar > .s4-app-bar-title-group { grid-area: title; }
@@ -1759,7 +1760,7 @@
   }
 
   @media (forced-colors: active) {
-    .s4-top-app-bar[data-scrolled] { border-block-end: 1px solid CanvasText; }
+    .s4-top-app-bar { border: 1px solid CanvasText; }
   }
 }
 
@@ -1772,19 +1773,22 @@
      </a>
      … 3 to 5 items (a or button)
    </nav>
-   80dp bar on surface-container. Each item: icon with a label-medium label under it. The current item has
+   80dp floating pill (decision 0038) on surface-container, always glass (glass.css). Each item: icon with a label-medium label under it. The current item has
    aria-current="page": a rounded secondary-container highlight covers its icon and label and slides and resizes from the
    previous item to it (nav-bar.js; without JS each current item shows a 56x32 pill around the icon).
    From 600 wide the items sit horizontally (icon beside label inside a 40dp pill), as M3 Expressive does on medium windows.
-   Inside .s4-app the bar sticks to the bottom and pads for the home indicator. The badge slot is .s4-badge in the indicator. */
+   Inside .s4-app the bar sticks to the bottom, 8dp above the screen edge and clear of the home indicator. The badge slot is .s4-badge in the indicator. */
 @layer s4.components {
   .s4-nav-bar {
     position: relative;   /* anchors the sliding pill; the app shell and fixed bars override it */
     container: s4-nav-bar / inline-size;
     display: flex;
     justify-content: center;
-    min-block-size: calc(var(--s4-size-nav-bar) + env(safe-area-inset-bottom, 0px));
-    padding: 0 env(safe-area-inset-right, 0px) env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
+    min-block-size: var(--s4-size-nav-bar);
+    /* decision 0038: the bar floats, a full pill inset from the screen edges and the home indicator */
+    margin: 0 max(var(--s4-space-2), env(safe-area-inset-right, 0px)) calc(var(--s4-space-2) + env(safe-area-inset-bottom, 0px)) max(var(--s4-space-2), env(safe-area-inset-left, 0px));
+    padding-inline: var(--s4-space-2);
+    border-radius: var(--md-sys-shape-corner-full);
     background: var(--md-sys-color-surface-container);
     color: var(--md-sys-color-on-surface-variant);
   }
@@ -1952,7 +1956,7 @@
   }
 
   @media (forced-colors: active) {
-    .s4-nav-bar { border-block-start: 1px solid CanvasText; }
+    .s4-nav-bar { border: 1px solid CanvasText; }
     .s4-nav-indicator::before { display: none; }
     .s4-nav-item[aria-current]:not([aria-current="false"]) .s4-nav-indicator::after, .s4-nav-pill { background: Highlight; forced-color-adjust: none; }
     .s4-nav-item[aria-current]:not([aria-current="false"]) .s4-nav-indicator { color: HighlightText; forced-color-adjust: none; }
@@ -1992,7 +1996,7 @@
     overflow-y: auto;
     overscroll-behavior: contain;
     scrollbar-width: none;
-    background: var(--md-sys-color-surface);
+    background: var(--md-sys-color-surface-container);
     color: var(--md-sys-color-on-surface-variant);
     transition:
       inline-size var(--md-sys-motion-spring-spatial-duration) var(--md-sys-motion-spring-spatial),
@@ -5183,9 +5187,9 @@
   @media (resolution < 1.5dppx) { :root { --_edge-scale: var(--s4-glass-edge-scale-standard); } }
   @media (resolution < 1.5dppx) and (min-device-width: 2200px) { :root { --_edge-scale: var(--s4-glass-edge-scale-large); } }
   :where(.s4-glass,
-         .s4-top-app-bar[data-scrolled],
+         .s4-top-app-bar,
          .s4-nav-bar,
-         .s4-nav-rail:is([data-modal], [data-overlay]),
+         .s4-nav-rail,
          .s4-toolbar,
          .s4-menu,
          .s4-dialog,
@@ -5211,9 +5215,9 @@
      The glow flips to an ink shade on light surfaces (decision 0037) and needs relative colors; without them the white glow stays. */
   @supports (color: color-mix(in oklab, red, white calc(50% * 1))) and (color: color-mix(in srgb, red min(100%, calc(1 * 100%)), transparent)) {
     :where(.s4-glass,
-         .s4-top-app-bar[data-scrolled],
+         .s4-top-app-bar,
          .s4-nav-bar,
-         .s4-nav-rail:is([data-modal], [data-overlay]),
+         .s4-nav-rail,
          .s4-toolbar,
          .s4-menu,
          .s4-dialog,
@@ -5232,9 +5236,9 @@
   }
   @supports (color: oklch(from red calc(1 - l) c h)) and (color: color-mix(in oklab, red, white calc(50% * 1))) {
     :where(.s4-glass,
-         .s4-top-app-bar[data-scrolled],
+         .s4-top-app-bar,
          .s4-nav-bar,
-         .s4-nav-rail:is([data-modal], [data-overlay]),
+         .s4-nav-rail,
          .s4-toolbar,
          .s4-menu,
          .s4-dialog,
@@ -5253,9 +5257,7 @@
   }
   /* full-width bars and docked surfaces touch the screen edges, so they draw a single line only on the edge that faces the content
      (a line along the screen edge reads as a box around the bar, especially on a phone) */
-  :where(.s4-top-app-bar[data-scrolled]) { box-shadow: inset 0 calc(-1 * var(--s4-glass-edge-width) * var(--_edge-scale)) 0 0 var(--s4-glass-edge-line); }
-  :where(.s4-nav-bar, .s4-toolbar[data-type="docked"]) { box-shadow: inset 0 calc(var(--s4-glass-edge-width) * var(--_edge-scale)) 0 0 var(--s4-glass-edge-line); }
-  :where(.s4-nav-rail:is([data-modal], [data-overlay])) { box-shadow: inset calc(-1 * var(--s4-glass-edge-width) * var(--_edge-scale)) 0 0 0 var(--s4-glass-edge-line); }
+  :where(.s4-toolbar[data-type="docked"]) { box-shadow: inset 0 calc(var(--s4-glass-edge-width) * var(--_edge-scale)) 0 0 var(--s4-glass-edge-line); }
   :where(.s4-side-sheet) { box-shadow: inset calc(var(--s4-glass-edge-width) * var(--_edge-scale)) 0 0 0 var(--s4-glass-edge-line); }
   @media (min-width: 600px) { :where(.s4-bottom-sheet) { box-shadow: inset 0 calc(var(--s4-glass-edge-width) * var(--_edge-scale)) 0 0 var(--s4-glass-edge-line); } }
 
@@ -5311,7 +5313,7 @@
   :where(.s4-toolbar[data-color="vibrant"]) { --_surface: var(--md-sys-color-primary-container); background-color: color-mix(in srgb, var(--md-sys-color-primary-container) calc(var(--_glass-tint) * 100%), transparent); }
 
   /* medium contrast: firmer glass (high contrast is already solid through the tokens) */
-  :where(:root[data-contrast="medium"]) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip) {
+  :where(:root[data-contrast="medium"]) :where(.s4-glass, .s4-top-app-bar, .s4-nav-bar, .s4-nav-rail, .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip) {
     --_glass-tint: var(--s4-glass-tint-opacity-medium-contrast);
   }
 
@@ -5329,12 +5331,12 @@
   :where([data-glass="off"]) { --_glass-tint: 1; box-shadow: revert-layer; -webkit-backdrop-filter: none; backdrop-filter: none; }
 
   /* solid fallbacks (high contrast, reduced transparency, no backdrop-filter): back to the component's own box-shadow (flat since 0017) */
-  :where(:root[data-contrast="high"]) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip) { box-shadow: revert-layer; }
+  :where(:root[data-contrast="high"]) :where(.s4-glass, .s4-top-app-bar, .s4-nav-bar, .s4-nav-rail, .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip) { box-shadow: revert-layer; }
   @media (prefers-reduced-transparency: reduce) {
-    :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip) { box-shadow: revert-layer; }
+    :where(.s4-glass, .s4-top-app-bar, .s4-nav-bar, .s4-nav-rail, .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip) { box-shadow: revert-layer; }
   }
   @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-    :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip) { box-shadow: revert-layer; }
+    :where(.s4-glass, .s4-top-app-bar, .s4-nav-bar, .s4-nav-rail, .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip) { box-shadow: revert-layer; }
   }
 
   /* ITEMS ON GLASS (decision 0015). The app's own UI stays the main thing on the depth the glass gives:
@@ -5343,25 +5345,25 @@
      - only an item that is just an outline with no fill (outlined button, unselected chip) keeps one, drawn as the frost line.
      Skipped wherever the glass is solid: high contrast and data-glass="off" are excluded in the selector, the two blocks after it
      hand everything back to the components for reduced transparency and for browsers without backdrop-filter. */
-  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-chip, .s4-button:not([data-variant="text"])) { background: color-mix(in srgb, var(--_bg) calc(var(--s4-glass-item-fill) * 100%), transparent); }
-  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-text-field)::before { background: color-mix(in srgb, var(--_bg) calc(var(--s4-glass-item-fill) * 100%), transparent); }
-  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-text-field:not(:focus-within, [data-error], :has([aria-invalid="true"]), :has(> :is(input, select, textarea):disabled))) { --_outline: transparent; }
-  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-switch:not(:has(> input:checked))) { --_border: transparent; }
-  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-chip:not([aria-pressed="true"], [data-elevated], :disabled, [aria-disabled="true"]), .s4-button[data-variant="outlined"]:not([data-color], [aria-pressed="true"], :disabled, [aria-disabled="true"])) { --_outline: var(--s4-glass-item-outline); }
+  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar, .s4-nav-bar, .s4-nav-rail, .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-chip, .s4-button:not([data-variant="text"])) { background: color-mix(in srgb, var(--_bg) calc(var(--s4-glass-item-fill) * 100%), transparent); }
+  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar, .s4-nav-bar, .s4-nav-rail, .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-text-field)::before { background: color-mix(in srgb, var(--_bg) calc(var(--s4-glass-item-fill) * 100%), transparent); }
+  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar, .s4-nav-bar, .s4-nav-rail, .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-text-field:not(:focus-within, [data-error], :has([aria-invalid="true"]), :has(> :is(input, select, textarea):disabled))) { --_outline: transparent; }
+  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar, .s4-nav-bar, .s4-nav-rail, .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-switch:not(:has(> input:checked))) { --_border: transparent; }
+  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar, .s4-nav-bar, .s4-nav-rail, .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-chip:not([aria-pressed="true"], [data-elevated], :disabled, [aria-disabled="true"]), .s4-button[data-variant="outlined"]:not([data-color], [aria-pressed="true"], :disabled, [aria-disabled="true"])) { --_outline: var(--s4-glass-item-outline); }
 
   @media (prefers-reduced-transparency: reduce) {
-  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-chip, .s4-button:not([data-variant="text"])), :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-text-field)::before { background: revert-layer; }
-  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-text-field:not(:focus-within, [data-error], :has([aria-invalid="true"]), :has(> :is(input, select, textarea):disabled))), :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-chip:not([aria-pressed="true"], [data-elevated], :disabled, [aria-disabled="true"]), .s4-button[data-variant="outlined"]:not([data-color], [aria-pressed="true"], :disabled, [aria-disabled="true"])) { --_outline: revert-layer; }
-  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-switch:not(:has(> input:checked))) { --_border: revert-layer; }
+  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar, .s4-nav-bar, .s4-nav-rail, .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-chip, .s4-button:not([data-variant="text"])), :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar, .s4-nav-bar, .s4-nav-rail, .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-text-field)::before { background: revert-layer; }
+  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar, .s4-nav-bar, .s4-nav-rail, .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-text-field:not(:focus-within, [data-error], :has([aria-invalid="true"]), :has(> :is(input, select, textarea):disabled))), :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar, .s4-nav-bar, .s4-nav-rail, .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-chip:not([aria-pressed="true"], [data-elevated], :disabled, [aria-disabled="true"]), .s4-button[data-variant="outlined"]:not([data-color], [aria-pressed="true"], :disabled, [aria-disabled="true"])) { --_outline: revert-layer; }
+  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar, .s4-nav-bar, .s4-nav-rail, .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-switch:not(:has(> input:checked))) { --_border: revert-layer; }
   }
   @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-chip, .s4-button:not([data-variant="text"])), :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-text-field)::before { background: revert-layer; }
-  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-text-field:not(:focus-within, [data-error], :has([aria-invalid="true"]), :has(> :is(input, select, textarea):disabled))), :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-chip:not([aria-pressed="true"], [data-elevated], :disabled, [aria-disabled="true"]), .s4-button[data-variant="outlined"]:not([data-color], [aria-pressed="true"], :disabled, [aria-disabled="true"])) { --_outline: revert-layer; }
-  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-switch:not(:has(> input:checked))) { --_border: revert-layer; }
+  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar, .s4-nav-bar, .s4-nav-rail, .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-chip, .s4-button:not([data-variant="text"])), :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar, .s4-nav-bar, .s4-nav-rail, .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-text-field)::before { background: revert-layer; }
+  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar, .s4-nav-bar, .s4-nav-rail, .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-text-field:not(:focus-within, [data-error], :has([aria-invalid="true"]), :has(> :is(input, select, textarea):disabled))), :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar, .s4-nav-bar, .s4-nav-rail, .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-chip:not([aria-pressed="true"], [data-elevated], :disabled, [aria-disabled="true"]), .s4-button[data-variant="outlined"]:not([data-color], [aria-pressed="true"], :disabled, [aria-disabled="true"])) { --_outline: revert-layer; }
+  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar, .s4-nav-bar, .s4-nav-rail, .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-switch:not(:has(> input:checked))) { --_border: revert-layer; }
   }
 
   @media (forced-colors: active) {
-    :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip) {
+    :where(.s4-glass, .s4-top-app-bar, .s4-nav-bar, .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip) {
       background-image: none; -webkit-backdrop-filter: none; backdrop-filter: none; border: 1px solid CanvasText;
     }
   }
