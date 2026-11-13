@@ -200,4 +200,12 @@ window.S4_REVIEW_DEMOS = [
         options: [{ v: 'A', label: 'Today' }, { v: 'B', label: 'Clear Hairline' }, { v: 'C', label: 'Bright Clear Rim' }, { v: 'D', label: 'Wide Clear Rim' }, { v: 'Other', label: 'Describe in notes' }] }
     ]
   }
+,
+  {
+    id: 'glass-depth', title: 'Depth With Glass', href: 'explore/review-depth.html',
+    questions: [
+      { id: 'gdepth', label: 'Glass and depth', help: 'How should glass and the solid base layer combine to show elevation?',
+        options: [{ v: 'A', label: 'Chrome Only' }, { v: 'B', label: 'Base, Content, Glass' }, { v: 'C', label: 'One Glass Hero' }, { v: 'D', label: 'Glass Sheet' }, { v: 'Other', label: 'Describe in notes' }] }
+    ]
+  }
 ];

@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>S4 Orion: Depth With Glass</title>
+<link rel="stylesheet" href="../components/orion.css">
+<style>
+body{margin:0;background:var(--md-sys-color-surface);color:var(--md-sys-color-on-surface)}
+h1,h2,p{margin:0}
+.bar{display:flex;align-items:center;padding:12px 24px;background:var(--md-sys-color-surface-container);border-bottom:1px solid var(--md-sys-color-outline-variant)}
+.bar h1{font-size:20px;line-height:28px;font-weight:500}
+.page{max-width:1500px;margin:0 auto;padding:24px 16px 64px;display:flex;flex-direction:column;gap:28px}
+.intro{max-width:80ch;color:var(--md-sys-color-on-surface-variant);display:flex;flex-direction:column;gap:12px}
+.sec > h2{font-size:24px;line-height:32px;font-weight:500;margin-bottom:6px}
+.sec > p{color:var(--md-sys-color-on-surface-variant);max-width:85ch;margin-bottom:16px}
+.cards{--rv-min:1180px}
+.ph-strip{display:flex;gap:20px;overflow-x:auto;padding:14px 12px 16px}
+.ph-frame{flex:none;width:390px;height:720px;border:0;border-radius:24px;background:var(--md-sys-color-surface);box-shadow:0 0 0 6px var(--md-sys-color-surface-container-highest)}
+</style>
+</head>
+<body>
+<div class="bar"><h1>S4 Orion: Depth With Glass</h1></div>
+<main class="page">
+  <div class="intro">
+    <p>You like today's glass. This question is how glass and the solid base layer work together as <b>elevation and depth</b>: what sits on the base, what floats above it, and where glass shows up. Each card is the real demo restyled that way: Home in light, Home in dark, Controls in light. Swipe the row sideways on a phone.</p>
+    <p>Glass values (tint, blur, edge) are unchanged in every option. Tap the card above its preview to pick it; Other plus a note if none is right (for example "C but with two glass cards").</p>
+  </div>
+  <div id="sections"></div>
+</main>
+<footer style="padding:24px;text-align:center;font-size:12px;color:var(--md-sys-color-on-surface-variant)"><a href="../">S4 Orion</a> exploration</footer>
+
+<script src="../components/assets/m3color.js"></script>
+<script src="../components/assets/icons.js"></script>
+<script src="../components/orion.js"></script>
+<script src="lib/questions.js"></script>
+<script src="lib/review.js"></script>
+<script src="lib/phone-review.js"></script>
+<script>
+const WASH = 'radial-gradient(70% 30% at 88% 10%,rgb(110 150 255 / .6),transparent 75%),radial-gradient(65% 30% at 0% 50%,rgb(255 140 180 / .55),transparent 75%),radial-gradient(70% 32% at 95% 85%,rgb(90 220 190 / .55),transparent 75%)';
+const GLASS = 'background-color:color-mix(in srgb,var(--md-sys-color-surface-container) 75%,transparent)!important;-webkit-backdrop-filter:blur(8px) saturate(1.5);backdrop-filter:blur(8px) saturate(1.5);box-shadow:inset 0 1.5px 1.5px 0 rgb(255 255 255 / .22),inset 0 -1.5px 1.5px 0 rgb(255 255 255 / .22)!important';
+const BASE = `html,body,.s4-app{background:${WASH},var(--md-sys-color-surface)!important;background-attachment:fixed}.s4-app-body,.s4-content,.s4-view{background:transparent!important}`;
+const OPTS = [
+  { k: 'A', name: 'Chrome Only', tag: 'Today', desc: 'One flat solid base. Glass appears only on things that float over it: bars, the nav, the FAB, menus, dialogs and sheets.', css: '' },
+  { k: 'B', name: 'Base, Content, Glass', desc: 'Three clear levels. The base is a soft colored wash, content cards sit on it as solid surfaces, and glass floats above both (bars, nav, FAB) so you can see the page pass under it. Depth reads from the wash showing through the glass.',
+    css: BASE + '.s4-pane,.s4-card{--_bg:var(--md-sys-color-surface-container-high)!important;background-color:var(--md-sys-color-surface-container-high)!important}' },
+  { k: 'C', name: 'One Glass Hero', desc: 'Like B, but the single most important card on each screen (the first one) is glass too, sitting on the wash, so each page has one lifted focal point. Everything else is solid.',
+    css: BASE + '.s4-pane,.s4-card{--_bg:var(--md-sys-color-surface-container-high)!important;background-color:var(--md-sys-color-surface-container-high)!important}.s4-view .s4-card:first-of-type{' + GLASS + '}' },
+  { k: 'D', name: 'Glass Sheet', desc: 'The page content sits on a large glass sheet inset from the screen edge, over the colored base, with solid cards on the sheet. Three layers stacked: base wash, glass sheet, solid cards. The strongest depth, and a more distinctive look.',
+    css: BASE + '.s4-content{margin:8px 8px 0;border-radius:28px;' + GLASS + '}.s4-pane,.s4-card{--_bg:var(--md-sys-color-surface-container-high)!important;background-color:var(--md-sys-color-surface-container-high)!important}' }
+];
+const SCREENS = [{ view: 'home', theme: 'light' }, { view: 'home', theme: 'dark' }, { view: 'controls', theme: 'light' }];
+const sec = document.createElement('section'); sec.className = 'sec';
+sec.innerHTML = '<h2>Glass and Depth</h2><p>All four use the same tokens, glass values and motion.</p><div class="cards rv-group" role="radiogroup" aria-label="Overall direction"></div>';
+document.getElementById('sections').appendChild(sec);
+OPTS.forEach(o => sec.querySelector('.cards').appendChild(S4Review.card({ pick: 'gdepth:' + o.k, letter: o.k, title: o.name, desc: o.desc, tag: o.tag || '', preview: S4Phones.strip(SCREENS, o.css) })));
+S4Review.page('glass-depth');
+</script>
+</body>
+</html>
