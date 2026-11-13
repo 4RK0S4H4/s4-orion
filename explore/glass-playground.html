@@ -67,13 +67,14 @@ const SL = [
   { k: 'lift', label: 'Edge Light Color', desc: 'The edge light is the surface\'s own color moved toward white. 0 matches the surface (the line disappears); 100 is pure white. Dark surfaces, like a dark floating button, get a softer lighter version of themselves.', min: 0, max: 100, step: 5, v: 50, fmt: v => v + '%', css: v => ['--s4-glass-edge-lift', v / 100] },
   { k: 'width', label: 'Edge Width', desc: 'Thickness of the edge line on phones and retina screens.', min: 0, max: 3, step: 0.5, v: 1, fmt: v => v + 'px', css: v => ['--s4-glass-edge-width', v + 'px'] },
   { k: 'scaleStd', label: 'Edge Width on Monitors', desc: 'Multiplier for the edge on 1080p and 1440p monitors, where 1px looks thin. Larger monitors get a third more.', min: 1, max: 3, step: 0.25, v: 1.5, fmt: v => '\u00d7' + v, css: v => ['--s4-glass-edge-scale-standard', v] },
-  { k: 'glow', label: 'Edge Glow', desc: 'Spreads the edge light inward as a glow. Each side glows as much as its own edge light: stronger bottom edge light, stronger bottom glow. 0 is off; high values are strong.', min: 0, max: 100, step: 1, v: 0, fmt: v => v },
-  { k: 'shade', label: 'Edge Shade (light surfaces)', desc: 'Light surfaces turn the glow inside out: instead of a white glow they get a soft dark shade toward their edge, so the edge stays visible on a pale page. Dark surfaces keep the white glow. 0 turns the shade off.', min: 0, max: 60, step: 1, v: 28, fmt: v => v + '%', css: v => ['--s4-glass-glow-shade-alpha', v / 100] },
+  { k: 'glow', label: 'Edge Glow (dark surfaces)', desc: 'Dark surfaces get a white glow just inside their top and bottom edges, fading inward. Same strength in light and dark mode. 0 is off.', min: 0, max: 100, step: 1, v: 80, fmt: v => v, css: v => ['--s4-glass-glow-alpha', (v / 100 * 0.3).toFixed(3)] },
+  { k: 'shade', label: 'Edge Shade (light surfaces)', desc: 'Light surfaces get a soft dark shade in the same place instead, so their edge shows on a pale page. Same shape as the glow. 0 is off.', min: 0, max: 100, step: 1, v: 56, fmt: v => v, css: v => ['--s4-glass-glow-shade-alpha', (v / 100 * 0.5).toFixed(3)] },
+  { k: 'flip', label: 'Glow / Shade Flip Point', desc: 'How light a surface has to be before it gets the shade instead of the glow. Lower flips more surfaces to shade; a mid gray always gets one or the other.', min: 20, max: 90, step: 5, v: 60, fmt: v => v + '%', css: v => ['--s4-glass-glow-flip', v / 100] },
   { k: 'contrast', label: 'Backdrop Contrast', desc: 'Squashes what is behind the glass toward gray so text stays readable. 100% is off (today).', min: 40, max: 100, step: 5, v: 100, fmt: v => v + '%', css: v => ['--s4-glass-backdrop-contrast-float', v / 100] },
   { k: 'bright', label: 'Backdrop Brightness', desc: 'Dims or brightens what is behind the glass. 100% is off (today).', min: 60, max: 120, step: 5, v: 100, fmt: v => v + '%', css: v => ['--s4-glass-backdrop-brightness-float', v / 100] }
 ];
 const GLOW_REACH = 12;   /* fixed: one control is enough */
-const D = { glow: 100, scaleStd: 1.5, lift: 100, shade: 28 };
+const D = { glow: 80, scaleStd: 1.5, lift: 100, shade: 56, flip: 60 };
 const TODAY = { tint: 75, fab: 75, blur: 8, sat: 150, contrast: 100, bright: 100, top: 20, side: 0, bottom: 20, width: 1, ...D };
 const PRE = {
   'Today (your set)': TODAY,
@@ -112,10 +113,8 @@ function apply() {
     root.setProperty('--s4-glass-edge-top-alpha', e.top.toFixed(3));
     root.setProperty('--s4-glass-edge-side-alpha', e.side.toFixed(3));
     root.setProperty('--s4-glass-tint-opacity-fab-color', Math.max(state.fab, 90) / 100);
-    root.setProperty('--s4-glass-glow-shade-side-alpha', (state.shade / 100).toFixed(3));
     root.setProperty('--s4-glass-glow-size', GLOW_REACH + 'px');
     root.setProperty('--s4-glass-edge-scale-large', (state.scaleStd * 4 / 3).toFixed(2));
-    root.setProperty('--s4-glass-glow-amount', glowAmount());
     root.setProperty('--s4-glass-edge-top-alpha', e.top.toFixed(3));
     root.setProperty('--s4-glass-edge-side-alpha', e.side.toFixed(3));
     root.setProperty('--s4-glass-edge-bottom-alpha', e.bottom.toFixed(3));
@@ -141,7 +140,7 @@ function contrast() {
 }
 function tier() { const d = frames[0].contentDocument; if (!d || !d.documentElement) return ''; const v = getComputedStyle(d.documentElement).getPropertyValue('--_edge-scale').trim(); return v ? ' · this screen: edge ×' + v + ' = ' + (state.width * v).toFixed(2).replace(/\.?0+$/, '') + 'px' : ''; }
 function readout() {
-  document.getElementById('readout').textContent = `glass tint ${state.tint}% · floating button tint ${state.fab}% · blur ${state.blur}px · color boost ${state.sat}%\nbackdrop contrast ${state.contrast}% · brightness ${state.bright}%\nedge glow ${state.glow} (follows the edge light) · edge shade ${state.shade}% on light surfaces · edge light color ${state.lift}% toward white · edge top ${state.top}, sides ${state.side}% of top, bottom ${state.bottom}, width ${state.width}px (monitors ×${state.scaleStd})${tier()}\nbehind: ${backdrop}`;
+  document.getElementById('readout').textContent = `glass tint ${state.tint}% · floating button tint ${state.fab}% · blur ${state.blur}px · color boost ${state.sat}%\nbackdrop contrast ${state.contrast}% · brightness ${state.bright}%\nedge glow ${state.glow} · edge shade ${state.shade} · flip point ${state.flip}% · edge light color ${state.lift}% toward white · edge top ${state.top}, sides ${state.side}% of top, bottom ${state.bottom}, width ${state.width}px (monitors ×${state.scaleStd})${tier()}\nbehind: ${backdrop}`;
 }
 function build() {
   const box = document.getElementById('sliders');

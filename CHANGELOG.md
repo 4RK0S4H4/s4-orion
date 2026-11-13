@@ -17,7 +17,8 @@ The first version of S4 Orion, a leaner rebuild of S4 Material 1.3 on Material 3
 - No sharp corners in hover, focus and press layers (lists 16, segments 12, table rows rounded).
 - Glass edge corrected to the owner's playground numbers (top 80.5% / 21%, sides 30% / 8.5%, bottom 8% / 5%, light / dark; decision 0027).
 - Glass numbers updated to the owner's latest (edge top 50, sides 25% of top, bottom 50, FAB tint 75%); optional edge glow and top sheen tokens (off by default; decision 0028).
-- The edge glow inverts into an ink edge shade on light surfaces and stays a white glow on dark ones, per surface, continuous in lightness (`--s4-glass-glow-shade-alpha`, `-shade-side-alpha`; decision 0036).
+- Decision 0037: the glow/shade is now a hard flip at OKLCH lightness 0.6 (`--s4-glass-glow-flip`), with identical top/bottom geometry and strength in light and dark (`glow-alpha`, `glow-shade-alpha`; `glow-amount` and `glow-shade-side-alpha` removed).
+- (Superseded by 0037) The edge glow inverts into an ink edge shade on light surfaces and stays a white glow on dark ones, per surface, continuous in lightness (`--s4-glass-glow-shade-alpha`, `-shade-side-alpha`; decision 0036).
 - Glass edge calibrated to the iOS tab bar (rim top and bottom 1.0 light / 0.55 dark, none on the sides, glow 0.5 over 12px) with a plain fallback where color-mix math is unsupported (decision 0034).
 - Top and bottom glass edges are lit equally (no dark bottom line; tokens `bottom-lift` and `bottom-target` removed; decision 0033).
 - Floating buttons with a `data-color` use a 90% tint (`--s4-glass-tint-opacity-fab-color`); the default FAB keeps 75% (decision 0032).

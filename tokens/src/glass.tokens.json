@@ -310,11 +310,21 @@
         }
       },
       "glow": {
-        "$description": "The surface itself is a little different near its edges (decisions 0030, 0034, 0036). A dark surface gets a white glow that follows the edge light (each side's edge color and alpha times `amount`). A light surface gets the inverse, an ink edge shade (`shade-alpha`, `shade-side-alpha`), so its edge is defined instead of vanishing into a pale page. The switch is continuous in the surface's OKLCH lightness (dark below about 0.45, light above about 0.65, nothing visible in between), so tinted and colored surfaces such as floating buttons choose for themselves. `size` is how far the glow or shade reaches inward. Off where `amount` is 0.",
-        "amount": {
+        "$description": "The surface itself is a little different near its top and bottom edges (decisions 0030, 0034, 0036, 0037). A dark surface gets a white glow, a light surface an ink edge shade, and it flips at a lightness threshold (`flip`), so every surface, grays included, gets one or the other. Both have the same geometry and the same strength in light and dark mode, and both follow the edge light's distribution (top, bottom and sides by the ratio of their edge alphas, so no side light means no side glow). `size` is how far they reach inward. 0 alpha turns one off.",
+        "alpha": {
           "$type": "number",
-          "$value": 2.0,
-          "$description": "How much of each edge's light is carried inward as glow: 0 is off, 1 repeats the edge's own strength, 2 doubles it (capped at fully opaque)."
+          "$value": 0.24,
+          "$description": "Strength of the white glow on a dark surface at the top edge (0 to 1), the same in light and dark mode."
+        },
+        "shade-alpha": {
+          "$type": "number",
+          "$value": 0.28,
+          "$description": "Strength of the ink edge shade on a light surface at the top edge (0 to 1), the same in light and dark mode."
+        },
+        "flip": {
+          "$type": "number",
+          "$value": 0.6,
+          "$description": "OKLCH lightness (0 black to 1 white) at which a surface flips from the glow to the shade. A surface at or above it gets the shade; below it, the glow. A mid gray therefore gets a glow or a shade, never nothing."
         },
         "size": {
           "$type": "dimension",
@@ -322,17 +332,7 @@
             "value": 12,
             "unit": "px"
           },
-          "$description": "How far the glow reaches inward from each edge."
-        },
-        "shade-alpha": {
-          "$type": "number",
-          "$value": 0.28,
-          "$description": "Decision 0036: on a light surface the glow inverts into an edge shade (ink instead of white). This is its strength along the top and bottom (0 to 1). Dark surfaces ignore it and keep the white glow."
-        },
-        "shade-side-alpha": {
-          "$type": "number",
-          "$value": 0.28,
-          "$description": "The edge shade's strength along the sides on a light surface (the white glow has none on the sides)."
+          "$description": "How far the glow or shade reaches inward from the edge."
         }
       }
     }

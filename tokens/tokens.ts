@@ -1200,25 +1200,25 @@ export const tokens = {
     "value": "1",
     "description": "Decision 0031: the edge light is the surface's own color moved this far toward white (0 = the surface color, 1 = pure white). A pale glass gets a near-white line; a dark glass or a dark floating button gets a softer, lighter version of itself instead of a hard white line."
   },
-  "--s4-glass-glow-amount": {
+  "--s4-glass-glow-alpha": {
     "type": "number",
-    "value": "2",
-    "description": "How much of each edge's light is carried inward as glow: 0 is off, 1 repeats the edge's own strength, 2 doubles it (capped at fully opaque)."
-  },
-  "--s4-glass-glow-size": {
-    "type": "dimension",
-    "value": "12px",
-    "description": "How far the glow reaches inward from each edge."
+    "value": "0.24",
+    "description": "Strength of the white glow on a dark surface at the top edge (0 to 1), the same in light and dark mode."
   },
   "--s4-glass-glow-shade-alpha": {
     "type": "number",
     "value": "0.28",
-    "description": "Decision 0036: on a light surface the glow inverts into an edge shade (ink instead of white). This is its strength along the top and bottom (0 to 1). Dark surfaces ignore it and keep the white glow."
+    "description": "Strength of the ink edge shade on a light surface at the top edge (0 to 1), the same in light and dark mode."
   },
-  "--s4-glass-glow-shade-side-alpha": {
+  "--s4-glass-glow-flip": {
     "type": "number",
-    "value": "0.28",
-    "description": "The edge shade's strength along the sides on a light surface (the white glow has none on the sides)."
+    "value": "0.6",
+    "description": "OKLCH lightness (0 black to 1 white) at which a surface flips from the glow to the shade. A surface at or above it gets the shade; below it, the glow. A mid gray therefore gets a glow or a shade, never nothing."
+  },
+  "--s4-glass-glow-size": {
+    "type": "dimension",
+    "value": "12px",
+    "description": "How far the glow or shade reaches inward from the edge."
   },
   "--s4-icon-duo-opacity": {
     "type": "number",

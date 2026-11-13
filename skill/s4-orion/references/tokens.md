@@ -381,10 +381,10 @@ Light values are shown; a second value is dark mode. Color roles also change wit
 | `--s4-glass-edge-side-alpha` | 0 | 0 | How strong the faint line all round is (0 to 1). |
 | `--s4-glass-edge-bottom-alpha` | 0.46 | 0.12 | How strong the light line along the bottom edge is (0 to 1). Lit like the top (decision 0033), in the same surface-based color, so a surface looks evenly lit and not raised. |
 | `--s4-glass-edge-lift` | 1 |  | Decision 0031: the edge light is the surface's own color moved this far toward white (0 = the surface color, 1 = pure white). A pale glass gets a near-white line; a dark glass or a dark floating button gets a softer, lighter version of itself instead of a hard white line. |
-| `--s4-glass-glow-amount` | 2 |  | How much of each edge's light is carried inward as glow: 0 is off, 1 repeats the edge's own strength, 2 doubles it (capped at fully opaque). |
-| `--s4-glass-glow-size` | 12px |  | How far the glow reaches inward from each edge. |
-| `--s4-glass-glow-shade-alpha` | 0.28 |  | Decision 0036: on a light surface the glow inverts into an edge shade (ink instead of white). This is its strength along the top and bottom (0 to 1). Dark surfaces ignore it and keep the white glow. |
-| `--s4-glass-glow-shade-side-alpha` | 0.28 |  | The edge shade's strength along the sides on a light surface (the white glow has none on the sides). |
+| `--s4-glass-glow-alpha` | 0.24 |  | Strength of the white glow on a dark surface at the top edge (0 to 1), the same in light and dark mode. |
+| `--s4-glass-glow-shade-alpha` | 0.28 |  | Strength of the ink edge shade on a light surface at the top edge (0 to 1), the same in light and dark mode. |
+| `--s4-glass-glow-flip` | 0.6 |  | OKLCH lightness (0 black to 1 white) at which a surface flips from the glow to the shade. A surface at or above it gets the shade; below it, the glow. A mid gray therefore gets a glow or a shade, never nothing. |
+| `--s4-glass-glow-size` | 12px |  | How far the glow or shade reaches inward from the edge. |
 
 ## Icons
 
