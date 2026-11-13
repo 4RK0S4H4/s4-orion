@@ -2,6 +2,8 @@
 
 ## NOW (2026-11-11): Orion stays M3 Expressive, with the new glass and simpler motion
 
+**2026-11-13 ([0039](decisions/0039-docked-glass-full-edge.md)):** docked glass has the full glass edge like everything else. Awaiting the owner's iPhone check.
+
 **2026-11-13 ([0038](decisions/0038-everything-floating.md)):** floating bars were tried and reverted; the top bar, nav bar and rail are docked again. Awaiting the owner's iPhone check of the demo.
 
 **2026-11-13 ([0037](decisions/0037-glow-shade-flip.md)):** the glass edge glow flips to an edge shade at OKLCH lightness 0.6 (hard step, grays included); glow and shade share top/bottom geometry and strength in both modes. Awaiting the owner's iPhone check in the Glass Playground (`explore/glass-playground.html`).
