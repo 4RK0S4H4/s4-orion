@@ -30,11 +30,9 @@
     grid-column: 1;
     grid-row: 1 / -1;
     position: sticky;
-    top: var(--s4-space-2);
+    top: 0;
     align-self: start;
-    block-size: calc(100dvh - 2 * var(--s4-space-2));
-    margin: var(--s4-space-2) 0 var(--s4-space-2) var(--s4-space-2);   /* decision 0038: the rail floats too */
-    border-radius: var(--md-sys-shape-corner-extra-large);
+    block-size: 100dvh;
     z-index: var(--s4-z-navigation);
   }
   .s4-app > .s4-app-body {
@@ -48,7 +46,7 @@
     grid-column: 1 / -1;
     grid-row: 2;
     position: sticky;
-    bottom: 0;   /* the bar's own margin keeps the floating gap */
+    bottom: 0;
     z-index: var(--s4-z-navigation);
   }
 
@@ -75,13 +73,16 @@
     .s4-app > .s4-nav-rail { display: none; }
     /* the nav bar already pads for the home indicator, so content only needs to clear the bar itself, which it does by
        being in flow; floating things (FAB, floating toolbar) read the inset to sit above the bar */
-    .s4-app:has(> .s4-nav-bar) > * { --s4-app-inset-bottom: calc(var(--s4-size-nav-bar) + 2 * var(--s4-space-2) + env(safe-area-inset-bottom, 0px)); }   /* the floating bar plus its gaps */
+    .s4-app:has(> .s4-nav-bar) > * { --s4-app-inset-bottom: calc(var(--s4-size-nav-bar) + env(safe-area-inset-bottom, 0px)); }
     .s4-app:has(> .s4-nav-bar) .s4-content { padding-block-end: var(--s4-space-6); }
   }
   /* medium and up: 24 margins */
   @container s4-app (width >= 600px) {
     .s4-content { --_margin: var(--s4-layout-margin); }
     /* the bar's title and icons line up with the 24dp content margin (the bar's own inset is 8 + the slot's 8) */
+    .s4-app-body > .s4-top-app-bar {
+      padding-inline: max(var(--s4-space-4), env(safe-area-inset-left, 0px)) max(var(--s4-space-4), env(safe-area-inset-right, 0px));
+    }
   }
   /* expanded (>= 840): rail at the left, nav bar hidden; the rail takes the left safe area */
   @container s4-app (width >= 840px) {

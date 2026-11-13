@@ -10,21 +10,18 @@
    Small (default): 64dp, title-large title. Medium (112, 136 with a subtitle) and large (120, 152) put a bigger headline
    under the 64dp row; it collapses on scroll: the bar sticks with a negative top so only the 64dp row stays, and
    top-app-bar.js slides that row down as the headline scrolls away, then fades a small title into it.
-   The bar floats (decision 0038), like iOS: no bar behind it, just separate glass buttons inset 8dp from the top and the
-   sides: a round leading button, a title pill and an actions pill (the medium and large headline stays plain text under
-   the row). Content scrolls under and between them. top-app-bar.js still sets data-scrolled. Sticks to the top of its scroll container; clears the notch.
+   At rest the bar is surface; when content scrolls under it top-app-bar.js sets data-scrolled and it takes
+   surface-container (glass.css turns that into glass). Sticks to the top of its scroll container; pads for the notch.
    Every child that isn't the title group or the actions is the leading (navigation) slot. */
 @layer s4.components {
   .s4-top-app-bar {
     --_row: var(--s4-size-top-app-bar);
     --_h: var(--_row);                         /* full height without the status-bar inset */
-    --_bg: var(--md-sys-color-surface-container);
-    --_gap: var(--s4-space-2);                   /* decision 0038: the bar floats, this far from the screen edges */
-    --_top: calc(var(--_gap) + env(safe-area-inset-top, 0px));
+    --_bg: var(--md-sys-color-surface);
     --_offset: 0px;                            /* set by JS: how far the 64dp row has followed the scroll */
     --_p: 0;                                   /* set by JS: collapse progress 0..1 */
     position: sticky;
-    top: calc(var(--_row) - var(--_h) + var(--_top));
+    top: calc(var(--_row) - var(--_h));
     z-index: var(--s4-z-app-bar);
     display: grid;
     grid-template-columns: auto minmax(0, 1fr) auto;
@@ -32,27 +29,17 @@
     grid-template-areas: "lead title actions";
     align-items: center;
     flex: none;
-    block-size: var(--_h);
-    margin: var(--_top) max(var(--_gap), env(safe-area-inset-right, 0px)) 0 max(var(--_gap), env(safe-area-inset-left, 0px));
-    column-gap: var(--s4-space-2);
-    background: none;                          /* decision 0038: the bar itself is invisible, its parts are floating glass buttons */
-    pointer-events: none;
+    block-size: calc(var(--_h) + env(safe-area-inset-top, 0px));
+    padding:
+      env(safe-area-inset-top, 0px)
+      max(var(--s4-space-2), env(safe-area-inset-right, 0px))
+      0
+      max(var(--s4-space-2), env(safe-area-inset-left, 0px));
+    background: var(--_bg);
     color: var(--md-sys-color-on-surface);
+    transition: background-color var(--md-sys-motion-spring-effects-duration) var(--md-sys-motion-spring-effects);
   }
-  /* the parts that float as glass (glass.css): the leading button is a circle, the title and the actions are pills.
-     In the medium and large bars the headline under the row is plain text, only the row floats. */
-  .s4-top-app-bar:not([data-size]) > *,
-  .s4-top-app-bar[data-size] > :not(.s4-app-bar-title-group, .s4-app-bar-collapsed-title) {
-    --_part: calc(var(--_row) - var(--s4-space-2));
-    block-size: var(--_part);
-    align-self: center;
-    border-radius: var(--md-sys-shape-corner-full);
-    background: var(--md-sys-color-surface-container);   /* solid where glass is off */
-    pointer-events: auto;
-  }
-  .s4-top-app-bar > :not(.s4-app-bar-title-group, .s4-app-bar-actions, .s4-app-bar-collapsed-title) { inline-size: var(--_part, var(--_row)); }
-  .s4-top-app-bar > .s4-app-bar-actions { padding-inline: var(--s4-space-1); }
-  .s4-top-app-bar:not([data-size]) > .s4-app-bar-title-group { align-items: center; text-align: center; padding-inline: var(--s4-space-4); }
+  .s4-top-app-bar[data-scrolled] { --_bg: var(--md-sys-color-surface-container); }
 
   .s4-top-app-bar > * { grid-area: lead; color: var(--md-sys-color-on-surface); }
   .s4-top-app-bar > .s4-app-bar-title-group { grid-area: title; }
@@ -163,6 +150,6 @@
   }
 
   @media (forced-colors: active) {
-    .s4-top-app-bar { border: 1px solid CanvasText; }
+    .s4-top-app-bar[data-scrolled] { border-block-end: 1px solid CanvasText; }
   }
 }
