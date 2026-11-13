@@ -17,6 +17,7 @@ The first version of S4 Orion, a leaner rebuild of S4 Material 1.3 on Material 3
 - No sharp corners in hover, focus and press layers (lists 16, segments 12, table rows rounded).
 - Glass edge corrected to the owner's playground numbers (top 80.5% / 21%, sides 30% / 8.5%, bottom 8% / 5%, light / dark; decision 0027).
 - Glass numbers updated to the owner's latest (edge top 50, sides 25% of top, bottom 50, FAB tint 75%); optional edge glow and top sheen tokens (off by default; decision 0028).
+- Decision 0040: docked glass lights, glows and shades only the edge that faces the content, not the edge touching the screen.
 - Decision 0039: docked glass (top bar, nav bar, docked toolbar, rail, sheets) uses the same rim, glow and edge shade as every other glass surface; the single-line edge is gone.
 - Decision 0038: floating top bar, bottom nav and rail were tried and reverted at the owner's request (the bars are docked again, as before).
 - Decision 0037: the glow/shade is now a hard flip at OKLCH lightness 0.6 (`--s4-glass-glow-flip`), with identical top/bottom geometry and strength in light and dark (`glow-alpha`, `glow-shade-alpha`; `glow-amount` and `glow-shade-side-alpha` removed).

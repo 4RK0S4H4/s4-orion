@@ -2,6 +2,8 @@
 
 ## NOW (2026-11-11): Orion stays M3 Expressive, with the new glass and simpler motion
 
+**2026-11-13 ([0040](decisions/0040-docked-glass-lit-edge-only.md)):** docked glass lights only its free edge. Awaiting the owner's iPhone check.
+
 **2026-11-13 ([0039](decisions/0039-docked-glass-full-edge.md)):** docked glass has the full glass edge like everything else. Awaiting the owner's iPhone check.
 
 **2026-11-13 ([0038](decisions/0038-everything-floating.md)):** floating bars were tried and reverted; the top bar, nav bar and rail are docked again. Awaiting the owner's iPhone check of the demo.
