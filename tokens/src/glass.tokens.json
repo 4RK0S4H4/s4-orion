@@ -266,11 +266,11 @@
         },
         "top-alpha": {
           "$type": "number",
-          "$value": 1.0,
+          "$value": 0.46,
           "$description": "How strong the light line along the top edge is (0 to 1). Its color comes from the surface (see `lift`), never pure white.",
           "$extensions": {
             "com.s4.modes": {
-              "dark": 0.55,
+              "dark": 0.12,
               "high-contrast": 0,
               "dark-high-contrast": 0,
               "reduced-transparency": 0
@@ -292,11 +292,11 @@
         },
         "bottom-alpha": {
           "$type": "number",
-          "$value": 1.0,
+          "$value": 0.46,
           "$description": "How strong the light line along the bottom edge is (0 to 1). Lit like the top (decision 0033), in the same surface-based color, so a surface looks evenly lit and not raised.",
           "$extensions": {
             "com.s4.modes": {
-              "dark": 0.55,
+              "dark": 0.12,
               "high-contrast": 0,
               "dark-high-contrast": 0,
               "reduced-transparency": 0
@@ -305,7 +305,7 @@
         },
         "lift": {
           "$type": "number",
-          "$value": 0.5,
+          "$value": 1.0,
           "$description": "Decision 0031: the edge light is the surface's own color moved this far toward white (0 = the surface color, 1 = pure white). A pale glass gets a near-white line; a dark glass or a dark floating button gets a softer, lighter version of itself instead of a hard white line."
         }
       },
@@ -313,7 +313,7 @@
         "$description": "The surface itself is a little lighter near the top and bottom edges and fades to its normal tone inside (decisions 0030, 0034; iOS: about +5% over 8 to 10px). Each side's glow is its edge color and alpha times `amount`, so it vanishes where the edge does. 0 is off.",
         "amount": {
           "$type": "number",
-          "$value": 0.5,
+          "$value": 2.0,
           "$description": "How much of each edge's light is carried inward as glow: 0 is off, 1 repeats the edge's own strength, 2 doubles it (capped at fully opaque)."
         },
         "size": {

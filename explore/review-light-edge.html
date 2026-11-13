@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>S4 Orion: Light Mode Glass Edge</title>
+<link rel="stylesheet" href="../components/orion.css?v=5dc32e9">
+<style>
+body{margin:0;background:var(--md-sys-color-surface);color:var(--md-sys-color-on-surface)}
+h1,h2,p{margin:0}
+.bar{display:flex;align-items:center;padding:12px 24px;background:var(--md-sys-color-surface-container);border-bottom:1px solid var(--md-sys-color-outline-variant)}
+.bar h1{font-size:20px;line-height:28px;font-weight:500}
+.page{max-width:1300px;margin:0 auto;padding:24px 16px 64px;display:flex;flex-direction:column;gap:28px}
+.intro{max-width:80ch;color:var(--md-sys-color-on-surface-variant);display:flex;flex-direction:column;gap:12px}
+.sec > h2{font-size:24px;line-height:32px;font-weight:500;margin-bottom:6px}
+.sec > p{color:var(--md-sys-color-on-surface-variant);max-width:85ch;margin-bottom:16px}
+.cards{--rv-min:1040px}
+.strip{display:flex;gap:16px;overflow-x:auto;padding:14px 12px 16px}
+.strip figure{margin:0;flex:none;display:grid;gap:6px}
+.strip figcaption{font:600 11px/14px Inter,system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--md-sys-color-on-surface-variant)}
+.strip iframe{width:320px;height:280px;border:0;border-radius:20px;background:var(--md-sys-color-surface);box-shadow:0 0 0 4px var(--md-sys-color-surface-container-highest)}
+</style>
+</head>
+<body>
+<div class="bar"><h1>S4 Orion: Light Mode Glass Edge</h1></div>
+<main class="page">
+  <div class="intro">
+    <p>Dark mode stays exactly as you tuned it. On light mode a white rim and a white glow have nothing to stand out against, so the edge of a glass surface disappears into a pale page. Four ways to fix it, shown on the worst case (glass over a pale page) and on a colorful backdrop, with dark mode alongside to show it is unchanged.</p>
+    <p>Tap the card above its preview to pick one; Other plus a note if none is right (for example "B but lighter").</p>
+  </div>
+  <div id="sections"></div>
+</main>
+<footer style="padding:24px;text-align:center;font-size:12px;color:var(--md-sys-color-on-surface-variant)"><a href="../">S4 Orion</a> exploration</footer>
+<script src="../components/assets/m3color.js"></script>
+<script src="../components/assets/icons.js?v=0b2fd72"></script>
+<script src="../components/orion.js?v=b0a06f1"></script>
+<script src="lib/questions.js?v=5e20e16"></script>
+<script src="lib/review.js?v=2d9b250"></script>
+<script>
+const OPTS = [
+  { k: 'A', o: 'a', name: 'Today', tag: 'Today', desc: 'A white rim and a white glow, as in dark mode. On a pale page the surface edge nearly vanishes.' },
+  { k: 'B', o: 'b', name: 'Hairline Outline', desc: 'What iOS does in light mode: a very thin dark outline (13% ink) just outside the surface, plus a soft white rim and glow inside it. Clear edges everywhere. It is an outline, which you have avoided elsewhere, but it is a near-invisible one.' },
+  { k: 'C', o: 'c', name: 'Shaded Rim', desc: 'No outside line. The rim is the surface\'s own color, darkened about 22%, with the bright glow just inside it, so the edge reads as a slightly darker bevel. Follows the color of floating buttons and tinted surfaces.' },
+  { k: 'D', o: 'd', name: 'Edge Shade', desc: 'No outline and no rim color change: the surface gets slightly darker toward its edge (an inward shade), with a thin white rim on the top and bottom. Reads as depth, like a lens, not a border.' }
+];
+const frame = (opt, bg, theme, cap) => `<figure><figcaption>${cap}</figcaption><iframe title="${cap}" src="review-light-edge-frame.html?opt=${opt}&amp;bg=${bg}&amp;theme=${theme}"></iframe></figure>`;
+const preview = o => { const el = document.createElement('div'); el.className = 'strip'; el.innerHTML = frame(o, 'pale', 'light', 'Light, pale page') + frame(o, 'color', 'light', 'Light, colorful') + frame('a', 'color', 'dark', 'Dark (unchanged)'); return el; };
+const sec = document.createElement('section'); sec.className = 'sec';
+sec.innerHTML = '<h2>Light Mode Edge</h2><p>Same glass, same tint, blur and boost. Only the light mode edge changes.</p><div class="cards rv-group" role="radiogroup" aria-label="Light mode edge"></div>';
+document.getElementById('sections').appendChild(sec);
+OPTS.forEach(x => sec.querySelector('.cards').appendChild(S4Review.card({ pick: 'lightedge:' + x.k, letter: x.k, title: x.name, desc: x.desc, tag: x.tag || '', preview: preview(x.o) })));
+S4Review.page('light-edge');
+</script>
+</body>
+</html>

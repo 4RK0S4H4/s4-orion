@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Light edge frame</title>
+<script>(function(){var q=new URLSearchParams(location.search);document.documentElement.dataset.theme=q.get('theme')==='dark'?'dark':'light';document.documentElement.dataset.opt=q.get('opt')||'a';document.documentElement.dataset.bg=q.get('bg')||'pale';})();</script>
+<link rel="stylesheet" href="../components/orion.css?v=5dc32e9">
+<style>
+html,body{margin:0;height:100%;overflow:hidden;background:var(--md-sys-color-surface);color:var(--md-sys-color-on-surface)}
+.stage{position:relative;height:100%;overflow:hidden;font-family:Inter,system-ui,sans-serif}
+.rows{position:absolute;inset:0;padding:12px;display:flex;flex-direction:column;gap:8px}
+.rows i{display:block;height:44px;border-radius:14px;background:var(--md-sys-color-surface-container-low)}
+[data-bg=color] .blob{position:absolute;inset:0;background:radial-gradient(45% 40% at 78% 30%,#ff4f7b 0 40%,transparent 72%),radial-gradient(50% 45% at 22% 80%,#2bc4a9 0 40%,transparent 72%),radial-gradient(40% 35% at 85% 88%,#4466ff 0 40%,transparent 72%)}
+.g{position:absolute}
+.menu{left:14px;top:18px;width:180px;padding:6px;border-radius:var(--md-sys-shape-corner-extra-large);display:flex;flex-direction:column}
+.menu a{display:flex;align-items:center;height:40px;padding:0 14px;border-radius:999px;font-size:15px;color:inherit;text-decoration:none}
+.menu a.on{background:color-mix(in srgb,currentColor 9%,transparent)}
+.card{right:14px;top:30px;width:150px;border-radius:var(--md-sys-shape-corner-extra-large);padding:14px;font-size:14px;line-height:20px}
+.fabs{right:14px;bottom:16px;display:flex;gap:10px;align-items:center}
+.nav{left:14px;bottom:16px;width:190px;height:60px;border-radius:999px;padding:0 6px;display:flex;align-items:center;justify-content:space-around;font-size:11px}
+.nav > span{display:grid;justify-items:center;gap:1px;width:56px;padding:6px 0;border-radius:999px}
+.nav > span.on{background:var(--md-sys-color-secondary-container);font-weight:600}
+.nav .s4-icon{--s4-icon-size:20px}
+
+/* ---- light-mode edge options (the real glass, then the same surfaces with a different edge) ----
+   b: a hairline dark outline (what iOS draws in light mode) around the surface, plus a white inner rim
+   c: a shaded rim (the surface's own color, darkened), with the bright glow just inside it
+   d: no outline: the surface gets darker toward its edge (an ink glow inward) with a thin white rim inside that */
+:root[data-theme="light"][data-opt="b"] :is(.s4-glass,.s4-fab){box-shadow:0 0 0 1px rgb(23 23 26 / .13),inset 0 1px 1px 0 rgb(255 255 255 / .85),inset 0 -1px 1px 0 rgb(255 255 255 / .85),inset 0 0 12px 0 rgb(255 255 255 / .5)}
+:root[data-theme="light"][data-opt="c"] :is(.s4-glass,.s4-fab){box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--_surface),black 22%),inset 0 0 14px 1px rgb(255 255 255 / .95),inset 0 1px 1px 1px rgb(255 255 255 / .7)}
+:root[data-theme="light"][data-opt="d"] :is(.s4-glass,.s4-fab){box-shadow:inset 0 1px 1px 0 rgb(255 255 255 / .9),inset 0 -1px 1px 0 rgb(255 255 255 / .9),inset 0 0 0 1px rgb(255 255 255 / .35),inset 0 0 14px 0 color-mix(in srgb,var(--_surface),black 28%)}
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="rows"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="blob"></div>
+
+  <div class="g menu s4-glass" aria-label="Example menu"><a href="#" class="on">Rename</a><a href="#">Move to…</a><a href="#">Archive</a></div>
+  <div class="g card s4-glass">Delete this note? It moves to Trash.</div>
+
+  <nav class="g nav s4-glass" aria-label="Example navigation">
+    <span class="on"><span class="s4-icon" data-icon="home"></span>Today</span>
+    <span><span class="s4-icon" data-icon="calendar"></span>Plan</span>
+    <span><span class="s4-icon" data-icon="chat"></span>Inbox</span>
+  </nav>
+  <div class="g fabs">
+    <button class="s4-fab" data-size="small" type="button" aria-label="Camera"><span class="s4-icon" data-icon="camera"></span></button>
+    <button class="s4-fab" type="button" aria-label="Add"><span class="s4-icon" data-icon="add"></span></button>
+  </div>
+</div>
+<script src="../components/assets/icons.js?v=0b2fd72"></script>
+<script src="../components/orion.js?v=b0a06f1"></script>
+</body>
+</html>

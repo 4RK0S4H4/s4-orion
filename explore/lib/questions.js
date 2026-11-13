@@ -184,4 +184,12 @@ window.S4_REVIEW_DEMOS = [
         options: [{ v: 'A', label: 'Rounded Tray (today)' }, { v: 'B', label: 'Pill Tray' }, { v: 'C', label: 'Separate Pills' }, { v: 'D', label: 'Soft Segments' }, { v: 'E', label: 'Joined Capsule' }, { v: 'Other', label: 'Describe in notes' }] }
     ]
   }
+  ,
+  {
+    id: 'light-edge', title: 'Light Mode Glass Edge', href: 'explore/review-light-edge.html',
+    questions: [
+      { id: 'lightedge', label: 'Light mode glass edge', help: 'Dark mode is unchanged. How should the edge of glass read on a pale page?',
+        options: [{ v: 'A', label: 'Today' }, { v: 'B', label: 'Hairline Outline' }, { v: 'C', label: 'Shaded Rim' }, { v: 'D', label: 'Edge Shade' }, { v: 'Other', label: 'Describe in notes' }] }
+    ]
+  }
 ];

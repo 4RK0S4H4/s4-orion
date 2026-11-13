@@ -377,11 +377,11 @@ Light values are shown; a second value is dark mode. Color roles also change wit
 | `--s4-glass-edge-line` | rgb(23 23 26 / 0.08) | rgb(255 255 255 / 0.08) | The single line full-width bars draw on their content-facing edge. |
 | `--s4-glass-edge-scale-standard` | 1.5 |  | Decision 0029: on a standard-density screen (under 1.5 device pixels per CSS pixel, e.g. a 1080p or 1440p monitor) the edge width is multiplied by this, so it stays visible. Retina and phone screens keep the width as it is. |
 | `--s4-glass-edge-scale-large` | 2 |  | Edge width multiplier on a large standard-density screen (a 2200px or wider display at under 1.5 device pixels per CSS pixel, e.g. 1440p and up). |
-| `--s4-glass-edge-top-alpha` | 1 | 0.55 | How strong the light line along the top edge is (0 to 1). Its color comes from the surface (see `lift`), never pure white. |
+| `--s4-glass-edge-top-alpha` | 0.46 | 0.12 | How strong the light line along the top edge is (0 to 1). Its color comes from the surface (see `lift`), never pure white. |
 | `--s4-glass-edge-side-alpha` | 0 | 0 | How strong the faint line all round is (0 to 1). |
-| `--s4-glass-edge-bottom-alpha` | 1 | 0.55 | How strong the light line along the bottom edge is (0 to 1). Lit like the top (decision 0033), in the same surface-based color, so a surface looks evenly lit and not raised. |
-| `--s4-glass-edge-lift` | 0.5 |  | Decision 0031: the edge light is the surface's own color moved this far toward white (0 = the surface color, 1 = pure white). A pale glass gets a near-white line; a dark glass or a dark floating button gets a softer, lighter version of itself instead of a hard white line. |
-| `--s4-glass-glow-amount` | 0.5 |  | How much of each edge's light is carried inward as glow: 0 is off, 1 repeats the edge's own strength, 2 doubles it (capped at fully opaque). |
+| `--s4-glass-edge-bottom-alpha` | 0.46 | 0.12 | How strong the light line along the bottom edge is (0 to 1). Lit like the top (decision 0033), in the same surface-based color, so a surface looks evenly lit and not raised. |
+| `--s4-glass-edge-lift` | 1 |  | Decision 0031: the edge light is the surface's own color moved this far toward white (0 = the surface color, 1 = pure white). A pale glass gets a near-white line; a dark glass or a dark floating button gets a softer, lighter version of itself instead of a hard white line. |
+| `--s4-glass-glow-amount` | 2 |  | How much of each edge's light is carried inward as glow: 0 is off, 1 repeats the edge's own strength, 2 doubles it (capped at fully opaque). |
 | `--s4-glass-glow-size` | 12px |  | How far the glow reaches inward from each edge. |
 
 ## Icons

@@ -1164,10 +1164,10 @@ export const tokens = {
   },
   "--s4-glass-edge-top-alpha": {
     "type": "number",
-    "value": "1",
+    "value": "0.46",
     "description": "How strong the light line along the top edge is (0 to 1). Its color comes from the surface (see `lift`), never pure white.",
     "modes": {
-      "dark": "0.55",
+      "dark": "0.12",
       "high-contrast": "0",
       "dark-high-contrast": "0",
       "reduced-transparency": "0"
@@ -1186,10 +1186,10 @@ export const tokens = {
   },
   "--s4-glass-edge-bottom-alpha": {
     "type": "number",
-    "value": "1",
+    "value": "0.46",
     "description": "How strong the light line along the bottom edge is (0 to 1). Lit like the top (decision 0033), in the same surface-based color, so a surface looks evenly lit and not raised.",
     "modes": {
-      "dark": "0.55",
+      "dark": "0.12",
       "high-contrast": "0",
       "dark-high-contrast": "0",
       "reduced-transparency": "0"
@@ -1197,12 +1197,12 @@ export const tokens = {
   },
   "--s4-glass-edge-lift": {
     "type": "number",
-    "value": "0.5",
+    "value": "1",
     "description": "Decision 0031: the edge light is the surface's own color moved this far toward white (0 = the surface color, 1 = pure white). A pale glass gets a near-white line; a dark glass or a dark floating button gets a softer, lighter version of itself instead of a hard white line."
   },
   "--s4-glass-glow-amount": {
     "type": "number",
-    "value": "0.5",
+    "value": "2",
     "description": "How much of each edge's light is carried inward as glow: 0 is off, 1 repeats the edge's own strength, 2 doubles it (capped at fully opaque)."
   },
   "--s4-glass-glow-size": {
