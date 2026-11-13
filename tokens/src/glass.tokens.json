@@ -310,7 +310,7 @@
         }
       },
       "glow": {
-        "$description": "The surface itself is a little lighter near the top and bottom edges and fades to its normal tone inside (decisions 0030, 0034; iOS: about +5% over 8 to 10px). Each side's glow is its edge color and alpha times `amount`, so it vanishes where the edge does. 0 is off.",
+        "$description": "The surface itself is a little different near its edges (decisions 0030, 0034, 0036). A dark surface gets a white glow that follows the edge light (each side's edge color and alpha times `amount`). A light surface gets the inverse, an ink edge shade (`shade-alpha`, `shade-side-alpha`), so its edge is defined instead of vanishing into a pale page. The switch is continuous in the surface's OKLCH lightness (dark below about 0.45, light above about 0.65, nothing visible in between), so tinted and colored surfaces such as floating buttons choose for themselves. `size` is how far the glow or shade reaches inward. Off where `amount` is 0.",
         "amount": {
           "$type": "number",
           "$value": 2.0,
@@ -323,6 +323,16 @@
             "unit": "px"
           },
           "$description": "How far the glow reaches inward from each edge."
+        },
+        "shade-alpha": {
+          "$type": "number",
+          "$value": 0.28,
+          "$description": "Decision 0036: on a light surface the glow inverts into an edge shade (ink instead of white). This is its strength along the top and bottom (0 to 1). Dark surfaces ignore it and keep the white glow."
+        },
+        "shade-side-alpha": {
+          "$type": "number",
+          "$value": 0.28,
+          "$description": "The edge shade's strength along the sides on a light surface (the white glow has none on the sides)."
         }
       }
     }

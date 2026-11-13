@@ -215,6 +215,8 @@
     --s4-glass-edge-lift: 1;
     --s4-glass-glow-amount: 2;
     --s4-glass-glow-size: 12px;
+    --s4-glass-glow-shade-alpha: 0.28;
+    --s4-glass-glow-shade-side-alpha: 0.28;
     --s4-icon-duo-opacity: 0.8;
     --s4-motion-spring-fast-spatial-calm-stiffness: 1400;
     --s4-motion-spring-fast-spatial-calm-damping: 1;

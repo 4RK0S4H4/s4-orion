@@ -54,6 +54,8 @@ The edge color depends on the surface (decision 0031): `--_edge-hi` is the surfa
 
 The edge width scales with the screen (decision 0029): the token `--s4-glass-edge-width` (1px) is the retina and phone width; standard-density monitors multiply it by `--s4-glass-edge-scale-standard` (1.5) and large ones by `--s4-glass-edge-scale-large` (2).
 
+The glow inverts on light surfaces (decision 0036): a dark surface gets a white glow, a light surface an ink edge shade (`--s4-glass-glow-shade-alpha`), chosen per surface from its lightness, so edges stay visible on pale pages.
+
 Floating action buttons are glass too (decisions 0025, 0028): tinted with their own color at `--s4-glass-tint-opacity-fab` (75%); the default monochrome FAB keeps 3:1 or better over any backdrop (`scripts/check-glass.mjs` prints the seeded worst case). Optional brighter-near-the-edges surface (decision 0030): `--s4-glass-glow-amount` (0 = off) and `--s4-glass-glow-size`; each side glows with its own edge light, so a stronger bottom edge gives a stronger bottom glow.
 
 Controls inside a glass surface (a dialog's fields, a menu's chips) stay your UI: they keep their own color at full fill (`--s4-glass-item-fill: 1`; lower it to let the blurred backdrop tint them) and drop their outlines, so the glass supplies the depth and the items stay clean (decision 0015).
