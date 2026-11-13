@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>S4 Orion: Clearer Glass Edges</title>
+<link rel="stylesheet" href="../components/orion.css?v=8182144">
+<style>
+body{margin:0;background:var(--md-sys-color-surface);color:var(--md-sys-color-on-surface)}
+h1,h2,p{margin:0}
+.bar{display:flex;align-items:center;padding:12px 24px;background:var(--md-sys-color-surface-container);border-bottom:1px solid var(--md-sys-color-outline-variant)}
+.bar h1{font-size:20px;line-height:28px;font-weight:500}
+.page{max-width:1300px;margin:0 auto;padding:24px 16px 64px;display:flex;flex-direction:column;gap:28px}
+.intro{max-width:80ch;color:var(--md-sys-color-on-surface-variant);display:flex;flex-direction:column;gap:12px}
+.sec > h2{font-size:24px;line-height:32px;font-weight:500;margin-bottom:6px}
+.sec > p{color:var(--md-sys-color-on-surface-variant);max-width:85ch;margin-bottom:16px}
+.cards{--rv-min:1040px}
+.strip{display:flex;gap:16px;overflow-x:auto;padding:14px 12px 16px}
+.strip figure{margin:0;flex:none;display:grid;gap:6px}
+.strip figcaption{font:600 11px/14px Inter,system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--md-sys-color-on-surface-variant)}
+.strip iframe{width:320px;height:280px;border:0;border-radius:20px;background:var(--md-sys-color-surface);box-shadow:0 0 0 4px var(--md-sys-color-surface-container-highest)}
+</style>
+</head>
+<body>
+<div class="bar"><h1>S4 Orion: Clearer Glass Edges</h1></div>
+<main class="page">
+  <div class="intro">
+    <p>Glass edges that let more of what is behind show through, like light passing through the rim. The surface tint fades out toward the edge, so the blurred backdrop shows more there. True refraction (bending the backdrop) only works in Chromium, so these are the Safari-safe versions. Shown on the colorful backdrop and on the pale page; the dark one shows the same option in dark mode.</p>
+    <p>Tap the card above its preview to pick one; Other plus a note if none is right (for example "B but lighter").</p>
+  </div>
+  <div id="sections"></div>
+</main>
+<footer style="padding:24px;text-align:center;font-size:12px;color:var(--md-sys-color-on-surface-variant)"><a href="../">S4 Orion</a> exploration</footer>
+<script src="../components/assets/m3color.js"></script>
+<script src="../components/assets/icons.js?v=0b2fd72"></script>
+<script src="../components/orion.js?v=b0a06f1"></script>
+<script src="lib/questions.js?v=0b45678"></script>
+<script src="lib/review.js?v=2d9b250"></script>
+<script>
+const OPTS = [
+  { k: 'A', o: 'a', name: 'Today', tag: 'Today', desc: 'Even tint all the way to the edge, with the rim and glow.' },
+  { k: 'B', o: 'b', name: 'Soft Clear Edge', desc: 'The tint fades to under half over the outer 8px, so the backdrop shows a little more at the edge.' },
+  { k: 'C', o: 'c', name: 'Clear Edge', desc: 'The tint fades to nothing over the outer 14px: a clearer rim with the blurred backdrop fully visible.' },
+  { k: 'D', o: 'd', name: 'Clear and Lit', desc: 'A mostly clear edge (12px) with a faint white lift on top of it, so the rim reads brighter than what is behind.' }
+];
+const frame = (opt, bg, theme, cap) => `<figure><figcaption>${cap}</figcaption><iframe title="${cap}" src="review-edge-refract-frame.html?opt=${opt}&amp;bg=${bg}&amp;theme=${theme}"></iframe></figure>`;
+const preview = o => { const el = document.createElement('div'); el.className = 'strip'; el.innerHTML = frame(o, 'pale', 'light', 'Light, pale page') + frame(o, 'color', 'light', 'Light, colorful') + frame(o, 'color', 'dark', 'Dark'); return el; };
+const sec = document.createElement('section'); sec.className = 'sec';
+sec.innerHTML = '<h2>Edge Clarity</h2><p>Same glass, same blur and boost. Only the edge changes.</p><div class="cards rv-group" role="radiogroup" aria-label="Edge clarity"></div>';
+document.getElementById('sections').appendChild(sec);
+OPTS.forEach(x => sec.querySelector('.cards').appendChild(S4Review.card({ pick: 'refract:' + x.k, letter: x.k, title: x.name, desc: x.desc, tag: x.tag || '', preview: preview(x.o) })));
+S4Review.page('edge-refract');
+</script>
+</body>
+</html>

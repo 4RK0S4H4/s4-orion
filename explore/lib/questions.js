@@ -192,4 +192,12 @@ window.S4_REVIEW_DEMOS = [
         options: [{ v: 'A', label: 'Today' }, { v: 'B', label: 'Hairline Outline' }, { v: 'C', label: 'Shaded Rim' }, { v: 'D', label: 'Edge Shade' }, { v: 'Other', label: 'Describe in notes' }] }
     ]
   }
+,
+  {
+    id: 'edge-refract', title: 'Clearer Glass Edges', href: 'explore/review-edge-refract.html',
+    questions: [
+      { id: 'refract', label: 'Clearer glass edges', help: 'Should the edge of glass let more of the backdrop show through?',
+        options: [{ v: 'A', label: 'Today' }, { v: 'B', label: 'Soft Clear Edge' }, { v: 'C', label: 'Clear Edge' }, { v: 'D', label: 'Clear and Lit' }, { v: 'Other', label: 'Describe in notes' }] }
+    ]
+  }
 ];

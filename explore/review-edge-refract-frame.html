@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Clear edge frame</title>
+<script>(function(){var q=new URLSearchParams(location.search);document.documentElement.dataset.theme=q.get('theme')==='dark'?'dark':'light';document.documentElement.dataset.opt=q.get('opt')||'a';document.documentElement.dataset.bg=q.get('bg')||'pale';})();</script>
+<link rel="stylesheet" href="../components/orion.css?v=8182144">
+<style>
+html,body{margin:0;height:100%;overflow:hidden;background:var(--md-sys-color-surface);color:var(--md-sys-color-on-surface)}
+.stage{position:relative;height:100%;overflow:hidden;font-family:Inter,system-ui,sans-serif}
+.rows{position:absolute;inset:0;padding:12px;display:flex;flex-direction:column;gap:8px}
+.rows i{display:block;height:44px;border-radius:14px;background:var(--md-sys-color-surface-container-low)}
+[data-bg=color] .blob{position:absolute;inset:0;background:radial-gradient(45% 40% at 78% 30%,#ff4f7b 0 40%,transparent 72%),radial-gradient(50% 45% at 22% 80%,#2bc4a9 0 40%,transparent 72%),radial-gradient(40% 35% at 85% 88%,#4466ff 0 40%,transparent 72%)}
+.g{position:absolute}
+.menu{left:14px;top:18px;width:180px;padding:6px;border-radius:var(--md-sys-shape-corner-extra-large);display:flex;flex-direction:column}
+.menu a{display:flex;align-items:center;height:40px;padding:0 14px;border-radius:999px;font-size:15px;color:inherit;text-decoration:none}
+.menu a.on{background:color-mix(in srgb,currentColor 9%,transparent)}
+.card{right:14px;top:30px;width:150px;border-radius:var(--md-sys-shape-corner-extra-large);padding:14px;font-size:14px;line-height:20px}
+.fabs{right:14px;bottom:16px;display:flex;gap:10px;align-items:center}
+.nav{left:14px;bottom:16px;width:190px;height:60px;border-radius:999px;padding:0 6px;display:flex;align-items:center;justify-content:space-around;font-size:11px}
+.nav > span{display:grid;justify-items:center;gap:1px;width:56px;padding:6px 0;border-radius:999px}
+.nav > span.on{background:var(--md-sys-color-secondary-container);font-weight:600}
+.nav .s4-icon{--s4-icon-size:20px}
+
+/* ---- clear-edge options (lab only): the tint is painted by ::before and faded out toward the edge, so more of the blurred backdrop shows there ---- */
+:root:not([data-opt="a"]) .g.s4-glass{background-color:transparent;isolation:auto}
+:root:not([data-opt="a"]) .g.s4-glass::before{content:"";position:absolute;inset:0;border-radius:inherit;z-index:-1;pointer-events:none;
+  background:color-mix(in srgb,var(--_surface) calc(var(--_glass-tint) * 100%),transparent);
+  -webkit-mask-image:linear-gradient(to right,rgb(0 0 0 / var(--m)),#000 var(--w),#000 calc(100% - var(--w)),rgb(0 0 0 / var(--m))),linear-gradient(to bottom,rgb(0 0 0 / var(--m)),#000 var(--w),#000 calc(100% - var(--w)),rgb(0 0 0 / var(--m)));
+  mask-image:linear-gradient(to right,rgb(0 0 0 / var(--m)),#000 var(--w),#000 calc(100% - var(--w)),rgb(0 0 0 / var(--m))),linear-gradient(to bottom,rgb(0 0 0 / var(--m)),#000 var(--w),#000 calc(100% - var(--w)),rgb(0 0 0 / var(--m)));
+  -webkit-mask-composite:source-in;mask-composite:intersect}
+:root[data-opt="b"]{--m:.45;--w:8px}
+:root[data-opt="c"]{--m:0;--w:14px}
+:root[data-opt="d"]{--m:.2;--w:12px}
+:root[data-opt="d"] .g.s4-glass::after{content:"";position:absolute;inset:0;border-radius:inherit;z-index:-1;pointer-events:none;background:#fff;opacity:.22;
+  -webkit-mask-image:linear-gradient(to right,#000,transparent 9px,transparent calc(100% - 9px),#000),linear-gradient(to bottom,#000,transparent 9px,transparent calc(100% - 9px),#000);
+  mask-image:linear-gradient(to right,#000,transparent 9px,transparent calc(100% - 9px),#000),linear-gradient(to bottom,#000,transparent 9px,transparent calc(100% - 9px),#000);
+  -webkit-mask-composite:source-over;mask-composite:add}
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="rows"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="blob"></div>
+
+  <div class="g menu s4-glass" aria-label="Example menu"><a href="#" class="on">Rename</a><a href="#">Move to…</a><a href="#">Archive</a></div>
+  <div class="g card s4-glass">Delete this note? It moves to Trash.</div>
+
+  <nav class="g nav s4-glass" aria-label="Example navigation">
+    <span class="on"><span class="s4-icon" data-icon="home"></span>Today</span>
+    <span><span class="s4-icon" data-icon="calendar"></span>Plan</span>
+    <span><span class="s4-icon" data-icon="chat"></span>Inbox</span>
+  </nav>
+  <div class="g fabs">
+    <button class="s4-fab" data-size="small" type="button" aria-label="Camera"><span class="s4-icon" data-icon="camera"></span></button>
+    <button class="s4-fab" type="button" aria-label="Add"><span class="s4-icon" data-icon="add"></span></button>
+  </div>
+</div>
+<script src="../components/assets/icons.js?v=0b2fd72"></script>
+<script src="../components/orion.js?v=b0a06f1"></script>
+</body>
+</html>
