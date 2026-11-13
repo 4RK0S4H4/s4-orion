@@ -23,20 +23,15 @@ html,body{margin:0;height:100%;overflow:hidden;background:var(--md-sys-color-sur
 .nav > span.on{background:var(--md-sys-color-secondary-container);font-weight:600}
 .nav .s4-icon{--s4-icon-size:20px}
 
-/* ---- clear-edge options (lab only): the tint is painted by ::before and faded out toward the edge, so more of the blurred backdrop shows there ---- */
-:root:not([data-opt="a"]) .g.s4-glass{background-color:transparent;isolation:auto}
-:root:not([data-opt="a"]) .g.s4-glass::before{content:"";position:absolute;inset:0;border-radius:inherit;z-index:-1;pointer-events:none;
-  background:color-mix(in srgb,var(--_surface) calc(var(--_glass-tint) * 100%),transparent);
-  -webkit-mask-image:linear-gradient(to right,rgb(0 0 0 / var(--m)),#000 var(--w),#000 calc(100% - var(--w)),rgb(0 0 0 / var(--m))),linear-gradient(to bottom,rgb(0 0 0 / var(--m)),#000 var(--w),#000 calc(100% - var(--w)),rgb(0 0 0 / var(--m)));
-  mask-image:linear-gradient(to right,rgb(0 0 0 / var(--m)),#000 var(--w),#000 calc(100% - var(--w)),rgb(0 0 0 / var(--m))),linear-gradient(to bottom,rgb(0 0 0 / var(--m)),#000 var(--w),#000 calc(100% - var(--w)),rgb(0 0 0 / var(--m)));
-  -webkit-mask-composite:source-in;mask-composite:intersect}
-:root[data-opt="b"]{--m:.45;--w:8px}
-:root[data-opt="c"]{--m:0;--w:14px}
-:root[data-opt="d"]{--m:.2;--w:12px}
-:root[data-opt="d"] .g.s4-glass::after{content:"";position:absolute;inset:0;border-radius:inherit;z-index:-1;pointer-events:none;background:#fff;opacity:.22;
-  -webkit-mask-image:linear-gradient(to right,#000,transparent 9px,transparent calc(100% - 9px),#000),linear-gradient(to bottom,#000,transparent 9px,transparent calc(100% - 9px),#000);
-  mask-image:linear-gradient(to right,#000,transparent 9px,transparent calc(100% - 9px),#000),linear-gradient(to bottom,#000,transparent 9px,transparent calc(100% - 9px),#000);
-  -webkit-mask-composite:source-over;mask-composite:add}
+/* ---- rim-line options (lab only): the tint stops short of the edge so the rim line is clear glass (the backdrop shows through it), and a white lift over it makes it brighter than the backdrop and colored by it ---- */
+:root:not([data-opt="a"]) .g.s4-glass{background-color:transparent}
+:root:not([data-opt="a"]) .g.s4-glass::before{content:"";position:absolute;inset:var(--rw);border-radius:inherit;z-index:-1;pointer-events:none;
+  background:color-mix(in srgb,var(--_surface) calc(var(--_glass-tint) * 100%),transparent)}
+:root:not([data-opt="a"]) .g.s4-glass::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  box-shadow:inset 0 var(--rw) calc(var(--rw) * 1.2) 0 rgb(255 255 255 / var(--lt)),inset 0 calc(-1 * var(--rw)) calc(var(--rw) * 1.2) 0 rgb(255 255 255 / var(--lt)),inset 0 0 0 var(--rw) rgb(255 255 255 / calc(var(--lt) * var(--ls)))}
+:root[data-opt="b"]{--rw:2px;--lt:.4;--ls:.4}
+:root[data-opt="c"]{--rw:3px;--lt:.7;--ls:.5}
+:root[data-opt="d"]{--rw:5px;--lt:.55;--ls:.35}
 </style>
 </head>
 <body>

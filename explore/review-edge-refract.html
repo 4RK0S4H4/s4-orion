@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>S4 Orion: Clearer Glass Edges</title>
+<title>S4 Orion: Glass Rim Line</title>
 <link rel="stylesheet" href="../components/orion.css?v=8182144">
 <style>
 body{margin:0;background:var(--md-sys-color-surface);color:var(--md-sys-color-on-surface)}
@@ -22,10 +22,10 @@ h1,h2,p{margin:0}
 </style>
 </head>
 <body>
-<div class="bar"><h1>S4 Orion: Clearer Glass Edges</h1></div>
+<div class="bar"><h1>S4 Orion: Glass Rim Line</h1></div>
 <main class="page">
   <div class="intro">
-    <p>Glass edges that let more of what is behind show through, like light passing through the rim. The surface tint fades out toward the edge, so the blurred backdrop shows more there. True refraction (bending the backdrop) only works in Chromium, so these are the Safari-safe versions. Shown on the colorful backdrop and on the pale page; the dark one shows the same option in dark mode.</p>
+    <p>The edge line itself should act like glass: clear, showing what is behind it, and brighter than the backdrop. Here the tint stops just short of the edge so the rim line is clear glass, with a white lift over it. True refraction (bending the backdrop) only works in Chromium, so these are the Safari-safe versions. Shown on the colorful backdrop and on the pale page; the dark one shows the same option in dark mode.</p>
     <p>Tap the card above its preview to pick one; Other plus a note if none is right (for example "B but lighter").</p>
   </div>
   <div id="sections"></div>
@@ -34,14 +34,14 @@ h1,h2,p{margin:0}
 <script src="../components/assets/m3color.js"></script>
 <script src="../components/assets/icons.js?v=0b2fd72"></script>
 <script src="../components/orion.js?v=b0a06f1"></script>
-<script src="lib/questions.js?v=0b45678"></script>
+<script src="lib/questions.js?v=dce902c"></script>
 <script src="lib/review.js?v=2d9b250"></script>
 <script>
 const OPTS = [
-  { k: 'A', o: 'a', name: 'Today', tag: 'Today', desc: 'Even tint all the way to the edge, with the rim and glow.' },
-  { k: 'B', o: 'b', name: 'Soft Clear Edge', desc: 'The tint fades to under half over the outer 8px, so the backdrop shows a little more at the edge.' },
-  { k: 'C', o: 'c', name: 'Clear Edge', desc: 'The tint fades to nothing over the outer 14px: a clearer rim with the blurred backdrop fully visible.' },
-  { k: 'D', o: 'd', name: 'Clear and Lit', desc: 'A mostly clear edge (12px) with a faint white lift on top of it, so the rim reads brighter than what is behind.' }
+  { k: 'A', o: 'a', name: 'Today', tag: 'Today', desc: 'The rim is a white line drawn on top of the tint.' },
+  { k: 'B', o: 'b', name: 'Clear Hairline', desc: 'The tint stops 2px short of the edge, so the rim line is clear glass: the backdrop shows through it, lifted a little brighter and colored by what is behind.' },
+  { k: 'C', o: 'c', name: 'Bright Clear Rim', desc: 'A 3px clear rim with a stronger lift, so the line reads clearly brighter than the backdrop, like light catching the edge.' },
+  { k: 'D', o: 'd', name: 'Wide Clear Rim', desc: 'A 5px clear rim with a medium lift: more of the backdrop in the edge, a bolder glassy band.' }
 ];
 const frame = (opt, bg, theme, cap) => `<figure><figcaption>${cap}</figcaption><iframe title="${cap}" src="review-edge-refract-frame.html?opt=${opt}&amp;bg=${bg}&amp;theme=${theme}"></iframe></figure>`;
 const preview = o => { const el = document.createElement('div'); el.className = 'strip'; el.innerHTML = frame(o, 'pale', 'light', 'Light, pale page') + frame(o, 'color', 'light', 'Light, colorful') + frame(o, 'color', 'dark', 'Dark'); return el; };

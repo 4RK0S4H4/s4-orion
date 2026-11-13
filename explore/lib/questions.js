@@ -194,10 +194,10 @@ window.S4_REVIEW_DEMOS = [
   }
 ,
   {
-    id: 'edge-refract', title: 'Clearer Glass Edges', href: 'explore/review-edge-refract.html',
+    id: 'edge-refract', title: 'Glass Rim Line', href: 'explore/review-edge-refract.html',
     questions: [
-      { id: 'refract', label: 'Clearer glass edges', help: 'Should the edge of glass let more of the backdrop show through?',
-        options: [{ v: 'A', label: 'Today' }, { v: 'B', label: 'Soft Clear Edge' }, { v: 'C', label: 'Clear Edge' }, { v: 'D', label: 'Clear and Lit' }, { v: 'Other', label: 'Describe in notes' }] }
+      { id: 'refract', label: 'Glass rim line', help: 'Should the edge line be clear glass that shows and brightens the backdrop?',
+        options: [{ v: 'A', label: 'Today' }, { v: 'B', label: 'Clear Hairline' }, { v: 'C', label: 'Bright Clear Rim' }, { v: 'D', label: 'Wide Clear Rim' }, { v: 'Other', label: 'Describe in notes' }] }
     ]
   }
 ];
