@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Description List · S4 Orion</title>
+<link rel="stylesheet" href="../index.css">
+<link rel="stylesheet" href="../_example/example.css">
+</head>
+<body>
+<header class="ex-bar"><h1><a href="../">Components</a> / Description List</h1></header>
+<main class="ex-main">
+  <p>Labelled values on a detail screen. Label left, value right, a divider between rows; stacked for long values.</p>
+  <section class="ex-sec">
+    <h2>Default</h2>
+    <p>Values end-aligned with tabular figures.</p>
+    <div class="ex-board col">
+      <section class="s4-pane" style="inline-size:100%"><h3 class="s4-pane-title">Iron Mountain</h3><dl class="s4-dl">
+        <div class="s4-dl-row"><dt>Amount</dt><dd>$1,240.00</dd></div>
+        <div class="s4-dl-row"><dt>Due Date</dt><dd>Oct 28</dd></div>
+        <div class="s4-dl-row"><dt>Status</dt><dd><span class="s4-status" data-tone="error">Overdue</span></dd></div>
+        <div class="s4-dl-row"><dt>Account</dt><dd>Operating ···4412</dd></div>
+      </dl></section>
+    </div>
+  </section>
+  <section class="ex-sec">
+    <h2>Stacked</h2>
+    <p><code>data-layout="stacked"</code> puts the label above the value.</p>
+    <div class="ex-board col">
+      <section class="s4-pane" style="inline-size:100%"><h3 class="s4-pane-title">Stacked</h3><dl class="s4-dl" data-layout="stacked">
+        <div class="s4-dl-row"><dt>Amount</dt><dd>$1,240.00</dd></div>
+        <div class="s4-dl-row"><dt>Due Date</dt><dd>Oct 28</dd></div>
+        <div class="s4-dl-row"><dt>Status</dt><dd><span class="s4-status" data-tone="error">Overdue</span></dd></div>
+        <div class="s4-dl-row"><dt>Account</dt><dd>Operating ···4412</dd></div>
+      </dl></section>
+    </div>
+  </section>
+</main>
+<script src="../assets/icons.js"></script>
+<script src="../core/core.js"></script>
+<script src="../_example/example.js"></script>
+</body>
+</html>

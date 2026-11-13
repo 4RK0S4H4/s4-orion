@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Templates · S4 Orion Template</title>
+
+<script>(function (k) { try { var t = JSON.parse(localStorage.getItem(k) || 'null'); if (t && t.mode && t.mode !== 'system') document.documentElement.dataset.theme = t.mode; } catch (e) {} })('orion-template-theme');</script>
+<link rel="preload" href="../components/assets/inter-variable.woff2?v=2edaa7b" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../components/orion.css?v=6958b53">
+<style>
+  .tg-frame { position: relative; aspect-ratio: 390 / 720; overflow: hidden; border-radius: var(--md-sys-shape-corner-large); background: var(--md-sys-color-surface); }
+  .tg-frame iframe { position: absolute; inset: 0 auto auto 0; inline-size: 390px; block-size: 720px; border: 0; transform-origin: 0 0; transform: scale(var(--k, 0.5)); pointer-events: none; }
+  .tg-card .s4-card-title { display: flex; align-items: center; gap: var(--s4-space-2); }
+</style>
+</head>
+<body>
+<div class="s4-app">
+  <div class="s4-app-body">
+    <header class="s4-top-app-bar">
+      <a class="s4-icon-button" href="../index.html" aria-label="S4 Orion Home"><span class="s4-icon" data-icon="back"></span></a>
+      <div class="s4-app-bar-title-group"><h1 class="s4-app-bar-title">Templates</h1></div>
+    </header>
+    <main class="s4-content">
+      <div class="s4-stack">
+        <p class="s4-body-large s4-on-surface-variant" style="margin:0; max-inline-size: 60ch">Start every new app from the template closest to it, then swap in its content. Each one is a complete page built only from orion.css and orion.js, passes the page checker at 390 dark and 1280 light, and ships inside the skill (<code>templates/</code>).</p>
+        <div class="s4-grid" style="--s4-min: 260px">
+        <article class="s4-card tg-card">
+          <div class="tg-frame"><iframe src="dashboard.html" title="Dashboard preview" loading="lazy" tabindex="-1" aria-hidden="true"></iframe></div>
+          <div class="s4-card-body">
+            <h2 class="s4-card-title"><span class="s4-icon" data-icon="dashboard"></span> Dashboard</h2>
+            <p class="s4-card-subhead">Analytics, finance, admin, status</p>
+            <p class="s4-card-supporting">Stats, a tonal chart, what needs attention, a sortable table.</p>
+          </div>
+          <div class="s4-card-actions"><a class="s4-button" data-variant="tonal" href="dashboard.html">Open</a><a class="s4-button" data-variant="text" href="https://github.com/4rk0s4h4/s4-orion/blob/main/templates/dashboard.html">Source</a></div>
+        </article>
+        <article class="s4-card tg-card">
+          <div class="tg-frame"><iframe src="list-detail.html" title="List and Detail preview" loading="lazy" tabindex="-1" aria-hidden="true"></iframe></div>
+          <div class="s4-card-body">
+            <h2 class="s4-card-title"><span class="s4-icon" data-icon="inbox"></span> List and Detail</h2>
+            <p class="s4-card-subhead">Mail, CRM, tickets, orders, any CRUD app</p>
+            <p class="s4-card-supporting">Search, a selectable list and a detail pane; one pane at a time on phones.</p>
+          </div>
+          <div class="s4-card-actions"><a class="s4-button" data-variant="tonal" href="list-detail.html">Open</a><a class="s4-button" data-variant="text" href="https://github.com/4rk0s4h4/s4-orion/blob/main/templates/list-detail.html">Source</a></div>
+        </article>
+        <article class="s4-card tg-card">
+          <div class="tg-frame"><iframe src="settings.html" title="Settings preview" loading="lazy" tabindex="-1" aria-hidden="true"></iframe></div>
+          <div class="s4-card-body">
+            <h2 class="s4-card-title"><span class="s4-icon" data-icon="settings"></span> Settings</h2>
+            <p class="s4-card-subhead">Every app’s settings screen</p>
+            <p class="s4-card-supporting">Theme controls, switches in segmented lists, storage, a danger zone.</p>
+          </div>
+          <div class="s4-card-actions"><a class="s4-button" data-variant="tonal" href="settings.html">Open</a><a class="s4-button" data-variant="text" href="https://github.com/4rk0s4h4/s4-orion/blob/main/templates/settings.html">Source</a></div>
+        </article>
+        <article class="s4-card tg-card">
+          <div class="tg-frame"><iframe src="sign-in.html" title="Sign In preview" loading="lazy" tabindex="-1" aria-hidden="true"></iframe></div>
+          <div class="s4-card-body">
+            <h2 class="s4-card-title"><span class="s4-icon" data-icon="login"></span> Sign In</h2>
+            <p class="s4-card-subhead">Sign-in, sign-up, onboarding</p>
+            <p class="s4-card-supporting">One centered task, no navigation, inline validation.</p>
+          </div>
+          <div class="s4-card-actions"><a class="s4-button" data-variant="tonal" href="sign-in.html">Open</a><a class="s4-button" data-variant="text" href="https://github.com/4rk0s4h4/s4-orion/blob/main/templates/sign-in.html">Source</a></div>
+        </article>
+        <article class="s4-card tg-card">
+          <div class="tg-frame"><iframe src="article.html" title="Article preview" loading="lazy" tabindex="-1" aria-hidden="true"></iframe></div>
+          <div class="s4-card-body">
+            <h2 class="s4-card-title"><span class="s4-icon" data-icon="book"></span> Article</h2>
+            <p class="s4-card-subhead">Help, docs, blog, release notes</p>
+            <p class="s4-card-supporting">Breadcrumbs, prose at reading width, related links.</p>
+          </div>
+          <div class="s4-card-actions"><a class="s4-button" data-variant="tonal" href="article.html">Open</a><a class="s4-button" data-variant="text" href="https://github.com/4rk0s4h4/s4-orion/blob/main/templates/article.html">Source</a></div>
+        </article>
+        <article class="s4-card tg-card">
+          <div class="tg-frame"><iframe src="chat.html" title="Chat preview" loading="lazy" tabindex="-1" aria-hidden="true"></iframe></div>
+          <div class="s4-card-body">
+            <h2 class="s4-card-title"><span class="s4-icon" data-icon="chat"></span> Chat</h2>
+            <p class="s4-card-subhead">Messaging, support, AI assistants</p>
+            <p class="s4-card-supporting">A thread of bubbles and a glass composer above the nav bar.</p>
+          </div>
+          <div class="s4-card-actions"><a class="s4-button" data-variant="tonal" href="chat.html">Open</a><a class="s4-button" data-variant="text" href="https://github.com/4rk0s4h4/s4-orion/blob/main/templates/chat.html">Source</a></div>
+        </article>
+        <article class="s4-card tg-card">
+          <div class="tg-frame"><iframe src="tool.html" title="Tool preview" loading="lazy" tabindex="-1" aria-hidden="true"></iframe></div>
+          <div class="s4-card-body">
+            <h2 class="s4-card-title"><span class="s4-icon" data-icon="tune"></span> Tool</h2>
+            <p class="s4-card-subhead">Calculators, converters, generators</p>
+            <p class="s4-card-supporting">Inputs beside a sticky result pane (supporting-pane layout).</p>
+          </div>
+          <div class="s4-card-actions"><a class="s4-button" data-variant="tonal" href="tool.html">Open</a><a class="s4-button" data-variant="text" href="https://github.com/4rk0s4h4/s4-orion/blob/main/templates/tool.html">Source</a></div>
+        </article>
+        <article class="s4-card tg-card">
+          <div class="tg-frame"><iframe src="landing.html" title="Landing Page preview" loading="lazy" tabindex="-1" aria-hidden="true"></iframe></div>
+          <div class="s4-card-body">
+            <h2 class="s4-card-title"><span class="s4-icon" data-icon="globe"></span> Landing Page</h2>
+            <p class="s4-card-subhead">A product or project home page</p>
+            <p class="s4-card-supporting">Hero, features, FAQ and a call to action.</p>
+          </div>
+          <div class="s4-card-actions"><a class="s4-button" data-variant="tonal" href="landing.html">Open</a><a class="s4-button" data-variant="text" href="https://github.com/4rk0s4h4/s4-orion/blob/main/templates/landing.html">Source</a></div>
+        </article>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="../components/assets/icons.js?v=f8aa430"></script>
+<script src="../components/orion.js?v=99a632f"></script>
+<script>S4.theme.restore('orion-template-theme', { mode: 'system' });
+/* scale each live preview to its frame */
+var ro = new ResizeObserver(function (es) { es.forEach(function (e) { e.target.style.setProperty('--k', e.contentRect.width / 390); }); });
+document.querySelectorAll('.tg-frame').forEach(function (f) { ro.observe(f); });</script>
+</body>
+</html>

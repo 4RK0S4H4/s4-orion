@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Prose · S4 Orion</title>
+<link rel="stylesheet" href="../index.css">
+<link rel="stylesheet" href="../_example/example.css">
+</head>
+<body>
+<header class="ex-bar"><h1><a href="../">Components</a> / Prose</h1></header>
+<main class="ex-main">
+  <p>Long-form text: articles, help, release notes, AI answers. Plain HTML elements styled only inside <code>.s4-prose</code>. Full screen: <a href="../../templates/article.html">article template</a>.</p>
+  <section class="ex-sec">
+    <h2>Elements</h2>
+    <p>Headings on the type scale, body-large text, links underlined in primary.</p>
+    <div class="ex-board col">
+      <article class="s4-prose">
+        <h1>Getting Paid Faster</h1>
+        <p class="s4-prose-lead">Three habits that cut the time between invoice and payment.</p>
+        <h2>Send Invoices the Same Day</h2>
+        <p>Clients pay in the order invoices arrive. <a href="#">See how we measured this</a>.</p>
+        <ul><li>Turn on card payments</li><li>Add a <strong>Pay Now</strong> link</li></ul>
+        <blockquote>Invoices with a payment link were paid 9 days sooner.</blockquote>
+        <h3>Reminders</h3>
+        <p>Change the wording in <code>Settings › Reminders</code>.</p>
+        <pre><code>S4.snackbar({ text: 'Reminder sent' })</code></pre>
+      </article>
+    </div>
+  </section>
+</main>
+<script src="../assets/icons.js"></script>
+<script src="../core/core.js"></script>
+<script src="../_example/example.js"></script>
+</body>
+</html>

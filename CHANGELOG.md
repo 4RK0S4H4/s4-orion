@@ -10,6 +10,22 @@ All notable changes to S4 Orion are recorded here. The format follows [Keep a Ch
 
 The first version of S4 Orion, a leaner rebuild of S4 Material 1.3 on Material 3 Expressive.
 
+### Added: the framework layer (2026-11-13, decision 0041)
+
+- **Templates** (`templates/`, also in the skill): dashboard, list and detail, settings, sign-in, article, chat, tool, landing page, plus a gallery page. Each passes the page checker at 390 dark and 1280 light.
+- **Canonical layouts** (`components/layout/`): `.s4-split` list-detail (one pane at a time under 840 with history-aware Back, side by side from 840) and supporting pane; `data-sticky` panes; `S4.split.open()`.
+- **Page widths:** `data-width="reading|wide|full"` on `.s4-content` or a view (tokens `--s4-layout-content-reading` 720, `--s4-layout-content-wide` 1600).
+- **Rail auto-expands** on large windows (≥ 1200) with `data-expand="auto"`.
+- **New components:** stat (`.s4-stat`, `.s4-stat-row`), description list (`.s4-dl`), messages (`.s4-thread`, `.s4-message`, `.s4-composer`), prose (`.s4-prose`). 46 components in all.
+- **Theme controls without script:** `data-theme-mode` and `data-theme-contrast` on connected button groups (like `data-theme-seed`).
+- **Deep links:** `#view` in the URL opens that view on load; nav links keep the URL in step.
+- **15 icons** in all three sets: send, attach, inbox, archive, login, key, security, cart, globe, help, code, list, book, tune, mic (`scripts/add-icons.mjs` adds more).
+- **Docs:** `docs/framework.md` (layers, public API, versioning, extending, quality gates), `docs/decisions/README.md` (status of every decision), the framework review. The hub is rebuilt with Orion itself; the labs moved to an Archive section.
+
+### Fixed (2026-11-13)
+
+- Docs described motion removed in 0022 (container transform, menu emerge) in `philosophy.md` and the list-detail pattern; the skill's page shape used the old demo's storage key.
+
 ### Changed and added (2026-11-11 to 11-12, decisions 0023 to 0025)
 
 - Nothing is outlined: chips, fields, checkboxes, radios, cards, buttons and the switch are filled (the `outlined` variants still work and draw filled). Small things are pills; inputs are medium-rounded (12). Checkboxes and radios are filled circles.

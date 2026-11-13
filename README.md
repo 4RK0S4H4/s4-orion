@@ -12,6 +12,7 @@ A personal design language for web apps and pages, built on **Material 3 Express
 | [`components/`](components/) | Reference implementations: one folder per component with its CSS and an HTML example, a small runtime (`orion.js`) for theming and motion, and React wrappers where they help. | Source |
 | [`docs/`](docs/) | Philosophy, foundations, usage guidelines, do/don't examples and the decision log. | Source |
 | [`skill/`](skill/) | The Claude skill (`skill/s4-orion/`): `SKILL.md`, reference files loaded on demand, and the built assets an app copies in. | `SKILL.md` and references are source; `assets/` is generated |
+| [`templates/`](templates/) | Eight starter apps (dashboard, list and detail, settings, sign-in, article, chat, tool, landing), also shipped in the skill. | Source |
 | [`demo/`](demo/) | One showcase page that uses every component, built only from the skill and tokens. | Source |
 | [`explore/`](explore/) | Review labs used to make design decisions (States and Shape, Motion, Transitions). Not part of the system. | Source |
 | [`scripts/`](scripts/) | Build and check scripts (tokens → CSS/TS, bundle, skill references, contrast and glass checks). | Source |
@@ -31,7 +32,10 @@ S4 Orion is being built phase by phase. Decisions are recorded in [`docs/decisio
 | 4 | Components and the glass layer | Done ([0004](docs/decisions/0004-glass.md), [components](https://4rk0s4h4.github.io/s4-orion/components/)) |
 | 5 | Claude skill | Done, approved ([skill](skill/), [download](skill/dist/s4-orion.skill)) |
 | 6 | Demo and review against the skill | Built; end-to-end review and motion fixes done 2026-11-03; awaiting the owner's iPhone check ([0005](docs/decisions/0005-phase-6-review.md)) |
+| 8 | Framework layer: templates, canonical layouts, content components, framework guide | Built 2026-11-13, awaiting the owner ([0041](docs/decisions/0041-framework-layer.md), [review](docs/reviews/2026-11-13-framework-review.md), [templates](https://4rk0s4h4.github.io/s4-orion/templates/)) |
 | 7 | Glass from the playground and simpler motion | Done 2026-11-11 ([0021](docs/decisions/0021-glass-from-the-playground.md), [0022](docs/decisions/0022-simpler-motion.md)); design review with proposals ([review](docs/reviews/2026-11-11-design-review.md)) awaiting the owner |
+
+How it fits together, what apps can rely on and how to extend it: [`docs/framework.md`](docs/framework.md).
 
 ## Building
 

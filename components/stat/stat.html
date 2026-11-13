@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Stat · S4 Orion</title>
+<link rel="stylesheet" href="../index.css">
+<link rel="stylesheet" href="../_example/example.css">
+</head>
+<body>
+<header class="ex-bar"><h1><a href="../">Components</a> / Stat</h1></header>
+<main class="ex-main">
+  <p>One number people check, with a label and an optional change. Several stats share one pane in a stat row (two per row on phones).</p>
+  <section class="ex-sec">
+    <h2>Default</h2>
+    <p>Display-small emphasized values, the change as a status.</p>
+    <div class="ex-board col">
+      <section class="s4-pane" aria-label="Key Numbers" style="inline-size:100%"><div class="s4-stat-row">
+        <div class="s4-stat"><span class="s4-stat-label">Revenue</span><span class="s4-stat-value">$48.2K</span><span class="s4-stat-meta"><span class="s4-status" data-tone="primary">+8%</span>vs. September</span></div>
+        <div class="s4-stat"><span class="s4-stat-label">Spent</span><span class="s4-stat-value">$31.7K</span><span class="s4-stat-meta"><span class="s4-status" data-tone="error">+12%</span>vs. September</span></div>
+        <div class="s4-stat"><span class="s4-stat-label">Open Invoices</span><span class="s4-stat-value">14</span><span class="s4-stat-meta">3 overdue</span></div>
+      </div></section>
+    </div>
+  </section>
+  <section class="ex-sec">
+    <h2>Small</h2>
+    <p><code>data-size="small"</code> for dense dashboards.</p>
+    <div class="ex-board col">
+      <section class="s4-pane" aria-label="Small Stats" style="inline-size:100%"><div class="s4-stat-row">
+        <div class="s4-stat" data-size="small"><span class="s4-stat-label">Steps</span><span class="s4-stat-value">8,412</span></div>
+        <div class="s4-stat" data-size="small"><span class="s4-stat-label">Sleep</span><span class="s4-stat-value">7h 20m</span></div>
+        <div class="s4-stat" data-size="small"><span class="s4-stat-label">Heart Rate</span><span class="s4-stat-value">62</span></div>
+        <div class="s4-stat" data-size="small"><span class="s4-stat-label">Water</span><span class="s4-stat-value">1.8 L</span></div>
+      </div></section>
+    </div>
+  </section>
+</main>
+<script src="../assets/icons.js"></script>
+<script src="../core/core.js"></script>
+<script src="../_example/example.js"></script>
+</body>
+</html>

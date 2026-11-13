@@ -25,8 +25,10 @@ component are in `components.md`. Live demo app: https://4rk0s4h4.github.io/s4-o
 | `.s4-row` | Wrapping row, 8 apart, centered. For button rows and chip-like groups. |
 | `.s4-grid` | Responsive grid of equal columns, at least `--s4-min` (280px) wide. For cards and dashboard panes. |
 
-Write the app's own layout with these and tokens. Need something else (a two-column detail split)? Write a small grid in
-the app's CSS with `--s4-space-*` gaps and a container query on `.s4-app` at 840:
+Two-pane screens use the canonical layouts (`.s4-split`, below). Page width: `data-width="reading"` (720) on
+`.s4-content` or a view for text, forms and settings; `wide` (1600) for tables and editors; the default (1200) for
+dashboards. For anything else, write a small grid in the app's CSS with `--s4-space-*` gaps and a container query on
+`.s4-app` at 840:
 
 ```css
 .ledger-split { display: grid; gap: var(--s4-layout-gap); }
@@ -40,8 +42,8 @@ page header: "Overview" + period button group (connected, single)
 grid of panes: KPI panes (label, emphasized number, delta status) · a chart pane · a short list pane ("Due This Week")
 ```
 
-- KPI tiles are `.s4-pane`s in an `.s4-grid` (`--s4-min: 200px` for small tiles). Label in `.s4-label-large`
-  `.s4-on-surface-variant`, value in `.s4-headline-small .s4-emphasized .s4-num`, change as a `.s4-status` with a tone.
+- Key numbers are **stats** (`.s4-stat`) in one pane with an `.s4-stat-row` (two per row on phones, four on desktop):
+  label, a display-small emphasized number, the change as a `.s4-status`. Template: `templates/dashboard.html`.
 - Period or scope switch: a **connected button group** with `data-select="single"` in the page header, not tabs.
   Tabs are for sibling content inside one screen.
 - Charts: draw with role colors read at run time (`S4.util.css('--md-sys-color-primary')`), redraw on the `s4-theme`
@@ -50,15 +52,26 @@ grid of panes: KPI panes (label, emphasized number, delta status) · a chart pan
 
 ## List and detail
 
-- **Phone:** the list is the view; tapping a row opens the detail as its own view or a full-screen dialog
-  (`S4.transition.containerTransform(detail, row)` grows it out of the row). Back closes it.
-- **Expanded (≥ 840):** list and detail side by side (the `.ledger-split` above); selecting a row fills the detail pane
-  with a shared axis or fade, never a container transform (nothing moves between panes).
-- The list is a `role="listbox"` `.s4-list` when it drives a detail pane (arrow keys, `aria-selected`), and plain links
-  when each row navigates.
+Use the canonical layout (`references/components.md`, Layout), not a hand-made grid:
+
+```html
+<div class="s4-split">
+  <section class="s4-split-pane" aria-label="Bills"><ul class="s4-list" role="listbox" aria-label="Bills">…rows with data-split-open…</ul></section>
+  <section class="s4-split-pane" data-sticky aria-label="Bill">
+    <div class="s4-row"><button class="s4-button" data-variant="text" type="button" data-split-back><span class="s4-icon" data-icon="back"></span>Bills</button></div>
+    …detail: title, status, an .s4-dl of fields, one filled action…
+  </section>
+</div>
+```
+
+- **Phone and medium (< 840):** one pane at a time. A row with `data-split-open` shows the detail (shared axis), the
+  phone's Back gesture or the `data-split-back` button returns to the list. Template: `templates/list-detail.html`.
+- **Expanded (≥ 840):** list (360) and detail side by side; the detail pane is sticky. Select the first item on load so
+  the detail is never empty. Changing the selection just re-renders the detail; nothing slides between panes.
+- The list is a `role="listbox"` `.s4-list` when it drives a detail pane (arrow keys, `aria-selected`); fill the detail
+  on its `s4-change`. Use plain links when each row navigates to its own page.
 - Detail header: title, a `.s4-status`, and the item's actions as one filled button + icon buttons with a `more-vert`
-  menu for the rest.
-- Search and filters sit above the list: `.s4-search` then a filter `.s4-chip-set`, both scrolling with the content.
+  menu for the rest. Fields go in a description list (`.s4-dl`).
 
 ## Settings
 
@@ -106,46 +119,34 @@ connection and try again."). A failed background action: snackbar with Retry. Ne
 
 ## Theme controls
 
-An app that offers appearance settings uses exactly these, so every app feels the same:
+An app that offers appearance settings uses exactly these, so every app feels the same. They need no script:
+`data-theme-mode`, `data-theme-contrast` and `data-theme-seed` call `S4.theme` themselves and follow the restored theme.
 
 ```html
 <section class="s4-pane" aria-labelledby="appearance">
   <h2 class="s4-pane-title" id="appearance">Appearance</h2>
-  <div class="s4-stack">
-    <div class="s4-button-group" data-connected data-select="single" aria-label="Theme" id="mode">
-      <button class="s4-button" type="button" value="system" aria-pressed="true">System</button>
-      <button class="s4-button" type="button" value="light" aria-pressed="false">Light</button>
-      <button class="s4-button" type="button" value="dark" aria-pressed="false">Dark</button>
-    </div>
-    <div class="s4-swatches" data-theme-seed aria-label="Theme Color">
-      <button class="s4-swatch" type="button" data-seed="#000000" aria-label="Mono"></button>
-      <button class="s4-swatch" type="button" data-seed="#4f46e5" aria-label="Indigo"></button>
-      <button class="s4-swatch" type="button" data-seed="#00796b" aria-label="Teal"></button>
-      <button class="s4-swatch" type="button" data-seed="#c2185b" aria-label="Rose"></button>
-    </div>
-    <div class="s4-button-group" data-connected data-select="single" aria-label="Contrast" id="contrast">
-      <button class="s4-button" type="button" value="0" aria-pressed="true">Standard</button>
-      <button class="s4-button" type="button" value="0.5" aria-pressed="false">Medium</button>
-      <button class="s4-button" type="button" value="1" aria-pressed="false">High</button>
-    </div>
+  <div class="s4-button-group" data-connected data-select="single" data-theme-mode aria-label="Theme">
+    <button class="s4-button" data-variant="tonal" type="button" value="light"><span class="s4-icon" data-icon="light-mode"></span>Light</button>
+    <button class="s4-button" data-variant="tonal" type="button" value="system">System</button>
+    <button class="s4-button" data-variant="tonal" type="button" value="dark"><span class="s4-icon" data-icon="dark-mode"></span>Dark</button>
+  </div>
+  <div class="s4-button-group" data-connected data-select="single" data-theme-contrast aria-label="Contrast">
+    <button class="s4-button" data-variant="tonal" type="button" value="0">Standard</button>
+    <button class="s4-button" data-variant="tonal" type="button" value="0.5">Medium</button>
+    <button class="s4-button" data-variant="tonal" type="button" value="1">High</button>
+  </div>
+  <div class="s4-swatches" data-theme-seed aria-label="Theme Color">
+    <button class="s4-swatch" type="button" data-seed="#000000" aria-label="Mono"></button>
+    <button class="s4-swatch" type="button" data-seed="#4f46e5" aria-label="Indigo"></button>
+    <button class="s4-swatch" type="button" data-seed="#00796b" aria-label="Teal"></button>
   </div>
 </section>
-<script>
-  document.getElementById('mode').addEventListener('s4-change', (e) => S4.theme({ mode: e.detail.value }));
-  document.getElementById('contrast').addEventListener('s4-change', (e) => S4.theme({ contrast: +e.detail.value }));
-  /* reflect the restored theme in the groups */
-  const t = S4.theme();
-  document.querySelectorAll('#mode [value]').forEach((b) => b.setAttribute('aria-pressed', b.value === t.mode));
-  document.querySelectorAll('#contrast [value]').forEach((b) => b.setAttribute('aria-pressed', +b.value === t.contrast));
-</script>
 ```
 
 - Mono is always the first swatch. Offer 3–6 seeds; the app's own seed (if it has one) is second.
-- Swatches with `data-theme-seed` call `S4.theme` themselves and stay in sync.
 - `S4.theme.restore(key, defaults)` at start-up (see the page shape in SKILL.md) makes every change save under that key.
   Use the same key in the head script that sets `data-theme` before first paint.
-- A single quick toggle in the top app bar (light-mode / dark-mode icon button) is fine for small tools; it calls
-  `S4.theme({ mode })` and swaps its icon with `S4.icon.set(el, name)`.
+- Template: `templates/settings.html`.
 
 ## Saving data
 

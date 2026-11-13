@@ -447,7 +447,8 @@ S4.register('fab', function (scope) {
      view replaces the current one with the shared axis pattern (old slides 30px out and fades, new slides in from the
      side you're heading; movement on the spatial spring, fades on effects), the page scrolls to the top, and the top app
      bar title takes the view's data-title. Fires s4-change { view, previous } on the .s4-app after the switch starts.
-   - S4.app.go(app, name) switches views from code (e.g. a "See All" link). */
+   - S4.app.go(app, name) switches views from code (e.g. a "See All" link).
+   - Deep links: nav items are <a href="#name">, so the URL follows the view; on load, #name opens that view. */
 (function () {
   /* shared axis lives in motion/motion.js (S4.transition.sharedAxis) */
   function sharedAxis(from, to, dir, state, onSwap) { return S4.transition.sharedAxis(from, to, dir, state, onSwap); }
@@ -496,8 +497,20 @@ S4.register('fab', function (scope) {
       /* start with only the current destination's view visible */
       var cur = app.querySelector('.s4-nav-item[aria-current="page"][data-view]');
       var list = views(app);
+      /* deep links: #name in the URL opens that view (reload, shared links); the nav follows */
+      var hash = decodeURIComponent(location.hash.slice(1)), deep = null;
+      if (hash && list.some(function (v) { return v.dataset.view === hash; })) {
+        app.querySelectorAll('.s4-nav-item[data-view]').forEach(function (x) {
+          if (x.dataset.view === hash) x.setAttribute('aria-current', 'page'); else x.removeAttribute('aria-current');
+        });
+        cur = app.querySelector('.s4-nav-item[aria-current="page"][data-view]');
+        var t = list.filter(function (v) { return v.dataset.view === hash; })[0].dataset.title;
+        var bar = app.querySelector('.s4-top-app-bar .s4-app-bar-title');
+        if (t && bar) bar.textContent = t;
+        deep = hash;
+      }
       if (list.length) {
-        var name = cur ? cur.dataset.view : list[0].dataset.view;
+        var name = deep || (cur ? cur.dataset.view : list[0].dataset.view);
         list.forEach(function (v) { v.hidden = v.dataset.view !== name; });
       }
       app.addEventListener('s4-change', function (e) {

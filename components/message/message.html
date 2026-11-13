@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Messages · S4 Orion</title>
+<link rel="stylesheet" href="../index.css">
+<link rel="stylesheet" href="../_example/example.css">
+</head>
+<body>
+<header class="ex-bar"><h1><a href="../">Components</a> / Messages</h1></header>
+<main class="ex-main">
+  <p>A conversation: theirs on the start side, mine (primary) on the end side, a glass composer that sticks above the nav bar. Full screen: <a href="../../templates/chat.html">chat template</a>.</p>
+  <section class="ex-sec">
+    <h2>Thread and Composer</h2>
+    <p>Bubbles are solid content; the composer floats, so it is glass.</p>
+    <div class="ex-board col">
+      <div style="inline-size:100%"><ol class="s4-thread" aria-label="Conversation">
+        <li class="s4-thread-day">Today</li>
+        <li class="s4-message"><p>Can you send the October invoice before Friday?</p><span class="s4-message-meta">Maya · 9:41</span></li>
+        <li class="s4-message"><p>Finance closes the month early.</p><span class="s4-message-meta">Maya · 9:41</span></li>
+        <li class="s4-message" data-from="me"><p>Sent it a minute ago.</p><span class="s4-message-meta">9:42</span></li>
+      </ol>
+      <form class="s4-composer s4-glass" onsubmit="return false">
+        <button class="s4-icon-button" type="button" aria-label="Attach File"><span class="s4-icon" data-icon="attach"></span></button>
+        <div class="s4-text-field"><textarea rows="1" aria-label="Message" placeholder="Message"></textarea></div>
+        <button class="s4-icon-button" data-variant="filled" type="submit" aria-label="Send"><span class="s4-icon" data-icon="send"></span></button>
+      </form></div>
+    </div>
+  </section>
+</main>
+<script src="../assets/icons.js"></script>
+<script src="../core/core.js"></script>
+<script src="../text-field/text-field.js"></script>
+<script src="../icon-button/icon-button.js"></script>
+<script src="../_example/example.js"></script>
+</body>
+</html>

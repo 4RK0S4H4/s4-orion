@@ -1,6 +1,6 @@
 ---
 name: s4-orion
-description: "S4 Orion, the user's own design system: Material 3 Expressive (M3 color roles from one seed, M3 type and shape scales, springs) with a very clear, contrast-guaranteed glass layer on floating chrome, Inter, Solar icons, Title Case labels, monochrome by default. Ships orion.css + orion.js with 41 components (app shell, nav bar/rail, top app bar, buttons, FAB, cards, lists, tables, fields, chips, menus, dialogs, sheets, snackbars…), tokens, and a page checker. Use it whenever the user wants a web app, tool, dashboard, page, prototype or mockup built or restyled in S4 Orion, S4 Material, Material / Material You / M3 / M3E or a Google/Android look, or asks to apply their design system to an app that already uses S4 Orion or S4 Material. It replaces the S4 Material skill. Not for S4 Glass or S4 Flat, and not for documents, slides or charts on their own."
+description: "S4 Orion, the user's own design system: Material 3 Expressive (M3 color roles from one seed, M3 type and shape scales, springs) with a very clear, contrast-guaranteed glass layer on floating chrome, Inter, Solar icons, Title Case labels, monochrome by default. Ships orion.css + orion.js with 46 components (app shell, canonical layouts, nav bar/rail, top app bar, buttons, FAB, cards, lists, tables, stats, fields, chips, menus, dialogs, sheets, snackbars, prose, chat…), eight app templates (dashboard, list-detail, settings, sign-in, article, chat, tool, landing), tokens, and a page checker. Use it whenever the user wants a web app, tool, dashboard, page, prototype or mockup built or restyled in S4 Orion, S4 Material, Material / Material You / M3 / M3E or a Google/Android look, or asks to apply their design system to an app that already uses S4 Orion or S4 Material. It replaces the S4 Material skill. Not for S4 Glass or S4 Flat, and not for documents, slides or charts on their own."
 ---
 
 # S4 Orion
@@ -30,6 +30,25 @@ Everything ships in this skill's `assets/` folder: `orion.css` (tokens, every co
 - **Never edit `orion.css` for one app.** Everything sits in `@layer s4.*`, so the app's own unlayered CSS wins; override
   with tokens and documented attributes instead. The source of truth is the repo (github.com/4rk0s4h4/s4-orion).
 
+## Start from a template
+
+Every new app or page starts from the closest file in this skill's `templates/` folder (copy it next to the five assets,
+rename, replace the content). They are complete, checker-clean pages; keep their structure and swap the words and data.
+
+| Template | For | Layout |
+|---|---|---|
+| `dashboard.html` | analytics, finance, admin, status, trackers | shell + views; stats, chart pane, attention list, table view |
+| `list-detail.html` | mail, CRM, tickets, orders, contacts, any CRUD | `.s4-split` list-detail, compose dialog, FAB |
+| `settings.html` | any app's settings | reading width; theme controls, segmented lists, danger pane |
+| `sign-in.html` | sign-in, sign-up, onboarding, one-task screens | no navigation, reading width, centered pane |
+| `article.html` | help, docs, blog, release notes, legal | reading width, breadcrumbs, `.s4-prose` |
+| `chat.html` | messaging, support, comments, AI assistants | thread + glass composer |
+| `tool.html` | calculators, converters, generators, editors | supporting-pane split: inputs + sticky result |
+| `landing.html` | a product or project home page | no shell navigation; hero, features, FAQ, CTA |
+
+Mixed apps combine them: a dashboard app whose Clients view is the list-detail screen, with the settings screen as its
+last destination. Keep one shell (`.s4-app`) per page.
+
 ## Page shape
 
 ```html
@@ -40,7 +59,7 @@ Everything ships in this skill's `assets/` folder: `orion.css` (tokens, every co
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Orion Showcase</title>
 <script>/* theme before first paint: no flash of the wrong mode */
-(function (k) { try { var t = JSON.parse(localStorage.getItem(k) || 'null'); if (t && t.mode && t.mode !== 'system') document.documentElement.dataset.theme = t.mode; } catch (e) {} })('pocket-ledger-theme');
+(function (k) { try { var t = JSON.parse(localStorage.getItem(k) || 'null'); if (t && t.mode && t.mode !== 'system') document.documentElement.dataset.theme = t.mode; } catch (e) {} })('app-theme');
 </script>
 <link rel="preload" href="inter-variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="orion.css">
@@ -66,7 +85,7 @@ Everything ships in this skill's `assets/` folder: `orion.css` (tokens, every co
 </div>
 <script src="icons.js"></script>
 <script src="orion.js"></script>
-<script>S4.theme.restore('pocket-ledger-theme', { mode: 'system' });   /* then the app's own script */</script>
+<script>S4.theme.restore('app-theme', { mode: 'system' });   /* then the app's own script */</script>
 </body>
 </html>
 ```
@@ -76,6 +95,11 @@ Everything ships in this skill's `assets/` folder: `orion.css` (tokens, every co
 - Window classes are container queries on `.s4-app`: compact < 600 (nav bar), medium 600–839 (nav bar), expanded ≥ 840
   (rail). A one-screen tool drops both navs and keeps the top app bar.
 - Markup works without app code: `orion.js` wires every component on load and anything added later.
+- **Page width:** `data-width="reading"` (720) on `.s4-content` or a view for text, forms, settings and sign-in;
+  `data-width="wide"` (1600) for tables, boards and editors; the default (1200) for dashboards.
+- **Two panes:** `.s4-split` (list-detail, the default) or `.s4-split[data-layout="supporting"]`: one pane at a time on
+  phones, side by side from 840. Don't hand-build split grids.
+- **Many destinations or a desktop-first tool:** `data-expand="auto"` on the rail shows labels from 1200.
 - Read `references/patterns.md` for screen patterns (dashboard, list and detail, settings, forms, empty states, theming).
 
 ## Decision rules
@@ -102,6 +126,12 @@ Everything ships in this skill's `assets/` folder: `orion.css` (tokens, every co
 - Rows people compare across columns: a **table** (it stacks into rows on phones by itself). Right-align numbers.
 - A few rich, independent things: **cards** in an `.s4-grid`. Sections of settings or a dashboard: **panes**.
 - State of a thing: a **status** pill with a tone and a word ("Overdue"), never color alone.
+- Numbers people check over time (KPIs): **stats** (`.s4-stat`) in one pane's `.s4-stat-row`, not a pane per number.
+- An item's fields on a detail screen: a **description list** (`.s4-dl`).
+- Long text (articles, help, AI answers): **prose** (`.s4-prose`) on a reading-width page. Conversations: **messages**
+  (`.s4-thread`, `.s4-message[data-from="me"]`) with a glass `.s4-composer`.
+- Charts: draw them in the app (SVG or divs) from role colors: past values `surface-container-highest`, the current or
+  selected value `primary`, labels `on-surface-variant`, a text alternative (`role="img"` + `aria-label`).
 
 **Overlays**
 - A short list of choices from a button: **menu**. A decision or a short input: **dialog**. A short task without leaving:
@@ -211,6 +241,7 @@ desktop, and both themes.
 
 | File | Read it when |
 |---|---|
+| `templates/*.html` | Starting any new app or page (see Start from a template). |
 | `references/components.md` | Writing markup for any component: classes, attributes, events, do/don't. Search it for the class you need (e.g. `s4-table`, `data-select`) rather than reading it all. |
 | `references/patterns.md` | Laying out a screen: dashboards, list and detail, settings, forms, empty and loading states, theme controls, saving data. |
 | `references/icons.md` | Picking an icon name. |
