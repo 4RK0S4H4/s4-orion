@@ -87,14 +87,6 @@
       inset calc(-1 * var(--s4-glass-glow-size)) 0 var(--s4-glass-glow-size) calc(-1 * var(--s4-glass-glow-size)) oklch(from var(--_surface) calc(.99 - .96 * clamp(0, calc((l - var(--s4-glass-glow-flip)) * 1000), 1)) calc(c * .3) h / calc(var(--s4-glass-glow-alpha) * min(1, var(--s4-glass-edge-side-alpha) / max(var(--s4-glass-edge-top-alpha), .001)) * (1 - clamp(0, calc((l - var(--s4-glass-glow-flip)) * 1000), 1)) + var(--s4-glass-glow-shade-alpha) * min(1, var(--s4-glass-edge-side-alpha) / max(var(--s4-glass-edge-top-alpha), .001)) * clamp(0, calc((l - var(--s4-glass-glow-flip)) * 1000), 1)));
     }
   }
-  /* full-width bars and docked surfaces touch the screen edges, so they draw a single line only on the edge that faces the content
-     (a line along the screen edge reads as a box around the bar, especially on a phone) */
-  :where(.s4-top-app-bar[data-scrolled]) { box-shadow: inset 0 calc(-1 * var(--s4-glass-edge-width) * var(--_edge-scale)) 0 0 var(--s4-glass-edge-line); }
-  :where(.s4-nav-bar, .s4-toolbar[data-type="docked"]) { box-shadow: inset 0 calc(var(--s4-glass-edge-width) * var(--_edge-scale)) 0 0 var(--s4-glass-edge-line); }
-  :where(.s4-nav-rail:is([data-modal], [data-overlay])) { box-shadow: inset calc(-1 * var(--s4-glass-edge-width) * var(--_edge-scale)) 0 0 0 var(--s4-glass-edge-line); }
-  :where(.s4-side-sheet) { box-shadow: inset calc(var(--s4-glass-edge-width) * var(--_edge-scale)) 0 0 0 var(--s4-glass-edge-line); }
-  @media (min-width: 600px) { :where(.s4-bottom-sheet) { box-shadow: inset 0 calc(var(--s4-glass-edge-width) * var(--_edge-scale)) 0 0 var(--s4-glass-edge-line); } }
-
   /* FLOATING ACTION BUTTONS (decision 0025): glass too, tinted with the FAB's own color (--_bg) instead of the surface color, so
      it keeps its identity (primary-container by default, or the data-color it sets). Its icon and label keep the FAB's own
      on-color; scripts/check-glass.mjs proves that pair too. */
