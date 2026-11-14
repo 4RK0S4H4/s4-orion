@@ -109,6 +109,48 @@ colors. Go a different way: for example keep the normal field fill and mark the 
 small icon and a quieter accent, and soften the error tones generally. Show options in a lab.
 ![Error fields](img/2026-11-14-error-fields-red.png)
 
+### 17. Selected chips must not change size
+Filter chips grow when selected (the check slides in), which pushes the other chips around. Chips keep one size in every
+state. **Draft first:** show the owner several ideas for how a selected chip looks without growing (fill change, icon
+swap in a fixed slot, inverse fill, a glass state, etc.) in a review lab before building.
+![Chips](img/2026-11-14-chips-expanding-check.png)
+
+### 18. Checkbox marks are too big
+The check and indeterminate marks inside checkboxes are far too big and stand out; the owner also isn't used to seeing
+icon-like glyphs in checkboxes. Make the mark smaller and quieter (a thin check that fits the box, a short dash for
+indeterminate). Show in the same lab as 17/19 if it's a visible change.
+![Checkboxes and radios](img/2026-11-14-checkbox-radio.png)
+
+### 19. Radio: liquid selection, no inner dot
+Idea to explore: the selected radio's fill moves **liquidly** from one radio to the next when the choice changes (comes
+in normally the first time; afterwards travels quickly behind the scenes from the old radio to the new one). Also, the
+owner doesn't usually see a dot inside a selected radio: try a selected look without the inner circle. Explore in the
+motion lab (see the motion direction).
+![Checkboxes and radios](img/2026-11-14-checkbox-radio.png)
+
+### 20. Slider must reach both ends
+The owner likes the slider's general look, but at 0% and 100% it doesn't reach the end: a sliver of the inactive track
+stays at the very end (or the active track looks less than full). At the ends the active (or inactive) track should run
+all the way, with no leftover sliver.
+![Slider at zero](img/2026-11-14-slider-at-zero.png)
+![Slider at max](img/2026-11-14-slider-at-max.png)
+
+### 21. No stop dot peeking out under the handle
+With stops (`data-stops`), a sliver of a stop dot shows beside the handle. Hide any dot the handle covers or sits next
+to. Together with issue 20 this makes the ends look doubly bad: fix both and check 0%, 100% and every stop.
+![Stop dot under the handle](img/2026-11-14-slider-stop-dot-under-handle.png)
+
+## Ideas (to explore later, not yet issues)
+
+### A. Whatever you touch turns into glass
+Owner's "crazy side idea" (2026-11-14), to spend real time on: anything you touch or that is active becomes glass. A
+selected chip turns into glass (keeping its selected color, just on a different surface), a focused text field turns
+into glass, with an animation between the two. Maybe glass has several states (resting, touched, selected) and this is
+a middle phase between solid and full glass. Questions to explore: does it keep text contrast (extend check-glass to
+tinted states)? Does it read on a solid content surface with nothing interesting behind it? Is it consistent with
+"content is solid" (0004)? Try it in a lab on chips, fields, list rows and buttons before deciding anything.
+![Chips](img/2026-11-14-chips-expanding-check.png)
+
 ## Done
 
 (none yet)
