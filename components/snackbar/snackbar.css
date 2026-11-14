@@ -1,7 +1,7 @@
 /* Snackbar (M3): a short message after an action, often with Undo. Created from code:
      S4.snackbar({ text: 'Bill archived', action: 'Undo', onAction: fn, closable: false, duration: 4000 })
-   Rises a few pixels and fades in (decision 0010), above the nav bar, a docked toolbar or a FAB. Solid inverse surface
-   (not glass: its inverse-primary action only reaches 4.5:1 on the full surface). */
+   Rises 14px into place and fades in (decision 0042), above the nav bar, a docked toolbar or a FAB. Glass (0042: a
+   notification is a raised object); text and the action are on-surface, which the glass guarantee keeps at AA. */
 @layer s4.components {
   .s4-snackbar-host {
     position: fixed;
@@ -24,9 +24,8 @@
     min-height: var(--s4-size-touch-target);
     padding: var(--s4-space-1) var(--s4-space-2) var(--s4-space-1) var(--s4-space-5);
     border-radius: var(--md-sys-shape-corner-full);
-    background: var(--md-sys-color-inverse-surface);
-    color: var(--md-sys-color-inverse-on-surface);
-    box-shadow: var(--md-sys-elevation-level3);
+    background: var(--md-sys-color-surface-container-high);
+    color: var(--md-sys-color-on-surface);
     pointer-events: auto;
     font-family: var(--md-sys-typescale-body-medium-font);
     font-size: var(--md-sys-typescale-body-medium-size);
@@ -37,7 +36,7 @@
   .s4-snackbar[data-multiline] { flex-wrap: wrap; border-radius: var(--md-sys-shape-corner-extra-large); }
   .s4-snackbar[data-multiline] .s4-snackbar-text { flex-basis: 100%; }
   .s4-snackbar[data-multiline] .s4-snackbar-action { margin-inline-start: auto; }
-  .s4-snackbar .s4-button[data-variant="text"] { --_fg: var(--md-sys-color-inverse-primary); }
-  .s4-snackbar .s4-icon-button { color: var(--md-sys-color-inverse-on-surface); }
+  .s4-snackbar .s4-button[data-variant="text"] { --_fg: var(--md-sys-color-on-surface); font-weight: var(--md-sys-typescale-emphasized-label-large-weight); }
+  .s4-snackbar .s4-icon-button { color: var(--md-sys-color-on-surface); }
   @media (forced-colors: active) { .s4-snackbar { border: 1px solid CanvasText; } }
 }

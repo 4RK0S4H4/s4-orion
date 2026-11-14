@@ -1519,8 +1519,8 @@ Picks exactly one option from a short visible list. M3 radio button on a native 
 | `name`, `value`, `checked`, `disabled` on the input | native radio group |
 | `data-error` on the label, or `aria-invalid="true"` | error color for an unanswered required group |
 
-20dp ring with a 2dp stroke (on-surface-variant); selected = primary ring with a 10dp dot that grows in on the
-fast-spatial spring. 40dp circular state layer; 48dp hit area. No JS.
+20dp filled disc (surface-container-highest); selected = the disc fills with primary ink, no inner dot (decision 0042):
+the ink grows in from the middle on the ink spring and drains out calmly. 40dp circular state layer; 48dp hit area. No JS.
 
 **Do:** group with `<fieldset>` + `<legend>` (or `role="radiogroup"` + `aria-label`); keep 2–7 options.
 **Don't:** use radios for a single on/off choice, or for long lists (use a select in a [text field](#text-field)).
@@ -1736,9 +1736,9 @@ component-level custom properties:
 
 | Property | What | Default |
 |---|---|---|
-| `--s4-progress-cycle` | linear indeterminate cycle (M3: two lines, 1800ms) | `1800ms` |
-| `--s4-progress-circular-cycle` | circular arc grow-and-catch-up cycle | `1333ms` |
-| `--s4-progress-circular-spin` | circular rotation | `2000ms` |
+| `--s4-progress-cycle` | linear indeterminate cycle (0042: one drop-like line, front edge leads) | `1500ms` |
+| `--s4-progress-circular-cycle` | circular arc breathing cycle (0042) | `1300ms` |
+| `--s4-progress-circular-spin` | circular rotation (out of step with the arc) | `1600ms` |
 
 **Reduced motion.** This component carries the one allowed `@media (prefers-reduced-motion: reduce)` query: tokens can't
 stop an infinite loop, so the indeterminate animations stop and show a still, partial indicator (40% of the linear bar,
@@ -1805,7 +1805,7 @@ A message that stays on the page until it is handled or dismissed. Not a toast; 
 
 ## Skeleton
 
-A quiet placeholder while content loads. Same shape and size as what will replace it. The pulse is opacity only.
+A quiet placeholder while content loads. Same shape and size as what will replace it. A soft sheen sweeps across the loading region as one wave (decision 0042).
 
 ```html
 <div aria-busy="true">
@@ -1827,7 +1827,7 @@ A quiet placeholder while content loads. Same shape and size as what will replac
 - Don't show skeletons for less than a second; it flickers.
 - Don't animate anything but opacity.
 
-**Accessibility:** The pulse stops under `prefers-reduced-motion`. Skeletons carry no text; the busy region tells screen readers loading is happening.
+**Accessibility:** The wave stops under `prefers-reduced-motion`. Skeletons carry no text; the busy region tells screen readers loading is happening.
 
 **Tokens:** surface-container roles, `on-surface`, `on-surface-variant`, shape `full` and `large`, spacing `--s4-space-*`, spring tokens. No outlines (decision 0023).
 
@@ -1838,7 +1838,8 @@ A quiet placeholder while content loads. Same shape and size as what will replac
 ## Snackbar
 
 A short message after an action, often with Undo. **Slides up from the bottom edge**, above a nav bar, docked toolbar or FAB.
-A solid inverse surface (not glass), so its `inverse-primary` action keeps 4.5:1.
+Glass (decision 0042): a notification is a raised object. Text and the action are `on-surface` (the action in the
+emphasized weight), which the glass guarantee keeps at AA. Rises 14px into place on the `rise` spring.
 
 ```js
 S4.snackbar({ text: 'Bill archived', action: 'Undo', onAction: restore });
@@ -1867,7 +1868,7 @@ a decision (use a dialog) or for messages that must stay (use a banner or inline
 ## Tooltips
 
 **Plain** tooltips name an icon-only control: `data-tooltip="Copy invoice number"`. They appear after a 500ms hover, on
-keyboard focus, or on a long press; Escape hides them; they can be hovered (WCAG 1.4.13). Solid inverse surface.
+keyboard focus, or on a long press; Escape hides them; they can be hovered (WCAG 1.4.13). Glass (decision 0042), rising 4px into place fast; they appear 350ms after the pointer arrives.
 
 **Rich** tooltips explain something in a few lines and may hold an action; they sit on glass:
 

@@ -15,6 +15,11 @@ the rail FAB; release 1.0.0; minified bundles and per-set icons; pruning for 2.0
 Also still waiting on the owner's iPhone checks: 0037 (glow/shade flip, Glass Playground) and 0040 (docked glass lit
 edge only, showcase).
 
+## Reminder for the owner
+
+**Review the row hover on a computer** (issue 7): [Liquid Motion Lab 2](../explore/motion-liquid-2.html), question 1.
+Bring this up at the start of the next session.
+
 ## Owner critiques (2026-11-14): 35 issues (one scrapped) and one idea
 
 "Very close to a final product." The owner sent six critiques with screenshots, listed in
@@ -50,6 +55,7 @@ needs a motion lab first). Goal: looks good on desktop and mobile. Work them in 
 
 ## Session log
 
+- 2026-11-14 (motion): Lab 2 answered; 0042 accepted and built (spring tokens ink/rise/settle/tip/reveal/bend; accordion, glass snackbar and tooltip, menu items follow, skeleton wave, progress, radio ink, rich tooltip corners). Issues 11, 19, 25-31 done. Open: row hover (owner reviews on a computer). Next: color (22) and the rest of the issues, in order.
 - 2026-11-14 (lab 2): Lab 1 answered (0042: liquid only for ink, glass plain, faster; accordion/snackbar/tooltip/loading = B). Liquid Motion Lab 2 published (row hover edges, radio ink under windows, menu, speed). Next: owner's answers, then build the motion issues.
 - 2026-11-14 (lab): Liquid Motion Lab published. Next: owner's answers, then decision 0042 and the motion issues.
 - 2026-11-14: owner's 35 critiques, one idea and the liquid-motion direction recorded as issues with images (docs/issues). Next: work the issues.

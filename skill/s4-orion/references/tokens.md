@@ -338,6 +338,12 @@ Light values are shown; a second value is dark mode. Color roles also change wit
 | `--s4-motion-spring-fast-spatial-calm-duration` | 200ms |  |  |
 | `--s4-motion-spring-spatial-calm-duration` | 260ms |  |  |
 | `--s4-motion-spring-slow-spatial-calm-duration` | 340ms |  |  |
+| `--s4-motion-spring-ink-duration` | 250ms |  |  |
+| `--s4-motion-spring-rise-duration` | 180ms |  |  |
+| `--s4-motion-spring-settle-duration` | 220ms |  |  |
+| `--s4-motion-spring-tip-duration` | 120ms |  |  |
+| `--s4-motion-spring-reveal-duration` | 300ms |  |  |
+| `--s4-motion-spring-bend-duration` | 200ms |  |  |
 | `--md-sys-motion-spring-fast-spatial` | linear(…) spring easing |  | Spring: stiffness 1400, damping 0.75, 220ms, overshoot 2.8%. |
 | `--md-sys-motion-spring-spatial` | linear(…) spring easing |  | Spring: stiffness 900, damping 0.85, 260ms, overshoot 0.6%. |
 | `--md-sys-motion-spring-slow-spatial` | linear(…) spring easing |  | Spring: stiffness 520, damping 0.9, 340ms, overshoot 0.2%. |
@@ -347,6 +353,12 @@ Light values are shown; a second value is dark mode. Color roles also change wit
 | `--s4-motion-spring-fast-spatial-calm` | linear(…) spring easing |  | Spring: stiffness 1400, damping 1, 200ms, overshoot 0%. |
 | `--s4-motion-spring-spatial-calm` | linear(…) spring easing |  | Spring: stiffness 900, damping 1, 260ms, overshoot 0%. |
 | `--s4-motion-spring-slow-spatial-calm` | linear(…) spring easing |  | Spring: stiffness 520, damping 1, 340ms, overshoot 0%. |
+| `--s4-motion-spring-ink` | linear(…) spring easing |  | Spring: stiffness 1060, damping 0.8, 250ms, overshoot 1.5%. |
+| `--s4-motion-spring-rise` | linear(…) spring easing |  | Spring: stiffness 1060, damping 0.9, 180ms, overshoot 0%. |
+| `--s4-motion-spring-settle` | linear(…) spring easing |  | Spring: stiffness 1490, damping 1, 220ms, overshoot 0%. |
+| `--s4-motion-spring-tip` | linear(…) spring easing |  | Spring: stiffness 2240, damping 0.9, 120ms, overshoot 0%. |
+| `--s4-motion-spring-reveal` | linear(…) spring easing |  | Spring: stiffness 775, damping 1, 300ms, overshoot 0%. |
+| `--s4-motion-spring-bend` | linear(…) spring easing |  | Spring: stiffness 860, damping 0.9, 200ms, overshoot 0%. |
 
 ## Motion: patterns
 

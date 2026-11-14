@@ -1,7 +1,7 @@
 # Tooltips
 
 **Plain** tooltips name an icon-only control: `data-tooltip="Copy invoice number"`. They appear after a 500ms hover, on
-keyboard focus, or on a long press; Escape hides them; they can be hovered (WCAG 1.4.13). Solid inverse surface.
+keyboard focus, or on a long press; Escape hides them; they can be hovered (WCAG 1.4.13). Glass (decision 0042), rising 4px into place fast; they appear 350ms after the pointer arrives.
 
 **Rich** tooltips explain something in a few lines and may hold an action; they sit on glass:
 

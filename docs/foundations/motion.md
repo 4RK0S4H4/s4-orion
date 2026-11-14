@@ -32,14 +32,27 @@ stays in the springs: movement opens on the spatial spring (a hint of overshoot)
 | Situation | Pattern | API |
 |---|---|---|
 | Dialogs, and the bottom sheet on a phone (a centered card) | **Pop**: rises 16px and fades in; closes with a quick 8px drop and fade | `[data-dialog]`, `[data-sheet]`, `S4.transition.pop(el, { open })` |
-| Menus | **Drop**: comes 8px out of the button's side and fades in | `[data-menu]`, `S4.transition.drop(menu, { open, from })` |
+| Menus | **Items follow** (0042): the glass fades in where it sits (not out of the button), then the items fade in one after another, each rising 4px | `[data-menu]`, `S4.transition.drop(menu, { open })` |
 | Bottom sheets on wider screens, side sheets | **Slide from edge**: from the edge where they live | `S4.transition.slide(el, { open, edge })` |
-| Snackbars | **Rise**: 10px and a fade | built in, `S4.transition.rise(el, { open })` |
+| Snackbars (glass) | **Rise** (0042): 14px into place on the rise spring and a fade | built in, `S4.transition.rise(el, { open })` |
+| Tooltips (glass) | **Tip** (0042): rise 4px fast and fade; leave faster | built in, `S4.transition.tip(el, { open })` |
+| Accordion | **Reveal** (0042): the section opens on the calm reveal spring, its text fades in behind; the chevron bends over like a page turned backward | built into `.s4-accordion` |
 | Switching between sibling views: tabs, nav destinations, steps | **Shared axis**: old view slides 30px out and fades, new one slides in from the side you're heading | built in, `S4.transition.sharedAxis(from, to, dir)` |
 | List row to detail | Open the detail as a dialog or sheet (pop), or as a sibling view (shared axis) | |
 
 The container transform, the menu emerge and the other menu styles (decisions 0001, 0004, 0018) were removed in 0022:
 they cloned elements, sampled colors and animated clip-path over glass, which was fragile in Safari. The old names
 `S4.transition.containerTransform()` and `S4.transition.unfold()` still work and run pop and drop.
+
+## Ink and glass (decision 0042)
+
+**Liquid motion is for ink only.** Ink is a solid fill that shows state: hover and selection fills, the nav and tab
+pill, radio and checkbox fills, the switch handle, slider and progress fills, selected chips. Ink may move on the `ink`
+spring (a subtle liquid overshoot), lead with one edge and trail with the other, and grow from its middle (the radio's
+ink fills in from the center). **Glass moves plainly**: a short rise or settle and a fade, never stretching or changing
+shape. Speeds stay close to today's springs (the owner picked "30% faster" than the first lab, which lands there).
+New spring tokens: `ink`, `rise`, `settle`, `tip`, `reveal`, `bend` (`--s4-motion-spring-*`, names for
+`S4.motion.animate`). Loading: one sheen wave across a skeleton region; the linear indicator slides through like a
+drop; the ring's arc breathes as it turns; at 100% both are completely full.
 
 Never scale a surface's content to make it appear (S4 Material's Origin did; it stretches text and reads as goofy).

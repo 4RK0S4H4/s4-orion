@@ -39,12 +39,15 @@
 
   /* ---------- motion ---------- */
   var reduce = window.matchMedia ? matchMedia('(prefers-reduced-motion: reduce)') : { matches: false };
-  var SPRING_TOKEN = function (name) { return /-calm$/.test(name) ? '--s4-motion-spring-' + name : '--md-sys-motion-spring-' + name; };
+  /* M3 springs live under --md-sys-motion-spring-*; Orion's own (the -calm ones and decision 0042's ink, rise, settle, tip,
+     reveal, bend) under --s4-motion-spring-* */
+  var S4_SPRINGS = /-calm$|^(ink|rise|settle|tip|reveal|bend)$/;
+  var SPRING_TOKEN = function (name) { return S4_SPRINGS.test(name) ? '--s4-motion-spring-' + name : '--md-sys-motion-spring-' + name; };
   S4.motion = {
     /* { duration (ms), easing } for a spring name: fast-spatial, spatial, slow-spatial, fast-effects, effects, slow-effects, *-calm */
     spring: function (name) {
       var t = SPRING_TOKEN(name), d = parseFloat(S4.util.css(t + '-duration')) || 0;
-      var spatial = /spatial/.test(name);
+      var spatial = !/effects/.test(name);
       if (spatial && (reduce.matches || root.dataset.motion === 'reduced')) d = 0;
       return { duration: d, easing: S4.util.css(t) || 'ease' };
     },
@@ -168,11 +171,14 @@
 })();
 
 /* ---- motion/motion.js ---- */
-/* S4 Orion transition patterns, simplified (decision 0022). Five patterns, each only moves and fades:
+/* S4 Orion transition patterns, simplified (decision 0022; glass motion updated by 0042: glass moves plainly, ink may be
+   liquid). Each only moves and fades:
      S4.transition.pop(surface, { open })                     dialogs, the phone sheet card: rise 16px and fade in on the spatial spring
-     S4.transition.drop(menu, { open, from: 'top'|'bottom' })  menus: drop 8px out of their button's side and fade in
+     S4.transition.drop(menu, { open })                       menus (0042): the glass fades in where it sits, then its items
+                                                              follow one after another, each rising 4px; closes with a quick fade
      S4.transition.slide(el, { open, edge })                  sheets from the edge they live on
-     S4.transition.rise(el, { open })                         snackbars: rise 10px and fade in
+     S4.transition.rise(el, { open })                         snackbars (0042): rise 14px into place on the rise spring and fade in
+     S4.transition.tip(el, { open })                          tooltips (0042): rise 4px fast and fade in; leave faster
      S4.transition.sharedAxis(outView, inView, direction)     switching sibling views (tabs, destinations, steps)
      S4.transition.fade(el, open)                             anything else
    Rules that keep it simple and robust in every browser:
@@ -219,17 +225,33 @@
     return moveFade(el, open, 'translateY(' + (open ? d : d / 2) + 'px)', open ? ['spatial', 'effects'] : ['fast-effects', 'fast-effects']);
   }
 
-  /* ---------- drop: menus come out of their button's side ---------- */
+  /* ---------- drop: menus (0042: not out of the button; the glass fades in place, the items follow) ---------- */
   function drop(el, opts) {
     opts = opts || {};
-    var open = opts.open !== false, up = opts.from === 'bottom', d = M.reduced() ? 0 : 8;
-    return moveFade(el, open, 'translateY(' + (up ? d : -d) + 'px)', open ? ['spatial', 'effects'] : ['fast-effects', 'fast-effects']);
+    var open = opts.open !== false, now = begin(el);
+    var items = Array.prototype.slice.call(el.querySelectorAll(':scope > .s4-menu-item, :scope > .s4-menu-label, :scope > .s4-menu-divider, :scope > hr'));
+    items.forEach(function (it) { it.getAnimations().forEach(function (a) { a.cancel(); }); });
+    var o = track(el, M.animate(el, [{ opacity: now ? now.opacity : (open ? 0 : 1) }, { opacity: open ? 1 : 0 }], open ? 'slow-effects' : 'fast-effects'));
+    var anims = [o];
+    if (open && !now) {
+      var d = M.reduced() ? 0 : 4;
+      items.forEach(function (it, i) {
+        anims.push(track(el, M.animate(it, [{ opacity: 0, transform: 'translateY(' + d + 'px)' }, { opacity: 1, transform: 'none' }], 'settle', { fill: 'backwards', delay: 30 + i * 25 })));
+      });
+    }
+    return settle(el, anims, !open);
   }
 
-  /* ---------- rise: snackbars ---------- */
+  /* ---------- rise: snackbars (0042) ---------- */
   function rise(el, opts) {
-    var open = !opts || opts.open !== false, d = M.reduced() ? 0 : 10;
-    return moveFade(el, open, 'translateY(' + d + 'px)', open ? ['spatial', 'effects'] : ['fast-effects', 'fast-effects']);
+    var open = !opts || opts.open !== false, d = M.reduced() ? 0 : (open ? 14 : 10);
+    return moveFade(el, open, 'translateY(' + d + 'px)', open ? ['rise', 'effects'] : ['fast-effects', 'fast-effects']);
+  }
+
+  /* ---------- tip: tooltips (0042) ---------- */
+  function tip(el, opts) {
+    var open = !opts || opts.open !== false, d = M.reduced() ? 0 : 4;
+    return moveFade(el, open, 'translateY(' + (opts && opts.from === 'bottom' ? -d : d) + 'px)', open ? ['tip', 'fast-effects'] : ['fast-effects', 'fast-effects']);
   }
 
   /* ---------- slide from edge: sheets ---------- */
@@ -288,7 +310,7 @@
   }
 
   S4.transition = {
-    pop: pop, drop: drop, rise: rise, slide: slide, fade: fade, sharedAxis: sharedAxis, restore: restore,
+    pop: pop, drop: drop, rise: rise, tip: tip, slide: slide, fade: fade, sharedAxis: sharedAxis, restore: restore,
     /* old names, same behavior as the new patterns */
     containerTransform: function (surface, source, opts) { return pop(surface, opts); },
     unfold: drop
@@ -1020,6 +1042,53 @@ S4.register('list', function (scope) {
   });
 });
 
+/* ---- accordion/accordion.js ---- */
+/* Accordion behaviour (decision 0042).
+   A click on a summary opens or closes its section on the calm reveal spring: the body's height grows from 0 (or
+   shrinks to 0) while its text fades in, rising 4px, just behind. Items that share a name="…" close the others.
+   data-closing on the <details> while it closes keeps the chevron in step (it bends back at the start). Reduced motion:
+   the height change is instant; the fade stays. Fires s4-toggle { open } on the item. */
+S4.register('accordion', function (scope) {
+  S4.util.all(scope, '.s4-accordion').forEach(function (acc) {
+    if (!S4.util.once(acc, 'accordion')) return;
+    /* the browser's own name="…" exclusivity would snap the other item shut with no motion: the script takes it over */
+    acc.querySelectorAll('.s4-accordion-item[name]').forEach(function (d) { d.dataset.name = d.getAttribute('name'); d.removeAttribute('name'); });
+    function body(d) { return d.querySelector(':scope > .s4-accordion-body'); }
+    function stop(b) { b.getAnimations().forEach(function (a) { a.cancel(); }); b.style.height = ''; b.style.overflow = ''; }
+    function open(d) {
+      var b = body(d); if (!b) { d.open = true; return; }
+      var from = d.hasAttribute('data-closing') ? b.getBoundingClientRect().height : 0;
+      stop(b); d.removeAttribute('data-closing'); d.open = true;
+      var to = b.scrollHeight; b.style.overflow = 'hidden';
+      var a = S4.motion.animate(b, [{ height: from + 'px' }, { height: to + 'px' }], 'reveal', { fill: 'none' });
+      a.onfinish = function () { b.style.overflow = ''; };
+      if (!from) Array.prototype.forEach.call(b.children.length ? b.children : [b], function (c) {
+        S4.motion.animate(c, [{ opacity: 0, transform: 'translateY(-4px)' }, { opacity: 1, transform: 'none' }], 'settle', { fill: 'backwards', delay: 40 });
+      });
+      S4.util.emit(d, 's4-toggle', { open: true });
+    }
+    function close(d) {
+      var b = body(d); if (!b) { d.open = false; return; }
+      var from = b.getBoundingClientRect().height;
+      stop(b); d.setAttribute('data-closing', ''); b.style.overflow = 'hidden';
+      var a = S4.motion.animate(b, [{ height: from + 'px' }, { height: '0px' }], 'reveal', { fill: 'forwards' });
+      a.onfinish = function () { if (!d.hasAttribute('data-closing')) return; d.open = false; d.removeAttribute('data-closing'); stop(b); };
+      S4.util.emit(d, 's4-toggle', { open: false });
+    }
+    acc.addEventListener('click', function (e) {
+      var sum = e.target.closest('summary'); if (!sum || !acc.contains(sum)) return;
+      var d = sum.parentElement; if (!d.matches('.s4-accordion-item')) return;
+      e.preventDefault();
+      var opening = !d.open || d.hasAttribute('data-closing');
+      if (opening) {
+        var name = d.dataset.name;
+        if (name) acc.querySelectorAll('.s4-accordion-item[open]').forEach(function (o) { if (o !== d && o.dataset.name === name && !o.hasAttribute('data-closing')) close(o); });
+        open(d);
+      } else close(d);
+    });
+  });
+});
+
 /* ---- table/table.js ---- */
 /* Data table behaviour, for every table.s4-table:
    - Column names: copies each header's text into data-label on its body and footer cells (shown when the table reflows
@@ -1506,6 +1575,30 @@ S4.register('banner', function (scope) {
   });
 });
 
+/* ---- skeleton/skeleton.js ---- */
+/* Skeleton behaviour (decision 0042): one sheen wave across a loading region. Each .s4-skeleton gets --_sk-x (its left
+   edge within the nearest [aria-busy="true"] region, or its parent) and --_sk-w (the region's width), so the sheens of
+   all placeholders line up into a single sweep. Re-measured when the region resizes. */
+S4.register('skeleton', function (scope) {
+  var regions = [];
+  S4.util.all(scope, '.s4-skeleton').forEach(function (sk) {
+    var r = sk.closest('[aria-busy="true"]') || sk.parentElement;
+    if (r && regions.indexOf(r) < 0) regions.push(r);
+  });
+  regions.forEach(function (r) {
+    if (!S4.util.once(r, 'skeleton')) return;
+    function measure() {
+      var R = r.getBoundingClientRect();
+      r.querySelectorAll('.s4-skeleton').forEach(function (sk) {
+        sk.style.setProperty('--_sk-w', Math.max(1, R.width) + 'px');
+        sk.style.setProperty('--_sk-x', (sk.getBoundingClientRect().left - R.left) + 'px');
+      });
+    }
+    measure();
+    if (window.ResizeObserver) new ResizeObserver(measure).observe(r);
+  });
+});
+
 /* ---- menu/menu.js ---- */
 /* Menus: [data-menu="id"] opens <div class="s4-menu" id popover role="menu">. Unfold motion (decision 0001), positioning
    against the anchor (flips above when there's no room), keyboard (arrows, Home/End, Escape, typeahead), radio/checkbox
@@ -1808,7 +1901,7 @@ S4.register('sheet', function (scope) {
    (light dismiss closes it). */
 (function () {
   var S4 = window.S4, tip = null, owner = null, showTimer = null, hideTimer = null, uid = 0;
-  var DELAY = 500, LONG_PRESS = 1500;
+  var DELAY = 350, LONG_PRESS = 1500;   /* 0042: a little quicker to appear */
   function ensureTip() {
     if (tip && tip.isConnected) return tip;
     tip = document.createElement('div'); tip.className = 's4-tooltip'; tip.id = 's4-tooltip'; tip.setAttribute('role', 'tooltip'); tip.hidden = true; tip.setAttribute('data-s4-skip', '');
@@ -1832,11 +1925,15 @@ S4.register('sheet', function (scope) {
     var top = a.top - gap - r.height < m ? a.bottom + gap : a.top - gap - r.height;
     var left = Math.max(m, Math.min(a.left + a.width / 2 - r.width / 2, document.documentElement.clientWidth - m - r.width));
     t.style.top = top + 'px'; t.style.left = left + 'px';
-    S4.motion.animate(t, [{ opacity: 0 }, { opacity: 1 }], 'fast-effects');
+    S4.transition.tip(t, { open: true, from: top > a.top ? 'bottom' : 'top' });
   }
   function hide(now) {
     clearTimeout(showTimer); clearTimeout(hideTimer);
-    hideTimer = setTimeout(function () { if (tip) tip.hidden = true; if (owner) { describe(owner, false); owner = null; } }, now ? 0 : 100);
+    hideTimer = setTimeout(function () {
+      if (owner) { describe(owner, false); owner = null; }
+      if (!tip || tip.hidden) return;
+      S4.transition.tip(tip, { open: false }).then(function (done) { if (done && !owner) tip.hidden = true; });
+    }, now ? 0 : 100);
   }
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && tip && !tip.hidden) hide(true); });
 
@@ -1858,7 +1955,7 @@ S4.register('sheet', function (scope) {
       if (!rt.hasAttribute('popover')) rt.setAttribute('popover', '');
       anchor.setAttribute('aria-expanded', 'false'); anchor.setAttribute('aria-controls', rt.id);
       var pinned = false, t = null;
-      function open() { if (rt.matches(':popover-open')) return; rt.showPopover(); S4.position(rt, anchor, { gap: 4 }); anchor.setAttribute('aria-expanded', 'true'); S4.motion.animate(rt, [{ opacity: 0 }, { opacity: 1 }], 'effects'); }
+      function open() { if (rt.matches(':popover-open')) return; rt.showPopover(); S4.position(rt, anchor, { gap: 4 }); anchor.setAttribute('aria-expanded', 'true'); S4.transition.tip(rt, { open: true, from: rt.getBoundingClientRect().top > anchor.getBoundingClientRect().top ? 'bottom' : 'top' }); }
       function close() { if (!rt.matches(':popover-open')) return; rt.hidePopover(); anchor.setAttribute('aria-expanded', 'false'); pinned = false; }
       anchor.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') { clearTimeout(t); t = setTimeout(open, DELAY); } });
       anchor.addEventListener('pointerleave', function () { clearTimeout(t); if (!pinned) t = setTimeout(close, 300); });

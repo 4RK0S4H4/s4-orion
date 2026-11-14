@@ -14,7 +14,7 @@ and deliberate:
 - **Monochrome by default.** An app that wants color sets one seed; every role is generated from it.
 - **Very clear glass on floating chrome only** (app bars over scrolled content, nav bar, toolbars, menus, dialogs, sheets),
   with a contrast floor that keeps text WCAG AA over any backdrop. Content is always solid.
-- **Simple, sturdy motion:** dialogs pop in, menus drop from their button, shared axis between views, sheets slide from their edge; only movement and fades, on M3 Expressive springs.
+- **Simple, sturdy motion:** dialogs pop in, menus fade in place with their items following, ink (state fills) moves with a subtle liquid spring, shared axis between views, sheets slide from their edge; only movement and fades, on M3 Expressive springs.
 
 When a question isn't answered here or in the references, do what stock Material 3 Expressive does. That keeps every app
 predictable and lets M3 guidance apply directly. Inventing new components, colors or radii is how a design system drifts.
@@ -141,7 +141,8 @@ last destination. Keep one shell (`.s4-app`) per page.
 
 **Motion** (built in; use the APIs, never hand-write durations or easings)
 - Dialogs (and the bottom sheet on a phone) **pop**: rise 16px and fade in (`[data-dialog]`, `[data-sheet]`, or `S4.transition.pop(el, { open })`).
-- Menus **drop** 8px out of their button's side (built into `[data-menu]`); sibling views and tabs use **shared axis**; sheets on wider screens **slide from the edge**; snackbars **rise** 10px (built in).
+- Menus fade in where they sit and their items follow (built into `[data-menu]`); sibling views and tabs use **shared axis**; sheets on wider screens **slide from the edge**; snackbars and tooltips are glass and **rise** into place (built in).
+- Decision 0042: liquid motion (the `ink` spring, edges that lead and trail) only for ink, the solid fills that show state; glass surfaces move plainly.
 - Transitions only move and fade (decision 0022): never animate clip-path, size, color or blur, never clone elements.
 - Never scale a surface's content to make it appear (it stretches text). Bounce is fine on movement; fades never bounce.
 - Custom animation: `S4.motion.animate(el, keyframes, 'spatial')` (reads the spring tokens and reduced motion).

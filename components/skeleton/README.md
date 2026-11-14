@@ -1,6 +1,6 @@
 # Skeleton
 
-A quiet placeholder while content loads. Same shape and size as what will replace it. The pulse is opacity only.
+A quiet placeholder while content loads. Same shape and size as what will replace it. A soft sheen sweeps across the loading region as one wave (decision 0042).
 
 ```html
 <div aria-busy="true">
@@ -22,6 +22,6 @@ A quiet placeholder while content loads. Same shape and size as what will replac
 - Don't show skeletons for less than a second; it flickers.
 - Don't animate anything but opacity.
 
-**Accessibility:** The pulse stops under `prefers-reduced-motion`. Skeletons carry no text; the busy region tells screen readers loading is happening.
+**Accessibility:** The wave stops under `prefers-reduced-motion`. Skeletons carry no text; the busy region tells screen readers loading is happening.
 
 **Tokens:** surface-container roles, `on-surface`, `on-surface-variant`, shape `full` and `large`, spacing `--s4-space-*`, spring tokens. No outlines (decision 0023).

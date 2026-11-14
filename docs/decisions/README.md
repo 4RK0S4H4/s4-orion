@@ -68,4 +68,4 @@ reasoning. A decision isn't reopened without the owner; a new one gets the next 
 | 0039 | Docked glass gets the full edge | Superseded by 0040 |
 | 0040 | Docked glass lights only its free edge | Active, awaiting the owner's iPhone check |
 | 0041 | Orion as a framework: layouts, templates, content components | Proposed (built, awaiting the owner's review) |
-| 0042 | Liquid motion for ink, plain motion for glass, quicker | In progress (Lab 1 answered; Lab 2 open) |
+| 0042 | Liquid motion for ink, plain motion for glass | Active (row hover still open) |

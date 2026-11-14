@@ -36,12 +36,15 @@
 
   /* ---------- motion ---------- */
   var reduce = window.matchMedia ? matchMedia('(prefers-reduced-motion: reduce)') : { matches: false };
-  var SPRING_TOKEN = function (name) { return /-calm$/.test(name) ? '--s4-motion-spring-' + name : '--md-sys-motion-spring-' + name; };
+  /* M3 springs live under --md-sys-motion-spring-*; Orion's own (the -calm ones and decision 0042's ink, rise, settle, tip,
+     reveal, bend) under --s4-motion-spring-* */
+  var S4_SPRINGS = /-calm$|^(ink|rise|settle|tip|reveal|bend)$/;
+  var SPRING_TOKEN = function (name) { return S4_SPRINGS.test(name) ? '--s4-motion-spring-' + name : '--md-sys-motion-spring-' + name; };
   S4.motion = {
     /* { duration (ms), easing } for a spring name: fast-spatial, spatial, slow-spatial, fast-effects, effects, slow-effects, *-calm */
     spring: function (name) {
       var t = SPRING_TOKEN(name), d = parseFloat(S4.util.css(t + '-duration')) || 0;
-      var spatial = /spatial/.test(name);
+      var spatial = !/effects/.test(name);
       if (spatial && (reduce.matches || root.dataset.motion === 'reduced')) d = 0;
       return { duration: d, easing: S4.util.css(t) || 'ease' };
     },

@@ -1,8 +1,11 @@
-/* S4 Orion transition patterns, simplified (decision 0022). Five patterns, each only moves and fades:
+/* S4 Orion transition patterns, simplified (decision 0022; glass motion updated by 0042: glass moves plainly, ink may be
+   liquid). Each only moves and fades:
      S4.transition.pop(surface, { open })                     dialogs, the phone sheet card: rise 16px and fade in on the spatial spring
-     S4.transition.drop(menu, { open, from: 'top'|'bottom' })  menus: drop 8px out of their button's side and fade in
+     S4.transition.drop(menu, { open })                       menus (0042): the glass fades in where it sits, then its items
+                                                              follow one after another, each rising 4px; closes with a quick fade
      S4.transition.slide(el, { open, edge })                  sheets from the edge they live on
-     S4.transition.rise(el, { open })                         snackbars: rise 10px and fade in
+     S4.transition.rise(el, { open })                         snackbars (0042): rise 14px into place on the rise spring and fade in
+     S4.transition.tip(el, { open })                          tooltips (0042): rise 4px fast and fade in; leave faster
      S4.transition.sharedAxis(outView, inView, direction)     switching sibling views (tabs, destinations, steps)
      S4.transition.fade(el, open)                             anything else
    Rules that keep it simple and robust in every browser:
@@ -49,17 +52,33 @@
     return moveFade(el, open, 'translateY(' + (open ? d : d / 2) + 'px)', open ? ['spatial', 'effects'] : ['fast-effects', 'fast-effects']);
   }
 
-  /* ---------- drop: menus come out of their button's side ---------- */
+  /* ---------- drop: menus (0042: not out of the button; the glass fades in place, the items follow) ---------- */
   function drop(el, opts) {
     opts = opts || {};
-    var open = opts.open !== false, up = opts.from === 'bottom', d = M.reduced() ? 0 : 8;
-    return moveFade(el, open, 'translateY(' + (up ? d : -d) + 'px)', open ? ['spatial', 'effects'] : ['fast-effects', 'fast-effects']);
+    var open = opts.open !== false, now = begin(el);
+    var items = Array.prototype.slice.call(el.querySelectorAll(':scope > .s4-menu-item, :scope > .s4-menu-label, :scope > .s4-menu-divider, :scope > hr'));
+    items.forEach(function (it) { it.getAnimations().forEach(function (a) { a.cancel(); }); });
+    var o = track(el, M.animate(el, [{ opacity: now ? now.opacity : (open ? 0 : 1) }, { opacity: open ? 1 : 0 }], open ? 'slow-effects' : 'fast-effects'));
+    var anims = [o];
+    if (open && !now) {
+      var d = M.reduced() ? 0 : 4;
+      items.forEach(function (it, i) {
+        anims.push(track(el, M.animate(it, [{ opacity: 0, transform: 'translateY(' + d + 'px)' }, { opacity: 1, transform: 'none' }], 'settle', { fill: 'backwards', delay: 30 + i * 25 })));
+      });
+    }
+    return settle(el, anims, !open);
   }
 
-  /* ---------- rise: snackbars ---------- */
+  /* ---------- rise: snackbars (0042) ---------- */
   function rise(el, opts) {
-    var open = !opts || opts.open !== false, d = M.reduced() ? 0 : 10;
-    return moveFade(el, open, 'translateY(' + d + 'px)', open ? ['spatial', 'effects'] : ['fast-effects', 'fast-effects']);
+    var open = !opts || opts.open !== false, d = M.reduced() ? 0 : (open ? 14 : 10);
+    return moveFade(el, open, 'translateY(' + d + 'px)', open ? ['rise', 'effects'] : ['fast-effects', 'fast-effects']);
+  }
+
+  /* ---------- tip: tooltips (0042) ---------- */
+  function tip(el, opts) {
+    var open = !opts || opts.open !== false, d = M.reduced() ? 0 : 4;
+    return moveFade(el, open, 'translateY(' + (opts && opts.from === 'bottom' ? -d : d) + 'px)', open ? ['tip', 'fast-effects'] : ['fast-effects', 'fast-effects']);
   }
 
   /* ---------- slide from edge: sheets ---------- */
@@ -118,7 +137,7 @@
   }
 
   S4.transition = {
-    pop: pop, drop: drop, rise: rise, slide: slide, fade: fade, sharedAxis: sharedAxis, restore: restore,
+    pop: pop, drop: drop, rise: rise, tip: tip, slide: slide, fade: fade, sharedAxis: sharedAxis, restore: restore,
     /* old names, same behavior as the new patterns */
     containerTransform: function (surface, source, opts) { return pop(surface, opts); },
     unfold: drop

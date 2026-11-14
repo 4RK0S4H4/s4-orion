@@ -1,8 +1,8 @@
-# 0042: Liquid motion for ink, quicker motion everywhere (in progress, 2026-11-14)
+# 0042: Liquid motion for ink, plain motion for glass (accepted, 2026-11-14)
 
-**Status:** partly decided by the owner in the [Liquid Motion Lab](../../explore/motion-liquid.html) (2026-11-14); row
-hover, radio, menu and the exact speed are open in [Liquid Motion Lab 2](../../explore/motion-liquid-2.html). Amends
-0022 (simpler motion). Nothing is built yet.
+**Status:** accepted by the owner in the [Liquid Motion Lab](../../explore/motion-liquid.html) and
+[Lab 2](../../explore/motion-liquid-2.html) (2026-11-14); built the same day. Amends 0022 (simpler motion). **Open:**
+the row hover (issue 7), which the owner wants to review on a computer.
 
 ## The owner's answers
 
@@ -16,6 +16,29 @@ hover, radio, menu and the exact speed are open in [Liquid Motion Lab 2](../../e
 | Radio (19) | Other: the selected fill is **behind the surface** and you see it pass under the other radios, through them like windows. → Lab 2. |
 | Menu (31) | Other: it shouldn't come directly from the button. → Lab 2. |
 | Overall | Close. |
+
+Lab 2:
+
+| Question | Answer |
+|---|---|
+| Row hover (7) | Other: the owner will review it on a computer (reminder in NEXT.md). Not built. |
+| Radio (19) | "A normal animation, subtle liquid style": no windows. Built: the selected disc fills with primary ink from the middle on the `ink` spring, no inner dot. |
+| Menu (31) | **C, Items Follow**: the glass fades in where it sits, then the items fade in one after another, each rising 4px. |
+| Speed | **C, 30% faster** than the first lab. The resulting springs land close to today's tokens. |
+| Ink for liquid, glass plain | **Yes.** |
+
+## Built (2026-11-14)
+
+- Spring tokens `ink` (1060, 0.8, 250ms), `rise` (1060, 0.9, 180ms), `settle` (1490, 1, 220ms), `tip` (2240, 0.9,
+  120ms), `reveal` (775, 1, 300ms), `bend` (860, 0.9, 200ms), usable by name in `S4.motion.animate`.
+- Accordion: accordion.js opens and closes on `reveal`, text fades in on `settle`, the chevron bends (rotateX with
+  perspective) on `bend`; the browser's name="…" exclusivity is taken over so the other item closes with motion.
+- Snackbar and plain tooltip are glass; snackbar rises 14px on `rise`, tooltip 4px on `tip`, tooltips appear after 350ms.
+- Menu: `S4.transition.drop` fades the glass in place and lets the items follow.
+- Skeleton: one sheen wave across the loading region (skeleton.js). Progress: drop-like linear indicator, breathing
+  ring, completely full at 100%; download demo on the progress page.
+- Radio: ink fill, no dot.
+- Rich tooltip: extra-large corners and room around its actions (issue 30).
 
 ## Rules so far
 

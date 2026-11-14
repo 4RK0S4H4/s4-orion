@@ -2,7 +2,8 @@
    <label class="s4-radio"><input type="radio" name="pay" value="card"><span class="s4-radio-ring"></span>Card</label>
    Group radios in a <fieldset> or role="radiogroup" with a label. The native input sits invisibly on top, so arrow keys,
    forms and screen readers work as usual.
-   20dp ring, 2dp stroke, on-surface-variant; selected = primary ring with a 10dp dot that grows in on fast-spatial.
+   20dp filled disc (surface-container-highest); selected = the disc fills with primary ink, no inner dot (decision 0042,
+   issue 19): the ink grows in from the middle on the ink spring (a subtle liquid overshoot) and drains out calmly.
    40dp circular state layer; 48dp touch target. */
 @layer s4.components {
   /* a labelled group of radios or checkboxes: a soft outlined box instead of the browser's square fieldset */
@@ -77,22 +78,21 @@
     pointer-events: none;
     transition: opacity var(--_effects);
   }
-  /* the 10dp dot */
+  /* the ink: a full primary disc that grows in when checked */
   .s4-radio-ring::after {
     content: "";
     position: absolute;
-    left: 50%;
-    top: 50%;
-    width: calc(var(--_size) / 2);
-    height: calc(var(--_size) / 2);
+    inset: 0;
     border-radius: var(--md-sys-shape-corner-full);
-    background: var(--md-sys-color-on-primary);
-    transform: translate(-50%, -50%) scale(0);
-    transition: transform var(--md-sys-motion-spring-fast-spatial-duration) var(--md-sys-motion-spring-fast-spatial), background-color var(--_effects);
+    background: var(--_state);
+    transform: scale(0);
+    transition: transform var(--s4-motion-spring-fast-spatial-calm-duration) var(--s4-motion-spring-fast-spatial-calm), background-color var(--_effects);
   }
   .s4-radio:has(> input:checked) { --_state: var(--md-sys-color-primary); }
-  .s4-radio:has(> input:checked) .s4-radio-ring { background: var(--md-sys-color-primary); }
-  .s4-radio:has(> input:checked) .s4-radio-ring::after { transform: translate(-50%, -50%) scale(1); }
+  .s4-radio:has(> input:checked) .s4-radio-ring::after {
+    transform: scale(1);
+    transition: transform var(--s4-motion-spring-ink-duration) var(--s4-motion-spring-ink), background-color var(--_effects);
+  }
 
   @media (hover: hover) {
     .s4-radio:hover:not(:has(> input:disabled)) .s4-radio-ring::before { opacity: var(--md-sys-state-hover-state-layer-opacity); }

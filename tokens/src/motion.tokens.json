@@ -247,6 +247,180 @@
               }
             }
           }
+        },
+        "ink": {
+          "$description": "Decision 0042: ink (solid fills that show state: selection, radio and checkbox fills, nav and tab pill, switch, slider and progress fills) moves on a subtle liquid spring with a small overshoot.",
+          "$extensions": {
+            "com.s4.spring": true
+          },
+          "stiffness": {
+            "$type": "number",
+            "$value": 1060
+          },
+          "damping": {
+            "$type": "number",
+            "$value": 0.8
+          },
+          "duration": {
+            "$type": "duration",
+            "$value": {
+              "value": 250,
+              "unit": "ms"
+            },
+            "$extensions": {
+              "com.s4.modes": {
+                "reduced-motion": {
+                  "value": 0,
+                  "unit": "ms"
+                }
+              }
+            }
+          }
+        },
+        "rise": {
+          "$description": "Decision 0042: glass surfaces (snackbars, glass items) rising into place. Plain: no stretching, barely any overshoot.",
+          "$extensions": {
+            "com.s4.spring": true
+          },
+          "stiffness": {
+            "$type": "number",
+            "$value": 1060
+          },
+          "damping": {
+            "$type": "number",
+            "$value": 0.9
+          },
+          "duration": {
+            "$type": "duration",
+            "$value": {
+              "value": 180,
+              "unit": "ms"
+            },
+            "$extensions": {
+              "com.s4.modes": {
+                "reduced-motion": {
+                  "value": 0,
+                  "unit": "ms"
+                }
+              }
+            }
+          }
+        },
+        "settle": {
+          "$description": "Decision 0042: menu items following the glass in, rising 4px; anything settling the last few pixels into place.",
+          "$extensions": {
+            "com.s4.spring": true
+          },
+          "stiffness": {
+            "$type": "number",
+            "$value": 1490
+          },
+          "damping": {
+            "$type": "number",
+            "$value": 1
+          },
+          "duration": {
+            "$type": "duration",
+            "$value": {
+              "value": 220,
+              "unit": "ms"
+            },
+            "$extensions": {
+              "com.s4.modes": {
+                "reduced-motion": {
+                  "value": 0,
+                  "unit": "ms"
+                }
+              }
+            }
+          }
+        },
+        "tip": {
+          "$description": "Decision 0042: tooltips rising 4px into place, fast.",
+          "$extensions": {
+            "com.s4.spring": true
+          },
+          "stiffness": {
+            "$type": "number",
+            "$value": 2240
+          },
+          "damping": {
+            "$type": "number",
+            "$value": 0.9
+          },
+          "duration": {
+            "$type": "duration",
+            "$value": {
+              "value": 120,
+              "unit": "ms"
+            },
+            "$extensions": {
+              "com.s4.modes": {
+                "reduced-motion": {
+                  "value": 0,
+                  "unit": "ms"
+                }
+              }
+            }
+          }
+        },
+        "reveal": {
+          "$description": "Decision 0042: sections opening and closing (accordion height), calm and never instant.",
+          "$extensions": {
+            "com.s4.spring": true
+          },
+          "stiffness": {
+            "$type": "number",
+            "$value": 775
+          },
+          "damping": {
+            "$type": "number",
+            "$value": 1
+          },
+          "duration": {
+            "$type": "duration",
+            "$value": {
+              "value": 300,
+              "unit": "ms"
+            },
+            "$extensions": {
+              "com.s4.modes": {
+                "reduced-motion": {
+                  "value": 0,
+                  "unit": "ms"
+                }
+              }
+            }
+          }
+        },
+        "bend": {
+          "$description": "Decision 0042: icons turning over (the accordion chevron bends like a page turned backward).",
+          "$extensions": {
+            "com.s4.spring": true
+          },
+          "stiffness": {
+            "$type": "number",
+            "$value": 860
+          },
+          "damping": {
+            "$type": "number",
+            "$value": 0.9
+          },
+          "duration": {
+            "$type": "duration",
+            "$value": {
+              "value": 200,
+              "unit": "ms"
+            },
+            "$extensions": {
+              "com.s4.modes": {
+                "reduced-motion": {
+                  "value": 0,
+                  "unit": "ms"
+                }
+              }
+            }
+          }
         }
       },
       "pattern": {

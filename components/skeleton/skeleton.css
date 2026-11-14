@@ -3,18 +3,32 @@
    <div class="s4-skeleton" data-shape="text"></div>                         one line of text (width from the parent)
    <div class="s4-skeleton" data-shape="circle" style="width: 2.5rem"></div> avatar
    <div class="s4-skeleton" data-shape="pill" style="width: 6rem"></div>     chip or button
-   Mark the loading region aria-busy="true". The pulse is opacity only and stops under reduced motion. */
+   Mark the loading region aria-busy="true". Decision 0042: a soft sheen sweeps across the region as one wave (skeleton.js
+   lines every placeholder up with the region: --_sk-x is its offset in the region, --_sk-w the region's width; without
+   the script each placeholder gets its own sweep). Stops under reduced motion.
+   Public knob: --s4-skeleton-cycle (one sweep, 1600ms). */
 @layer s4.components {
   .s4-skeleton {
+    --s4-skeleton-cycle: 1600ms;
+    --_sk-w: 400px;
+    --_sk-x: 0px;
     display: block;
     min-height: var(--s4-space-3);
     border-radius: var(--md-sys-shape-corner-medium);
-    background: var(--md-sys-color-surface-container-high);
-    animation: s4-skeleton-pulse 1.4s ease-in-out infinite alternate;
+    background-color: var(--md-sys-color-surface-container-high);
+    background-image: linear-gradient(90deg, transparent 0 38%, color-mix(in oklab, var(--md-sys-color-on-surface) 7%, transparent) 50%, transparent 62% 100%);
+    background-size: calc(var(--_sk-w) * 2) 100%;
+    background-repeat: no-repeat;
+    animation: s4-skeleton-wave var(--s4-skeleton-cycle) ease-in-out infinite;
   }
   .s4-skeleton[data-shape="text"] { height: 1em; min-height: 0; border-radius: var(--md-sys-shape-corner-full); font-size: var(--md-sys-typescale-body-large-size); }
   .s4-skeleton[data-shape="pill"] { height: var(--s4-space-10); border-radius: var(--md-sys-shape-corner-full); }
   .s4-skeleton[data-shape="circle"] { aspect-ratio: 1; border-radius: var(--md-sys-shape-corner-full); }
-  @keyframes s4-skeleton-pulse { from { opacity: 1; } to { opacity: 0.5; } }
-  @media (prefers-reduced-motion: reduce) { .s4-skeleton { animation: none; } }
+  /* the sheen's middle travels from 30% before the region to 30% past it, in region coordinates */
+  @keyframes s4-skeleton-wave {
+    from { background-position: calc(var(--_sk-w) * -1.3 - var(--_sk-x)) 0; }
+    to { background-position: calc(var(--_sk-w) * 0.3 - var(--_sk-x)) 0; }
+  }
+  @media (prefers-reduced-motion: reduce) { .s4-skeleton { animation: none; background-image: none; } }
+  :root[data-motion="reduced"] .s4-skeleton { animation: none; background-image: none; }
 }

@@ -10,6 +10,15 @@ All notable changes to S4 Orion are recorded here. The format follows [Keep a Ch
 
 The first version of S4 Orion, a leaner rebuild of S4 Material 1.3 on Material 3 Expressive.
 
+### Changed: motion (2026-11-14, decision 0042)
+
+- Liquid motion only for ink (state fills), glass moves plainly. New spring tokens `ink`, `rise`, `settle`, `tip`, `reveal`, `bend`.
+- Accordion opens on a calm spring with its text fading in; the chevron bends over instead of spinning (new `accordion.js`).
+- Snackbars and plain tooltips are glass; snackbars rise 14px, tooltips 4px and appear after 350ms (`S4.transition.tip`).
+- Menus fade in where they sit and their items follow (no longer out of the button).
+- Skeleton: one sheen wave across the loading region (new `skeleton.js`). Progress: drop-like linear indicator, breathing ring, completely full at 100%; download demo on the progress page.
+- Radio: the selected disc fills with ink, no inner dot. Rich tooltips: extra-large corners.
+
 ### Added: the framework layer (2026-11-13, decision 0041)
 
 - **Templates** (`templates/`, also in the skill): dashboard, list and detail, settings, sign-in, article, chat, tool, landing page, plus a gallery page. Each passes the page checker at 390 dark and 1280 light.

@@ -5,7 +5,7 @@
    (light dismiss closes it). */
 (function () {
   var S4 = window.S4, tip = null, owner = null, showTimer = null, hideTimer = null, uid = 0;
-  var DELAY = 500, LONG_PRESS = 1500;
+  var DELAY = 350, LONG_PRESS = 1500;   /* 0042: a little quicker to appear */
   function ensureTip() {
     if (tip && tip.isConnected) return tip;
     tip = document.createElement('div'); tip.className = 's4-tooltip'; tip.id = 's4-tooltip'; tip.setAttribute('role', 'tooltip'); tip.hidden = true; tip.setAttribute('data-s4-skip', '');
@@ -29,11 +29,15 @@
     var top = a.top - gap - r.height < m ? a.bottom + gap : a.top - gap - r.height;
     var left = Math.max(m, Math.min(a.left + a.width / 2 - r.width / 2, document.documentElement.clientWidth - m - r.width));
     t.style.top = top + 'px'; t.style.left = left + 'px';
-    S4.motion.animate(t, [{ opacity: 0 }, { opacity: 1 }], 'fast-effects');
+    S4.transition.tip(t, { open: true, from: top > a.top ? 'bottom' : 'top' });
   }
   function hide(now) {
     clearTimeout(showTimer); clearTimeout(hideTimer);
-    hideTimer = setTimeout(function () { if (tip) tip.hidden = true; if (owner) { describe(owner, false); owner = null; } }, now ? 0 : 100);
+    hideTimer = setTimeout(function () {
+      if (owner) { describe(owner, false); owner = null; }
+      if (!tip || tip.hidden) return;
+      S4.transition.tip(tip, { open: false }).then(function (done) { if (done && !owner) tip.hidden = true; });
+    }, now ? 0 : 100);
   }
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && tip && !tip.hidden) hide(true); });
 
@@ -55,7 +59,7 @@
       if (!rt.hasAttribute('popover')) rt.setAttribute('popover', '');
       anchor.setAttribute('aria-expanded', 'false'); anchor.setAttribute('aria-controls', rt.id);
       var pinned = false, t = null;
-      function open() { if (rt.matches(':popover-open')) return; rt.showPopover(); S4.position(rt, anchor, { gap: 4 }); anchor.setAttribute('aria-expanded', 'true'); S4.motion.animate(rt, [{ opacity: 0 }, { opacity: 1 }], 'effects'); }
+      function open() { if (rt.matches(':popover-open')) return; rt.showPopover(); S4.position(rt, anchor, { gap: 4 }); anchor.setAttribute('aria-expanded', 'true'); S4.transition.tip(rt, { open: true, from: rt.getBoundingClientRect().top > anchor.getBoundingClientRect().top ? 'bottom' : 'top' }); }
       function close() { if (!rt.matches(':popover-open')) return; rt.hidePopover(); anchor.setAttribute('aria-expanded', 'false'); pinned = false; }
       anchor.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') { clearTimeout(t); t = setTimeout(open, DELAY); } });
       anchor.addEventListener('pointerleave', function () { clearTimeout(t); if (!pinned) t = setTimeout(close, 300); });

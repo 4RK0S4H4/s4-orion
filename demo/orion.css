@@ -230,6 +230,24 @@
     --s4-motion-spring-slow-spatial-calm-stiffness: 520;
     --s4-motion-spring-slow-spatial-calm-damping: 1;
     --s4-motion-spring-slow-spatial-calm-duration: 340ms;
+    --s4-motion-spring-ink-stiffness: 1060;
+    --s4-motion-spring-ink-damping: 0.8;
+    --s4-motion-spring-ink-duration: 250ms;
+    --s4-motion-spring-rise-stiffness: 1060;
+    --s4-motion-spring-rise-damping: 0.9;
+    --s4-motion-spring-rise-duration: 180ms;
+    --s4-motion-spring-settle-stiffness: 1490;
+    --s4-motion-spring-settle-damping: 1;
+    --s4-motion-spring-settle-duration: 220ms;
+    --s4-motion-spring-tip-stiffness: 2240;
+    --s4-motion-spring-tip-damping: 0.9;
+    --s4-motion-spring-tip-duration: 120ms;
+    --s4-motion-spring-reveal-stiffness: 775;
+    --s4-motion-spring-reveal-damping: 1;
+    --s4-motion-spring-reveal-duration: 300ms;
+    --s4-motion-spring-bend-stiffness: 860;
+    --s4-motion-spring-bend-damping: 0.9;
+    --s4-motion-spring-bend-duration: 200ms;
     --s4-motion-pattern-container-transform-content-fade-start: 0.35;
     --s4-motion-pattern-container-transform-source-fade-end: 0.3;
     --s4-motion-pattern-shared-axis-distance: 30px;
@@ -333,6 +351,12 @@
     --s4-motion-spring-fast-spatial-calm: linear(0, 0.015 2.5%, 0.055 5%, 0.109 7.5%, 0.173 10%, 0.24 12.5%, 0.309 15%, 0.377 17.5%, 0.441 20%, 0.502 22.5%, 0.558 25%, 0.609 27.5%, 0.656 30%, 0.698 32.5%, 0.736 35%, 0.77 37.5%, 0.8 40%, 0.826 42.5%, 0.849 45%, 0.87 47.5%, 0.888 50%, 0.903 52.5%, 0.917 55%, 0.928 57.5%, 0.938 60%, 0.947 62.5%, 0.955 65%, 0.961 67.5%, 0.967 70%, 0.972 72.5%, 0.976 75%, 0.979 77.5%, 0.982 80%, 0.985 82.5%, 0.987 85%, 0.989 87.5%, 0.991 90%, 0.992 92.5%, 0.993 95%, 0.994 97.5%, 1);
     --s4-motion-spring-spatial-calm: linear(0, 0.017 2.5%, 0.059 5%, 0.117 7.5%, 0.184 10%, 0.255 12.5%, 0.327 15%, 0.396 17.5%, 0.462 20%, 0.524 22.5%, 0.58 25%, 0.632 27.5%, 0.678 30%, 0.72 32.5%, 0.757 35%, 0.789 37.5%, 0.818 40%, 0.843 42.5%, 0.865 45%, 0.884 47.5%, 0.901 50%, 0.915 52.5%, 0.928 55%, 0.938 57.5%, 0.947 60%, 0.955 62.5%, 0.962 65%, 0.968 67.5%, 0.973 70%, 0.977 72.5%, 0.98 75%, 0.983 77.5%, 0.986 80%, 0.988 82.5%, 0.99 85%, 0.991 87.5%, 0.993 90%, 0.994 92.5%, 0.995 95%, 0.996 97.5%, 1);
     --s4-motion-spring-slow-spatial-calm: linear(0, 0.017 2.5%, 0.058 5%, 0.116 7.5%, 0.182 10%, 0.253 12.5%, 0.324 15%, 0.393 17.5%, 0.459 20%, 0.52 22.5%, 0.577 25%, 0.629 27.5%, 0.675 30%, 0.717 32.5%, 0.754 35%, 0.787 37.5%, 0.815 40%, 0.841 42.5%, 0.863 45%, 0.882 47.5%, 0.899 50%, 0.913 52.5%, 0.926 55%, 0.937 57.5%, 0.946 60%, 0.954 62.5%, 0.961 65%, 0.967 67.5%, 0.972 70%, 0.976 72.5%, 0.98 75%, 0.983 77.5%, 0.985 80%, 0.988 82.5%, 0.99 85%, 0.991 87.5%, 0.993 90%, 0.994 92.5%, 0.995 95%, 0.996 97.5%, 1);
+    --s4-motion-spring-ink: linear(0, 0.019 2.5%, 0.067 5%, 0.134 7.5%, 0.213 10%, 0.298 12.5%, 0.384 15%, 0.468 17.5%, 0.547 20%, 0.621 22.5%, 0.687 25%, 0.746 27.5%, 0.797 30%, 0.841 32.5%, 0.879 35%, 0.91 37.5%, 0.936 40%, 0.957 42.5%, 0.974 45%, 0.987 47.5%, 0.996 50%, 1.004 52.5%, 1.009 55%, 1.012 57.5%, 1.014 60%, 1.015 62.5%, 1.015 65%, 1.015 67.5%, 1.014 70%, 1.013 72.5%, 1.012 75%, 1.01 77.5%, 1.009 80%, 1.008 82.5%, 1.007 85%, 1.005 87.5%, 1.004 90%, 1.004 92.5%, 1.003 95%, 1.002 97.5%, 1);
+    --s4-motion-spring-rise: linear(0, 0.01 2.5%, 0.036 5%, 0.074 7.5%, 0.121 10%, 0.174 12.5%, 0.23 15%, 0.287 17.5%, 0.345 20%, 0.401 22.5%, 0.456 25%, 0.508 27.5%, 0.558 30%, 0.604 32.5%, 0.647 35%, 0.687 37.5%, 0.723 40%, 0.756 42.5%, 0.786 45%, 0.814 47.5%, 0.838 50%, 0.86 52.5%, 0.879 55%, 0.896 57.5%, 0.911 60%, 0.925 62.5%, 0.936 65%, 0.946 67.5%, 0.955 70%, 0.963 72.5%, 0.969 75%, 0.975 77.5%, 0.98 80%, 0.984 82.5%, 0.987 85%, 0.99 87.5%, 0.992 90%, 0.994 92.5%, 0.996 95%, 0.997 97.5%, 1);
+    --s4-motion-spring-settle: linear(0, 0.02 2.5%, 0.068 5%, 0.134 7.5%, 0.209 10%, 0.287 12.5%, 0.364 15%, 0.438 17.5%, 0.506 20%, 0.569 22.5%, 0.626 25%, 0.677 27.5%, 0.722 30%, 0.762 32.5%, 0.797 35%, 0.827 37.5%, 0.853 40%, 0.875 42.5%, 0.894 45%, 0.911 47.5%, 0.925 50%, 0.937 52.5%, 0.947 55%, 0.955 57.5%, 0.963 60%, 0.969 62.5%, 0.974 65%, 0.978 67.5%, 0.982 70%, 0.985 72.5%, 0.987 75%, 0.989 77.5%, 0.991 80%, 0.993 82.5%, 0.994 85%, 0.995 87.5%, 0.996 90%, 0.997 92.5%, 0.997 95%, 0.998 97.5%, 1);
+    --s4-motion-spring-tip: linear(0, 0.009 2.5%, 0.034 5%, 0.07 7.5%, 0.115 10%, 0.165 12.5%, 0.219 15%, 0.275 17.5%, 0.33 20%, 0.386 22.5%, 0.439 25%, 0.491 27.5%, 0.54 30%, 0.586 32.5%, 0.629 35%, 0.669 37.5%, 0.706 40%, 0.739 42.5%, 0.77 45%, 0.798 47.5%, 0.823 50%, 0.846 52.5%, 0.866 55%, 0.884 57.5%, 0.9 60%, 0.914 62.5%, 0.927 65%, 0.938 67.5%, 0.948 70%, 0.956 72.5%, 0.963 75%, 0.97 77.5%, 0.975 80%, 0.98 82.5%, 0.984 85%, 0.987 87.5%, 0.99 90%, 0.992 92.5%, 0.994 95%, 0.996 97.5%, 1);
+    --s4-motion-spring-reveal: linear(0, 0.019 2.5%, 0.066 5%, 0.131 7.5%, 0.204 10%, 0.28 12.5%, 0.356 15%, 0.429 17.5%, 0.497 20%, 0.56 22.5%, 0.617 25%, 0.668 27.5%, 0.714 30%, 0.754 32.5%, 0.789 35%, 0.82 37.5%, 0.846 40%, 0.869 42.5%, 0.889 45%, 0.906 47.5%, 0.92 50%, 0.933 52.5%, 0.943 55%, 0.952 57.5%, 0.96 60%, 0.966 62.5%, 0.972 65%, 0.976 67.5%, 0.98 70%, 0.983 72.5%, 0.986 75%, 0.988 77.5%, 0.99 80%, 0.992 82.5%, 0.993 85%, 0.994 87.5%, 0.995 90%, 0.996 92.5%, 0.997 95%, 0.997 97.5%, 1);
+    --s4-motion-spring-bend: linear(0, 0.01 2.5%, 0.036 5%, 0.074 7.5%, 0.121 10%, 0.174 12.5%, 0.23 15%, 0.287 17.5%, 0.345 20%, 0.402 22.5%, 0.456 25%, 0.509 27.5%, 0.558 30%, 0.604 32.5%, 0.647 35%, 0.687 37.5%, 0.724 40%, 0.757 42.5%, 0.787 45%, 0.814 47.5%, 0.838 50%, 0.86 52.5%, 0.879 55%, 0.896 57.5%, 0.912 60%, 0.925 62.5%, 0.936 65%, 0.947 67.5%, 0.955 70%, 0.963 72.5%, 0.969 75%, 0.975 77.5%, 0.98 80%, 0.984 82.5%, 0.987 85%, 0.99 87.5%, 0.992 90%, 0.994 92.5%, 0.996 95%, 0.997 97.5%, 1);
   }
   @media (prefers-color-scheme: dark) {
     :where(:root:not([data-theme="light"])) {
@@ -852,6 +876,12 @@
       --s4-motion-spring-fast-spatial-calm-duration: 0ms;
       --s4-motion-spring-spatial-calm-duration: 0ms;
       --s4-motion-spring-slow-spatial-calm-duration: 0ms;
+      --s4-motion-spring-ink-duration: 0ms;
+      --s4-motion-spring-rise-duration: 0ms;
+      --s4-motion-spring-settle-duration: 0ms;
+      --s4-motion-spring-tip-duration: 0ms;
+      --s4-motion-spring-reveal-duration: 0ms;
+      --s4-motion-spring-bend-duration: 0ms;
     }
     }
   :where(:root[data-motion="reduced"]) {
@@ -861,6 +891,12 @@
     --s4-motion-spring-fast-spatial-calm-duration: 0ms;
     --s4-motion-spring-spatial-calm-duration: 0ms;
     --s4-motion-spring-slow-spatial-calm-duration: 0ms;
+    --s4-motion-spring-ink-duration: 0ms;
+    --s4-motion-spring-rise-duration: 0ms;
+    --s4-motion-spring-settle-duration: 0ms;
+    --s4-motion-spring-tip-duration: 0ms;
+    --s4-motion-spring-reveal-duration: 0ms;
+    --s4-motion-spring-bend-duration: 0ms;
   }
   @media (prefers-reduced-transparency: reduce) {
     :where(:root) {
@@ -3010,7 +3046,9 @@
      …
    </div>
    Items are filled rounded rows 2dp apart (surface-container-low); the open one rises to surface-container. Give every
-   <details> the same name="…" for "only one open at a time". The chevron turns (transform), the body fades in (opacity). */
+   <details> the same name="…" for "only one open at a time". Decision 0042: the section opens and closes on the calm
+   reveal spring (accordion.js animates the body's height; without JS it just opens), its text fades in just behind, and
+   the chevron bends over like a page turned backward (a flip around its horizontal middle), not a spin. */
 @layer s4.components {
   .s4-accordion { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
   .s4-accordion-item {
@@ -3054,9 +3092,10 @@
   .s4-accordion-item > summary:active::before { opacity: var(--md-sys-state-pressed-state-layer-opacity); }
   .s4-accordion-item > summary > .s4-icon {
     color: var(--md-sys-color-on-surface-variant);
-    transition: transform var(--md-sys-motion-spring-fast-spatial-duration) var(--md-sys-motion-spring-fast-spatial);
+    transform: perspective(calc(var(--s4-size-icon) * 2.5)) rotateX(0deg);
+    transition: transform var(--s4-motion-spring-bend-duration) var(--s4-motion-spring-bend);
   }
-  .s4-accordion-item[open] > summary > .s4-icon { transform: rotate(180deg); }
+  .s4-accordion-item[open]:not([data-closing]) > summary > .s4-icon { transform: perspective(calc(var(--s4-size-icon) * 2.5)) rotateX(180deg); }
   .s4-accordion-body {
     padding: 0 var(--s4-space-4) var(--s4-space-4);
     color: var(--md-sys-color-on-surface-variant);
@@ -3064,7 +3103,9 @@
     font-size: var(--md-sys-typescale-body-large-size);
     line-height: var(--md-sys-typescale-body-large-line-height);
   }
-  .s4-accordion-item[open] > .s4-accordion-body { animation: s4-accordion-in var(--md-sys-motion-spring-fast-effects-duration) var(--md-sys-motion-spring-fast-effects); }
+  .s4-accordion-body { box-sizing: border-box; }
+  /* without the script, the body still fades in */
+  .s4-accordion:not([data-s4accordion]) .s4-accordion-item[open] > .s4-accordion-body { animation: s4-accordion-in var(--md-sys-motion-spring-effects-duration) var(--md-sys-motion-spring-effects); }
   @keyframes s4-accordion-in { from { opacity: 0; } }
   @media (forced-colors: active) { .s4-accordion-item { border: 1px solid CanvasText; } .s4-accordion-item > summary::before { display: none; } }
 }
@@ -4255,7 +4296,8 @@
    <label class="s4-radio"><input type="radio" name="pay" value="card"><span class="s4-radio-ring"></span>Card</label>
    Group radios in a <fieldset> or role="radiogroup" with a label. The native input sits invisibly on top, so arrow keys,
    forms and screen readers work as usual.
-   20dp ring, 2dp stroke, on-surface-variant; selected = primary ring with a 10dp dot that grows in on fast-spatial.
+   20dp filled disc (surface-container-highest); selected = the disc fills with primary ink, no inner dot (decision 0042,
+   issue 19): the ink grows in from the middle on the ink spring (a subtle liquid overshoot) and drains out calmly.
    40dp circular state layer; 48dp touch target. */
 @layer s4.components {
   /* a labelled group of radios or checkboxes: a soft outlined box instead of the browser's square fieldset */
@@ -4330,22 +4372,21 @@
     pointer-events: none;
     transition: opacity var(--_effects);
   }
-  /* the 10dp dot */
+  /* the ink: a full primary disc that grows in when checked */
   .s4-radio-ring::after {
     content: "";
     position: absolute;
-    left: 50%;
-    top: 50%;
-    width: calc(var(--_size) / 2);
-    height: calc(var(--_size) / 2);
+    inset: 0;
     border-radius: var(--md-sys-shape-corner-full);
-    background: var(--md-sys-color-on-primary);
-    transform: translate(-50%, -50%) scale(0);
-    transition: transform var(--md-sys-motion-spring-fast-spatial-duration) var(--md-sys-motion-spring-fast-spatial), background-color var(--_effects);
+    background: var(--_state);
+    transform: scale(0);
+    transition: transform var(--s4-motion-spring-fast-spatial-calm-duration) var(--s4-motion-spring-fast-spatial-calm), background-color var(--_effects);
   }
   .s4-radio:has(> input:checked) { --_state: var(--md-sys-color-primary); }
-  .s4-radio:has(> input:checked) .s4-radio-ring { background: var(--md-sys-color-primary); }
-  .s4-radio:has(> input:checked) .s4-radio-ring::after { transform: translate(-50%, -50%) scale(1); }
+  .s4-radio:has(> input:checked) .s4-radio-ring::after {
+    transform: scale(1);
+    transition: transform var(--s4-motion-spring-ink-duration) var(--s4-motion-spring-ink), background-color var(--_effects);
+  }
 
   @media (hover: hover) {
     .s4-radio:hover:not(:has(> input:disabled)) .s4-radio-ring::before { opacity: var(--md-sys-state-hover-state-layer-opacity); }
@@ -4928,9 +4969,11 @@
    dot at the end (decision 0010). Circular: 40dp, 4dp stroke, same gap, no track while indeterminate.
 
    Public knobs (the indeterminate cycles are long, linear loops that no spring token describes):
-     --s4-progress-cycle           linear indeterminate cycle            1800ms (M3)
-     --s4-progress-circular-cycle  circular arc grow / shrink cycle      1333ms (M3)
-     --s4-progress-circular-spin   circular rotation cycle               2000ms
+     --s4-progress-cycle           linear indeterminate cycle            1500ms (0042)
+     --s4-progress-circular-cycle  circular arc breathing cycle          1300ms (0042)
+     --s4-progress-circular-spin   circular rotation cycle               1600ms (0042: out of step with the arc, so it never
+                                                                         looks like the same loop twice)
+   At 100% the bar and the ring are completely full (issues 26, 27).
    Under prefers-reduced-motion the indeterminate animation stops and shows a static partial indicator. */
 
 @layer s4.components {
@@ -4940,9 +4983,9 @@
   @property --_h2 { syntax: "<length-percentage>"; inherits: true; initial-value: 0%; }
 
   .s4-progress {
-    --s4-progress-cycle: 1800ms;
-    --s4-progress-circular-cycle: 1333ms;
-    --s4-progress-circular-spin: 2000ms;
+    --s4-progress-cycle: 1500ms;
+    --s4-progress-circular-cycle: 1300ms;
+    --s4-progress-circular-spin: 1600ms;
     --_indicator: var(--md-sys-color-primary);
     --_track: var(--md-sys-color-secondary-container);
     --_thickness: var(--s4-space-1);   /* 4 */
@@ -5001,17 +5044,13 @@
     width: calc(var(--_h2) - var(--_t2));
     background: var(--_indicator);
   }
-  /* M3 timings: line 1 head 0–750ms, tail 333–1183ms; line 2 head 1000–1567ms, tail 1267–1800ms (of 1800).
-     Each property only interpolates between the keyframes that name it. Lines rest just off either end. */
+  /* Decision 0042: one indicator slides through like a drop: the front edge runs ahead to 55%, then the back edge
+     catches up while the front reaches the end. Line 2 rests off the start. */
   @keyframes s4-progress-linear {
-    0% { --_h1: calc(var(--_gap) * -2); --_t1: calc(var(--_gap) * -2); --_h2: calc(var(--_gap) * -2); --_t2: calc(var(--_gap) * -2); animation-timing-function: var(--md-sys-motion-spring-slow-effects); }
-    18.5% { --_t1: calc(var(--_gap) * -2); animation-timing-function: var(--md-sys-motion-spring-slow-effects); }
-    41.7% { --_h1: calc(100% + var(--_gap) * 2); }
-    55.6% { --_h2: calc(var(--_gap) * -2); animation-timing-function: var(--md-sys-motion-spring-slow-effects); }
-    65.7% { --_t1: calc(100% + var(--_gap) * 2); }
-    70.4% { --_t2: calc(var(--_gap) * -2); animation-timing-function: var(--md-sys-motion-spring-slow-effects); }
-    87% { --_h2: calc(100% + var(--_gap) * 2); }
-    100% { --_h1: calc(100% + var(--_gap) * 2); --_t1: calc(100% + var(--_gap) * 2); --_h2: calc(100% + var(--_gap) * 2); --_t2: calc(100% + var(--_gap) * 2); }
+    0% { --_h1: 0%; --_t1: 0%; --_h2: calc(var(--_gap) * -2); --_t2: calc(var(--_gap) * -2); animation-timing-function: var(--md-sys-motion-spring-slow-effects); }
+    40% { --_h1: 55%; --_t1: 0%; animation-timing-function: var(--md-sys-motion-spring-slow-effects); }
+    78% { --_h1: 100%; --_t1: 55%; animation-timing-function: var(--md-sys-motion-spring-slow-effects); }
+    100% { --_h1: 100%; --_t1: 100%; --_h2: calc(var(--_gap) * -2); --_t2: calc(var(--_gap) * -2); }
   }
 
   /* ---------- circular (SVG drawn by progress.js: 40×40 box, r 18, pathLength 100) ---------- */
@@ -5020,6 +5059,7 @@
     --_cap: 3.54;
     --_gap-u: 3.54;
     --_track-len: calc(100 - var(--_value) * 100 - var(--_gap-u) * 2 - var(--_cap));
+    --_full: clamp(0, calc((var(--_value) - 0.999) * 1000), 1);   /* 1 at 100%: the ring closes (issue 26) */
 
     display: inline-block;
     flex: none;
@@ -5046,8 +5086,8 @@
   .s4-progress-indicator { stroke: var(--_indicator); }
   .s4-progress-track { stroke: var(--_track); }
   .s4-progress[data-type="circular"][data-value] .s4-progress-indicator {
-    stroke-dasharray: max(0, calc(var(--_value) * 100 - var(--_cap))) 200;
-    stroke-dashoffset: calc(var(--_cap) / -2);
+    stroke-dasharray: max(0, calc(var(--_value) * 100 - var(--_cap) * (1 - var(--_full)))) 200;
+    stroke-dashoffset: calc(var(--_cap) / -2 * (1 - var(--_full)));
     stroke-width: calc(4 * min(1, var(--_value) * 1000));   /* nothing at 0, not a dot */
   }
   .s4-progress[data-type="circular"][data-value] .s4-progress-track {
@@ -5062,11 +5102,11 @@
     animation: s4-progress-arc var(--s4-progress-circular-cycle) var(--md-sys-motion-spring-slow-effects) infinite;
   }
   @keyframes s4-progress-spin { from { transform: rotate(-90deg); } to { transform: rotate(270deg); } }
-  /* the head runs ahead to a 3/4 arc, then the tail catches up */
+  /* 0042: the arc breathes as it turns: the head runs ahead to 60%, then the tail catches up to a short arc */
   @keyframes s4-progress-arc {
-    0% { stroke-dasharray: 1 200; stroke-dashoffset: 0; }
-    50% { stroke-dasharray: 71 200; stroke-dashoffset: -28; }
-    100% { stroke-dasharray: 71 200; stroke-dashoffset: -99; }
+    0% { stroke-dasharray: 6 200; stroke-dashoffset: 0; }
+    50% { stroke-dasharray: 60 200; stroke-dashoffset: -12; }
+    100% { stroke-dasharray: 6 200; stroke-dashoffset: -94; }
   }
 
   /* ---------- reduced motion: no sweeping or spinning; a still, partial indicator says "working" ---------- */
@@ -5147,20 +5187,34 @@
    <div class="s4-skeleton" data-shape="text"></div>                         one line of text (width from the parent)
    <div class="s4-skeleton" data-shape="circle" style="width: 2.5rem"></div> avatar
    <div class="s4-skeleton" data-shape="pill" style="width: 6rem"></div>     chip or button
-   Mark the loading region aria-busy="true". The pulse is opacity only and stops under reduced motion. */
+   Mark the loading region aria-busy="true". Decision 0042: a soft sheen sweeps across the region as one wave (skeleton.js
+   lines every placeholder up with the region: --_sk-x is its offset in the region, --_sk-w the region's width; without
+   the script each placeholder gets its own sweep). Stops under reduced motion.
+   Public knob: --s4-skeleton-cycle (one sweep, 1600ms). */
 @layer s4.components {
   .s4-skeleton {
+    --s4-skeleton-cycle: 1600ms;
+    --_sk-w: 400px;
+    --_sk-x: 0px;
     display: block;
     min-height: var(--s4-space-3);
     border-radius: var(--md-sys-shape-corner-medium);
-    background: var(--md-sys-color-surface-container-high);
-    animation: s4-skeleton-pulse 1.4s ease-in-out infinite alternate;
+    background-color: var(--md-sys-color-surface-container-high);
+    background-image: linear-gradient(90deg, transparent 0 38%, color-mix(in oklab, var(--md-sys-color-on-surface) 7%, transparent) 50%, transparent 62% 100%);
+    background-size: calc(var(--_sk-w) * 2) 100%;
+    background-repeat: no-repeat;
+    animation: s4-skeleton-wave var(--s4-skeleton-cycle) ease-in-out infinite;
   }
   .s4-skeleton[data-shape="text"] { height: 1em; min-height: 0; border-radius: var(--md-sys-shape-corner-full); font-size: var(--md-sys-typescale-body-large-size); }
   .s4-skeleton[data-shape="pill"] { height: var(--s4-space-10); border-radius: var(--md-sys-shape-corner-full); }
   .s4-skeleton[data-shape="circle"] { aspect-ratio: 1; border-radius: var(--md-sys-shape-corner-full); }
-  @keyframes s4-skeleton-pulse { from { opacity: 1; } to { opacity: 0.5; } }
-  @media (prefers-reduced-motion: reduce) { .s4-skeleton { animation: none; } }
+  /* the sheen's middle travels from 30% before the region to 30% past it, in region coordinates */
+  @keyframes s4-skeleton-wave {
+    from { background-position: calc(var(--_sk-w) * -1.3 - var(--_sk-x)) 0; }
+    to { background-position: calc(var(--_sk-w) * 0.3 - var(--_sk-x)) 0; }
+  }
+  @media (prefers-reduced-motion: reduce) { .s4-skeleton { animation: none; background-image: none; } }
+  :root[data-motion="reduced"] .s4-skeleton { animation: none; background-image: none; }
 }
 
 /* ---- empty-state/empty-state.css ---- */
@@ -5420,8 +5474,8 @@
 /* ---- snackbar/snackbar.css ---- */
 /* Snackbar (M3): a short message after an action, often with Undo. Created from code:
      S4.snackbar({ text: 'Bill archived', action: 'Undo', onAction: fn, closable: false, duration: 4000 })
-   Rises a few pixels and fades in (decision 0010), above the nav bar, a docked toolbar or a FAB. Solid inverse surface
-   (not glass: its inverse-primary action only reaches 4.5:1 on the full surface). */
+   Rises 14px into place and fades in (decision 0042), above the nav bar, a docked toolbar or a FAB. Glass (0042: a
+   notification is a raised object); text and the action are on-surface, which the glass guarantee keeps at AA. */
 @layer s4.components {
   .s4-snackbar-host {
     position: fixed;
@@ -5444,9 +5498,8 @@
     min-height: var(--s4-size-touch-target);
     padding: var(--s4-space-1) var(--s4-space-2) var(--s4-space-1) var(--s4-space-5);
     border-radius: var(--md-sys-shape-corner-full);
-    background: var(--md-sys-color-inverse-surface);
-    color: var(--md-sys-color-inverse-on-surface);
-    box-shadow: var(--md-sys-elevation-level3);
+    background: var(--md-sys-color-surface-container-high);
+    color: var(--md-sys-color-on-surface);
     pointer-events: auto;
     font-family: var(--md-sys-typescale-body-medium-font);
     font-size: var(--md-sys-typescale-body-medium-size);
@@ -5457,15 +5510,15 @@
   .s4-snackbar[data-multiline] { flex-wrap: wrap; border-radius: var(--md-sys-shape-corner-extra-large); }
   .s4-snackbar[data-multiline] .s4-snackbar-text { flex-basis: 100%; }
   .s4-snackbar[data-multiline] .s4-snackbar-action { margin-inline-start: auto; }
-  .s4-snackbar .s4-button[data-variant="text"] { --_fg: var(--md-sys-color-inverse-primary); }
-  .s4-snackbar .s4-icon-button { color: var(--md-sys-color-inverse-on-surface); }
+  .s4-snackbar .s4-button[data-variant="text"] { --_fg: var(--md-sys-color-on-surface); font-weight: var(--md-sys-typescale-emphasized-label-large-weight); }
+  .s4-snackbar .s4-icon-button { color: var(--md-sys-color-on-surface); }
   @media (forced-colors: active) { .s4-snackbar { border: 1px solid CanvasText; } }
 }
 
 /* ---- tooltip/tooltip.css ---- */
 /* Tooltips (M3)
    Plain: any element with data-tooltip="Copy to clipboard" (usually an icon button). Shows on hover after a short delay, on
-   keyboard focus, and on long press; a solid inverse surface (not glass).
+   keyboard focus, and on long press. Glass (decision 0042, glass.css), rising 4px into place fast (S4.transition.tip).
    Rich: <div class="s4-rich-tooltip" id="autopay-tip" popover role="dialog">…</div> opened by [data-rich-tooltip="id"] on
    hover, focus or click; may hold a subhead, text and actions. Glass (glass.css). */
 @layer s4.components {
@@ -5475,8 +5528,8 @@
     max-width: min(320px, calc(100vw - 2 * var(--s4-space-4)));
     padding: var(--s4-space-1) var(--s4-space-2);
     border-radius: var(--s4-shape-tooltip);
-    background: var(--md-sys-color-inverse-surface);
-    color: var(--md-sys-color-inverse-on-surface);
+    background: var(--md-sys-color-surface-container);
+    color: var(--md-sys-color-on-surface);
     font-family: var(--md-sys-typescale-body-small-font);
     font-size: var(--md-sys-typescale-body-small-size);
     line-height: var(--md-sys-typescale-body-small-line-height);
@@ -5489,9 +5542,9 @@
     inset: auto;
     margin: 0;
     max-width: min(320px, calc(100vw - 2 * var(--s4-space-4)));
-    padding: var(--s4-space-3) var(--s4-space-4) var(--s4-space-2);
+    padding: var(--s4-space-4) var(--s4-space-4) var(--s4-space-3);
     border: 0;
-    border-radius: var(--md-sys-shape-corner-medium);
+    border-radius: var(--md-sys-shape-corner-extra-large);   /* issue 30: round enough for the pill actions near its corners */
     background: var(--md-sys-color-surface-container);
     color: var(--md-sys-color-on-surface-variant);
     box-shadow: var(--md-sys-elevation-level2);
@@ -5511,7 +5564,7 @@
     letter-spacing: var(--md-sys-typescale-title-small-tracking);
     font-weight: var(--md-sys-typescale-title-small-weight);
   }
-  .s4-rich-tooltip-actions { display: flex; gap: var(--s4-space-2); margin-inline-start: calc(var(--s4-space-3) * -1); padding-top: var(--s4-space-1); }
+  .s4-rich-tooltip-actions { display: flex; gap: var(--s4-space-2); padding-top: var(--s4-space-2); }
   @media (forced-colors: active) { .s4-tooltip, .s4-rich-tooltip { border: 1px solid CanvasText; } }
 }
 
@@ -5545,7 +5598,9 @@
          .s4-dialog,
          .s4-bottom-sheet,
          .s4-side-sheet,
-         .s4-rich-tooltip) {
+         .s4-rich-tooltip,
+         .s4-tooltip,
+         .s4-snackbar) {
     --md-sys-color-on-surface-variant: var(--md-sys-color-on-surface);
     --_surface: var(--s4-glass-tint-float);
     --_edge-hi: color-mix(in oklab, var(--_surface), white calc(var(--s4-glass-edge-lift) * 100%));
@@ -5579,7 +5634,9 @@
          .s4-dialog,
          .s4-bottom-sheet,
          .s4-side-sheet,
-         .s4-rich-tooltip) {
+         .s4-rich-tooltip,
+         .s4-tooltip,
+         .s4-snackbar) {
       box-shadow:
       inset 0 calc(var(--s4-glass-edge-width) * var(--_edge-scale)) calc(var(--s4-glass-edge-width) * var(--_edge-scale)) 0 color-mix(in srgb, var(--_edge-hi) calc(var(--_aT) * 100%), transparent),
       inset 0 calc(-1 * calc(var(--s4-glass-edge-width) * var(--_edge-scale))) calc(var(--s4-glass-edge-width) * var(--_edge-scale)) 0 color-mix(in srgb, var(--_edge-hi) calc(var(--_aB) * 100%), transparent),
@@ -5601,7 +5658,9 @@
          .s4-dialog,
          .s4-bottom-sheet,
          .s4-side-sheet,
-         .s4-rich-tooltip) {
+         .s4-rich-tooltip,
+         .s4-tooltip,
+         .s4-snackbar) {
       box-shadow:
       inset 0 calc(var(--s4-glass-edge-width) * var(--_edge-scale)) calc(var(--s4-glass-edge-width) * var(--_edge-scale)) 0 color-mix(in srgb, var(--_edge-hi) calc(var(--_aT) * 100%), transparent),
       inset 0 calc(-1 * calc(var(--s4-glass-edge-width) * var(--_edge-scale))) calc(var(--s4-glass-edge-width) * var(--_edge-scale)) 0 color-mix(in srgb, var(--_edge-hi) calc(var(--_aB) * 100%), transparent),
@@ -5679,7 +5738,7 @@
   :where(.s4-toolbar[data-color="vibrant"]) { --_surface: var(--md-sys-color-primary-container); background-color: color-mix(in srgb, var(--md-sys-color-primary-container) calc(var(--_glass-tint) * 100%), transparent); }
 
   /* medium contrast: firmer glass (high contrast is already solid through the tokens) */
-  :where(:root[data-contrast="medium"]) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip) {
+  :where(:root[data-contrast="medium"]) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip, .s4-tooltip, .s4-snackbar) {
     --_glass-tint: var(--s4-glass-tint-opacity-medium-contrast);
   }
 
@@ -5697,12 +5756,12 @@
   :where([data-glass="off"]) { --_glass-tint: 1; box-shadow: revert-layer; -webkit-backdrop-filter: none; backdrop-filter: none; }
 
   /* solid fallbacks (high contrast, reduced transparency, no backdrop-filter): back to the component's own box-shadow (flat since 0017) */
-  :where(:root[data-contrast="high"]) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip) { box-shadow: revert-layer; }
+  :where(:root[data-contrast="high"]) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip, .s4-tooltip, .s4-snackbar) { box-shadow: revert-layer; }
   @media (prefers-reduced-transparency: reduce) {
-    :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip) { box-shadow: revert-layer; }
+    :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip, .s4-tooltip, .s4-snackbar) { box-shadow: revert-layer; }
   }
   @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-    :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip) { box-shadow: revert-layer; }
+    :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip, .s4-tooltip, .s4-snackbar) { box-shadow: revert-layer; }
   }
 
   /* ITEMS ON GLASS (decision 0015). The app's own UI stays the main thing on the depth the glass gives:
@@ -5711,25 +5770,25 @@
      - only an item that is just an outline with no fill (outlined button, unselected chip) keeps one, drawn as the frost line.
      Skipped wherever the glass is solid: high contrast and data-glass="off" are excluded in the selector, the two blocks after it
      hand everything back to the components for reduced transparency and for browsers without backdrop-filter. */
-  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-chip, .s4-button:not([data-variant="text"])) { background: color-mix(in srgb, var(--_bg) calc(var(--s4-glass-item-fill) * 100%), transparent); }
-  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-text-field)::before { background: color-mix(in srgb, var(--_bg) calc(var(--s4-glass-item-fill) * 100%), transparent); }
-  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-text-field:not(:focus-within, [data-error], :has([aria-invalid="true"]), :has(> :is(input, select, textarea):disabled))) { --_outline: transparent; }
-  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-switch:not(:has(> input:checked))) { --_border: transparent; }
-  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-chip:not([aria-pressed="true"], [data-elevated], :disabled, [aria-disabled="true"]), .s4-button[data-variant="outlined"]:not([data-color], [aria-pressed="true"], :disabled, [aria-disabled="true"])) { --_outline: var(--s4-glass-item-outline); }
+  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip, .s4-tooltip, .s4-snackbar):not([data-glass="off"]) :where(.s4-chip, .s4-button:not([data-variant="text"])) { background: color-mix(in srgb, var(--_bg) calc(var(--s4-glass-item-fill) * 100%), transparent); }
+  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip, .s4-tooltip, .s4-snackbar):not([data-glass="off"]) :where(.s4-text-field)::before { background: color-mix(in srgb, var(--_bg) calc(var(--s4-glass-item-fill) * 100%), transparent); }
+  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip, .s4-tooltip, .s4-snackbar):not([data-glass="off"]) :where(.s4-text-field:not(:focus-within, [data-error], :has([aria-invalid="true"]), :has(> :is(input, select, textarea):disabled))) { --_outline: transparent; }
+  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip, .s4-tooltip, .s4-snackbar):not([data-glass="off"]) :where(.s4-switch:not(:has(> input:checked))) { --_border: transparent; }
+  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip, .s4-tooltip, .s4-snackbar):not([data-glass="off"]) :where(.s4-chip:not([aria-pressed="true"], [data-elevated], :disabled, [aria-disabled="true"]), .s4-button[data-variant="outlined"]:not([data-color], [aria-pressed="true"], :disabled, [aria-disabled="true"])) { --_outline: var(--s4-glass-item-outline); }
 
   @media (prefers-reduced-transparency: reduce) {
-  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-chip, .s4-button:not([data-variant="text"])), :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-text-field)::before { background: revert-layer; }
-  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-text-field:not(:focus-within, [data-error], :has([aria-invalid="true"]), :has(> :is(input, select, textarea):disabled))), :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-chip:not([aria-pressed="true"], [data-elevated], :disabled, [aria-disabled="true"]), .s4-button[data-variant="outlined"]:not([data-color], [aria-pressed="true"], :disabled, [aria-disabled="true"])) { --_outline: revert-layer; }
-  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-switch:not(:has(> input:checked))) { --_border: revert-layer; }
+  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip, .s4-tooltip, .s4-snackbar):not([data-glass="off"]) :where(.s4-chip, .s4-button:not([data-variant="text"])), :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip, .s4-tooltip, .s4-snackbar):not([data-glass="off"]) :where(.s4-text-field)::before { background: revert-layer; }
+  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip, .s4-tooltip, .s4-snackbar):not([data-glass="off"]) :where(.s4-text-field:not(:focus-within, [data-error], :has([aria-invalid="true"]), :has(> :is(input, select, textarea):disabled))), :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip, .s4-tooltip, .s4-snackbar):not([data-glass="off"]) :where(.s4-chip:not([aria-pressed="true"], [data-elevated], :disabled, [aria-disabled="true"]), .s4-button[data-variant="outlined"]:not([data-color], [aria-pressed="true"], :disabled, [aria-disabled="true"])) { --_outline: revert-layer; }
+  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip, .s4-tooltip, .s4-snackbar):not([data-glass="off"]) :where(.s4-switch:not(:has(> input:checked))) { --_border: revert-layer; }
   }
   @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-chip, .s4-button:not([data-variant="text"])), :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-text-field)::before { background: revert-layer; }
-  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-text-field:not(:focus-within, [data-error], :has([aria-invalid="true"]), :has(> :is(input, select, textarea):disabled))), :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-chip:not([aria-pressed="true"], [data-elevated], :disabled, [aria-disabled="true"]), .s4-button[data-variant="outlined"]:not([data-color], [aria-pressed="true"], :disabled, [aria-disabled="true"])) { --_outline: revert-layer; }
-  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip):not([data-glass="off"]) :where(.s4-switch:not(:has(> input:checked))) { --_border: revert-layer; }
+  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip, .s4-tooltip, .s4-snackbar):not([data-glass="off"]) :where(.s4-chip, .s4-button:not([data-variant="text"])), :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip, .s4-tooltip, .s4-snackbar):not([data-glass="off"]) :where(.s4-text-field)::before { background: revert-layer; }
+  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip, .s4-tooltip, .s4-snackbar):not([data-glass="off"]) :where(.s4-text-field:not(:focus-within, [data-error], :has([aria-invalid="true"]), :has(> :is(input, select, textarea):disabled))), :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip, .s4-tooltip, .s4-snackbar):not([data-glass="off"]) :where(.s4-chip:not([aria-pressed="true"], [data-elevated], :disabled, [aria-disabled="true"]), .s4-button[data-variant="outlined"]:not([data-color], [aria-pressed="true"], :disabled, [aria-disabled="true"])) { --_outline: revert-layer; }
+  :where(:root:not([data-contrast="high"])) :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-nav-rail:is([data-modal], [data-overlay]), .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip, .s4-tooltip, .s4-snackbar):not([data-glass="off"]) :where(.s4-switch:not(:has(> input:checked))) { --_border: revert-layer; }
   }
 
   @media (forced-colors: active) {
-    :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip) {
+    :where(.s4-glass, .s4-top-app-bar[data-scrolled], .s4-nav-bar, .s4-toolbar, .s4-menu, .s4-dialog, .s4-bottom-sheet, .s4-side-sheet, .s4-rich-tooltip, .s4-tooltip, .s4-snackbar) {
       background-image: none; -webkit-backdrop-filter: none; backdrop-filter: none; border: 1px solid CanvasText;
     }
   }

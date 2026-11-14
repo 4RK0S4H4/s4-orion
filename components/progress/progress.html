@@ -51,6 +51,18 @@
     </div>
   </section>
   <p class="ex-foot">Source: <code>components/progress/</code> · Solar icons by 480 Design (CC BY 4.0)</p>
+  <section class="ex-sec">
+    <h2>Download Demo</h2>
+    <p>A determinate bar driven like a real download: fast for the first five seconds, then stalling and moving at random speeds, always finishing within ten. At 100% the bar is completely full.</p>
+    <div class="ex-board col">
+      <div style="display:grid;gap:8px;inline-size:100%;max-inline-size:520px">
+        <div style="display:flex;justify-content:space-between" class="s4-body-medium s4-num"><span>Q4 Statements.zip</span><span id="dl-pc">0%</span></div>
+        <div class="s4-progress" id="dl" data-value="0" aria-label="Downloading Q4 Statements"></div>
+        <div style="display:flex;justify-content:space-between" class="s4-body-small s4-on-surface-variant s4-num"><span id="dl-mb">0 of 248 MB</span><span id="dl-st">Starting…</span></div>
+        <div class="s4-row"><button class="s4-button" data-variant="tonal" type="button" id="dl-go"><span class="s4-icon" data-icon="refresh"></span>Replay</button></div>
+      </div>
+    </div>
+  </section>
 </main>
 <script src="../assets/icons.js"></script>
 <script src="../core/core.js"></script>
@@ -64,6 +76,32 @@
       el.dataset.value = v > 1.01 ? 0 : Math.round(v * 10) / 10;
     });
   });
+</script>
+<script>
+/* download demo: a plan of (time, percent) points, fast until 5s, then stalls and bursts, 100% before 10s */
+(function () {
+  var bar = document.getElementById('dl'), pc = document.getElementById('dl-pc'), mb = document.getElementById('dl-mb'), st = document.getElementById('dl-st'), timers = [];
+  function plan() {
+    var pts = [[0, 0]], t = 0, v = 0, p1 = 55 + Math.random() * 15, end = 9.2 + Math.random() * 0.7;
+    while (t < 4.6) { t += 0.3 + Math.random() * 0.4; v = Math.min(p1, v + p1 * (0.08 + Math.random() * 0.1)); pts.push([Math.min(t, 5), v]); }
+    pts.push([5, p1]); t = 5; v = p1;
+    while (t < end - 0.6) { var stall = Math.random() < 0.45; t = Math.min(end - 0.4, t + (stall ? 0.3 + Math.random() * 0.8 : 0.2 + Math.random() * 0.5)); if (!stall) v = Math.min(97, v + (100 - v) * (0.08 + Math.random() * 0.3)); pts.push([t, v]); }
+    pts.push([end, 100]); return pts;
+  }
+  function run() {
+    timers.forEach(clearTimeout); timers = []; var last = 0, lastT = 0;
+    plan().forEach(function (p) {
+      timers.push(setTimeout(function () {
+        bar.dataset.value = (p[1] / 100).toFixed(3);
+        var speed = lastT === p[0] ? 0 : (p[1] - last) / 100 * 248 / (p[0] - lastT); last = p[1]; lastT = p[0];
+        pc.textContent = Math.floor(p[1]) + '%'; mb.textContent = Math.round(p[1] / 100 * 248) + ' of 248 MB';
+        st.textContent = p[1] >= 100 ? 'Done' : speed < 1 ? 'Waiting…' : Math.round(speed) + ' MB/s';
+      }, p[0] * 1000));
+    });
+  }
+  document.getElementById('dl-go').addEventListener('click', run);
+  run();
+})();
 </script>
 </body>
 </html>

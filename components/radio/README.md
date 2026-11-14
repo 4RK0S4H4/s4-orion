@@ -15,8 +15,8 @@ Picks exactly one option from a short visible list. M3 radio button on a native 
 | `name`, `value`, `checked`, `disabled` on the input | native radio group |
 | `data-error` on the label, or `aria-invalid="true"` | error color for an unanswered required group |
 
-20dp ring with a 2dp stroke (on-surface-variant); selected = primary ring with a 10dp dot that grows in on the
-fast-spatial spring. 40dp circular state layer; 48dp hit area. No JS.
+20dp filled disc (surface-container-highest); selected = the disc fills with primary ink, no inner dot (decision 0042):
+the ink grows in from the middle on the ink spring and drains out calmly. 40dp circular state layer; 48dp hit area. No JS.
 
 **Do:** group with `<fieldset>` + `<legend>` (or `role="radiogroup"` + `aria-label`); keep 2–7 options.
 **Don't:** use radios for a single on/off choice, or for long lists (use a select in a [text field](../text-field/)).

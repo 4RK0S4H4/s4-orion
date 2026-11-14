@@ -55,8 +55,9 @@ there is a gap at the top, which looks odd. Inset the selection evenly (padding 
 never touches only some edges.
 ![List selection edges](img/2026-11-14-list-selection-edges.png)
 
-### 7. Liquid hover between list rows
-Moving the pointer from one row to the next should feel liquid: the hover/selection shape flows to the next row and its
+### 7. Liquid hover between list rows (owner reviews on a computer)
+**Reminder for the owner: review the row hover options on a computer** ([Lab 2](../../explore/motion-liquid-2.html), question 1: Today, Edges Settle, Edges Lean, Corners Melt) and say which one, or describe it. Owner's direction so far: a minor animation of the hover box's edges, not a box that travels between rows.
+Original note: moving the pointer from one row to the next should feel liquid: the hover/selection shape flows to the next row and its
 rounded corners morph as it goes (like the sliding nav pill, but softer). Subtle. Applies to lists and similar rows.
 ![List rows](img/2026-11-14-list-hover-liquid.png)
 
@@ -75,12 +76,6 @@ solid: remove any glass or translucency from the table and its sticky header.
 Hovering a row draws a fill with odd rounded edges and a big halo around the row checkbox. Make the row hover clean
 (and consistent with issue 6's even inset and issue 7's liquid hover).
 ![Table row hover](img/2026-11-14-table-row-hover.png)
-
-### 11. Accordion: too fast, chevron should bend, not spin
-Opening and closing feels too fast; it should be quick but never look instant. The chevron should **bend** into the
-other direction, like bending a book backward (a flip around its horizontal axis), not rotate. The owner wants this
-kind of interesting but subtle animation elsewhere too (see the motion direction above).
-![Accordion](img/2026-11-14-accordion-motion.png)
 
 ### 12. Composer send button height looks bugged
 In the chat composer the send button doesn't match the height of the message field next to it (it looks squashed and
@@ -126,13 +121,6 @@ icon-like glyphs in checkboxes. Make the mark smaller and quieter (a thin check 
 indeterminate). Show in the same lab as 17/19 if it's a visible change.
 ![Checkboxes and radios](img/2026-11-14-checkbox-radio.png)
 
-### 19. Radio: liquid selection, no inner dot
-Idea to explore: the selected radio's fill moves **liquidly** from one radio to the next when the choice changes (comes
-in normally the first time; afterwards travels quickly behind the scenes from the old radio to the new one). Also, the
-owner doesn't usually see a dot inside a selected radio: try a selected look without the inner circle. Explore in the
-motion lab (see the motion direction).
-![Checkboxes and radios](img/2026-11-14-checkbox-radio.png)
-
 ### 20. Slider must reach both ends
 The owner likes the slider's general look, but at 0% and 100% it doesn't reach the end: a sliver of the inactive track
 stays at the very end (or the active track looks less than full). At the ends the active (or inactive) track should run
@@ -161,41 +149,6 @@ badge read clearly in both modes.
 
 ### 24. ~~Banner on glass~~ (scrapped)
 Scrapped by the owner (2026-11-14): they meant snackbars, not banners. Banners stay solid content. See issue 28.
-
-### 25. Skeleton: glitchy, and a wave instead of a blink
-The skeleton's animation looks glitchy (owner on Chrome). Replace the blink with a subtle **wave** (a soft sheen
-travelling across the placeholders, in step across the group), only transform/opacity, off under reduced motion.
-![Skeleton](img/2026-11-14-skeleton.png)
-
-### 26. Circular progress: 100% is a full circle; a more creative indeterminate
-At 100% the circular indicator still shows the M3 gap; it must close into a full circle. The indeterminate animation
-should be a bit more creative (subtle and liquid, per the motion direction).
-![Circular progress](img/2026-11-14-progress-circular.png)
-
-### 27. Linear progress: full at 100%, creative indeterminate, a realistic download demo
-Same as 26 for the linear bar: no gap or stop at 100%, a more creative indeterminate animation. On the progress
-reference page, add a **download demo**: a bar that runs on its own and always reaches 100% within 10 seconds, fast for
-the first 5 seconds, then stopping and moving at random speeds for the last 5, like a real download (replay button).
-![Linear progress](img/2026-11-14-progress-linear.webp)
-
-### 28. Snackbars on glass, with a liquid arrival
-Snackbars become glass: the owner sees them as a notification, a raised object (the light solid pill today). Their
-arrival and exit should be liquid but subtle (motion lab first). Keep the text and the action AA on glass
-(extend check-glass to the snackbar's action color). Updates 0010 (pill snackbar) and the review's proposal 7.
-![Snackbar](img/2026-11-14-snackbar.png)
-
-### 29. Tooltips: a bit faster and a better entrance
-Tooltips should come in a little faster, with a better animation (in the new motion style). Covers plain and rich
-tooltips. No separate image; the rich tooltip image below shows the component.
-
-### 30. Rich tooltips: rounder, with room around the action
-The rich tooltip's corners are too small for the rounded Learn More button sitting close to the corner. Round the
-tooltip out (corner at least the button's radius plus the padding) and give the action room from the edge.
-![Rich tooltip](img/2026-11-14-rich-tooltip.png)
-
-### 31. Menus in the new motion style
-Update the menu's open and close (today: drop 8px and fade, 0022) to the liquid-but-subtle style once the motion lab
-has settled it. No image.
 
 ### 32. Don't autofocus fields in dialogs and sheets
 Opening a dialog or sheet focuses its first text field, so on iOS the keyboard pops up at the same moment as the dialog
@@ -236,4 +189,12 @@ tinted states)? Does it read on a solid content surface with nothing interesting
 
 ## Done
 
-(none yet)
+- **11.** Accordion: too fast, chevron should bend, not spin: done 2026-11-14 (accordion reveal + bending chevron, decision 0042).
+- **19.** Radio: liquid selection, no inner dot: done 2026-11-14 (ink fill, no dot (window idea dropped by the owner), decision 0042).
+- **25.** Skeleton: glitchy, and a wave instead of a blink: done 2026-11-14 (one sheen wave, decision 0042).
+- **26.** Circular progress: 100% is a full circle; a more creative indeterminate: done 2026-11-14 (full ring, breathing arc, decision 0042).
+- **27.** Linear progress: full at 100%, creative indeterminate, a realistic download demo: done 2026-11-14 (full bar, drop-like line, download demo on the progress page, decision 0042).
+- **28.** Snackbars on glass, with a liquid arrival: done 2026-11-14 (glass, rises 14px, decision 0042).
+- **29.** Tooltips: a bit faster and a better entrance: done 2026-11-14 (glass, rises 4px, appears after 350ms, decision 0042).
+- **30.** Rich tooltips: rounder, with room around the action: done 2026-11-14 (extra-large corners, room around actions, decision 0042).
+- **31.** Menus in the new motion style: done 2026-11-14 (items follow, decision 0042).

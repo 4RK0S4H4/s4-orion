@@ -1,7 +1,8 @@
 # Snackbar
 
 A short message after an action, often with Undo. **Slides up from the bottom edge**, above a nav bar, docked toolbar or FAB.
-A solid inverse surface (not glass), so its `inverse-primary` action keeps 4.5:1.
+Glass (decision 0042): a notification is a raised object. Text and the action are `on-surface` (the action in the
+emphasized weight), which the glass guarantee keeps at AA. Rises 14px into place on the `rise` spring.
 
 ```js
 S4.snackbar({ text: 'Bill archived', action: 'Undo', onAction: restore });

@@ -27,9 +27,9 @@ component-level custom properties:
 
 | Property | What | Default |
 |---|---|---|
-| `--s4-progress-cycle` | linear indeterminate cycle (M3: two lines, 1800ms) | `1800ms` |
-| `--s4-progress-circular-cycle` | circular arc grow-and-catch-up cycle | `1333ms` |
-| `--s4-progress-circular-spin` | circular rotation | `2000ms` |
+| `--s4-progress-cycle` | linear indeterminate cycle (0042: one drop-like line, front edge leads) | `1500ms` |
+| `--s4-progress-circular-cycle` | circular arc breathing cycle (0042) | `1300ms` |
+| `--s4-progress-circular-spin` | circular rotation (out of step with the arc) | `1600ms` |
 
 **Reduced motion.** This component carries the one allowed `@media (prefers-reduced-motion: reduce)` query: tokens can't
 stop an infinite loop, so the indeterminate animations stop and show a still, partial indicator (40% of the linear bar,
