@@ -77,6 +77,38 @@ other direction, like bending a book backward (a flip around its horizontal axis
 kind of interesting but subtle animation elsewhere too (see the motion direction above).
 ![Accordion](img/2026-11-14-accordion-motion.png)
 
+### 12. Composer send button height looks bugged
+In the chat composer the send button doesn't match the height of the message field next to it (it looks squashed and
+misaligned). Align button and field heights in the composer (and anywhere an icon button sits beside a field).
+![Composer](img/2026-11-14-composer-button-height.png)
+
+### 13. Press-to-square only where it fits
+The owner likes buttons morphing toward a square when pressed, **but not** when the button sits at the end of a rounded
+container (like the send button in the composer), where a square looks bad against the container's curve or seems to
+overlap it. There the button should keep a shape that follows the container (stay round or match the container's
+corner). Confirm this reading with the owner before building.
+![Pressed send button](img/2026-11-14-button-press-square-in-container.png)
+
+### 14. Selects must open the glass menu
+The Category select on the text field reference page opens the browser's native drop-down list. Selects are supposed to
+open the glass menu (0024); find why this one doesn't (reference page script order, or a select case text-field.js
+misses) and check every select in the gallery, templates and showcase.
+![Native drop-down](img/2026-11-14-select-native-dropdown.png)
+
+### 15. A real date picker
+Date fields open the browser's native calendar. Build an Orion date picker with the details already done: month header
+with a month/year switch, previous/next, weekday row, today marked, selected day filled, days outside the month muted,
+Clear and Today actions, keyboard support (arrows, Page Up/Down, Home/End, Enter, Escape), on glass like the menu,
+a phone layout (sheet or centered card), min/max and disabled dates, and a range option. Native `<input type="date">`
+stays underneath for forms and as the fallback.
+![Native date picker](img/2026-11-14-native-date-picker.png)
+
+### 16. Error fields: the red is too intense
+The error state fills the whole field with a strong red (error-container) that's too intense and clashes with other
+colors. Go a different way: for example keep the normal field fill and mark the error with the label, helper text, a
+small icon and a quieter accent, and soften the error tones generally. Show options in a lab.
+![Error fields](img/2026-11-14-error-fields-red.png)
+
 ## Done
 
 (none yet)
