@@ -16,7 +16,7 @@ reasoning. A decision isn't reopened without the owner; a new one gets the next 
 | Glass: the look (tint 75%, blur 8px, saturate 150%, no shadow) | 0021, 0028, 0035, 0017 |
 | Glass: the edge (thin rim top and bottom, glow or shade by lightness, width by screen density, docked bars light only the free edge) | 0034, 0036, 0037, 0029, 0040 |
 | Items on glass keep their own color | 0015 |
-| Motion: pop, drop, slide, rise, shared axis; only transform and opacity | 0022 |
+| Motion: pop, drop, slide, rise, shared axis; only transform and opacity | 0022, amended by 0042 (liquid ink) |
 | Shape and fill: nothing outlined, small things are pills, no sharp corners, inputs medium-rounded | 0023, 0024, 0025 |
 | Button groups: the Joined Capsule | 0026 |
 | FAB: glass tinted with its own color | 0025, 0032 |
@@ -68,3 +68,4 @@ reasoning. A decision isn't reopened without the owner; a new one gets the next 
 | 0039 | Docked glass gets the full edge | Superseded by 0040 |
 | 0040 | Docked glass lights only its free edge | Active, awaiting the owner's iPhone check |
 | 0041 | Orion as a framework: layouts, templates, content components | Proposed (built, awaiting the owner's review) |
+| 0042 | Liquid motion for ink, plain motion for glass, quicker | In progress (Lab 1 answered; Lab 2 open) |

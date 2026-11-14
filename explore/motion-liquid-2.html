@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>S4 Orion: Liquid Motion Lab 2</title>
+<link rel="stylesheet" href="../components/orion.css?v=6958b53">
+<style>
+body{margin:0;background:var(--md-sys-color-surface);color:var(--md-sys-color-on-surface)}
+h1,h2,p{margin:0}
+.bar{display:flex;align-items:center;padding:12px 24px;background:var(--md-sys-color-surface-container);border-bottom:1px solid var(--md-sys-color-outline-variant)}
+.bar h1{font-size:20px;line-height:28px;font-weight:500}
+.page{max-width:1100px;margin:0 auto;padding:24px 16px 120px;display:flex;flex-direction:column;gap:40px}
+.intro{max-width:80ch;color:var(--md-sys-color-on-surface-variant);display:flex;flex-direction:column;gap:12px}
+.sec > h2{font-size:24px;line-height:32px;font-weight:500;margin-bottom:6px}
+.sec > p{color:var(--md-sys-color-on-surface-variant);max-width:85ch;margin-bottom:16px}
+.cards{--rv-min:300px}
+.pv{display:grid;gap:12px;padding:16px;background:var(--md-sys-color-surface-container-low);border-radius:20px;position:relative}
+.cap{font:500 12px/16px Inter,system-ui,sans-serif;color:var(--md-sys-color-on-surface-variant)}
+.btnrow{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+
+/* rows */
+.rows{position:relative;padding:6px;border-radius:22px;background:var(--md-sys-color-surface-container);display:flex;flex-direction:column;gap:2px;user-select:none;-webkit-user-select:none}
+.row{position:relative;display:flex;align-items:center;gap:12px;height:52px;padding:0 14px;cursor:pointer;font:400 15px/20px Inter,system-ui,sans-serif;isolation:isolate}
+.row .s4-icon{--s4-icon-size:20px;color:var(--md-sys-color-on-surface-variant)}
+.row b{margin-left:auto;font-weight:500;font-size:12px;color:var(--md-sys-color-on-surface-variant);font-variant-numeric:tabular-nums}
+.row[aria-selected="true"]{font-weight:600}
+.row .hl{position:absolute;top:0;left:0;right:0;bottom:0;border-radius:16px;background:var(--md-sys-color-surface-container-highest);opacity:0;z-index:-1}
+.row .sel{position:absolute;inset:0;border-radius:16px;background:var(--md-sys-color-secondary-container);opacity:0;z-index:-2}
+.row[aria-selected="true"] .sel{opacity:1}
+
+/* radio windows */
+.radios{position:relative;user-select:none;-webkit-user-select:none}
+.rad{position:relative;z-index:2;display:flex;align-items:center;gap:14px;height:44px;cursor:pointer;font:400 15px/20px Inter,system-ui,sans-serif;padding-left:36px}
+.rad[aria-checked="true"]{font-weight:600}
+.wells,.ink{position:absolute;left:0;top:0;width:22px;bottom:0}
+.wells i{position:absolute;left:0;width:22px;height:22px;border-radius:50%;background:var(--md-sys-color-surface-container-highest)}
+.ink{z-index:1;pointer-events:none}
+.ink .drop{position:absolute;left:0;width:22px;height:22px;top:-40px;border-radius:11px;background:var(--md-sys-color-primary)}
+.real .s4-radio{min-height:44px}
+
+/* menu */
+.mstage{position:relative;height:230px;border-radius:16px;overflow:hidden;padding:16px;box-sizing:border-box;background:
+  radial-gradient(circle at 80% 70%, #4f46e5 0 25%, transparent 26%),
+  repeating-linear-gradient(-45deg, var(--md-sys-color-surface-container-high) 0 10px, var(--md-sys-color-surface-container) 10px 20px)}
+.mn{position:absolute;left:16px;top:62px;width:200px;height:156px;pointer-events:none;opacity:0;border-radius:16px}
+.mn.open{pointer-events:auto}
+.mn-items{position:absolute;inset:0;padding:6px;display:flex;flex-direction:column;gap:2px}
+.mn-it{display:flex;align-items:center;gap:10px;height:46px;padding:0 12px;border-radius:12px;font:500 14px/20px Inter,system-ui,sans-serif}
+.mn-it .s4-icon{--s4-icon-size:20px}
+
+/* speed */
+.spd{display:grid;gap:12px}
+.acc{border-radius:20px;background:var(--md-sys-color-surface-container);padding:6px}
+.acc-h{display:flex;align-items:center;width:100%;gap:8px;height:48px;padding:0 14px;border:0;border-radius:16px;background:transparent;color:inherit;font:600 15px/20px Inter,system-ui,sans-serif;text-align:left}
+.acc-h .chev{margin-left:auto;display:inline-flex}
+.acc-b{overflow:hidden;height:0}
+.acc-b > div{padding:4px 14px 14px;color:var(--md-sys-color-on-surface-variant);font:400 14px/20px Inter,system-ui,sans-serif}
+.stage{position:relative;height:96px;border-radius:16px;overflow:hidden;background:
+  radial-gradient(circle at 25% 40%, #ff7a59 0 22%, transparent 23%),
+  repeating-linear-gradient(45deg, var(--md-sys-color-surface-container-high) 0 12px, var(--md-sys-color-surface-container) 12px 24px)}
+.snk{position:absolute;left:12px;right:12px;bottom:12px;height:48px;opacity:0;border-radius:24px;display:flex;align-items:center;padding:0 8px 0 18px;font:500 14px/20px Inter,system-ui,sans-serif}
+.snk span{flex:1}.snk i{font-style:normal;font-weight:600;padding:8px 12px;color:var(--md-sys-color-primary)}
+</style>
+</head>
+<body>
+<div class="bar"><h1>S4 Orion: Liquid Motion Lab 2</h1></div>
+<main class="page">
+  <div class="intro">
+    <p>From your answers: <b>liquid only for ink</b> (the solid fills that show state: hover and selection fills, the nav and tab pill, radio and checkbox fills, the switch, slider and progress fills). <b>Glass moves plainly</b>. Everything a little <b>faster</b>. Accordion B, snackbar B, tooltip B and loading B are decided.</p>
+    <p>This round covers the three you answered with Other, plus the speed. Play inside each preview, then tap the card header to pick.</p>
+  </div>
+  <div id="sections"></div>
+</main>
+<footer style="padding:24px;text-align:center;font-size:12px;color:var(--md-sys-color-on-surface-variant)"><a href="../">S4 Orion</a> exploration</footer>
+<script src="lib/scrub.js?v=b7738ee"></script>
+<script src="../components/assets/icons.js?v=f8aa430"></script>
+<script src="../components/orion.js?v=99a632f"></script>
+<script src="lib/questions.js?v=3e02993"></script>
+<script src="lib/review.js?v=2d9b250"></script>
+<script>
+function spring(k, z, f = 1) {
+  const w = Math.sqrt(k), x = t => {
+    if (z >= 1) return 1 - Math.exp(-w * t) * (1 + w * t);
+    const wd = w * Math.sqrt(1 - z * z); return 1 - Math.exp(-z * w * t) * (Math.cos(wd * t) + (z * w / wd) * Math.sin(wd * t));
+  };
+  let end = 0; for (let t = 0; t < 3; t += 0.001) if (Math.abs(x(t) - 1) > 0.002) end = t; end = Math.max(end, 0.05);
+  const pts = []; for (let i = 0; i <= 40; i++) { const v = x(end * i / 40); pts.push(i === 0 ? '0' : i === 40 ? '1' : v.toFixed(3) + ' ' + (i * 2.5).toFixed(1) + '%'); }
+  return { d: Math.round(end * 1000 * f), e: 'linear(' + pts.join(',') + ')' };
+}
+const TODAY = () => { const s = S4.motion.spring('spatial'); return { d: s.duration || 260, e: s.easing }; };
+const TODAYFX = () => { const s = S4.motion.spring('effects'); return { d: s.duration || 120, e: s.easing }; };
+const anim = (el, kf, s, o = {}) => el.animate(kf, Object.assign({ duration: s.d, easing: s.e, fill: 'both' }, o));
+const icon = n => `<span class="s4-icon" data-icon="${n}"></span>`;
+const FAST = 0.85;   /* this round runs 15% faster than lab 1 */
+function edgeFrames(a0, b0, a1, b1, lead, trail, z) {
+  const forward = (a1 + b1) / 2 >= (a0 + b0) / 2, kA = forward ? trail : lead, kB = forward ? lead : trail;
+  let a = a0, b = b0, va = 0, vb = 0, t = 0; const dt = 1 / 480, fr = [];
+  for (;;) {
+    for (let i = 0; i < 8; i++) { va += (-kA * (a - a1) - 2 * z * Math.sqrt(kA) * va) * dt; a += va * dt; vb += (-kB * (b - b1) - 2 * z * Math.sqrt(kB) * vb) * dt; b += vb * dt; t += dt; }
+    fr.push({ a, b }); if ((Math.abs(a - a1) < 0.25 && Math.abs(b - b1) < 0.25 && Math.abs(va) + Math.abs(vb) < 8) || t > 2) break;
+  }
+  fr.push({ a: a1, b: b1 }); return { d: Math.max(100, fr.length * 1000 / 60), fr };
+}
+function section(id, title, text, opts, build) {
+  const sec = document.createElement('section'); sec.className = 'sec';
+  sec.innerHTML = `<h2>${title}</h2><p>${text}</p><div class="cards rv-group" role="radiogroup" aria-label="${title}"></div>`;
+  document.getElementById('sections').appendChild(sec);
+  opts.forEach(o => { const pv = document.createElement('div'); pv.className = 'pv'; build(pv, o.k); sec.querySelector('.cards').appendChild(S4Review.card({ pick: id + ':' + o.k, letter: o.k, title: o.name, desc: o.desc, tag: o.tag || '', preview: pv })); });
+}
+
+/* ===== 1. row hover: the edges, not a travelling box ===== */
+section('rows2', 'Row Hover: the Edges of the Box', 'Each row has its own hover box (nothing travels between rows). Only its edges move, and only a little. Hover down the list with a mouse, or tap rows on a phone (a tap selects).', [
+  { k: 'A', name: 'Today', tag: 'Today', desc: 'The box just fades in and out.' },
+  { k: 'B', name: 'Edges Settle', desc: 'The box fades in starting 3px smaller on every side, and its edges flow out to full size with a tiny overshoot. Leaving, the edges draw back in as it fades.' },
+  { k: 'C', name: 'Edges Lean', desc: 'Like B, but the edges lean toward where the pointer came from: entering from above, the top edge arrives first and the bottom edge follows a moment later.' },
+  { k: 'D', name: 'Corners Melt', desc: 'The box fades in at full size; only its corners move, from extra round to their normal radius, settling with a slight wobble.' }
+], (pv, k) => {
+  const names = [['bills', 'All Bills', 48], ['schedule', 'Due Soon', 6], ['check', 'Paid', 39], ['folder', 'Archived', 12], ['star', 'Starred', 3]];
+  pv.innerHTML = `<div class="rows">${names.map((n, i) => `<div class="row" aria-selected="${i === 0}"><span class="sel"></span><span class="hl"></span>${icon(n[0])}${n[1]}<b>${n[2]}</b></div>`).join('')}</div>`;
+  const rows = [...pv.querySelectorAll('.row')];
+  let lastIdx = null;
+  const enter = (r, e) => {
+    const hl = r.querySelector('.hl'); hl.getAnimations().forEach(a => a.cancel());
+    const fade = spring(1400, 1, FAST);
+    if (k === 'A') { anim(hl, [{ opacity: 0 }, { opacity: 1 }], TODAYFX()); return; }
+    anim(hl, [{ opacity: 0 }, { opacity: 1 }], fade);
+    if (k === 'B') anim(hl, [{ top: '3px', bottom: '3px', left: '3px', right: '3px' }, { top: '0px', bottom: '0px', left: '0px', right: '0px' }], spring(700, 0.62, FAST));
+    if (k === 'C') {
+      const i = rows.indexOf(r), fromAbove = lastIdx == null || lastIdx < i;
+      const lead = spring(900, 0.7, FAST), trail = spring(420, 0.7, FAST);
+      anim(hl, [{ top: '3px', left: '3px', right: '3px' }, { top: '0px', left: '0px', right: '0px' }], fromAbove ? lead : trail);
+      anim(hl, [{ bottom: '3px' }, { bottom: '0px' }], fromAbove ? trail : lead, { composite: 'replace' });
+    }
+    if (k === 'D') anim(hl, [{ borderRadius: '26px' }, { borderRadius: '16px' }], spring(520, 0.5, FAST));
+  };
+  const leave = r => {
+    const hl = r.querySelector('.hl'); const op = getComputedStyle(hl).opacity; hl.getAnimations().forEach(a => a.cancel());
+    if (k === 'A') { anim(hl, [{ opacity: op }, { opacity: 0 }], TODAYFX()); return; }
+    anim(hl, [{ opacity: op }, { opacity: 0 }], spring(1800, 1, FAST));
+    if (k === 'B' || k === 'C') anim(hl, [{ top: '0px', bottom: '0px', left: '0px', right: '0px' }, { top: '3px', bottom: '3px', left: '3px', right: '3px' }], spring(1200, 1, FAST));
+  };
+  rows.forEach(r => {
+    r.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') enter(r, e); });
+    r.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') { lastIdx = rows.indexOf(r); leave(r); } });
+    r.addEventListener('click', e => { rows.forEach(x => x.setAttribute('aria-selected', x === r)); if (e.pointerType !== 'mouse') { enter(r, e); setTimeout(() => leave(r), 250); } });
+  });
+});
+
+/* ===== 2. radio: ink behind the surface, seen through windows ===== */
+section('radio2', 'Radio: Ink Under the Surface', 'Each radio is a round window in the surface. The ink sits behind the surface and slides underneath it; you only see it while it passes under a window. Pick one, then one further down.', [
+  { k: 'A', name: 'Today', tag: 'Today', desc: 'The real Orion radio: a dot appears inside the new one.' },
+  { k: 'B', name: 'Ink Drop Under Windows', desc: 'A round drop of ink slides behind the surface to the new window, stretching a little as it goes, so you catch it passing under the windows in between.' },
+  { k: 'C', name: 'Ink Disc Under Windows', desc: 'The same, but the ink keeps its round shape (no stretch) and travels a little faster.' }
+], (pv, k) => {
+  const opts = ['Checking •••• 4021', 'Savings •••• 0937', 'Card •••• 8830', 'Pay Later'];
+  if (k === 'A') { pv.innerHTML = `<fieldset class="real" style="border:0;margin:0;padding:0;display:grid">${opts.map((o, i) => `<label class="s4-radio"><input type="radio" name="r2A" ${i === 0 ? 'checked' : ''}><span class="s4-radio-ring"></span>${o}</label>`).join('')}</fieldset>`; return; }
+  pv.innerHTML = `<div class="radios" role="radiogroup" aria-label="Pay With"><div class="wells"></div><div class="ink"><div class="drop"></div></div>${opts.map(o => `<div class="rad" role="radio" aria-checked="false" tabindex="0">${o}</div>`).join('')}</div>`;
+  const rads = [...pv.querySelectorAll('.rad')], wells = pv.querySelector('.wells'), ink = pv.querySelector('.ink'), drop = ink.querySelector('.drop');
+  /* measured once the preview is on the page (and again if the layout changes) */
+  let ys = [];
+  const layout = () => {
+    ys = rads.map(r => r.offsetTop + (r.offsetHeight - 22) / 2);
+    wells.innerHTML = ys.map(y => `<i style="top:${y}px"></i>`).join('');
+    const mask = ys.map(y => `radial-gradient(circle 11px at 11px ${y + 11}px, #000 98%, transparent 100%)`).join(',');
+    ink.style.maskImage = mask; ink.style.webkitMaskImage = mask;
+  };
+  requestAnimationFrame(layout);
+  new ResizeObserver(layout).observe(pv);
+  let cur = -1;
+  const pick = i => {
+    if (i === cur) return;
+    if (!ys[1]) layout(); rads.forEach((r, j) => r.setAttribute('aria-checked', j === i));
+    const cs = getComputedStyle(drop), from = cur < 0 ? [ys[i] - 30, ys[i] - 8] : [parseFloat(cs.top), parseFloat(cs.top) + parseFloat(cs.height)];
+    drop.getAnimations().forEach(a => a.cancel()); drop.style.top = from[0] + 'px'; drop.style.height = (from[1] - from[0]) + 'px';
+    const s = k === 'B' ? edgeFrames(from[0], from[1], ys[i], ys[i] + 22, 1300, 520, 0.85) : edgeFrames(from[0], from[1], ys[i], ys[i] + 22, 1500, 1500, 0.9);
+    const a = drop.animate(s.fr.map(f => ({ top: f.a + 'px', height: Math.max(22, f.b - f.a) + 'px' })), { duration: s.d * FAST, easing: 'linear', fill: 'both' });
+    a.onfinish = () => { drop.style.top = ys[i] + 'px'; drop.style.height = '22px'; a.cancel(); };
+    cur = i;
+  };
+  rads.forEach((r, i) => { r.addEventListener('click', () => pick(i)); r.addEventListener('keydown', e => { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); pick(i); } }); });
+});
+
+/* ===== 3. menu: glass, plain, not out of the button ===== */
+section('menu2', 'Menu: Glass, Plain, Not Out of the Button', 'Glass moves plainly now, and the menu shouldn’t come straight out of its button. Tap the button to open and close.', [
+  { k: 'A', name: 'Today', tag: 'Today', desc: 'Drops 8px down out of the button and fades in.' },
+  { k: 'B', name: 'Settle in Place', desc: 'Fades in where it will sit, rising the last 4px into place (from below, not from the button). Closes with a quick fade.' },
+  { k: 'C', name: 'Items Follow', desc: 'The glass fades in where it sits, then the items fade in one after another, each rising 4px. Closes with a quick fade.' },
+  { k: 'D', name: 'Fade Only', desc: 'Just a quick fade in place. Nothing moves.' }
+], (pv, k) => {
+  pv.innerHTML = `<div class="mstage"><button class="s4-button" data-variant="tonal" type="button">${icon('sort')}Sort By</button>
+    <div class="mn s4-glass"><div class="mn-items"><div class="mn-it">${icon('calendar')}Due Date</div><div class="mn-it">${icon('wallet')}Amount</div><div class="mn-it">${icon('people')}Vendor</div></div></div></div>`;
+  const btn = pv.querySelector('button'), m = pv.querySelector('.mn'), items = [...m.querySelectorAll('.mn-it')];
+  let open = false;
+  const toggle = () => {
+    open = !open; m.classList.toggle('open', open); [m, ...items].forEach(e => e.getAnimations().forEach(a => a.cancel()));
+    const out = spring(2200, 1, FAST);
+    if (!open) { anim(m, [{ opacity: 1 }, { opacity: 0 }], k === 'A' ? TODAYFX() : out); return; }
+    if (k === 'A') { anim(m, [{ opacity: 0, transform: 'translateY(-8px)' }, { opacity: 1, transform: 'none' }], TODAY()); return; }
+    if (k === 'B') { anim(m, [{ opacity: 0, transform: 'translateY(4px)' }, { opacity: 1, transform: 'none' }], spring(1000, 1, FAST)); return; }
+    if (k === 'C') { anim(m, [{ opacity: 0 }, { opacity: 1 }], spring(1600, 1, FAST)); items.forEach((it, i) => anim(it, [{ opacity: 0, transform: 'translateY(4px)' }, { opacity: 1, transform: 'none' }], spring(1000, 1, FAST), { delay: 40 + i * 30 })); return; }
+    anim(m, [{ opacity: 0 }, { opacity: 1 }], spring(1600, 1, FAST));
+  };
+  btn.addEventListener('click', toggle); items.forEach(it => it.addEventListener('click', () => { if (open) toggle(); }));
+});
+
+/* ===== 4. speed ===== */
+section('speed', 'How Fast', 'The decided motions (accordion B, snackbar B) at three speeds. Tap Play in each card and compare. Quick enough never to be in the way, never instant.', [
+  { k: 'A', name: 'Lab 1 Speed', desc: 'The speed of the first lab.' },
+  { k: 'B', name: '15% Faster', desc: 'What this round uses.' },
+  { k: 'C', name: '30% Faster', desc: 'Quicker still.' }
+], (pv, k) => {
+  const f = { A: 1, B: 0.85, C: 0.7 }[k];
+  pv.innerHTML = `<div class="btnrow"><button class="s4-button" data-variant="tonal" type="button">${icon('play')}Play</button></div>
+    <div class="acc"><div class="acc-h">What Is Autopay?<span class="chev">${icon('chevron-down')}</span></div><div class="acc-b"><div>Pays the bill from your default account on its due date.</div></div></div>
+    <div class="stage"><div class="snk s4-glass"><span>Bill archived</span><i>Undo</i></div></div>`;
+  const b = pv.querySelector('.acc-b'), c = pv.querySelector('.chev'), inner = b.firstElementChild, snk = pv.querySelector('.snk');
+  let on = false;
+  pv.querySelector('button').onclick = () => {
+    on = !on; [b, c, inner, snk].forEach(e => e.getAnimations().forEach(a => a.cancel()));
+    const h = inner.scrollHeight;
+    anim(b, [{ height: (on ? 0 : h) + 'px' }, { height: (on ? h : 0) + 'px' }], spring(380, 1, f));
+    if (on) anim(inner, [{ opacity: 0, transform: 'translateY(-4px)' }, { opacity: 1, transform: 'none' }], spring(500, 1, f), { delay: 60 * f });
+    anim(c, [{ transform: `perspective(60px) rotateX(${on ? 0 : 180}deg)` }, { transform: `perspective(60px) rotateX(${on ? 180 : 0}deg)` }], spring(420, 0.9, f));
+    anim(snk, on ? [{ opacity: 0, transform: 'translateY(14px)' }, { opacity: 1, transform: 'none' }] : [{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'translateY(10px)' }], on ? spring(520, 0.8, f) : spring(900, 1, f));
+  };
+});
+
+(function () {
+  const sec = document.createElement('section'); sec.className = 'sec';
+  sec.innerHTML = '<h2>Ink and Glass</h2><p>Last question (in Your Answers): is the split right? Liquid for ink (fills that show state), plain motion for glass surfaces.</p>';
+  document.getElementById('sections').appendChild(sec);
+})();
+S4Review.page('motion-liquid-2');
+</script>
+</body>
+</html>

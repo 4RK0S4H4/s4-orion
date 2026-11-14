@@ -222,4 +222,15 @@ window.S4_REVIEW_DEMOS = [
       { id: 'overall', label: 'Did I get "liquid but subtle" right?', help: 'Looking at B and C together.', options: [{ v: 'Yes', label: 'That is it' }, { v: 'Close', label: 'Close; see notes' }, { v: 'No', label: 'Not what I mean; see notes' }] }
     ]
   }
+  ,
+  {
+    id: 'motion-liquid-2', title: 'Liquid Motion 2', href: 'explore/motion-liquid-2.html',
+    questions: [
+      { id: 'rows2', label: 'Row hover: the edges of the box', help: 'Issue 7.', options: [{ v: 'A', label: 'Today' }, { v: 'B', label: 'Edges Settle' }, { v: 'C', label: 'Edges Lean' }, { v: 'D', label: 'Corners Melt' }, { v: 'Other', label: 'Describe in notes' }] },
+      { id: 'radio2', label: 'Radio: ink under the surface', help: 'Issue 19.', options: [{ v: 'A', label: 'Today' }, { v: 'B', label: 'Ink Drop Under Windows' }, { v: 'C', label: 'Ink Disc Under Windows' }, { v: 'Other', label: 'Describe in notes' }] },
+      { id: 'menu2', label: 'Menu: glass, plain', help: 'Issue 31.', options: [{ v: 'A', label: 'Today' }, { v: 'B', label: 'Settle in Place' }, { v: 'C', label: 'Items Follow' }, { v: 'D', label: 'Fade Only' }, { v: 'Other', label: 'Describe in notes' }] },
+      { id: 'speed', label: 'How fast', help: 'Accordion and snackbar at three speeds.', options: [{ v: 'A', label: 'Lab 1 Speed' }, { v: 'B', label: '15% Faster' }, { v: 'C', label: '30% Faster' }] },
+      { id: 'split', label: 'Liquid for ink, plain for glass?', help: 'Ink = fills that show state; glass = surfaces.', options: [{ v: 'Yes', label: 'Right' }, { v: 'No', label: 'Not quite; see notes' }] }
+    ]
+  }
 ];
