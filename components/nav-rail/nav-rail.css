@@ -1,5 +1,5 @@
-/* Navigation rail (M3 Expressive)
-   <nav class="s4-nav-rail" aria-label="Main">
+/* Navigation rail: the side navigation on wide windows (decision 0043)
+   <nav class="s4-nav-rail" aria-label="Main" data-expand="auto">
      <div class="s4-nav-rail-header">
        <button class="s4-icon-button" type="button" data-rail-toggle aria-expanded="false" aria-label="Expand Navigation">
          <span class="s4-icon" data-icon="menu"></span></button>
@@ -8,93 +8,133 @@
      <div class="s4-nav-rail-items">
        <a class="s4-nav-item" href="#home" aria-current="page">
          <span class="s4-nav-indicator"><span class="s4-icon" data-icon="home"></span></span><span class="s4-nav-label">Home</span></a>
+       <div class="s4-nav-rail-title">Library</div>      optional group title (hidden while collapsed)
        …
      </div>
+     <div class="s4-nav-rail-footer">…</div>            optional: account, settings (stays at the bottom)
    </nav>
-   Collapsed: 96dp, icon in a 56x32 pill with the label under it, on surface. data-expanded: wider, labels beside the
-   icons inside a 56dp pill that spans icon and label, label-large, on surface-container. [data-rail-toggle] flips it
-   (nav-rail.js). In the collapsed rail a FAB's text (any child span that is not the icon) is hidden, so the same FAB
-   becomes an extended FAB when the rail expands. Shares .s4-nav-item with the nav bar (nav-bar.css).
-   Public knob: --s4-nav-rail-expanded-width (default 240; M3 Expressive allows 220 to 360). */
+   Items are always rows: the icon keeps one place and the label sits beside it. Collapsed, the rail is one icon wide
+   and the labels are hidden (the item's label becomes its tooltip, nav-rail.js); data-expanded shows them. Because
+   nothing moves between the two states except the rail's own edge, expanding and collapsing can't glitch.
+   The header's .s4-fab is the rail's main action: a solid primary button here (never glass), round when collapsed.
+   [data-rail-toggle] flips the rail (nav-rail.js); data-expand="auto" expands it on large windows.
+   Shares .s4-nav-item with the nav bar (nav-bar.css).
+   Public knob: --s4-nav-rail-expanded-width (default 240). */
 @layer s4.components {
   .s4-nav-rail {
+    --_row: var(--s4-size-nav-row);
+    --_pad: calc((var(--s4-size-nav-rail) - var(--_row)) / 2);              /* 12: the row's inset from the rail's edges */
     --_w: var(--s4-size-nav-rail);
-    --_inset: calc((var(--s4-size-nav-rail) - var(--s4-size-nav-indicator-width)) / 2);   /* 20: indicator's start edge */
     display: flex;
     flex-direction: column;
     flex: none;
+    gap: var(--s4-space-4);
     inline-size: calc(var(--_w) + env(safe-area-inset-left, 0px));
-    padding-block: max(var(--s4-space-10), env(safe-area-inset-top, 0px)) max(var(--s4-space-4), env(safe-area-inset-bottom, 0px));
+    padding-block: max(var(--s4-space-3), env(safe-area-inset-top, 0px)) max(var(--s4-space-3), env(safe-area-inset-bottom, 0px));
     padding-inline-start: env(safe-area-inset-left, 0px);
     overflow-x: hidden;
     overflow-y: auto;
     overscroll-behavior: contain;
     scrollbar-width: none;
-    background: var(--md-sys-color-surface);
+    background: var(--md-sys-color-surface-container-low);
     color: var(--md-sys-color-on-surface-variant);
-    transition:
-      inline-size var(--md-sys-motion-spring-spatial-duration) var(--md-sys-motion-spring-spatial),
-      background-color var(--md-sys-motion-spring-effects-duration) var(--md-sys-motion-spring-effects);
+    transition: inline-size var(--md-sys-motion-spring-fast-spatial-duration) var(--md-sys-motion-spring-settle);
   }
-  .s4-nav-rail-header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--s4-space-1);
-    padding-block-end: var(--s4-space-10);
-  }
-  .s4-nav-rail-items {
-    display: flex;
-    flex-direction: column;
-    gap: var(--s4-space-1);
-  }
-  .s4-nav-rail .s4-nav-item {
-    inline-size: var(--s4-size-nav-rail);
-    padding-block: var(--s4-space-1) var(--s4-space-2);
-  }
-  /* a collapsed rail shows the FAB as icon-only (aria-label carries the name) */
-  .s4-nav-rail:not([data-expanded]) .s4-nav-rail-header .s4-fab > :not(.s4-icon) { display: none; }
+  .s4-nav-rail[data-expanded] { --_w: var(--s4-nav-rail-expanded-width, var(--s4-size-nav-rail-expanded)); }
 
-  /* ---------- expanded ---------- */
-  .s4-nav-rail[data-expanded] {
-    --_w: var(--s4-nav-rail-expanded-width, var(--s4-size-nav-rail-expanded));
-    background: var(--md-sys-color-surface-container);
+  .s4-nav-rail-header,
+  .s4-nav-rail-items,
+  .s4-nav-rail-footer {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--s4-space-1) / 2);
+    padding-inline: var(--_pad);
   }
-  .s4-nav-rail[data-expanded] .s4-nav-rail-header {
-    align-items: flex-start;
-    padding-inline-start: var(--_inset);
-  }
-  /* the menu button lines up with the item icons (icon at 36) */
-  .s4-nav-rail[data-expanded] .s4-nav-rail-header > [data-rail-toggle] {
-    margin-inline-start: calc((var(--s4-size-nav-indicator-width) - var(--s4-size-icon-button)) / 2);
-  }
-  .s4-nav-rail[data-expanded] .s4-nav-item {
-    --_weight: var(--md-sys-typescale-label-large-weight);
-    flex-direction: row;
+  .s4-nav-rail-header { gap: var(--s4-space-3); }
+  .s4-nav-rail-footer { margin-block-start: auto; }
+  /* the menu button's icon lines up with the item icons */
+  .s4-nav-rail-header > [data-rail-toggle] { align-self: flex-start; margin-inline-start: calc((var(--_row) - var(--s4-size-icon-button)) / 2); }
+
+  /* ---------- the main action: a solid primary button, the same row as the items ---------- */
+  .s4-nav-rail-header > .s4-fab {
+    --_h: var(--_row);
+    --_bg: var(--md-sys-color-primary);
+    --_fg: var(--md-sys-color-on-primary);
+    --_elevation: var(--md-sys-elevation-level0);
     justify-content: flex-start;
-    align-self: flex-start;
-    gap: var(--s4-space-2);
-    inline-size: auto;
-    max-inline-size: calc(100% - 2 * var(--_inset));
-    min-block-size: var(--s4-size-list-item-one-line);
-    margin-inline-start: var(--_inset);
-    padding: 0 var(--s4-space-4);
-    border-radius: var(--s4-shape-nav-indicator);
+    gap: var(--s4-space-3);
+    inline-size: 100%;
+    min-inline-size: 0;
+    padding-inline: calc((var(--_row) - var(--s4-size-icon)) / 2);
+    border-radius: calc(var(--_row) / 2);
+    overflow: hidden;
     font-family: var(--md-sys-typescale-label-large-font);
     font-size: var(--md-sys-typescale-label-large-size);
     line-height: var(--md-sys-typescale-label-large-line-height);
     letter-spacing: var(--md-sys-typescale-label-large-tracking);
+    font-weight: var(--md-sys-typescale-emphasized-label-large-weight);
   }
-  .s4-nav-rail[data-expanded] .s4-nav-item[aria-current]:not([aria-current="false"]) { --_weight: var(--md-sys-typescale-emphasized-label-large-weight); }
-  /* the indicator box dissolves so its pill and state layer (absolute) span the whole item: icon and label */
-  .s4-nav-rail[data-expanded] .s4-nav-indicator { display: contents; }
-  .s4-nav-rail[data-expanded] .s4-nav-indicator > .s4-badge { position: static; order: 2; margin-inline-start: auto; }
-  .s4-nav-rail[data-expanded] .s4-nav-label { text-align: start; }
-  .s4-nav-rail[data-expanded] .s4-nav-item:focus-visible {
+  .s4-nav-rail-header > .s4-fab > :not(.s4-icon) { margin: 0; max-width: none; }
+
+  /* ---------- items: rows ---------- */
+  .s4-nav-rail .s4-nav-item {
+    --_weight: var(--md-sys-typescale-label-large-weight);
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: var(--s4-space-3);
+    inline-size: 100%;
+    block-size: var(--_row);
+    min-block-size: 0;
+    padding-inline: calc((var(--_row) - var(--s4-size-icon)) / 2);
+    border-radius: calc(var(--_row) / 2);
+    overflow: hidden;
+    font-family: var(--md-sys-typescale-label-large-font);
+    font-size: var(--md-sys-typescale-label-large-size);
+    line-height: var(--md-sys-typescale-label-large-line-height);
+    letter-spacing: var(--md-sys-typescale-label-large-tracking);
+    text-align: start;
+  }
+  .s4-nav-rail .s4-nav-item[aria-current]:not([aria-current="false"]) { --_weight: var(--md-sys-typescale-emphasized-label-large-weight); }
+  /* the indicator box dissolves: its pill and state layer (absolute) span the whole row */
+  .s4-nav-rail .s4-nav-indicator { display: contents; }
+  .s4-nav-rail .s4-nav-item .s4-icon { color: var(--_icon-fg); }
+  .s4-nav-rail .s4-nav-label { flex: 1 1 auto; text-align: start; }
+  .s4-nav-rail .s4-nav-item:focus-visible {
     outline: var(--s4-focus-ring-width) solid var(--s4-focus-ring-color);
-    outline-offset: var(--s4-focus-ring-offset);
+    outline-offset: calc(-1 * var(--s4-focus-ring-width));
+  }
+  /* the sliding highlight is as wide as the row in CSS, so it follows the rail's edge without a script */
+  .s4-nav-rail-items > .s4-nav-pill {
+    inset-inline: var(--_pad);
+    inline-size: auto;
+    border-radius: calc(var(--_row) / 2);
+    transform: translateY(var(--_y, 0));
+  }
+  .s4-nav-rail-items > .s4-nav-pill[data-animate] {
+    transition:
+      transform var(--md-sys-motion-spring-fast-spatial-duration) var(--md-sys-motion-spring-ink),
+      block-size var(--md-sys-motion-spring-fast-spatial-duration) var(--md-sys-motion-spring-ink);
+  }
+  .s4-nav-rail-title {
+    padding: var(--s4-space-4) calc((var(--_row) - var(--s4-size-icon)) / 2) var(--s4-space-1);
+    overflow: hidden;
+    color: var(--md-sys-color-on-surface-variant);
+    font-family: var(--md-sys-typescale-label-medium-font);
+    font-size: var(--md-sys-typescale-label-medium-size);
+    line-height: var(--md-sys-typescale-label-medium-line-height);
+    letter-spacing: var(--md-sys-typescale-label-medium-tracking);
+    font-weight: var(--md-sys-typescale-label-medium-weight);
+    white-space: nowrap;
   }
 
+  /* ---------- labels: beside the icon, shown when the rail is expanded ---------- */
+  .s4-nav-rail .s4-nav-label,
+  .s4-nav-rail-header > .s4-fab > :not(.s4-icon),
+  .s4-nav-rail-title {
+    transition: opacity var(--md-sys-motion-spring-fast-effects-duration) var(--md-sys-motion-spring-fast-effects);
+  }
+  .s4-nav-rail:not([data-expanded]) :is(.s4-nav-label, .s4-nav-rail-title, .s4-nav-rail-header > .s4-fab > :not(.s4-icon)) { opacity: 0; }
+  .s4-nav-rail:not([data-expanded]) .s4-nav-rail-title { block-size: var(--s4-space-4); padding-block: 0; }
   @media (forced-colors: active) {
     .s4-nav-rail { border-inline-end: 1px solid CanvasText; }
   }

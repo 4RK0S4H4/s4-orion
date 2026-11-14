@@ -94,7 +94,6 @@
       opacity var(--md-sys-motion-spring-effects-duration) var(--md-sys-motion-spring-effects);
   }
   .s4-nav-item[aria-current]:not([aria-current="false"]) .s4-nav-indicator::after { opacity: 1; transform: none; }
-  .s4-nav-item[aria-current]:not([aria-current="false"]) .s4-icon { --s4-icon-duo-opacity: 1; }   /* M3: filled icon when selected */
 
   /* ---------- the sliding highlight (nav-bar.js): one pill behind the items that covers icon and label of the current
      item and morphs from item to item. The per-item indicator pill is replaced by it. ---------- */

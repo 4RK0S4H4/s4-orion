@@ -29,6 +29,10 @@ const modes = {
   'dark-high-contrast': M3.scheme(gen.seed, gen.variant, true, 1),
 };
 
+/* Decision 0043: quieter, clearer error tones in dark mode (M3's tone-80 salmon reads washed out; its tone-30 container is
+   too loud as a fill). Light and both high-contrast modes keep the generated values. */
+Object.assign(modes.dark, { error: '#ff8983', 'on-error': '#410004', 'error-container': '#4a1719', 'on-error-container': '#ffdad7' });
+
 const color = (hex) => {
   const h = hex.toLowerCase(), c = [1, 3, 5].map((i) => +(parseInt(h.slice(i, i + 2), 16) / 255).toFixed(4));
   return { colorSpace: 'srgb', components: c, hex: h };

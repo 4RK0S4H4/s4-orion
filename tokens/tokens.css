@@ -217,7 +217,7 @@
     --s4-glass-glow-shade-alpha: 0.28;
     --s4-glass-glow-flip: 0.6;
     --s4-glass-glow-size: 12px;
-    --s4-icon-duo-opacity: 0.8;
+    --s4-icon-duo-opacity: 0.42;
     --s4-motion-spring-fast-spatial-calm-stiffness: 1400;
     --s4-motion-spring-fast-spatial-calm-damping: 1;
     --s4-motion-spring-fast-spatial-calm-duration: 200ms;
@@ -299,7 +299,7 @@
     --s4-size-list-item-three-line: 88px;
     --s4-size-top-app-bar: 64px;
     --s4-size-nav-bar: 80px;
-    --s4-size-nav-rail: 96px;
+    --s4-size-nav-rail: 72px;
     --s4-size-nav-indicator-width: 56px;
     --s4-size-nav-indicator-height: 32px;
     --s4-size-table-row: 52px;
@@ -311,6 +311,8 @@
     --s4-size-avatar: 40px;
     --s4-size-badge-dot: 6px;
     --s4-size-badge: 16px;
+    --s4-size-nav-row: 48px;
+    --s4-size-titlebar: 40px;
     --s4-layout-margin-compact: var(--s4-space-4);
     --s4-layout-margin: var(--s4-space-6);
     --s4-layout-pane-gap: var(--s4-space-6);
@@ -335,10 +337,40 @@
     --s4-z-menu: 95;
     --s4-z-snackbar: 100;
     --s4-z-tooltip: 110;
+    --s4-density-compact-touch-target: 32px;
+    --s4-density-compact-button: 32px;
+    --s4-density-compact-button-small: 28px;
+    --s4-density-compact-icon-button: 32px;
+    --s4-density-compact-chip: 28px;
+    --s4-density-compact-text-field: 40px;
+    --s4-density-compact-list-item-one-line: 40px;
+    --s4-density-compact-list-item-two-line: 56px;
+    --s4-density-compact-list-item-three-line: 72px;
+    --s4-density-compact-top-app-bar: 48px;
+    --s4-density-compact-nav-row: 36px;
+    --s4-density-compact-nav-rail: 60px;
+    --s4-density-compact-table-row: 40px;
+    --s4-density-compact-table-header: 40px;
+    --s4-density-compact-toolbar: 48px;
+    --s4-density-compact-avatar: 32px;
+    --s4-density-compact-icon: 20px;
+    --s4-density-compact-layout-margin: 20px;
+    --s4-density-compact-layout-gap: 12px;
     --s4-focus-ring-width: 3px;
     --s4-focus-ring-offset: 2px;
     --s4-focus-ring-color: var(--md-sys-color-secondary);
     --s4-scrim-opacity: 0.32;
+    --s4-color-success: #146c40;
+    --s4-color-success-container: #d7f2e1;
+    --s4-color-on-success-container: #0b4429;
+    --s4-color-warning: #7d5200;
+    --s4-color-warning-container: #fbe7b5;
+    --s4-color-on-warning-container: #4d3200;
+    --s4-color-info: #0b5cbc;
+    --s4-color-info-container: #dbe7fd;
+    --s4-color-on-info-container: #0a376f;
+    --s4-color-badge: #d93025;
+    --s4-color-on-badge: #ffffff;
     --md-sys-motion-spring-fast-spatial: linear(0, 0.019 2.5%, 0.069 5%, 0.139 7.5%, 0.222 10%, 0.311 12.5%, 0.401 15%, 0.49 17.5%, 0.573 20%, 0.65 22.5%, 0.719 25%, 0.78 27.5%, 0.832 30%, 0.877 32.5%, 0.914 35%, 0.945 37.5%, 0.969 40%, 0.989 42.5%, 1.003 45%, 1.013 47.5%, 1.021 50%, 1.025 52.5%, 1.028 55%, 1.028 57.5%, 1.028 60%, 1.027 62.5%, 1.025 65%, 1.022 67.5%, 1.02 70%, 1.017 72.5%, 1.015 75%, 1.012 77.5%, 1.01 80%, 1.008 82.5%, 1.006 85%, 1.005 87.5%, 1.004 90%, 1.003 92.5%, 1.002 95%, 1.001 97.5%, 1);
     --md-sys-motion-spring-spatial: linear(0, 0.017 2.5%, 0.061 5%, 0.123 7.5%, 0.195 10%, 0.274 12.5%, 0.353 15%, 0.431 17.5%, 0.505 20%, 0.575 22.5%, 0.638 25%, 0.695 27.5%, 0.746 30%, 0.791 32.5%, 0.83 35%, 0.863 37.5%, 0.892 40%, 0.916 42.5%, 0.935 45%, 0.952 47.5%, 0.965 50%, 0.976 52.5%, 0.984 55%, 0.991 57.5%, 0.996 60%, 0.999 62.5%, 1.002 65%, 1.004 67.5%, 1.005 70%, 1.006 72.5%, 1.006 75%, 1.006 77.5%, 1.006 80%, 1.006 82.5%, 1.005 85%, 1.005 87.5%, 1.004 90%, 1.004 92.5%, 1.003 95%, 1.003 97.5%, 1);
     --md-sys-motion-spring-slow-spatial: linear(0, 0.017 2.5%, 0.06 5%, 0.12 7.5%, 0.19 10%, 0.265 12.5%, 0.341 15%, 0.416 17.5%, 0.487 20%, 0.553 22.5%, 0.614 25%, 0.669 27.5%, 0.719 30%, 0.763 32.5%, 0.801 35%, 0.834 37.5%, 0.863 40%, 0.888 42.5%, 0.909 45%, 0.926 47.5%, 0.941 50%, 0.953 52.5%, 0.963 55%, 0.972 57.5%, 0.979 60%, 0.984 62.5%, 0.988 65%, 0.992 67.5%, 0.994 70%, 0.997 72.5%, 0.998 75%, 0.999 77.5%, 1 80%, 1.001 82.5%, 1.001 85%, 1.001 87.5%, 1.001 90%, 1.002 92.5%, 1.002 95%, 1.001 97.5%, 1);
@@ -371,10 +403,10 @@
       --md-sys-color-on-tertiary: #1b1b1b;
       --md-sys-color-tertiary-container: #919191;
       --md-sys-color-on-tertiary-container: #000000;
-      --md-sys-color-error: #ffb4ab;
-      --md-sys-color-on-error: #690005;
-      --md-sys-color-error-container: #93000a;
-      --md-sys-color-on-error-container: #ffdad6;
+      --md-sys-color-error: #ff8983;
+      --md-sys-color-on-error: #410004;
+      --md-sys-color-error-container: #4a1719;
+      --md-sys-color-on-error-container: #ffdad7;
       --md-sys-color-background: #131313;
       --md-sys-color-on-background: #e2e2e2;
       --md-sys-color-surface: #131313;
@@ -415,7 +447,18 @@
       --s4-glass-edge-top-alpha: 0.12;
       --s4-glass-edge-side-alpha: 0;
       --s4-glass-edge-bottom-alpha: 0.12;
-      --s4-icon-duo-opacity: 0.65;
+      --s4-icon-duo-opacity: 0.38;
+      --s4-color-success: #62d39b;
+      --s4-color-success-container: #173a2a;
+      --s4-color-on-success-container: #b9f0d2;
+      --s4-color-warning: #f0bb4a;
+      --s4-color-warning-container: #43320d;
+      --s4-color-on-warning-container: #ffe3a6;
+      --s4-color-info: #8ab6ff;
+      --s4-color-info-container: #172f52;
+      --s4-color-on-info-container: #d5e4ff;
+      --s4-color-badge: #d93025;
+      --s4-color-on-badge: #ffffff;
     }
     }
   :where(:root[data-theme="dark"]) {
@@ -433,10 +476,10 @@
     --md-sys-color-on-tertiary: #1b1b1b;
     --md-sys-color-tertiary-container: #919191;
     --md-sys-color-on-tertiary-container: #000000;
-    --md-sys-color-error: #ffb4ab;
-    --md-sys-color-on-error: #690005;
-    --md-sys-color-error-container: #93000a;
-    --md-sys-color-on-error-container: #ffdad6;
+    --md-sys-color-error: #ff8983;
+    --md-sys-color-on-error: #410004;
+    --md-sys-color-error-container: #4a1719;
+    --md-sys-color-on-error-container: #ffdad7;
     --md-sys-color-background: #131313;
     --md-sys-color-on-background: #e2e2e2;
     --md-sys-color-surface: #131313;
@@ -477,7 +520,18 @@
     --s4-glass-edge-top-alpha: 0.12;
     --s4-glass-edge-side-alpha: 0;
     --s4-glass-edge-bottom-alpha: 0.12;
-    --s4-icon-duo-opacity: 0.65;
+    --s4-icon-duo-opacity: 0.38;
+    --s4-color-success: #62d39b;
+    --s4-color-success-container: #173a2a;
+    --s4-color-on-success-container: #b9f0d2;
+    --s4-color-warning: #f0bb4a;
+    --s4-color-warning-container: #43320d;
+    --s4-color-on-warning-container: #ffe3a6;
+    --s4-color-info: #8ab6ff;
+    --s4-color-info-container: #172f52;
+    --s4-color-on-info-container: #d5e4ff;
+    --s4-color-badge: #d93025;
+    --s4-color-on-badge: #ffffff;
   }
   @media (prefers-contrast: more) {
     :where(:root:not([data-contrast])) {
@@ -540,6 +594,9 @@
       --s4-glass-edge-top-alpha: 0;
       --s4-glass-edge-side-alpha: 0;
       --s4-glass-edge-bottom-alpha: 0;
+      --s4-color-success: #0b4429;
+      --s4-color-warning: #4d3200;
+      --s4-color-info: #0a376f;
     }
     }
   :where(:root[data-contrast="high"]) {
@@ -602,6 +659,9 @@
     --s4-glass-edge-top-alpha: 0;
     --s4-glass-edge-side-alpha: 0;
     --s4-glass-edge-bottom-alpha: 0;
+    --s4-color-success: #0b4429;
+    --s4-color-warning: #4d3200;
+    --s4-color-info: #0a376f;
   }
   @media (prefers-color-scheme: dark) and (prefers-contrast: more) {
     :where(:root:not([data-theme="light"]):not([data-contrast])) {
@@ -666,7 +726,18 @@
       --s4-glass-edge-top-alpha: 0;
       --s4-glass-edge-side-alpha: 0;
       --s4-glass-edge-bottom-alpha: 0;
-      --s4-icon-duo-opacity: 0.65;
+      --s4-icon-duo-opacity: 0.38;
+      --s4-color-success: #b9f0d2;
+      --s4-color-success-container: #173a2a;
+      --s4-color-on-success-container: #b9f0d2;
+      --s4-color-warning: #ffe3a6;
+      --s4-color-warning-container: #43320d;
+      --s4-color-on-warning-container: #ffe3a6;
+      --s4-color-info: #d5e4ff;
+      --s4-color-info-container: #172f52;
+      --s4-color-on-info-container: #d5e4ff;
+      --s4-color-badge: #d93025;
+      --s4-color-on-badge: #ffffff;
     }
     }
   @media (prefers-color-scheme: dark) {
@@ -732,7 +803,18 @@
       --s4-glass-edge-top-alpha: 0;
       --s4-glass-edge-side-alpha: 0;
       --s4-glass-edge-bottom-alpha: 0;
-      --s4-icon-duo-opacity: 0.65;
+      --s4-icon-duo-opacity: 0.38;
+      --s4-color-success: #b9f0d2;
+      --s4-color-success-container: #173a2a;
+      --s4-color-on-success-container: #b9f0d2;
+      --s4-color-warning: #ffe3a6;
+      --s4-color-warning-container: #43320d;
+      --s4-color-on-warning-container: #ffe3a6;
+      --s4-color-info: #d5e4ff;
+      --s4-color-info-container: #172f52;
+      --s4-color-on-info-container: #d5e4ff;
+      --s4-color-badge: #d93025;
+      --s4-color-on-badge: #ffffff;
     }
     }
   @media (prefers-contrast: more) {
@@ -798,7 +880,18 @@
       --s4-glass-edge-top-alpha: 0;
       --s4-glass-edge-side-alpha: 0;
       --s4-glass-edge-bottom-alpha: 0;
-      --s4-icon-duo-opacity: 0.65;
+      --s4-icon-duo-opacity: 0.38;
+      --s4-color-success: #b9f0d2;
+      --s4-color-success-container: #173a2a;
+      --s4-color-on-success-container: #b9f0d2;
+      --s4-color-warning: #ffe3a6;
+      --s4-color-warning-container: #43320d;
+      --s4-color-on-warning-container: #ffe3a6;
+      --s4-color-info: #d5e4ff;
+      --s4-color-info-container: #172f52;
+      --s4-color-on-info-container: #d5e4ff;
+      --s4-color-badge: #d93025;
+      --s4-color-on-badge: #ffffff;
     }
     }
   :where(:root[data-theme="dark"][data-contrast="high"]) {
@@ -863,7 +956,18 @@
     --s4-glass-edge-top-alpha: 0;
     --s4-glass-edge-side-alpha: 0;
     --s4-glass-edge-bottom-alpha: 0;
-    --s4-icon-duo-opacity: 0.65;
+    --s4-icon-duo-opacity: 0.38;
+    --s4-color-success: #b9f0d2;
+    --s4-color-success-container: #173a2a;
+    --s4-color-on-success-container: #b9f0d2;
+    --s4-color-warning: #ffe3a6;
+    --s4-color-warning-container: #43320d;
+    --s4-color-on-warning-container: #ffe3a6;
+    --s4-color-info: #d5e4ff;
+    --s4-color-info-container: #172f52;
+    --s4-color-on-info-container: #d5e4ff;
+    --s4-color-badge: #d93025;
+    --s4-color-on-badge: #ffffff;
   }
   @media (prefers-reduced-motion: reduce) {
     :where(:root) {

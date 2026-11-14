@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="../_example/example.css">
 <style>
   /* page-only: a frame the height of a small laptop window, with fake content beside the rail */
-  .demo-window { display: flex; height: calc(var(--s4-size-nav-rail) * 6); overflow: hidden; border-radius: var(--md-sys-shape-corner-large); box-shadow: inset 0 0 0 1px var(--md-sys-color-outline-variant); background: var(--md-sys-color-surface); }
+  .demo-window { display: flex; height: calc(var(--s4-size-nav-rail) * 7); overflow: hidden; border-radius: var(--md-sys-shape-corner-large); box-shadow: inset 0 0 0 1px var(--md-sys-color-outline-variant); background: var(--md-sys-color-surface); }
   .demo-window > .s4-nav-rail { height: 100%; }
   .demo-page { flex: 1; min-width: 0; padding: var(--s4-space-6); display: flex; flex-direction: column; gap: var(--s4-space-3); }
   .demo-page > div { height: var(--s4-size-list-item-two-line); border-radius: var(--s4-shape-card); background: var(--md-sys-color-surface-container-low); }
@@ -22,13 +22,13 @@
 
   <section class="ex-sec">
     <h2>Collapsed and Expanded</h2>
-    <p>Collapsed: 96dp, label under the icon. Press the menu button to expand: the rail widens, labels move beside the icons inside a pill that spans both, and the FAB shows its label. <code>data-expanded</code> starts it open.</p>
+    <p>Items are rows: the icon keeps its place and the label sits beside it. Collapsed, the rail is one icon wide (72) and each label becomes the item's tooltip. Press the menu button to expand: only the rail's edge moves and the labels fade in. <code>data-expanded</code> starts it open.</p>
     <div class="demo-grid">
       <div class="demo-window">
         <nav class="s4-nav-rail" aria-label="Main (collapsed)">
         <div class="s4-nav-rail-header">
           <button class="s4-icon-button" type="button" data-rail-toggle aria-expanded="false" aria-label="Expand Navigation" data-label-expand="Expand Navigation" data-label-collapse="Collapse Navigation"><span class="s4-icon" data-icon="menu"></span></button>
-          <button class="s4-fab" type="button" data-color="tertiary-container" aria-label="Add Bill"><span class="s4-icon" data-icon="add"></span><span class="s4-fab-label">Add Bill</span></button>
+          <button class="s4-fab" type="button" aria-label="Add Bill"><span class="s4-icon" data-icon="add"></span><span class="s4-fab-label">Add Bill</span></button>
         </div>
           <div class="s4-nav-rail-items">
       <a class="s4-nav-item" href="#home" data-view="home" aria-current="page"><span class="s4-nav-indicator"><span class="s4-icon" data-icon="home"></span></span><span class="s4-nav-label">Home</span></a>
@@ -43,7 +43,7 @@
         <nav class="s4-nav-rail" aria-label="Main (expanded)" data-expanded>
         <div class="s4-nav-rail-header">
           <button class="s4-icon-button" type="button" data-rail-toggle aria-expanded="false" aria-label="Expand Navigation" data-label-expand="Expand Navigation" data-label-collapse="Collapse Navigation"><span class="s4-icon" data-icon="menu"></span></button>
-          <button class="s4-fab" type="button" data-color="tertiary-container" aria-label="Add Bill"><span class="s4-icon" data-icon="add"></span><span class="s4-fab-label">Add Bill</span></button>
+          <button class="s4-fab" type="button" aria-label="Add Bill"><span class="s4-icon" data-icon="add"></span><span class="s4-fab-label">Add Bill</span></button>
         </div>
           <div class="s4-nav-rail-items">
       <a class="s4-nav-item" href="#home" data-view="home"><span class="s4-nav-indicator"><span class="s4-icon" data-icon="home"></span></span><span class="s4-nav-label">Home</span></a>

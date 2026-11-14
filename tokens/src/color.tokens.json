@@ -583,10 +583,10 @@
                 "colorSpace": "srgb",
                 "components": [
                   1,
-                  0.7059,
-                  0.6706
+                  0.5373,
+                  0.5137
                 ],
-                "hex": "#ffb4ab"
+                "hex": "#ff8983"
               },
               "high-contrast": {
                 "colorSpace": "srgb",
@@ -624,11 +624,11 @@
               "dark": {
                 "colorSpace": "srgb",
                 "components": [
-                  0.4118,
+                  0.2549,
                   0,
-                  0.0196
+                  0.0157
                 ],
-                "hex": "#690005"
+                "hex": "#410004"
               },
               "high-contrast": {
                 "colorSpace": "srgb",
@@ -666,11 +666,11 @@
               "dark": {
                 "colorSpace": "srgb",
                 "components": [
-                  0.5765,
-                  0,
-                  0.0392
+                  0.2902,
+                  0.0902,
+                  0.098
                 ],
-                "hex": "#93000a"
+                "hex": "#4a1719"
               },
               "high-contrast": {
                 "colorSpace": "srgb",
@@ -710,9 +710,9 @@
                 "components": [
                   1,
                   0.8549,
-                  0.8392
+                  0.8431
                 ],
-                "hex": "#ffdad6"
+                "hex": "#ffdad7"
               },
               "high-contrast": {
                 "colorSpace": "srgb",

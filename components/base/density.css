@@ -1,0 +1,69 @@
+/* Density (decision 0043). Orion has two densities:
+     comfortable  the default: touch-first sizes (48dp targets), right for phones, tablets and touch laptops
+     compact      pointer-first sizes for desktop windows and desktop apps (32px targets, 14px body text)
+   Set data-density on <html>, .s4-app or any container:
+     data-density="compact"   always compact inside
+     data-density="auto"      compact only where the main pointer is a mouse or trackpad (pointer: fine); touch stays comfortable
+   Only tokens change, so every component follows without its own rules. Apps never restyle components for density. */
+@layer s4.tokens {
+  :where([data-density="compact"]) {
+    --s4-size-touch-target: var(--s4-density-compact-touch-target);
+    --s4-size-button: var(--s4-density-compact-button);
+    --s4-size-button-small: var(--s4-density-compact-button-small);
+    --s4-size-icon-button: var(--s4-density-compact-icon-button);
+    --s4-size-chip: var(--s4-density-compact-chip);
+    --s4-size-text-field: var(--s4-density-compact-text-field);
+    --s4-size-list-item-one-line: var(--s4-density-compact-list-item-one-line);
+    --s4-size-list-item-two-line: var(--s4-density-compact-list-item-two-line);
+    --s4-size-list-item-three-line: var(--s4-density-compact-list-item-three-line);
+    --s4-size-top-app-bar: var(--s4-density-compact-top-app-bar);
+    --s4-size-nav-row: var(--s4-density-compact-nav-row);
+    --s4-size-nav-rail: var(--s4-density-compact-nav-rail);
+    --s4-size-table-row: var(--s4-density-compact-table-row);
+    --s4-size-table-header: var(--s4-density-compact-table-header);
+    --s4-size-toolbar: var(--s4-density-compact-toolbar);
+    --s4-size-avatar: var(--s4-density-compact-avatar);
+    --s4-size-icon: var(--s4-density-compact-icon);
+    --s4-layout-margin: var(--s4-density-compact-layout-margin);
+    --s4-layout-gap: var(--s4-density-compact-layout-gap);
+    --md-sys-typescale-body-large-size: var(--md-sys-typescale-body-medium-size);
+    --md-sys-typescale-body-large-line-height: var(--md-sys-typescale-body-medium-line-height);
+    --md-sys-typescale-body-large-tracking: var(--md-sys-typescale-body-medium-tracking);
+    --md-sys-typescale-title-medium-size: var(--md-sys-typescale-title-small-size);
+    --md-sys-typescale-title-medium-line-height: var(--md-sys-typescale-title-small-line-height);
+    --md-sys-typescale-title-medium-tracking: var(--md-sys-typescale-title-small-tracking);
+    font-size: var(--md-sys-typescale-body-large-size);
+    line-height: var(--md-sys-typescale-body-large-line-height);
+  }
+  @media (pointer: fine) {
+    :where([data-density="auto"]) {
+      --s4-size-touch-target: var(--s4-density-compact-touch-target);
+      --s4-size-button: var(--s4-density-compact-button);
+      --s4-size-button-small: var(--s4-density-compact-button-small);
+      --s4-size-icon-button: var(--s4-density-compact-icon-button);
+      --s4-size-chip: var(--s4-density-compact-chip);
+      --s4-size-text-field: var(--s4-density-compact-text-field);
+      --s4-size-list-item-one-line: var(--s4-density-compact-list-item-one-line);
+      --s4-size-list-item-two-line: var(--s4-density-compact-list-item-two-line);
+      --s4-size-list-item-three-line: var(--s4-density-compact-list-item-three-line);
+      --s4-size-top-app-bar: var(--s4-density-compact-top-app-bar);
+      --s4-size-nav-row: var(--s4-density-compact-nav-row);
+      --s4-size-nav-rail: var(--s4-density-compact-nav-rail);
+      --s4-size-table-row: var(--s4-density-compact-table-row);
+      --s4-size-table-header: var(--s4-density-compact-table-header);
+      --s4-size-toolbar: var(--s4-density-compact-toolbar);
+      --s4-size-avatar: var(--s4-density-compact-avatar);
+      --s4-size-icon: var(--s4-density-compact-icon);
+      --s4-layout-margin: var(--s4-density-compact-layout-margin);
+      --s4-layout-gap: var(--s4-density-compact-layout-gap);
+      --md-sys-typescale-body-large-size: var(--md-sys-typescale-body-medium-size);
+      --md-sys-typescale-body-large-line-height: var(--md-sys-typescale-body-medium-line-height);
+      --md-sys-typescale-body-large-tracking: var(--md-sys-typescale-body-medium-tracking);
+      --md-sys-typescale-title-medium-size: var(--md-sys-typescale-title-small-size);
+      --md-sys-typescale-title-medium-line-height: var(--md-sys-typescale-title-small-line-height);
+      --md-sys-typescale-title-medium-tracking: var(--md-sys-typescale-title-small-tracking);
+      font-size: var(--md-sys-typescale-body-large-size);
+      line-height: var(--md-sys-typescale-body-large-line-height);
+    }
+  }
+}

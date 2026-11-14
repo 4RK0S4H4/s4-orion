@@ -189,9 +189,10 @@
       },
       "nav-rail": {
         "$value": {
-          "value": 96,
+          "value": 72,
           "unit": "px"
-        }
+        },
+        "$description": "Collapsed navigation rail: one icon wide (decision 0043)."
       },
       "nav-indicator-width": {
         "$value": {
@@ -261,6 +262,20 @@
           "value": 16,
           "unit": "px"
         }
+      },
+      "nav-row": {
+        "$value": {
+          "value": 48,
+          "unit": "px"
+        },
+        "$description": "A navigation row in the rail: icon and label side by side."
+      },
+      "titlebar": {
+        "$value": {
+          "value": 40,
+          "unit": "px"
+        },
+        "$description": "Desktop app title bar (window controls overlay, Electron, Tauri)."
       }
     },
     "layout": {
@@ -376,6 +391,126 @@
       },
       "tooltip": {
         "$value": 110
+      }
+    },
+    "density": {
+      "$type": "dimension",
+      "$description": "Compact density (decision 0043): the sizes data-density=\"compact\" swaps in for mouse-and-keyboard windows. Touch targets drop to 32, so compact is never applied on a coarse pointer.",
+      "compact": {
+        "touch-target": {
+          "$value": {
+            "value": 32,
+            "unit": "px"
+          }
+        },
+        "button": {
+          "$value": {
+            "value": 32,
+            "unit": "px"
+          }
+        },
+        "button-small": {
+          "$value": {
+            "value": 28,
+            "unit": "px"
+          }
+        },
+        "icon-button": {
+          "$value": {
+            "value": 32,
+            "unit": "px"
+          }
+        },
+        "chip": {
+          "$value": {
+            "value": 28,
+            "unit": "px"
+          }
+        },
+        "text-field": {
+          "$value": {
+            "value": 40,
+            "unit": "px"
+          }
+        },
+        "list-item-one-line": {
+          "$value": {
+            "value": 40,
+            "unit": "px"
+          }
+        },
+        "list-item-two-line": {
+          "$value": {
+            "value": 56,
+            "unit": "px"
+          }
+        },
+        "list-item-three-line": {
+          "$value": {
+            "value": 72,
+            "unit": "px"
+          }
+        },
+        "top-app-bar": {
+          "$value": {
+            "value": 48,
+            "unit": "px"
+          }
+        },
+        "nav-row": {
+          "$value": {
+            "value": 36,
+            "unit": "px"
+          }
+        },
+        "nav-rail": {
+          "$value": {
+            "value": 60,
+            "unit": "px"
+          }
+        },
+        "table-row": {
+          "$value": {
+            "value": 40,
+            "unit": "px"
+          }
+        },
+        "table-header": {
+          "$value": {
+            "value": 40,
+            "unit": "px"
+          }
+        },
+        "toolbar": {
+          "$value": {
+            "value": 48,
+            "unit": "px"
+          }
+        },
+        "avatar": {
+          "$value": {
+            "value": 32,
+            "unit": "px"
+          }
+        },
+        "icon": {
+          "$value": {
+            "value": 20,
+            "unit": "px"
+          }
+        },
+        "layout-margin": {
+          "$value": {
+            "value": 20,
+            "unit": "px"
+          }
+        },
+        "layout-gap": {
+          "$value": {
+            "value": 12,
+            "unit": "px"
+          }
+        }
       }
     }
   }

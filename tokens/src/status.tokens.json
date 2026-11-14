@@ -1,0 +1,331 @@
+{
+  "$description": "Status colors outside the M3 roles (decision 0043): the plain green, amber, blue and red other frameworks use, fixed (not derived from the seed) so status never changes meaning with the accent. Error stays the M3 error role.",
+  "s4": {
+    "color": {
+      "$type": "color",
+      "success": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.0784,
+            0.4235,
+            0.251
+          ],
+          "hex": "#146c40"
+        },
+        "$extensions": {
+          "com.s4.modes": {
+            "dark": {
+              "colorSpace": "srgb",
+              "components": [
+                0.3843,
+                0.8275,
+                0.6078
+              ],
+              "hex": "#62d39b"
+            },
+            "high-contrast": {
+              "colorSpace": "srgb",
+              "components": [
+                0.0431,
+                0.2667,
+                0.1608
+              ],
+              "hex": "#0b4429"
+            },
+            "dark-high-contrast": {
+              "colorSpace": "srgb",
+              "components": [
+                0.7255,
+                0.9412,
+                0.8235
+              ],
+              "hex": "#b9f0d2"
+            }
+          }
+        },
+        "$description": "Positive status text and icons on surfaces."
+      },
+      "success-container": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.8431,
+            0.949,
+            0.8824
+          ],
+          "hex": "#d7f2e1"
+        },
+        "$extensions": {
+          "com.s4.modes": {
+            "dark": {
+              "colorSpace": "srgb",
+              "components": [
+                0.0902,
+                0.2275,
+                0.1647
+              ],
+              "hex": "#173a2a"
+            }
+          }
+        },
+        "$description": "Positive status fill (status pill, banner)."
+      },
+      "on-success-container": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.0431,
+            0.2667,
+            0.1608
+          ],
+          "hex": "#0b4429"
+        },
+        "$extensions": {
+          "com.s4.modes": {
+            "dark": {
+              "colorSpace": "srgb",
+              "components": [
+                0.7255,
+                0.9412,
+                0.8235
+              ],
+              "hex": "#b9f0d2"
+            }
+          }
+        }
+      },
+      "warning": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.4902,
+            0.3216,
+            0.0
+          ],
+          "hex": "#7d5200"
+        },
+        "$extensions": {
+          "com.s4.modes": {
+            "dark": {
+              "colorSpace": "srgb",
+              "components": [
+                0.9412,
+                0.7333,
+                0.2902
+              ],
+              "hex": "#f0bb4a"
+            },
+            "high-contrast": {
+              "colorSpace": "srgb",
+              "components": [
+                0.302,
+                0.1961,
+                0.0
+              ],
+              "hex": "#4d3200"
+            },
+            "dark-high-contrast": {
+              "colorSpace": "srgb",
+              "components": [
+                1.0,
+                0.8902,
+                0.651
+              ],
+              "hex": "#ffe3a6"
+            }
+          }
+        },
+        "$description": "Warning status text and icons on surfaces."
+      },
+      "warning-container": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.9843,
+            0.9059,
+            0.7098
+          ],
+          "hex": "#fbe7b5"
+        },
+        "$extensions": {
+          "com.s4.modes": {
+            "dark": {
+              "colorSpace": "srgb",
+              "components": [
+                0.2627,
+                0.1961,
+                0.051
+              ],
+              "hex": "#43320d"
+            }
+          }
+        }
+      },
+      "on-warning-container": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.302,
+            0.1961,
+            0.0
+          ],
+          "hex": "#4d3200"
+        },
+        "$extensions": {
+          "com.s4.modes": {
+            "dark": {
+              "colorSpace": "srgb",
+              "components": [
+                1.0,
+                0.8902,
+                0.651
+              ],
+              "hex": "#ffe3a6"
+            }
+          }
+        }
+      },
+      "info": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.0431,
+            0.3608,
+            0.7373
+          ],
+          "hex": "#0b5cbc"
+        },
+        "$extensions": {
+          "com.s4.modes": {
+            "dark": {
+              "colorSpace": "srgb",
+              "components": [
+                0.5412,
+                0.7137,
+                1.0
+              ],
+              "hex": "#8ab6ff"
+            },
+            "high-contrast": {
+              "colorSpace": "srgb",
+              "components": [
+                0.0392,
+                0.2157,
+                0.4353
+              ],
+              "hex": "#0a376f"
+            },
+            "dark-high-contrast": {
+              "colorSpace": "srgb",
+              "components": [
+                0.8353,
+                0.8941,
+                1.0
+              ],
+              "hex": "#d5e4ff"
+            }
+          }
+        },
+        "$description": "Informational status text and icons on surfaces."
+      },
+      "info-container": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.8588,
+            0.9059,
+            0.9922
+          ],
+          "hex": "#dbe7fd"
+        },
+        "$extensions": {
+          "com.s4.modes": {
+            "dark": {
+              "colorSpace": "srgb",
+              "components": [
+                0.0902,
+                0.1843,
+                0.3216
+              ],
+              "hex": "#172f52"
+            }
+          }
+        }
+      },
+      "on-info-container": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.0392,
+            0.2157,
+            0.4353
+          ],
+          "hex": "#0a376f"
+        },
+        "$extensions": {
+          "com.s4.modes": {
+            "dark": {
+              "colorSpace": "srgb",
+              "components": [
+                0.8353,
+                0.8941,
+                1.0
+              ],
+              "hex": "#d5e4ff"
+            }
+          }
+        }
+      },
+      "badge": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.851,
+            0.1882,
+            0.1451
+          ],
+          "hex": "#d93025"
+        },
+        "$extensions": {
+          "com.s4.modes": {
+            "dark": {
+              "colorSpace": "srgb",
+              "components": [
+                0.851,
+                0.1882,
+                0.1451
+              ],
+              "hex": "#d93025"
+            }
+          }
+        },
+        "$description": "Count badges and notification dots: one clear red in both modes (decision 0043)."
+      },
+      "on-badge": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "hex": "#ffffff"
+        },
+        "$extensions": {
+          "com.s4.modes": {
+            "dark": {
+              "colorSpace": "srgb",
+              "components": [
+                1.0,
+                1.0,
+                1.0
+              ],
+              "hex": "#ffffff"
+            }
+          }
+        }
+      }
+    }
+  }
+}

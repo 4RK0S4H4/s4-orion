@@ -19,8 +19,8 @@
     height: var(--_h);
     padding: 0 var(--s4-space-1);
     border-radius: var(--md-sys-shape-corner-full);
-    background: var(--md-sys-color-error);
-    color: var(--md-sys-color-on-error);
+    background: var(--s4-color-badge);
+    color: var(--s4-color-on-badge);
     font-family: var(--md-sys-typescale-label-small-font);
     font-size: var(--md-sys-typescale-label-small-size);
     line-height: var(--md-sys-typescale-label-small-line-height);

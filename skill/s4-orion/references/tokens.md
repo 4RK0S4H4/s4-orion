@@ -20,10 +20,10 @@ Light values are shown; a second value is dark mode. Color roles also change wit
 | `--md-sys-color-on-tertiary` | #e2e2e2 | #1b1b1b |  |
 | `--md-sys-color-tertiary-container` | #747474 | #919191 |  |
 | `--md-sys-color-on-tertiary-container` | #ffffff | #000000 |  |
-| `--md-sys-color-error` | #ba1a1a | #ffb4ab | Errors and destructive actions. |
-| `--md-sys-color-on-error` | #ffffff | #690005 |  |
-| `--md-sys-color-error-container` | #ffdad6 | #93000a |  |
-| `--md-sys-color-on-error-container` | #410002 | #ffdad6 |  |
+| `--md-sys-color-error` | #ba1a1a | #ff8983 | Errors and destructive actions. |
+| `--md-sys-color-on-error` | #ffffff | #410004 |  |
+| `--md-sys-color-error-container` | #ffdad6 | #4a1719 |  |
+| `--md-sys-color-on-error-container` | #410002 | #ffdad7 |  |
 | `--md-sys-color-background` | #f9f9f9 | #131313 |  |
 | `--md-sys-color-on-background` | #1b1b1b | #e2e2e2 |  |
 | `--md-sys-color-surface` | #f9f9f9 | #131313 | The default background. |
@@ -242,7 +242,7 @@ Light values are shown; a second value is dark mode. Color roles also change wit
 | `--s4-size-list-item-three-line` | 88px |  |  |
 | `--s4-size-top-app-bar` | 64px |  |  |
 | `--s4-size-nav-bar` | 80px |  |  |
-| `--s4-size-nav-rail` | 96px |  |  |
+| `--s4-size-nav-rail` | 72px |  | Collapsed navigation rail: one icon wide (decision 0043). |
 | `--s4-size-nav-indicator-width` | 56px |  |  |
 | `--s4-size-nav-indicator-height` | 32px |  |  |
 | `--s4-size-table-row` | 52px |  |  |
@@ -254,6 +254,8 @@ Light values are shown; a second value is dark mode. Color roles also change wit
 | `--s4-size-avatar` | 40px |  |  |
 | `--s4-size-badge-dot` | 6px |  |  |
 | `--s4-size-badge` | 16px |  |  |
+| `--s4-size-nav-row` | 48px |  | A navigation row in the rail: icon and label side by side. |
+| `--s4-size-titlebar` | 40px |  | Desktop app title bar (window controls overlay, Electron, Tauri). |
 
 ## Layout
 
@@ -404,4 +406,4 @@ Light values are shown; a second value is dark mode. Color roles also change wit
 
 | Token | Value | Dark | Notes |
 |---|---|---|---|
-| `--s4-icon-duo-opacity` | 0.8 | 0.65 | Opacity of the faded half of a duotone icon. |
+| `--s4-icon-duo-opacity` | 0.42 | 0.38 | Opacity of the faded half of a duotone icon. |

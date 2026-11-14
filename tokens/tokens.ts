@@ -131,7 +131,7 @@ export const tokens = {
     "value": "#ba1a1a",
     "description": "Errors and destructive actions.",
     "modes": {
-      "dark": "#ffb4ab",
+      "dark": "#ff8983",
       "high-contrast": "#600004",
       "dark-high-contrast": "#ffece9"
     }
@@ -140,7 +140,7 @@ export const tokens = {
     "type": "color",
     "value": "#ffffff",
     "modes": {
-      "dark": "#690005",
+      "dark": "#410004",
       "high-contrast": "#ffffff",
       "dark-high-contrast": "#000000"
     }
@@ -149,7 +149,7 @@ export const tokens = {
     "type": "color",
     "value": "#ffdad6",
     "modes": {
-      "dark": "#93000a",
+      "dark": "#4a1719",
       "high-contrast": "#98000a",
       "dark-high-contrast": "#ffaea4"
     }
@@ -158,7 +158,7 @@ export const tokens = {
     "type": "color",
     "value": "#410002",
     "modes": {
-      "dark": "#ffdad6",
+      "dark": "#ffdad7",
       "high-contrast": "#ffffff",
       "dark-high-contrast": "#220001"
     }
@@ -1222,11 +1222,11 @@ export const tokens = {
   },
   "--s4-icon-duo-opacity": {
     "type": "number",
-    "value": "0.8",
+    "value": "0.42",
     "description": "Opacity of the faded half of a duotone icon.",
     "modes": {
-      "dark": "0.65",
-      "dark-high-contrast": "0.65"
+      "dark": "0.38",
+      "dark-high-contrast": "0.38"
     }
   },
   "--s4-motion-spring-fast-spatial-calm-stiffness": {
@@ -1594,7 +1594,8 @@ export const tokens = {
   },
   "--s4-size-nav-rail": {
     "type": "dimension",
-    "value": "96px"
+    "value": "72px",
+    "description": "Collapsed navigation rail: one icon wide (decision 0043)."
   },
   "--s4-size-nav-indicator-width": {
     "type": "dimension",
@@ -1642,6 +1643,16 @@ export const tokens = {
   "--s4-size-badge": {
     "type": "dimension",
     "value": "16px"
+  },
+  "--s4-size-nav-row": {
+    "type": "dimension",
+    "value": "48px",
+    "description": "A navigation row in the rail: icon and label side by side."
+  },
+  "--s4-size-titlebar": {
+    "type": "dimension",
+    "value": "40px",
+    "description": "Desktop app title bar (window controls overlay, Electron, Tauri)."
   },
   "--s4-layout-margin-compact": {
     "type": "dimension",
@@ -1744,6 +1755,82 @@ export const tokens = {
     "type": "number",
     "value": "110"
   },
+  "--s4-density-compact-touch-target": {
+    "type": "dimension",
+    "value": "32px"
+  },
+  "--s4-density-compact-button": {
+    "type": "dimension",
+    "value": "32px"
+  },
+  "--s4-density-compact-button-small": {
+    "type": "dimension",
+    "value": "28px"
+  },
+  "--s4-density-compact-icon-button": {
+    "type": "dimension",
+    "value": "32px"
+  },
+  "--s4-density-compact-chip": {
+    "type": "dimension",
+    "value": "28px"
+  },
+  "--s4-density-compact-text-field": {
+    "type": "dimension",
+    "value": "40px"
+  },
+  "--s4-density-compact-list-item-one-line": {
+    "type": "dimension",
+    "value": "40px"
+  },
+  "--s4-density-compact-list-item-two-line": {
+    "type": "dimension",
+    "value": "56px"
+  },
+  "--s4-density-compact-list-item-three-line": {
+    "type": "dimension",
+    "value": "72px"
+  },
+  "--s4-density-compact-top-app-bar": {
+    "type": "dimension",
+    "value": "48px"
+  },
+  "--s4-density-compact-nav-row": {
+    "type": "dimension",
+    "value": "36px"
+  },
+  "--s4-density-compact-nav-rail": {
+    "type": "dimension",
+    "value": "60px"
+  },
+  "--s4-density-compact-table-row": {
+    "type": "dimension",
+    "value": "40px"
+  },
+  "--s4-density-compact-table-header": {
+    "type": "dimension",
+    "value": "40px"
+  },
+  "--s4-density-compact-toolbar": {
+    "type": "dimension",
+    "value": "48px"
+  },
+  "--s4-density-compact-avatar": {
+    "type": "dimension",
+    "value": "32px"
+  },
+  "--s4-density-compact-icon": {
+    "type": "dimension",
+    "value": "20px"
+  },
+  "--s4-density-compact-layout-margin": {
+    "type": "dimension",
+    "value": "20px"
+  },
+  "--s4-density-compact-layout-gap": {
+    "type": "dimension",
+    "value": "12px"
+  },
   "--s4-focus-ring-width": {
     "type": "dimension",
     "value": "3px"
@@ -1761,6 +1848,102 @@ export const tokens = {
     "type": "number",
     "value": "0.32",
     "description": "Scrim behind modal surfaces: md.sys.color.scrim at this opacity."
+  },
+  "--s4-color-success": {
+    "type": "color",
+    "value": "#146c40",
+    "description": "Positive status text and icons on surfaces.",
+    "modes": {
+      "dark": "#62d39b",
+      "high-contrast": "#0b4429",
+      "dark-high-contrast": "#b9f0d2"
+    }
+  },
+  "--s4-color-success-container": {
+    "type": "color",
+    "value": "#d7f2e1",
+    "description": "Positive status fill (status pill, banner).",
+    "modes": {
+      "dark": "#173a2a",
+      "dark-high-contrast": "#173a2a"
+    }
+  },
+  "--s4-color-on-success-container": {
+    "type": "color",
+    "value": "#0b4429",
+    "modes": {
+      "dark": "#b9f0d2",
+      "dark-high-contrast": "#b9f0d2"
+    }
+  },
+  "--s4-color-warning": {
+    "type": "color",
+    "value": "#7d5200",
+    "description": "Warning status text and icons on surfaces.",
+    "modes": {
+      "dark": "#f0bb4a",
+      "high-contrast": "#4d3200",
+      "dark-high-contrast": "#ffe3a6"
+    }
+  },
+  "--s4-color-warning-container": {
+    "type": "color",
+    "value": "#fbe7b5",
+    "modes": {
+      "dark": "#43320d",
+      "dark-high-contrast": "#43320d"
+    }
+  },
+  "--s4-color-on-warning-container": {
+    "type": "color",
+    "value": "#4d3200",
+    "modes": {
+      "dark": "#ffe3a6",
+      "dark-high-contrast": "#ffe3a6"
+    }
+  },
+  "--s4-color-info": {
+    "type": "color",
+    "value": "#0b5cbc",
+    "description": "Informational status text and icons on surfaces.",
+    "modes": {
+      "dark": "#8ab6ff",
+      "high-contrast": "#0a376f",
+      "dark-high-contrast": "#d5e4ff"
+    }
+  },
+  "--s4-color-info-container": {
+    "type": "color",
+    "value": "#dbe7fd",
+    "modes": {
+      "dark": "#172f52",
+      "dark-high-contrast": "#172f52"
+    }
+  },
+  "--s4-color-on-info-container": {
+    "type": "color",
+    "value": "#0a376f",
+    "modes": {
+      "dark": "#d5e4ff",
+      "dark-high-contrast": "#d5e4ff"
+    }
+  },
+  "--s4-color-badge": {
+    "type": "color",
+    "value": "#d93025",
+    "description": "Count badges and notification dots: one clear red in both modes (decision 0043).",
+    "modes": {
+      "dark": "#d93025",
+      "dark-high-contrast": "#d93025"
+    }
+  },
+  "--s4-color-on-badge": {
+    "type": "color",
+    "value": "#ffffff",
+    "modes": {
+      "dark": "#ffffff",
+      "dark-high-contrast": "#ffffff"
+    }
   },
   "--md-sys-motion-spring-fast-spatial": {
     "type": "easing",

@@ -220,7 +220,7 @@
     --s4-glass-glow-shade-alpha: 0.28;
     --s4-glass-glow-flip: 0.6;
     --s4-glass-glow-size: 12px;
-    --s4-icon-duo-opacity: 0.8;
+    --s4-icon-duo-opacity: 0.42;
     --s4-motion-spring-fast-spatial-calm-stiffness: 1400;
     --s4-motion-spring-fast-spatial-calm-damping: 1;
     --s4-motion-spring-fast-spatial-calm-duration: 200ms;
@@ -302,7 +302,7 @@
     --s4-size-list-item-three-line: 88px;
     --s4-size-top-app-bar: 64px;
     --s4-size-nav-bar: 80px;
-    --s4-size-nav-rail: 96px;
+    --s4-size-nav-rail: 72px;
     --s4-size-nav-indicator-width: 56px;
     --s4-size-nav-indicator-height: 32px;
     --s4-size-table-row: 52px;
@@ -314,6 +314,8 @@
     --s4-size-avatar: 40px;
     --s4-size-badge-dot: 6px;
     --s4-size-badge: 16px;
+    --s4-size-nav-row: 48px;
+    --s4-size-titlebar: 40px;
     --s4-layout-margin-compact: var(--s4-space-4);
     --s4-layout-margin: var(--s4-space-6);
     --s4-layout-pane-gap: var(--s4-space-6);
@@ -338,10 +340,40 @@
     --s4-z-menu: 95;
     --s4-z-snackbar: 100;
     --s4-z-tooltip: 110;
+    --s4-density-compact-touch-target: 32px;
+    --s4-density-compact-button: 32px;
+    --s4-density-compact-button-small: 28px;
+    --s4-density-compact-icon-button: 32px;
+    --s4-density-compact-chip: 28px;
+    --s4-density-compact-text-field: 40px;
+    --s4-density-compact-list-item-one-line: 40px;
+    --s4-density-compact-list-item-two-line: 56px;
+    --s4-density-compact-list-item-three-line: 72px;
+    --s4-density-compact-top-app-bar: 48px;
+    --s4-density-compact-nav-row: 36px;
+    --s4-density-compact-nav-rail: 60px;
+    --s4-density-compact-table-row: 40px;
+    --s4-density-compact-table-header: 40px;
+    --s4-density-compact-toolbar: 48px;
+    --s4-density-compact-avatar: 32px;
+    --s4-density-compact-icon: 20px;
+    --s4-density-compact-layout-margin: 20px;
+    --s4-density-compact-layout-gap: 12px;
     --s4-focus-ring-width: 3px;
     --s4-focus-ring-offset: 2px;
     --s4-focus-ring-color: var(--md-sys-color-secondary);
     --s4-scrim-opacity: 0.32;
+    --s4-color-success: #146c40;
+    --s4-color-success-container: #d7f2e1;
+    --s4-color-on-success-container: #0b4429;
+    --s4-color-warning: #7d5200;
+    --s4-color-warning-container: #fbe7b5;
+    --s4-color-on-warning-container: #4d3200;
+    --s4-color-info: #0b5cbc;
+    --s4-color-info-container: #dbe7fd;
+    --s4-color-on-info-container: #0a376f;
+    --s4-color-badge: #d93025;
+    --s4-color-on-badge: #ffffff;
     --md-sys-motion-spring-fast-spatial: linear(0, 0.019 2.5%, 0.069 5%, 0.139 7.5%, 0.222 10%, 0.311 12.5%, 0.401 15%, 0.49 17.5%, 0.573 20%, 0.65 22.5%, 0.719 25%, 0.78 27.5%, 0.832 30%, 0.877 32.5%, 0.914 35%, 0.945 37.5%, 0.969 40%, 0.989 42.5%, 1.003 45%, 1.013 47.5%, 1.021 50%, 1.025 52.5%, 1.028 55%, 1.028 57.5%, 1.028 60%, 1.027 62.5%, 1.025 65%, 1.022 67.5%, 1.02 70%, 1.017 72.5%, 1.015 75%, 1.012 77.5%, 1.01 80%, 1.008 82.5%, 1.006 85%, 1.005 87.5%, 1.004 90%, 1.003 92.5%, 1.002 95%, 1.001 97.5%, 1);
     --md-sys-motion-spring-spatial: linear(0, 0.017 2.5%, 0.061 5%, 0.123 7.5%, 0.195 10%, 0.274 12.5%, 0.353 15%, 0.431 17.5%, 0.505 20%, 0.575 22.5%, 0.638 25%, 0.695 27.5%, 0.746 30%, 0.791 32.5%, 0.83 35%, 0.863 37.5%, 0.892 40%, 0.916 42.5%, 0.935 45%, 0.952 47.5%, 0.965 50%, 0.976 52.5%, 0.984 55%, 0.991 57.5%, 0.996 60%, 0.999 62.5%, 1.002 65%, 1.004 67.5%, 1.005 70%, 1.006 72.5%, 1.006 75%, 1.006 77.5%, 1.006 80%, 1.006 82.5%, 1.005 85%, 1.005 87.5%, 1.004 90%, 1.004 92.5%, 1.003 95%, 1.003 97.5%, 1);
     --md-sys-motion-spring-slow-spatial: linear(0, 0.017 2.5%, 0.06 5%, 0.12 7.5%, 0.19 10%, 0.265 12.5%, 0.341 15%, 0.416 17.5%, 0.487 20%, 0.553 22.5%, 0.614 25%, 0.669 27.5%, 0.719 30%, 0.763 32.5%, 0.801 35%, 0.834 37.5%, 0.863 40%, 0.888 42.5%, 0.909 45%, 0.926 47.5%, 0.941 50%, 0.953 52.5%, 0.963 55%, 0.972 57.5%, 0.979 60%, 0.984 62.5%, 0.988 65%, 0.992 67.5%, 0.994 70%, 0.997 72.5%, 0.998 75%, 0.999 77.5%, 1 80%, 1.001 82.5%, 1.001 85%, 1.001 87.5%, 1.001 90%, 1.002 92.5%, 1.002 95%, 1.001 97.5%, 1);
@@ -374,10 +406,10 @@
       --md-sys-color-on-tertiary: #1b1b1b;
       --md-sys-color-tertiary-container: #919191;
       --md-sys-color-on-tertiary-container: #000000;
-      --md-sys-color-error: #ffb4ab;
-      --md-sys-color-on-error: #690005;
-      --md-sys-color-error-container: #93000a;
-      --md-sys-color-on-error-container: #ffdad6;
+      --md-sys-color-error: #ff8983;
+      --md-sys-color-on-error: #410004;
+      --md-sys-color-error-container: #4a1719;
+      --md-sys-color-on-error-container: #ffdad7;
       --md-sys-color-background: #131313;
       --md-sys-color-on-background: #e2e2e2;
       --md-sys-color-surface: #131313;
@@ -418,7 +450,18 @@
       --s4-glass-edge-top-alpha: 0.12;
       --s4-glass-edge-side-alpha: 0;
       --s4-glass-edge-bottom-alpha: 0.12;
-      --s4-icon-duo-opacity: 0.65;
+      --s4-icon-duo-opacity: 0.38;
+      --s4-color-success: #62d39b;
+      --s4-color-success-container: #173a2a;
+      --s4-color-on-success-container: #b9f0d2;
+      --s4-color-warning: #f0bb4a;
+      --s4-color-warning-container: #43320d;
+      --s4-color-on-warning-container: #ffe3a6;
+      --s4-color-info: #8ab6ff;
+      --s4-color-info-container: #172f52;
+      --s4-color-on-info-container: #d5e4ff;
+      --s4-color-badge: #d93025;
+      --s4-color-on-badge: #ffffff;
     }
     }
   :where(:root[data-theme="dark"]) {
@@ -436,10 +479,10 @@
     --md-sys-color-on-tertiary: #1b1b1b;
     --md-sys-color-tertiary-container: #919191;
     --md-sys-color-on-tertiary-container: #000000;
-    --md-sys-color-error: #ffb4ab;
-    --md-sys-color-on-error: #690005;
-    --md-sys-color-error-container: #93000a;
-    --md-sys-color-on-error-container: #ffdad6;
+    --md-sys-color-error: #ff8983;
+    --md-sys-color-on-error: #410004;
+    --md-sys-color-error-container: #4a1719;
+    --md-sys-color-on-error-container: #ffdad7;
     --md-sys-color-background: #131313;
     --md-sys-color-on-background: #e2e2e2;
     --md-sys-color-surface: #131313;
@@ -480,7 +523,18 @@
     --s4-glass-edge-top-alpha: 0.12;
     --s4-glass-edge-side-alpha: 0;
     --s4-glass-edge-bottom-alpha: 0.12;
-    --s4-icon-duo-opacity: 0.65;
+    --s4-icon-duo-opacity: 0.38;
+    --s4-color-success: #62d39b;
+    --s4-color-success-container: #173a2a;
+    --s4-color-on-success-container: #b9f0d2;
+    --s4-color-warning: #f0bb4a;
+    --s4-color-warning-container: #43320d;
+    --s4-color-on-warning-container: #ffe3a6;
+    --s4-color-info: #8ab6ff;
+    --s4-color-info-container: #172f52;
+    --s4-color-on-info-container: #d5e4ff;
+    --s4-color-badge: #d93025;
+    --s4-color-on-badge: #ffffff;
   }
   @media (prefers-contrast: more) {
     :where(:root:not([data-contrast])) {
@@ -543,6 +597,9 @@
       --s4-glass-edge-top-alpha: 0;
       --s4-glass-edge-side-alpha: 0;
       --s4-glass-edge-bottom-alpha: 0;
+      --s4-color-success: #0b4429;
+      --s4-color-warning: #4d3200;
+      --s4-color-info: #0a376f;
     }
     }
   :where(:root[data-contrast="high"]) {
@@ -605,6 +662,9 @@
     --s4-glass-edge-top-alpha: 0;
     --s4-glass-edge-side-alpha: 0;
     --s4-glass-edge-bottom-alpha: 0;
+    --s4-color-success: #0b4429;
+    --s4-color-warning: #4d3200;
+    --s4-color-info: #0a376f;
   }
   @media (prefers-color-scheme: dark) and (prefers-contrast: more) {
     :where(:root:not([data-theme="light"]):not([data-contrast])) {
@@ -669,7 +729,18 @@
       --s4-glass-edge-top-alpha: 0;
       --s4-glass-edge-side-alpha: 0;
       --s4-glass-edge-bottom-alpha: 0;
-      --s4-icon-duo-opacity: 0.65;
+      --s4-icon-duo-opacity: 0.38;
+      --s4-color-success: #b9f0d2;
+      --s4-color-success-container: #173a2a;
+      --s4-color-on-success-container: #b9f0d2;
+      --s4-color-warning: #ffe3a6;
+      --s4-color-warning-container: #43320d;
+      --s4-color-on-warning-container: #ffe3a6;
+      --s4-color-info: #d5e4ff;
+      --s4-color-info-container: #172f52;
+      --s4-color-on-info-container: #d5e4ff;
+      --s4-color-badge: #d93025;
+      --s4-color-on-badge: #ffffff;
     }
     }
   @media (prefers-color-scheme: dark) {
@@ -735,7 +806,18 @@
       --s4-glass-edge-top-alpha: 0;
       --s4-glass-edge-side-alpha: 0;
       --s4-glass-edge-bottom-alpha: 0;
-      --s4-icon-duo-opacity: 0.65;
+      --s4-icon-duo-opacity: 0.38;
+      --s4-color-success: #b9f0d2;
+      --s4-color-success-container: #173a2a;
+      --s4-color-on-success-container: #b9f0d2;
+      --s4-color-warning: #ffe3a6;
+      --s4-color-warning-container: #43320d;
+      --s4-color-on-warning-container: #ffe3a6;
+      --s4-color-info: #d5e4ff;
+      --s4-color-info-container: #172f52;
+      --s4-color-on-info-container: #d5e4ff;
+      --s4-color-badge: #d93025;
+      --s4-color-on-badge: #ffffff;
     }
     }
   @media (prefers-contrast: more) {
@@ -801,7 +883,18 @@
       --s4-glass-edge-top-alpha: 0;
       --s4-glass-edge-side-alpha: 0;
       --s4-glass-edge-bottom-alpha: 0;
-      --s4-icon-duo-opacity: 0.65;
+      --s4-icon-duo-opacity: 0.38;
+      --s4-color-success: #b9f0d2;
+      --s4-color-success-container: #173a2a;
+      --s4-color-on-success-container: #b9f0d2;
+      --s4-color-warning: #ffe3a6;
+      --s4-color-warning-container: #43320d;
+      --s4-color-on-warning-container: #ffe3a6;
+      --s4-color-info: #d5e4ff;
+      --s4-color-info-container: #172f52;
+      --s4-color-on-info-container: #d5e4ff;
+      --s4-color-badge: #d93025;
+      --s4-color-on-badge: #ffffff;
     }
     }
   :where(:root[data-theme="dark"][data-contrast="high"]) {
@@ -866,7 +959,18 @@
     --s4-glass-edge-top-alpha: 0;
     --s4-glass-edge-side-alpha: 0;
     --s4-glass-edge-bottom-alpha: 0;
-    --s4-icon-duo-opacity: 0.65;
+    --s4-icon-duo-opacity: 0.38;
+    --s4-color-success: #b9f0d2;
+    --s4-color-success-container: #173a2a;
+    --s4-color-on-success-container: #b9f0d2;
+    --s4-color-warning: #ffe3a6;
+    --s4-color-warning-container: #43320d;
+    --s4-color-on-warning-container: #ffe3a6;
+    --s4-color-info: #d5e4ff;
+    --s4-color-info-container: #172f52;
+    --s4-color-on-info-container: #d5e4ff;
+    --s4-color-badge: #d93025;
+    --s4-color-on-badge: #ffffff;
   }
   @media (prefers-reduced-motion: reduce) {
     :where(:root) {
@@ -1071,6 +1175,77 @@
   .s4-stack { display: flex; flex-direction: column; gap: var(--s4-gap, var(--s4-layout-gap)); }
   .s4-row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s4-gap, var(--s4-space-2)); }
   .s4-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(var(--s4-min, 280px), 100%), 1fr)); gap: var(--s4-gap, var(--s4-layout-gap)); }
+}
+
+/* ---- base/density.css ---- */
+/* Density (decision 0043). Orion has two densities:
+     comfortable  the default: touch-first sizes (48dp targets), right for phones, tablets and touch laptops
+     compact      pointer-first sizes for desktop windows and desktop apps (32px targets, 14px body text)
+   Set data-density on <html>, .s4-app or any container:
+     data-density="compact"   always compact inside
+     data-density="auto"      compact only where the main pointer is a mouse or trackpad (pointer: fine); touch stays comfortable
+   Only tokens change, so every component follows without its own rules. Apps never restyle components for density. */
+@layer s4.tokens {
+  :where([data-density="compact"]) {
+    --s4-size-touch-target: var(--s4-density-compact-touch-target);
+    --s4-size-button: var(--s4-density-compact-button);
+    --s4-size-button-small: var(--s4-density-compact-button-small);
+    --s4-size-icon-button: var(--s4-density-compact-icon-button);
+    --s4-size-chip: var(--s4-density-compact-chip);
+    --s4-size-text-field: var(--s4-density-compact-text-field);
+    --s4-size-list-item-one-line: var(--s4-density-compact-list-item-one-line);
+    --s4-size-list-item-two-line: var(--s4-density-compact-list-item-two-line);
+    --s4-size-list-item-three-line: var(--s4-density-compact-list-item-three-line);
+    --s4-size-top-app-bar: var(--s4-density-compact-top-app-bar);
+    --s4-size-nav-row: var(--s4-density-compact-nav-row);
+    --s4-size-nav-rail: var(--s4-density-compact-nav-rail);
+    --s4-size-table-row: var(--s4-density-compact-table-row);
+    --s4-size-table-header: var(--s4-density-compact-table-header);
+    --s4-size-toolbar: var(--s4-density-compact-toolbar);
+    --s4-size-avatar: var(--s4-density-compact-avatar);
+    --s4-size-icon: var(--s4-density-compact-icon);
+    --s4-layout-margin: var(--s4-density-compact-layout-margin);
+    --s4-layout-gap: var(--s4-density-compact-layout-gap);
+    --md-sys-typescale-body-large-size: var(--md-sys-typescale-body-medium-size);
+    --md-sys-typescale-body-large-line-height: var(--md-sys-typescale-body-medium-line-height);
+    --md-sys-typescale-body-large-tracking: var(--md-sys-typescale-body-medium-tracking);
+    --md-sys-typescale-title-medium-size: var(--md-sys-typescale-title-small-size);
+    --md-sys-typescale-title-medium-line-height: var(--md-sys-typescale-title-small-line-height);
+    --md-sys-typescale-title-medium-tracking: var(--md-sys-typescale-title-small-tracking);
+    font-size: var(--md-sys-typescale-body-large-size);
+    line-height: var(--md-sys-typescale-body-large-line-height);
+  }
+  @media (pointer: fine) {
+    :where([data-density="auto"]) {
+      --s4-size-touch-target: var(--s4-density-compact-touch-target);
+      --s4-size-button: var(--s4-density-compact-button);
+      --s4-size-button-small: var(--s4-density-compact-button-small);
+      --s4-size-icon-button: var(--s4-density-compact-icon-button);
+      --s4-size-chip: var(--s4-density-compact-chip);
+      --s4-size-text-field: var(--s4-density-compact-text-field);
+      --s4-size-list-item-one-line: var(--s4-density-compact-list-item-one-line);
+      --s4-size-list-item-two-line: var(--s4-density-compact-list-item-two-line);
+      --s4-size-list-item-three-line: var(--s4-density-compact-list-item-three-line);
+      --s4-size-top-app-bar: var(--s4-density-compact-top-app-bar);
+      --s4-size-nav-row: var(--s4-density-compact-nav-row);
+      --s4-size-nav-rail: var(--s4-density-compact-nav-rail);
+      --s4-size-table-row: var(--s4-density-compact-table-row);
+      --s4-size-table-header: var(--s4-density-compact-table-header);
+      --s4-size-toolbar: var(--s4-density-compact-toolbar);
+      --s4-size-avatar: var(--s4-density-compact-avatar);
+      --s4-size-icon: var(--s4-density-compact-icon);
+      --s4-layout-margin: var(--s4-density-compact-layout-margin);
+      --s4-layout-gap: var(--s4-density-compact-layout-gap);
+      --md-sys-typescale-body-large-size: var(--md-sys-typescale-body-medium-size);
+      --md-sys-typescale-body-large-line-height: var(--md-sys-typescale-body-medium-line-height);
+      --md-sys-typescale-body-large-tracking: var(--md-sys-typescale-body-medium-tracking);
+      --md-sys-typescale-title-medium-size: var(--md-sys-typescale-title-small-size);
+      --md-sys-typescale-title-medium-line-height: var(--md-sys-typescale-title-small-line-height);
+      --md-sys-typescale-title-medium-tracking: var(--md-sys-typescale-title-small-tracking);
+      font-size: var(--md-sys-typescale-body-large-size);
+      line-height: var(--md-sys-typescale-body-large-line-height);
+    }
+  }
 }
 
 /* ---- button/button.css ---- */
@@ -1960,7 +2135,6 @@
       opacity var(--md-sys-motion-spring-effects-duration) var(--md-sys-motion-spring-effects);
   }
   .s4-nav-item[aria-current]:not([aria-current="false"]) .s4-nav-indicator::after { opacity: 1; transform: none; }
-  .s4-nav-item[aria-current]:not([aria-current="false"]) .s4-icon { --s4-icon-duo-opacity: 1; }   /* M3: filled icon when selected */
 
   /* ---------- the sliding highlight (nav-bar.js): one pill behind the items that covers icon and label of the current
      item and morphs from item to item. The per-item indicator pill is replaced by it. ---------- */
@@ -2060,8 +2234,8 @@
 }
 
 /* ---- nav-rail/nav-rail.css ---- */
-/* Navigation rail (M3 Expressive)
-   <nav class="s4-nav-rail" aria-label="Main">
+/* Navigation rail: the side navigation on wide windows (decision 0043)
+   <nav class="s4-nav-rail" aria-label="Main" data-expand="auto">
      <div class="s4-nav-rail-header">
        <button class="s4-icon-button" type="button" data-rail-toggle aria-expanded="false" aria-label="Expand Navigation">
          <span class="s4-icon" data-icon="menu"></span></button>
@@ -2070,93 +2244,133 @@
      <div class="s4-nav-rail-items">
        <a class="s4-nav-item" href="#home" aria-current="page">
          <span class="s4-nav-indicator"><span class="s4-icon" data-icon="home"></span></span><span class="s4-nav-label">Home</span></a>
+       <div class="s4-nav-rail-title">Library</div>      optional group title (hidden while collapsed)
        …
      </div>
+     <div class="s4-nav-rail-footer">…</div>            optional: account, settings (stays at the bottom)
    </nav>
-   Collapsed: 96dp, icon in a 56x32 pill with the label under it, on surface. data-expanded: wider, labels beside the
-   icons inside a 56dp pill that spans icon and label, label-large, on surface-container. [data-rail-toggle] flips it
-   (nav-rail.js). In the collapsed rail a FAB's text (any child span that is not the icon) is hidden, so the same FAB
-   becomes an extended FAB when the rail expands. Shares .s4-nav-item with the nav bar (nav-bar.css).
-   Public knob: --s4-nav-rail-expanded-width (default 240; M3 Expressive allows 220 to 360). */
+   Items are always rows: the icon keeps one place and the label sits beside it. Collapsed, the rail is one icon wide
+   and the labels are hidden (the item's label becomes its tooltip, nav-rail.js); data-expanded shows them. Because
+   nothing moves between the two states except the rail's own edge, expanding and collapsing can't glitch.
+   The header's .s4-fab is the rail's main action: a solid primary button here (never glass), round when collapsed.
+   [data-rail-toggle] flips the rail (nav-rail.js); data-expand="auto" expands it on large windows.
+   Shares .s4-nav-item with the nav bar (nav-bar.css).
+   Public knob: --s4-nav-rail-expanded-width (default 240). */
 @layer s4.components {
   .s4-nav-rail {
+    --_row: var(--s4-size-nav-row);
+    --_pad: calc((var(--s4-size-nav-rail) - var(--_row)) / 2);              /* 12: the row's inset from the rail's edges */
     --_w: var(--s4-size-nav-rail);
-    --_inset: calc((var(--s4-size-nav-rail) - var(--s4-size-nav-indicator-width)) / 2);   /* 20: indicator's start edge */
     display: flex;
     flex-direction: column;
     flex: none;
+    gap: var(--s4-space-4);
     inline-size: calc(var(--_w) + env(safe-area-inset-left, 0px));
-    padding-block: max(var(--s4-space-10), env(safe-area-inset-top, 0px)) max(var(--s4-space-4), env(safe-area-inset-bottom, 0px));
+    padding-block: max(var(--s4-space-3), env(safe-area-inset-top, 0px)) max(var(--s4-space-3), env(safe-area-inset-bottom, 0px));
     padding-inline-start: env(safe-area-inset-left, 0px);
     overflow-x: hidden;
     overflow-y: auto;
     overscroll-behavior: contain;
     scrollbar-width: none;
-    background: var(--md-sys-color-surface);
+    background: var(--md-sys-color-surface-container-low);
     color: var(--md-sys-color-on-surface-variant);
-    transition:
-      inline-size var(--md-sys-motion-spring-spatial-duration) var(--md-sys-motion-spring-spatial),
-      background-color var(--md-sys-motion-spring-effects-duration) var(--md-sys-motion-spring-effects);
+    transition: inline-size var(--md-sys-motion-spring-fast-spatial-duration) var(--md-sys-motion-spring-settle);
   }
-  .s4-nav-rail-header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--s4-space-1);
-    padding-block-end: var(--s4-space-10);
-  }
-  .s4-nav-rail-items {
-    display: flex;
-    flex-direction: column;
-    gap: var(--s4-space-1);
-  }
-  .s4-nav-rail .s4-nav-item {
-    inline-size: var(--s4-size-nav-rail);
-    padding-block: var(--s4-space-1) var(--s4-space-2);
-  }
-  /* a collapsed rail shows the FAB as icon-only (aria-label carries the name) */
-  .s4-nav-rail:not([data-expanded]) .s4-nav-rail-header .s4-fab > :not(.s4-icon) { display: none; }
+  .s4-nav-rail[data-expanded] { --_w: var(--s4-nav-rail-expanded-width, var(--s4-size-nav-rail-expanded)); }
 
-  /* ---------- expanded ---------- */
-  .s4-nav-rail[data-expanded] {
-    --_w: var(--s4-nav-rail-expanded-width, var(--s4-size-nav-rail-expanded));
-    background: var(--md-sys-color-surface-container);
+  .s4-nav-rail-header,
+  .s4-nav-rail-items,
+  .s4-nav-rail-footer {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--s4-space-1) / 2);
+    padding-inline: var(--_pad);
   }
-  .s4-nav-rail[data-expanded] .s4-nav-rail-header {
-    align-items: flex-start;
-    padding-inline-start: var(--_inset);
-  }
-  /* the menu button lines up with the item icons (icon at 36) */
-  .s4-nav-rail[data-expanded] .s4-nav-rail-header > [data-rail-toggle] {
-    margin-inline-start: calc((var(--s4-size-nav-indicator-width) - var(--s4-size-icon-button)) / 2);
-  }
-  .s4-nav-rail[data-expanded] .s4-nav-item {
-    --_weight: var(--md-sys-typescale-label-large-weight);
-    flex-direction: row;
+  .s4-nav-rail-header { gap: var(--s4-space-3); }
+  .s4-nav-rail-footer { margin-block-start: auto; }
+  /* the menu button's icon lines up with the item icons */
+  .s4-nav-rail-header > [data-rail-toggle] { align-self: flex-start; margin-inline-start: calc((var(--_row) - var(--s4-size-icon-button)) / 2); }
+
+  /* ---------- the main action: a solid primary button, the same row as the items ---------- */
+  .s4-nav-rail-header > .s4-fab {
+    --_h: var(--_row);
+    --_bg: var(--md-sys-color-primary);
+    --_fg: var(--md-sys-color-on-primary);
+    --_elevation: var(--md-sys-elevation-level0);
     justify-content: flex-start;
-    align-self: flex-start;
-    gap: var(--s4-space-2);
-    inline-size: auto;
-    max-inline-size: calc(100% - 2 * var(--_inset));
-    min-block-size: var(--s4-size-list-item-one-line);
-    margin-inline-start: var(--_inset);
-    padding: 0 var(--s4-space-4);
-    border-radius: var(--s4-shape-nav-indicator);
+    gap: var(--s4-space-3);
+    inline-size: 100%;
+    min-inline-size: 0;
+    padding-inline: calc((var(--_row) - var(--s4-size-icon)) / 2);
+    border-radius: calc(var(--_row) / 2);
+    overflow: hidden;
     font-family: var(--md-sys-typescale-label-large-font);
     font-size: var(--md-sys-typescale-label-large-size);
     line-height: var(--md-sys-typescale-label-large-line-height);
     letter-spacing: var(--md-sys-typescale-label-large-tracking);
+    font-weight: var(--md-sys-typescale-emphasized-label-large-weight);
   }
-  .s4-nav-rail[data-expanded] .s4-nav-item[aria-current]:not([aria-current="false"]) { --_weight: var(--md-sys-typescale-emphasized-label-large-weight); }
-  /* the indicator box dissolves so its pill and state layer (absolute) span the whole item: icon and label */
-  .s4-nav-rail[data-expanded] .s4-nav-indicator { display: contents; }
-  .s4-nav-rail[data-expanded] .s4-nav-indicator > .s4-badge { position: static; order: 2; margin-inline-start: auto; }
-  .s4-nav-rail[data-expanded] .s4-nav-label { text-align: start; }
-  .s4-nav-rail[data-expanded] .s4-nav-item:focus-visible {
+  .s4-nav-rail-header > .s4-fab > :not(.s4-icon) { margin: 0; max-width: none; }
+
+  /* ---------- items: rows ---------- */
+  .s4-nav-rail .s4-nav-item {
+    --_weight: var(--md-sys-typescale-label-large-weight);
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: var(--s4-space-3);
+    inline-size: 100%;
+    block-size: var(--_row);
+    min-block-size: 0;
+    padding-inline: calc((var(--_row) - var(--s4-size-icon)) / 2);
+    border-radius: calc(var(--_row) / 2);
+    overflow: hidden;
+    font-family: var(--md-sys-typescale-label-large-font);
+    font-size: var(--md-sys-typescale-label-large-size);
+    line-height: var(--md-sys-typescale-label-large-line-height);
+    letter-spacing: var(--md-sys-typescale-label-large-tracking);
+    text-align: start;
+  }
+  .s4-nav-rail .s4-nav-item[aria-current]:not([aria-current="false"]) { --_weight: var(--md-sys-typescale-emphasized-label-large-weight); }
+  /* the indicator box dissolves: its pill and state layer (absolute) span the whole row */
+  .s4-nav-rail .s4-nav-indicator { display: contents; }
+  .s4-nav-rail .s4-nav-item .s4-icon { color: var(--_icon-fg); }
+  .s4-nav-rail .s4-nav-label { flex: 1 1 auto; text-align: start; }
+  .s4-nav-rail .s4-nav-item:focus-visible {
     outline: var(--s4-focus-ring-width) solid var(--s4-focus-ring-color);
-    outline-offset: var(--s4-focus-ring-offset);
+    outline-offset: calc(-1 * var(--s4-focus-ring-width));
+  }
+  /* the sliding highlight is as wide as the row in CSS, so it follows the rail's edge without a script */
+  .s4-nav-rail-items > .s4-nav-pill {
+    inset-inline: var(--_pad);
+    inline-size: auto;
+    border-radius: calc(var(--_row) / 2);
+    transform: translateY(var(--_y, 0));
+  }
+  .s4-nav-rail-items > .s4-nav-pill[data-animate] {
+    transition:
+      transform var(--md-sys-motion-spring-fast-spatial-duration) var(--md-sys-motion-spring-ink),
+      block-size var(--md-sys-motion-spring-fast-spatial-duration) var(--md-sys-motion-spring-ink);
+  }
+  .s4-nav-rail-title {
+    padding: var(--s4-space-4) calc((var(--_row) - var(--s4-size-icon)) / 2) var(--s4-space-1);
+    overflow: hidden;
+    color: var(--md-sys-color-on-surface-variant);
+    font-family: var(--md-sys-typescale-label-medium-font);
+    font-size: var(--md-sys-typescale-label-medium-size);
+    line-height: var(--md-sys-typescale-label-medium-line-height);
+    letter-spacing: var(--md-sys-typescale-label-medium-tracking);
+    font-weight: var(--md-sys-typescale-label-medium-weight);
+    white-space: nowrap;
   }
 
+  /* ---------- labels: beside the icon, shown when the rail is expanded ---------- */
+  .s4-nav-rail .s4-nav-label,
+  .s4-nav-rail-header > .s4-fab > :not(.s4-icon),
+  .s4-nav-rail-title {
+    transition: opacity var(--md-sys-motion-spring-fast-effects-duration) var(--md-sys-motion-spring-fast-effects);
+  }
+  .s4-nav-rail:not([data-expanded]) :is(.s4-nav-label, .s4-nav-rail-title, .s4-nav-rail-header > .s4-fab > :not(.s4-icon)) { opacity: 0; }
+  .s4-nav-rail:not([data-expanded]) .s4-nav-rail-title { block-size: var(--s4-space-4); padding-block: 0; }
   @media (forced-colors: active) {
     .s4-nav-rail { border-inline-end: 1px solid CanvasText; }
   }
@@ -2229,7 +2443,6 @@
     .s4-tab[aria-selected="false"]:not(:disabled, [aria-disabled="true"]):hover { --_fg: var(--md-sys-color-on-surface); }
   }
   .s4-tab[aria-selected="true"] { --_fg: var(--_pill-fg); }
-  .s4-tab[aria-selected="true"] .s4-icon { --s4-icon-duo-opacity: 1; }
   .s4-tabs:not([data-variant="secondary"]) > .s4-tab:has(> .s4-icon) { min-block-size: calc(var(--s4-size-touch-target) + var(--s4-space-4)); }
   .s4-tabs[data-variant="secondary"] > .s4-tab { flex-direction: row; gap: var(--s4-space-2); }
 
@@ -4863,8 +5076,8 @@
     height: var(--_h);
     padding: 0 var(--s4-space-1);
     border-radius: var(--md-sys-shape-corner-full);
-    background: var(--md-sys-color-error);
-    color: var(--md-sys-color-on-error);
+    background: var(--s4-color-badge);
+    color: var(--s4-color-on-badge);
     font-family: var(--md-sys-typescale-label-small-font);
     font-size: var(--md-sys-typescale-label-small-size);
     line-height: var(--md-sys-typescale-label-small-line-height);
@@ -5681,7 +5894,7 @@
   /* FLOATING ACTION BUTTONS (decision 0025): glass too, tinted with the FAB's own color (--_bg) instead of the surface color, so
      it keeps its identity (primary-container by default, or the data-color it sets). Its icon and label keep the FAB's own
      on-color; scripts/check-glass.mjs proves that pair too. */
-  :where(.s4-fab:not([data-glass="off"])) {
+  :where(.s4-fab:not([data-glass="off"], .s4-nav-rail-header > *)) {
     --_surface: var(--_bg);   /* the floating button's own color */
     --_edge-hi: color-mix(in oklab, var(--_surface), white calc(var(--s4-glass-edge-lift) * 100%));
     --_glass-tint: var(--s4-glass-tint-opacity-fab);
@@ -5700,7 +5913,7 @@
     backdrop-filter: blur(var(--s4-glass-blur-float)) saturate(var(--s4-glass-saturation-float)) contrast(var(--s4-glass-backdrop-contrast-float)) brightness(var(--s4-glass-backdrop-brightness-float));
   }
   @supports (color: color-mix(in oklab, red, white calc(50% * 1))) and (color: color-mix(in srgb, red min(100%, calc(1 * 100%)), transparent)) {
-    :where(.s4-fab:not([data-glass="off"])) {
+    :where(.s4-fab:not([data-glass="off"], .s4-nav-rail-header > *)) {
       box-shadow:
       inset 0 calc(var(--s4-glass-edge-width) * var(--_edge-scale)) calc(var(--s4-glass-edge-width) * var(--_edge-scale)) 0 color-mix(in srgb, var(--_edge-hi) calc(var(--_aT) * 100%), transparent),
       inset 0 calc(-1 * calc(var(--s4-glass-edge-width) * var(--_edge-scale))) calc(var(--s4-glass-edge-width) * var(--_edge-scale)) 0 color-mix(in srgb, var(--_edge-hi) calc(var(--_aB) * 100%), transparent),
@@ -5713,7 +5926,7 @@
     }
   }
   @supports (color: oklch(from red calc(1 - l) c h)) and (color: color-mix(in oklab, red, white calc(50% * 1))) {
-    :where(.s4-fab:not([data-glass="off"])) {
+    :where(.s4-fab:not([data-glass="off"], .s4-nav-rail-header > *)) {
       box-shadow:
       inset 0 calc(var(--s4-glass-edge-width) * var(--_edge-scale)) calc(var(--s4-glass-edge-width) * var(--_edge-scale)) 0 color-mix(in srgb, var(--_edge-hi) calc(var(--_aT) * 100%), transparent),
       inset 0 calc(-1 * calc(var(--s4-glass-edge-width) * var(--_edge-scale))) calc(var(--s4-glass-edge-width) * var(--_edge-scale)) 0 color-mix(in srgb, var(--_edge-hi) calc(var(--_aB) * 100%), transparent),
@@ -5725,7 +5938,7 @@
       inset calc(-1 * var(--s4-glass-glow-size)) 0 var(--s4-glass-glow-size) calc(-1 * var(--s4-glass-glow-size)) oklch(from var(--_surface) calc(.99 - .96 * clamp(0, calc((l - var(--s4-glass-glow-flip)) * 1000), 1)) calc(c * .3) h / calc(var(--s4-glass-glow-alpha) * min(1, var(--_aR) / max(var(--s4-glass-edge-top-alpha), .001)) * (1 - clamp(0, calc((l - var(--s4-glass-glow-flip)) * 1000), 1)) + var(--s4-glass-glow-shade-alpha) * min(1, var(--_aR) / max(var(--s4-glass-edge-top-alpha), .001)) * clamp(0, calc((l - var(--s4-glass-glow-flip)) * 1000), 1)));
     }
   }
-  :where(.s4-fab[data-color]:not([data-glass="off"])) { --_glass-tint: var(--s4-glass-tint-opacity-fab-color); }   /* decision 0032 */
+  :where(.s4-fab[data-color]:not([data-glass="off"], .s4-nav-rail-header > *)) { --_glass-tint: var(--s4-glass-tint-opacity-fab-color); }   /* decision 0032 */
   :where(:root[data-contrast="high"]) :where(.s4-fab) { background-color: var(--_bg); box-shadow: var(--_elevation); -webkit-backdrop-filter: none; backdrop-filter: none; }
   @media (prefers-reduced-transparency: reduce) {
     :where(.s4-fab) { background-color: var(--_bg); box-shadow: var(--_elevation); -webkit-backdrop-filter: none; backdrop-filter: none; }

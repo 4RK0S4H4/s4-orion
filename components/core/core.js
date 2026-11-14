@@ -92,11 +92,11 @@
   };
 
   /* ---------- theme ----------
-     S4.theme({ seed: '#0b57d0', variant: 'vibrant', mode: 'system'|'light'|'dark', contrast: 0|0.5|1, save: 'app-key' })
+     S4.theme({ seed: '#0b57d0', variant: 'vibrant', surfaces: 'neutral'|'tinted', mode: 'system'|'light'|'dark', contrast: 0|0.5|1, save: 'app-key' })
      Monochrome (no seed) uses the roles already in tokens.css. A seed generates every M3 role with Material Color
      Utilities (m3color.js, loaded on demand) for light and dark, written in the same zero-specificity blocks as
      tokens.css, so device dark mode and high contrast keep working. */
-  var state = { seed: null, variant: 'vibrant', mode: 'system', contrast: 0 };
+  var state = { seed: null, variant: 'vibrant', mode: 'system', contrast: 0, surfaces: 'neutral' };
   /* m3color.js sits next to orion.js (skill assets) or in components/assets/ (repo); <script data-m3color="..."> overrides. */
   var m3src = (document.currentScript && document.currentScript.dataset.m3color) ||
     (scriptSrc.indexOf('/components/') >= 0 ? scriptSrc.slice(0, scriptSrc.indexOf('/components/')) + '/components/assets/m3color.js'
@@ -107,14 +107,28 @@
     s.onerror = function () { console.error('S4: could not load ' + m3src + ' (set data-m3color on the orion.js script tag)'); };
     document.head.appendChild(s);
   }
-  function rolesCss(scheme) { return Object.keys(scheme).map(function (k) { return '--md-sys-color-' + k + ':' + scheme[k]; }).join(';'); }
+  function rolesCss(scheme) { return Object.keys(scheme).map(function (k) { return (k.charAt(0) === '-' ? k : '--md-sys-color-' + k) + ':' + scheme[k]; }).join(';'); }
+  /* Decision 0043: by default a seed colors only the accents (primary and its container, the FAB, selection, focus);
+     surfaces, text, outlines and status keep the neutral values in tokens.css. surfaces: 'tinted' is stock M3 (every
+     role from the seed). */
+  var ACCENT = ['primary', 'on-primary', 'primary-container', 'on-primary-container', 'inverse-primary', 'surface-tint',
+    'primary-fixed', 'primary-fixed-dim', 'on-primary-fixed', 'on-primary-fixed-variant'];
+  function schemeFor(dark, c) {
+    var M = window.M3Color, s = M.scheme(state.seed, state.variant, dark, c);
+    if (state.surfaces === 'tinted') return s;
+    var pal = M.palettes(state.seed, state.variant), tone = function (t) { return pal.rows.Primary[pal.tones.indexOf(t)]; };
+    var o = {}; ACCENT.forEach(function (k) { o[k] = s[k]; });
+    o['secondary-container'] = tone(dark ? 30 : 90);       /* selection: a soft tint of the accent */
+    o['on-secondary-container'] = tone(dark ? 90 : 10);
+    o['--s4-focus-ring-color'] = s.primary;
+    return o;
+  }
   function writeColor() {
     var el = document.getElementById('s4-dynamic-color');
     if (!state.seed) { if (el) el.remove(); return; }
     loadColor(function () {
-      var M = window.M3Color, c = state.contrast >= 1 ? 1 : state.contrast;
-      var L = M.scheme(state.seed, state.variant, false, c), D = M.scheme(state.seed, state.variant, true, c);
-      var LH = M.scheme(state.seed, state.variant, false, 1), DH = M.scheme(state.seed, state.variant, true, 1);
+      var c = state.contrast >= 1 ? 1 : state.contrast;
+      var L = schemeFor(false, c), D = schemeFor(true, c), LH = schemeFor(false, 1), DH = schemeFor(true, 1);
       var W = function (s) { return ':where(' + s + ')'; };
       var css = '@layer s4.tokens{' +
         W(':root') + '{' + rolesCss(L) + '}' +
@@ -139,10 +153,11 @@
     });
   }
   S4.theme = function (opts) {
-    if (!opts) return { seed: state.seed, variant: state.variant, mode: state.mode, contrast: state.contrast };
+    if (!opts) return { seed: state.seed, variant: state.variant, mode: state.mode, contrast: state.contrast, surfaces: state.surfaces };
     var colorChanged = false;
     if ('seed' in opts) { state.seed = opts.seed && String(opts.seed).toLowerCase() !== '#000000' ? opts.seed : null; colorChanged = true; }
     if (opts.variant) { state.variant = opts.variant; colorChanged = true; }
+    if (opts.surfaces) { state.surfaces = opts.surfaces === 'tinted' ? 'tinted' : 'neutral'; colorChanged = true; }
     if (opts.mode) { state.mode = opts.mode; if (opts.mode === 'system') root.removeAttribute('data-theme'); else root.setAttribute('data-theme', opts.mode); }
     if ('contrast' in opts) {
       state.contrast = +opts.contrast || 0; colorChanged = true;

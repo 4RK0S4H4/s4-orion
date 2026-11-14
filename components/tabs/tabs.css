@@ -64,7 +64,6 @@
     .s4-tab[aria-selected="false"]:not(:disabled, [aria-disabled="true"]):hover { --_fg: var(--md-sys-color-on-surface); }
   }
   .s4-tab[aria-selected="true"] { --_fg: var(--_pill-fg); }
-  .s4-tab[aria-selected="true"] .s4-icon { --s4-icon-duo-opacity: 1; }
   .s4-tabs:not([data-variant="secondary"]) > .s4-tab:has(> .s4-icon) { min-block-size: calc(var(--s4-size-touch-target) + var(--s4-space-4)); }
   .s4-tabs[data-variant="secondary"] > .s4-tab { flex-direction: row; gap: var(--s4-space-2); }
 

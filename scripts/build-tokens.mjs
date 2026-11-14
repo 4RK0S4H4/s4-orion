@@ -156,12 +156,15 @@ function lum(hex) {
   return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
 }
 const ratio = (a, b) => { const [x, y] = [lum(a), lum(b)].sort((p, q) => q - p); return (x + 0.05) / (y + 0.05); };
-const roleIn = (role, mode) => { const e = json[`--md-sys-color-${role}`]; return mode === 'light' ? e?.value : e?.modes?.[mode] ?? e?.value; };
+const roleIn = (role, mode) => { const e = json[role.startsWith('--') ? role : `--md-sys-color-${role}`]; return mode === 'light' ? e?.value : e?.modes?.[mode] ?? e?.value; };
 const SURFACES = ['surface', 'surface-container-lowest', 'surface-container-low', 'surface-container', 'surface-container-high', 'surface-container-highest', 'surface-dim', 'surface-bright'];
 const PAIRS = [
   ...['primary', 'secondary', 'tertiary', 'error'].flatMap((r) => [[`on-${r}`, r, 4.5], [`on-${r}-container`, `${r}-container`, 4.5]]),
   ...SURFACES.flatMap((s) => [['on-surface', s, 4.5], ['on-surface-variant', s, 4.5], ['primary', s, 3], ['outline', s, 3]]),
   ['inverse-on-surface', 'inverse-surface', 4.5], ['inverse-primary', 'inverse-surface', 3],
+  /* status colors (decision 0043): text on every surface, text on its own container, the badge */
+  ...['success', 'warning', 'info'].flatMap((r) => [...SURFACES.map((s) => [`--s4-color-${r}`, s, 4.5]), [`--s4-color-on-${r}-container`, `--s4-color-${r}-container`, 4.5]]),
+  ...SURFACES.map((s) => ['error', s, 4.5]), ['--s4-color-on-badge', '--s4-color-badge', 4.5],
 ];
 const contrastReport = [];
 for (const mode of ['light', 'dark', 'high-contrast', 'dark-high-contrast']) {

@@ -57,7 +57,7 @@ Arrows and chevrons are Linear, everything else Bold Duotone. Other sets: solar,
 | `hidden` | eye-closed |
 | `light-mode` | sun |
 | `dark-mode` | moon |
-| `menu` | menu-dots |
+| `menu` | hamburger-menu-line-duotone |
 | `sidebar` | sidebar-minimalistic |
 | `refresh` | refresh |
 | `undo` | undo-left |

@@ -110,7 +110,7 @@
   /* FLOATING ACTION BUTTONS (decision 0025): glass too, tinted with the FAB's own color (--_bg) instead of the surface color, so
      it keeps its identity (primary-container by default, or the data-color it sets). Its icon and label keep the FAB's own
      on-color; scripts/check-glass.mjs proves that pair too. */
-  :where(.s4-fab:not([data-glass="off"])) {
+  :where(.s4-fab:not([data-glass="off"], .s4-nav-rail-header > *)) {
     --_surface: var(--_bg);   /* the floating button's own color */
     --_edge-hi: color-mix(in oklab, var(--_surface), white calc(var(--s4-glass-edge-lift) * 100%));
     --_glass-tint: var(--s4-glass-tint-opacity-fab);
@@ -129,7 +129,7 @@
     backdrop-filter: blur(var(--s4-glass-blur-float)) saturate(var(--s4-glass-saturation-float)) contrast(var(--s4-glass-backdrop-contrast-float)) brightness(var(--s4-glass-backdrop-brightness-float));
   }
   @supports (color: color-mix(in oklab, red, white calc(50% * 1))) and (color: color-mix(in srgb, red min(100%, calc(1 * 100%)), transparent)) {
-    :where(.s4-fab:not([data-glass="off"])) {
+    :where(.s4-fab:not([data-glass="off"], .s4-nav-rail-header > *)) {
       box-shadow:
       inset 0 calc(var(--s4-glass-edge-width) * var(--_edge-scale)) calc(var(--s4-glass-edge-width) * var(--_edge-scale)) 0 color-mix(in srgb, var(--_edge-hi) calc(var(--_aT) * 100%), transparent),
       inset 0 calc(-1 * calc(var(--s4-glass-edge-width) * var(--_edge-scale))) calc(var(--s4-glass-edge-width) * var(--_edge-scale)) 0 color-mix(in srgb, var(--_edge-hi) calc(var(--_aB) * 100%), transparent),
@@ -142,7 +142,7 @@
     }
   }
   @supports (color: oklch(from red calc(1 - l) c h)) and (color: color-mix(in oklab, red, white calc(50% * 1))) {
-    :where(.s4-fab:not([data-glass="off"])) {
+    :where(.s4-fab:not([data-glass="off"], .s4-nav-rail-header > *)) {
       box-shadow:
       inset 0 calc(var(--s4-glass-edge-width) * var(--_edge-scale)) calc(var(--s4-glass-edge-width) * var(--_edge-scale)) 0 color-mix(in srgb, var(--_edge-hi) calc(var(--_aT) * 100%), transparent),
       inset 0 calc(-1 * calc(var(--s4-glass-edge-width) * var(--_edge-scale))) calc(var(--s4-glass-edge-width) * var(--_edge-scale)) 0 color-mix(in srgb, var(--_edge-hi) calc(var(--_aB) * 100%), transparent),
@@ -154,7 +154,7 @@
       inset calc(-1 * var(--s4-glass-glow-size)) 0 var(--s4-glass-glow-size) calc(-1 * var(--s4-glass-glow-size)) oklch(from var(--_surface) calc(.99 - .96 * clamp(0, calc((l - var(--s4-glass-glow-flip)) * 1000), 1)) calc(c * .3) h / calc(var(--s4-glass-glow-alpha) * min(1, var(--_aR) / max(var(--s4-glass-edge-top-alpha), .001)) * (1 - clamp(0, calc((l - var(--s4-glass-glow-flip)) * 1000), 1)) + var(--s4-glass-glow-shade-alpha) * min(1, var(--_aR) / max(var(--s4-glass-edge-top-alpha), .001)) * clamp(0, calc((l - var(--s4-glass-glow-flip)) * 1000), 1)));
     }
   }
-  :where(.s4-fab[data-color]:not([data-glass="off"])) { --_glass-tint: var(--s4-glass-tint-opacity-fab-color); }   /* decision 0032 */
+  :where(.s4-fab[data-color]:not([data-glass="off"], .s4-nav-rail-header > *)) { --_glass-tint: var(--s4-glass-tint-opacity-fab-color); }   /* decision 0032 */
   :where(:root[data-contrast="high"]) :where(.s4-fab) { background-color: var(--_bg); box-shadow: var(--_elevation); -webkit-backdrop-filter: none; backdrop-filter: none; }
   @media (prefers-reduced-transparency: reduce) {
     :where(.s4-fab) { background-color: var(--_bg); box-shadow: var(--_elevation); -webkit-backdrop-filter: none; backdrop-filter: none; }
