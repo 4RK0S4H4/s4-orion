@@ -15,6 +15,14 @@ the rail FAB; release 1.0.0; minified bundles and per-set icons; pruning for 2.0
 Also still waiting on the owner's iPhone checks: 0037 (glow/shade flip, Glass Playground) and 0040 (docked glass lit
 edge only, showcase).
 
+## Owner critiques (2026-11-14): six open issues
+
+"Very close to a final product." The owner sent six critiques with screenshots, listed in
+[`issues/README.md`](issues/README.md) (images in `issues/img/`): rail collapse animation bug, duotone icons white when
+selected, rail labels beside icons + hamburger (Line Duotone allowed there), solid controls on glass, duotone tones too
+close, selected list rows touching the side edges. Goal: looks good on desktop and mobile. Work them in that order after
+(or alongside) the review answers; record new decisions as 0042 onward.
+
 ## Plan after the answers
 
 1. Apply the answers (each a small commit; 0041 becomes accepted or is amended).
@@ -34,4 +42,5 @@ edge only, showcase).
 
 ## Session log
 
+- 2026-11-14: owner's six critiques recorded as issues with images (docs/issues). Next: work the issues.
 - 2026-11-13 (framework): review + overhaul (0041), templates, layouts, content components, docs, hub. Next: owner's answers.
