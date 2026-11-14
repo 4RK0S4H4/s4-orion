@@ -6,6 +6,12 @@ issue. When an issue is done, move it to "Done" with the commit and decision num
 Goal across all of them (owner, 2026-11-14): **look good on both desktop and mobile** (check at 390 and 1280, light and
 dark, and ask for an iPhone look).
 
+**Motion direction (owner, 2026-11-14):** the general animation theme should be **super subtle but liquidy**, with small
+interesting moments (a shape that flows, an icon that bends into the next one) instead of plain fades and spins. Quick
+enough to never be in the way, but never looking instant. This amends 0022 (simpler motion): keep its sturdiness rules
+(transform and opacity, one transition per element, nothing cloned) unless the owner agrees otherwise; record as a new
+decision and show options in a motion lab with the scrubber before building.
+
 ## Open (2026-11-14)
 
 ### 1. Rail collapse animation glitches
@@ -43,6 +49,33 @@ In lists (and similar places) the selected or hovered fill runs to the left and 
 there is a gap at the top, which looks odd. Inset the selection evenly (padding or margin on all sides) so the fill
 never touches only some edges.
 ![List selection edges](img/2026-11-14-list-selection-edges.png)
+
+### 7. Liquid hover between list rows
+Moving the pointer from one row to the next should feel liquid: the hover/selection shape flows to the next row and its
+rounded corners morph as it goes (like the sliding nav pill, but softer). Subtle. Applies to lists and similar rows.
+![List rows](img/2026-11-14-list-hover-liquid.png)
+
+### 8. Switch hover looks bad; no hover halo
+The switch's hover state looks wrong, and the owner doesn't like the round hover "shadow" (state-layer halo) around the
+handle. Find a cleaner hover (for example a slight handle or track change) for switches, and check the other controls
+that draw the same halo (checkbox, radio, slider handle).
+![Switch hover](img/2026-11-14-switch-hover.png)
+
+### 9. No glass on tables
+The table (sticky header, scroll area) looks like it's trying to be glass; it looks bad. Tables are content and stay
+solid: remove any glass or translucency from the table and its sticky header.
+![Table](img/2026-11-14-table-no-glass.png)
+
+### 10. Table row hover looks bad
+Hovering a row draws a fill with odd rounded edges and a big halo around the row checkbox. Make the row hover clean
+(and consistent with issue 6's even inset and issue 7's liquid hover).
+![Table row hover](img/2026-11-14-table-row-hover.png)
+
+### 11. Accordion: too fast, chevron should bend, not spin
+Opening and closing feels too fast; it should be quick but never look instant. The chevron should **bend** into the
+other direction, like bending a book backward (a flip around its horizontal axis), not rotate. The owner wants this
+kind of interesting but subtle animation elsewhere too (see the motion direction above).
+![Accordion](img/2026-11-14-accordion-motion.png)
 
 ## Done
 
