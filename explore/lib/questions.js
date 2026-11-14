@@ -208,4 +208,18 @@ window.S4_REVIEW_DEMOS = [
         options: [{ v: 'A', label: 'Chrome Only' }, { v: 'B', label: 'Base, Content, Glass' }, { v: 'C', label: 'One Glass Hero' }, { v: 'D', label: 'Glass Sheet' }, { v: 'Other', label: 'Describe in notes' }] }
     ]
   }
+  ,
+  {
+    id: 'motion-liquid', title: 'Liquid Motion', href: 'explore/motion-liquid.html',
+    questions: [
+      { id: 'rows', label: 'Row hover and selection', help: 'Issue 7.', options: [{ v: 'A', label: 'Today' }, { v: 'B', label: 'Subtle Liquid' }, { v: 'C', label: 'More Liquid' }, { v: 'Other', label: 'Describe in notes' }] },
+      { id: 'chevron', label: 'Accordion and chevron', help: 'Issue 11.', options: [{ v: 'A', label: 'Today' }, { v: 'B', label: 'Subtle Liquid (bend over)' }, { v: 'C', label: 'More Liquid (fold flat)' }, { v: 'Other', label: 'Describe in notes' }] },
+      { id: 'radio', label: 'Radio buttons', help: 'Issue 19.', options: [{ v: 'A', label: 'Today' }, { v: 'B', label: 'Subtle Liquid' }, { v: 'C', label: 'More Liquid' }, { v: 'Other', label: 'Describe in notes' }] },
+      { id: 'snackbar', label: 'Snackbar', help: 'Issue 28.', options: [{ v: 'A', label: 'Today' }, { v: 'B', label: 'Subtle Liquid (glass, rises)' }, { v: 'C', label: 'More Liquid (glass drop spreads)' }, { v: 'Other', label: 'Describe in notes' }] },
+      { id: 'tooltip', label: 'Tooltip', help: 'Issue 29.', options: [{ v: 'A', label: 'Today' }, { v: 'B', label: 'Subtle Liquid (fast rise)' }, { v: 'C', label: 'More Liquid (grows from a drop)' }, { v: 'Other', label: 'Describe in notes' }] },
+      { id: 'menu', label: 'Menu', help: 'Issue 31.', options: [{ v: 'A', label: 'Today' }, { v: 'B', label: 'Subtle Liquid (pours from the button)' }, { v: 'C', label: 'More Liquid' }, { v: 'Other', label: 'Describe in notes' }] },
+      { id: 'loading', label: 'Skeleton and progress', help: 'Issues 25-27.', options: [{ v: 'A', label: 'Today' }, { v: 'B', label: 'Subtle Liquid' }, { v: 'C', label: 'More Liquid' }, { v: 'Other', label: 'Describe in notes' }] },
+      { id: 'overall', label: 'Did I get "liquid but subtle" right?', help: 'Looking at B and C together.', options: [{ v: 'Yes', label: 'That is it' }, { v: 'Close', label: 'Close; see notes' }, { v: 'No', label: 'Not what I mean; see notes' }] }
+    ]
+  }
 ];

@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>S4 Orion: Liquid Motion Lab</title>
+<link rel="stylesheet" href="../components/orion.css?v=6958b53">
+<style>
+body{margin:0;background:var(--md-sys-color-surface);color:var(--md-sys-color-on-surface)}
+h1,h2,p{margin:0}
+.bar{display:flex;align-items:center;padding:12px 24px;background:var(--md-sys-color-surface-container);border-bottom:1px solid var(--md-sys-color-outline-variant)}
+.bar h1{font-size:20px;line-height:28px;font-weight:500}
+.page{max-width:1100px;margin:0 auto;padding:24px 16px 120px;display:flex;flex-direction:column;gap:40px}
+.intro{max-width:80ch;color:var(--md-sys-color-on-surface-variant);display:flex;flex-direction:column;gap:12px}
+.sec > h2{font-size:24px;line-height:32px;font-weight:500;margin-bottom:6px}
+.sec > p{color:var(--md-sys-color-on-surface-variant);max-width:85ch;margin-bottom:16px}
+.cards{--rv-min:300px}
+.pv{display:grid;gap:12px;padding:16px;background:var(--md-sys-color-surface-container-low);border-radius:20px;min-height:120px;position:relative}
+.cap{font:500 12px/16px Inter,system-ui,sans-serif;color:var(--md-sys-color-on-surface-variant)}
+.btnrow{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+
+/* ---- rows ---- */
+.rows{position:relative;padding:6px;border-radius:22px;background:var(--md-sys-color-surface-container);display:flex;flex-direction:column;gap:2px;user-select:none;-webkit-user-select:none}
+.row{position:relative;z-index:1;display:flex;align-items:center;gap:12px;height:52px;padding:0 14px;border-radius:16px;cursor:pointer;font:400 15px/20px Inter,system-ui,sans-serif}
+.row .s4-icon{--s4-icon-size:20px;color:var(--md-sys-color-on-surface-variant)}
+.row b{margin-left:auto;font-weight:500;font-size:12px;color:var(--md-sys-color-on-surface-variant);font-variant-numeric:tabular-nums}
+.row[aria-selected="true"]{font-weight:600}
+.row .hl{position:absolute;inset:0;border-radius:inherit;background:var(--md-sys-color-surface-container-highest);opacity:0;z-index:-1}
+.row[aria-selected="true"] .hl{background:var(--md-sys-color-secondary-container);opacity:1}
+.blob{position:absolute;left:6px;right:6px;top:6px;height:52px;border-radius:16px;background:var(--md-sys-color-surface-container-highest);z-index:0;pointer-events:none}
+
+/* ---- accordion ---- */
+.acc{border-radius:20px;background:var(--md-sys-color-surface-container);padding:6px}
+.acc-item + .acc-item{margin-top:2px}
+.acc-h{display:flex;align-items:center;width:100%;gap:8px;height:52px;padding:0 14px;border:0;border-radius:16px;background:transparent;color:inherit;font:600 15px/20px Inter,system-ui,sans-serif;cursor:pointer;text-align:left}
+.acc-h:hover{background:color-mix(in oklab,var(--md-sys-color-on-surface) 6%,transparent)}
+.acc-h .chev{margin-left:auto;display:inline-flex}
+.acc-h .s4-icon{--s4-icon-size:22px}
+.acc-b{overflow:hidden;height:0}
+.acc-b > div{padding:4px 14px 14px;color:var(--md-sys-color-on-surface-variant);font:400 14px/20px Inter,system-ui,sans-serif}
+
+/* ---- radio ---- */
+.radios{position:relative;display:flex;flex-direction:column;gap:0;user-select:none;-webkit-user-select:none}
+.rad{position:relative;z-index:1;display:flex;align-items:center;gap:14px;height:44px;cursor:pointer;font:400 15px/20px Inter,system-ui,sans-serif}
+.rad .ring{width:22px;height:22px;border-radius:50%;background:var(--md-sys-color-surface-container-highest);flex:0 0 auto}
+.rad[aria-checked="true"]{font-weight:600}
+.rblob{position:absolute;left:0;width:22px;top:11px;height:22px;border-radius:11px;background:var(--md-sys-color-primary);z-index:2;pointer-events:none;opacity:0}
+
+/* ---- busy backdrop for glass ---- */
+.stage{position:relative;height:200px;border-radius:16px;overflow:hidden;background:
+  radial-gradient(circle at 20% 30%, #ff7a59 0 18%, transparent 19%),
+  radial-gradient(circle at 75% 60%, #4f46e5 0 22%, transparent 23%),
+  radial-gradient(circle at 45% 85%, #10b981 0 14%, transparent 15%),
+  repeating-linear-gradient(45deg, var(--md-sys-color-surface-container-high) 0 12px, var(--md-sys-color-surface-container) 12px 24px)}
+.stage .tip-text{position:absolute;inset:auto 12px 12px;font:500 12px/16px Inter,system-ui,sans-serif;color:var(--md-sys-color-on-surface)}
+
+/* ---- snackbar ---- */
+.snk{position:absolute;left:12px;right:12px;bottom:14px;height:52px;pointer-events:none;opacity:0}
+.snk-bg{position:absolute;inset:0;border-radius:26px}
+.snk-bg.solid{background:var(--md-sys-color-inverse-surface)}
+.snk-fg{position:absolute;inset:0;display:flex;align-items:center;gap:8px;padding:0 8px 0 20px;font:500 14px/20px Inter,system-ui,sans-serif;color:var(--md-sys-color-on-surface)}
+.snk-fg.inv{color:var(--md-sys-color-inverse-on-surface)}
+.snk-fg span{flex:1}
+.snk-fg i{font-style:normal;font-weight:600;padding:8px 12px;border-radius:18px;color:var(--md-sys-color-primary)}
+.snk-fg.inv i{color:var(--md-sys-color-inverse-primary)}
+
+/* ---- tooltip ---- */
+.tipwrap{position:relative;display:flex;justify-content:center;padding-top:64px;height:140px;box-sizing:border-box}
+.tip{position:absolute;left:50%;top:14px;width:150px;margin-left:-75px;height:36px;pointer-events:none;opacity:0}
+.tip-bg{position:absolute;inset:0;border-radius:18px}
+.tip-bg.solid{background:var(--md-sys-color-inverse-surface)}
+.tip-fg{position:absolute;inset:0;display:grid;place-items:center;font:500 13px/16px Inter,system-ui,sans-serif;color:var(--md-sys-color-on-surface)}
+.tip-fg.inv{color:var(--md-sys-color-inverse-on-surface)}
+
+/* ---- menu ---- */
+.mstage{position:relative;height:230px;border-radius:16px;overflow:hidden;padding:16px;box-sizing:border-box;background:
+  radial-gradient(circle at 80% 70%, #4f46e5 0 25%, transparent 26%),
+  repeating-linear-gradient(-45deg, var(--md-sys-color-surface-container-high) 0 10px, var(--md-sys-color-surface-container) 10px 20px)}
+.mn{position:absolute;left:16px;top:62px;width:200px;height:156px;pointer-events:none;opacity:0}
+.mn.open{pointer-events:auto}
+.mn-bg{position:absolute;inset:0;border-radius:16px}
+.mn-bg.solid{background:var(--md-sys-color-surface-container)}
+.mn-items{position:absolute;inset:0;padding:6px;display:flex;flex-direction:column;gap:2px}
+.mn-it{display:flex;align-items:center;gap:10px;height:46px;padding:0 12px;border-radius:12px;font:500 14px/20px Inter,system-ui,sans-serif}
+.mn-it .s4-icon{--s4-icon-size:20px}
+
+/* ---- loading ---- */
+.lin{position:relative;height:6px;border-radius:3px;background:var(--md-sys-color-surface-container-highest);overflow:hidden}
+.lin > i{position:absolute;top:0;bottom:0;left:0;right:100%;border-radius:3px;background:var(--md-sys-color-primary)}
+.lin.det > i{right:auto;width:0}
+.circ{width:48px;height:48px}
+.circ circle{fill:none;stroke-width:5;stroke-linecap:round}
+.circ .trk{stroke:var(--md-sys-color-surface-container-highest)}
+.circ .arc{stroke:var(--md-sys-color-primary);transform-origin:24px 24px}
+.sk{display:grid;gap:8px;grid-template-columns:40px 1fr;align-items:center}
+.sk > *{position:relative;overflow:hidden;background:var(--md-sys-color-surface-container-highest)}
+.sk .a{width:40px;height:40px;border-radius:50%;grid-row:span 2}
+.sk .l1{height:12px;border-radius:6px;width:80%}
+.sk .l2{height:12px;border-radius:6px;width:55%}
+.sk .bx{grid-column:1/-1;height:56px;border-radius:12px}
+.sk .sheen{position:absolute;top:0;bottom:0;left:0;width:90px;background:linear-gradient(90deg,transparent,color-mix(in oklab,var(--md-sys-color-on-surface) 9%,transparent),transparent)}
+.dl{display:grid;gap:8px;padding:16px;border-radius:20px;background:var(--md-sys-color-surface-container-low);max-width:520px}
+.dl .meta{display:flex;justify-content:space-between;font:500 13px/18px Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums;color:var(--md-sys-color-on-surface-variant)}
+.dl .lin{height:8px;border-radius:4px}
+.dl .lin > i{border-radius:4px}
+</style>
+</head>
+<body>
+<div class="bar"><h1>S4 Orion: Liquid Motion Lab</h1></div>
+<main class="page">
+  <div class="intro">
+    <p>You asked for motion that is <b>super subtle but liquid</b>: quick enough never to be in the way, never instant, with small interesting moments. This lab checks I understand what you mean before anything is built. Every question has <b>A. Today</b> and two readings of “liquid”: <b>B. Subtle Liquid</b> (my best guess) and <b>C. More Liquid</b> (the same idea, pushed further).</p>
+    <p>Play with each preview (hover or tap inside it), then tap the card header above it to pick. Use the blue bar at the bottom to freeze an animation and drag through it if you want to point at a moment. The last question asks whether I got “liquid but subtle” right at all.</p>
+  </div>
+  <div id="sections"></div>
+</main>
+<footer style="padding:24px;text-align:center;font-size:12px;color:var(--md-sys-color-on-surface-variant)"><a href="../">S4 Orion</a> exploration</footer>
+<script src="lib/scrub.js?v=b7738ee"></script>
+<script src="../components/assets/icons.js?v=f8aa430"></script>
+<script src="../components/orion.js?v=99a632f"></script>
+<script src="lib/questions.js?v=7f95321"></script>
+<script src="lib/review.js?v=2d9b250"></script>
+<script>
+/* ---------- springs ---------- */
+function spring(k, z) {
+  const w = Math.sqrt(k), x = t => {
+    if (z >= 1) return 1 - Math.exp(-w * t) * (1 + w * t);
+    const wd = w * Math.sqrt(1 - z * z); return 1 - Math.exp(-z * w * t) * (Math.cos(wd * t) + (z * w / wd) * Math.sin(wd * t));
+  };
+  let end = 0; for (let t = 0; t < 3; t += 0.001) if (Math.abs(x(t) - 1) > 0.002) end = t; end = Math.max(end, 0.05);
+  const pts = []; for (let i = 0; i <= 40; i++) { const v = x(end * i / 40); pts.push(i === 0 ? '0' : i === 40 ? '1' : v.toFixed(3) + ' ' + (i * 2.5).toFixed(1) + '%'); }
+  return { d: Math.round(end * 1000), e: 'linear(' + pts.join(',') + ')' };
+}
+const TODAY = () => { const s = S4.motion.spring('spatial'); return { d: s.duration || 260, e: s.easing }; };
+const TODAYFX = () => { const s = S4.motion.spring('effects'); return { d: s.duration || 120, e: s.easing }; };
+const SP = { soft: spring(520, 0.8), liquid: spring(340, 0.62), calm: spring(600, 1), fade: spring(900, 1), quick: spring(1200, 0.9) };
+const anim = (el, kf, s, o = {}) => el.animate(kf, Object.assign({ duration: s.d, easing: s.e, fill: 'both' }, o));
+const icon = n => `<span class="s4-icon" data-icon="${n}"></span>`;
+
+/* Two edges on springs: the edge in front leads (stiffer), the one behind trails, so a moving shape stretches and
+   catches up like a drop. Returns linear keyframes for top/height (or left/width) plus a radius that rounds while moving. */
+function edgeFrames(a0, b0, a1, b1, lead, trail, z, rBase, rGain) {
+  const forward = (a1 + b1) / 2 >= (a0 + b0) / 2;
+  const kA = forward ? trail : lead, kB = forward ? lead : trail;
+  let a = a0, b = b0, va = 0, vb = 0, t = 0; const dt = 1 / 480, fr = [];
+  for (;;) {
+    for (let i = 0; i < 8; i++) {
+      va += (-kA * (a - a1) - 2 * z * Math.sqrt(kA) * va) * dt; a += va * dt;
+      vb += (-kB * (b - b1) - 2 * z * Math.sqrt(kB) * vb) * dt; b += vb * dt; t += dt;
+    }
+    fr.push({ a, b, v: Math.abs(va) + Math.abs(vb) });
+    if ((Math.abs(a - a1) < 0.25 && Math.abs(b - b1) < 0.25 && Math.abs(va) + Math.abs(vb) < 8) || t > 2) break;
+  }
+  fr.push({ a: a1, b: b1, v: 0 });
+  return { d: Math.max(120, fr.length * 1000 / 60), fr, r: f => Math.min(rBase + rGain, rBase + f.v * rGain / 900) };
+}
+function moveEdges(el, from, to, opt, axis) {
+  const s = edgeFrames(from[0], from[1], to[0], to[1], opt.lead, opt.trail, opt.z, opt.r, opt.rGain || 0);
+  const P = axis === 'x' ? ['left', 'width'] : ['top', 'height'];
+  const kf = s.fr.map(f => ({ [P[0]]: f.a + 'px', [P[1]]: Math.max(opt.min || 0, f.b - f.a) + 'px', borderRadius: Math.min(s.r(f), (f.b - f.a) / 2) + 'px' }));
+  return el.animate(kf, { duration: s.d, easing: 'linear', fill: 'both' });
+}
+function settle(el, a, props) { a.onfinish = () => { props.forEach(p => el.style[p] = getComputedStyle(el)[p]); a.cancel(); }; }
+function current(el, axis) { const cs = getComputedStyle(el); return axis === 'x' ? [parseFloat(cs.left), parseFloat(cs.left) + parseFloat(cs.width)] : [parseFloat(cs.top), parseFloat(cs.top) + parseFloat(cs.height)]; }
+function freeze(el, props) { const cs = getComputedStyle(el); const v = {}; props.forEach(p => v[p] = cs[p]); el.getAnimations().forEach(a => a.cancel()); Object.assign(el.style, v); }
+
+/* ---------- section helper ---------- */
+function section(id, title, text, opts, build) {
+  const sec = document.createElement('section'); sec.className = 'sec';
+  sec.innerHTML = `<h2>${title}</h2><p>${text}</p><div class="cards rv-group" role="radiogroup" aria-label="${title}"></div>`;
+  document.getElementById('sections').appendChild(sec);
+  opts.forEach(o => { const pv = document.createElement('div'); pv.className = 'pv'; build(pv, o.k); sec.querySelector('.cards').appendChild(S4Review.card({ pick: id + ':' + o.k, letter: o.k, title: o.name, desc: o.desc, tag: o.tag || '', preview: pv })); });
+  return sec;
+}
+const ABC = (b, c, a) => [
+  { k: 'A', name: 'Today', tag: 'Today', desc: a },
+  { k: 'B', name: 'Subtle Liquid', desc: b },
+  { k: 'C', name: 'More Liquid', desc: c }];
+
+/* ===== 1. rows ===== */
+section('rows', 'Row Hover and Selection', 'Issue 7 (and 6: the fill is inset evenly on every side here). Move the pointer down the list, or tap rows on a phone.', ABC(
+  'One highlight glides from row to row. While it moves, the edge in front leads and the back edge catches up, so it stretches a little and its corners round out, then settles.',
+  'The same, with a softer spring: a longer stretch, a small overshoot and a wobble as it lands.',
+  'Each row fades its own highlight in and out. Nothing moves between rows.'), (pv, k) => {
+  const names = [['bills', 'All Bills', 48], ['schedule', 'Due Soon', 6], ['check', 'Paid', 39], ['folder', 'Archived', 12], ['star', 'Starred', 3]];
+  pv.innerHTML = `<div class="rows">${k === 'A' ? '' : '<div class="blob"></div>'}${names.map((n, i) => `<div class="row" data-i="${i}" aria-selected="${i === 0}">${k === 'A' ? '<span class="hl"></span>' : ''}${icon(n[0])}${n[1]}<b>${n[2]}</b></div>`).join('')}</div>`;
+  const rows = [...pv.querySelectorAll('.row')], list = pv.querySelector('.rows'), blob = pv.querySelector('.blob');
+  let sel = 0, over = null;
+  if (k === 'A') {
+    rows.forEach(r => {
+      r.addEventListener('pointerenter', () => { if (r.getAttribute('aria-selected') !== 'true') anim(r.querySelector('.hl'), [{ opacity: 0 }, { opacity: 1 }], TODAYFX()); });
+      r.addEventListener('pointerleave', () => { if (r.getAttribute('aria-selected') !== 'true') anim(r.querySelector('.hl'), [{ opacity: 1 }, { opacity: 0 }], TODAYFX()); });
+      r.addEventListener('click', () => { rows.forEach(x => { x.setAttribute('aria-selected', x === r); x.querySelector('.hl').getAnimations().forEach(a => a.cancel()); }); });
+    });
+    return;
+  }
+  const opt = k === 'B' ? { lead: 900, trail: 380, z: 0.95, r: 16, rGain: 8 } : { lead: 520, trail: 200, z: 0.7, r: 16, rGain: 14 };
+  const place = i => { const r = rows[i]; return [r.offsetTop, r.offsetTop + r.offsetHeight]; };
+  blob.style.background = 'var(--md-sys-color-secondary-container)';
+  const go = i => { const from = current(blob); freeze(blob, ['top', 'height', 'borderRadius']); const a = moveEdges(blob, from, place(i), opt); settle(blob, a, ['top', 'height', 'borderRadius']); };
+  requestAnimationFrame(() => { const p = place(0); blob.style.top = p[0] + 'px'; blob.style.height = (p[1] - p[0]) + 'px'; });
+  rows.forEach((r, i) => {
+    r.addEventListener('pointerenter', e => { if (e.pointerType !== 'mouse') return; over = i; blob.style.background = 'var(--md-sys-color-surface-container-highest)'; go(i); });
+    r.addEventListener('click', () => { sel = i; rows.forEach(x => x.setAttribute('aria-selected', x === r)); blob.style.background = 'var(--md-sys-color-secondary-container)'; go(i); });
+  });
+  list.addEventListener('pointerleave', e => { if (e.pointerType !== 'mouse') return; over = null; blob.style.background = 'var(--md-sys-color-secondary-container)'; go(sel); });
+});
+
+/* ===== 2. accordion ===== */
+section('chevron', 'Accordion and Chevron', 'Issue 11. Open and close the sections. B and C open a little slower than today (quick, never instant), and the chevron turns over instead of spinning.', ABC(
+  'The chevron bends over like a page turned backward (a flip around its horizontal middle). The section opens on a calm spring, its text fading in just behind.',
+  'The chevron folds flat and springs out the other way with a little bounce; the section opens on a softer spring that settles with a slight overshoot.',
+  'The chevron rotates half a turn; the section opens on today’s fast spring.'), (pv, k) => {
+  const qs = [['What Is Autopay?', 'Pays the bill from your default account on its due date.'], ['Can I Change the Account?', 'Yes. Choose another account in Settings before the due date.'], ['What If a Payment Fails?', 'We try again the next day and tell you right away.']];
+  pv.innerHTML = `<div class="acc">${qs.map(q => `<div class="acc-item"><button class="acc-h" type="button" aria-expanded="false">${q[0]}<span class="chev">${icon('chevron-down')}</span></button><div class="acc-b"><div>${q[1]}</div></div></div>`).join('')}</div>`;
+  const open = (h, on) => {
+    const b = h.nextElementSibling, c = h.querySelector('.chev'), inner = b.firstElementChild;
+    h.setAttribute('aria-expanded', on);
+    const hFrom = b.getBoundingClientRect().height, hTo = on ? inner.scrollHeight : 0;
+    b.getAnimations().forEach(a => a.cancel()); c.getAnimations().forEach(a => a.cancel());
+    const sB = k === 'A' ? TODAY() : k === 'B' ? spring(380, 1) : SP.soft;
+    const ab = anim(b, [{ height: hFrom + 'px' }, { height: hTo + 'px' }], sB); settle(b, ab, ['height']);
+    if (on) anim(inner, [{ opacity: 0, transform: 'translateY(-4px)' }, { opacity: 1, transform: 'none' }], k === 'A' ? TODAYFX() : spring(500, 1), { delay: k === 'A' ? 0 : 60 });
+    const turned = c.dataset.on === '1';
+    if (k === 'A') anim(c, [{ transform: `rotate(${turned ? 180 : 0}deg)` }, { transform: `rotate(${on ? 180 : 0}deg)` }], TODAY());
+    else if (k === 'B') anim(c, [{ transform: `perspective(60px) rotateX(${turned ? 180 : 0}deg)` }, { transform: `perspective(60px) rotateX(${on ? 180 : 0}deg)` }], spring(420, 0.9));
+    else anim(c, [{ transform: `scaleY(${turned ? -1 : 1})` }, { transform: `scaleY(${on ? -1 : 1})` }], spring(300, 0.55));
+    c.dataset.on = on ? '1' : '0';
+  };
+  pv.querySelectorAll('.acc-h').forEach(h => h.addEventListener('click', () => {
+    const on = h.getAttribute('aria-expanded') !== 'true';
+    pv.querySelectorAll('.acc-h[aria-expanded="true"]').forEach(x => { if (x !== h) open(x, false); });
+    open(h, on);
+  }));
+});
+
+/* ===== 3. radio ===== */
+section('radio', 'Radio Buttons', 'Issue 19. Pick one, then another. B and C drop the dot inside the selected radio: the selected one is simply filled.', ABC(
+  'The first pick fills in; after that the fill travels quickly from the old radio to the new one, stretching a little on the way like a drop.',
+  'The same travel with a softer spring: a longer stretch and a small wobble as the drop lands.',
+  'The real Orion radio: a dot appears in the new one and leaves the old one.'), (pv, k) => {
+  const opts = ['Checking •••• 4021', 'Savings •••• 0937', 'Card •••• 8830', 'Pay Later'];
+  if (k === 'A') { pv.innerHTML = `<fieldset style="border:0;margin:0;padding:0;display:grid;gap:4px">${opts.map((o, i) => `<label class="s4-radio"><input type="radio" name="rA" ${i === 0 ? 'checked' : ''}><span class="s4-radio-ring"></span>${o}</label>`).join('')}</fieldset>`; return; }
+  pv.innerHTML = `<div class="radios" role="radiogroup" aria-label="Pay With"><div class="rblob"></div>${opts.map(o => `<div class="rad" role="radio" aria-checked="false" tabindex="0"><span class="ring"></span>${o}</div>`).join('')}</div>`;
+  const rads = [...pv.querySelectorAll('.rad')], blob = pv.querySelector('.rblob');
+  const opt = k === 'B' ? { lead: 1100, trail: 420, z: 0.9, r: 11, min: 22 } : { lead: 600, trail: 220, z: 0.68, r: 11, min: 22 };
+  let cur = -1;
+  const ringBox = i => { const r = rads[i].querySelector('.ring'); return [rads[i].offsetTop + r.offsetTop, rads[i].offsetTop + r.offsetTop + 22]; };
+  const pick = i => {
+    if (i === cur) return;
+    rads.forEach((r, j) => r.setAttribute('aria-checked', j === i));
+    if (cur < 0) {
+      const p = ringBox(i); blob.style.top = p[0] + 'px'; blob.style.height = '22px'; blob.style.opacity = 1;
+      anim(blob, [{ transform: 'scale(.3)', opacity: 0 }, { transform: 'none', opacity: 1 }], k === 'B' ? spring(700, 0.8) : spring(420, 0.6), { fill: 'none' });
+    } else {
+      const from = current(blob); freeze(blob, ['top', 'height', 'borderRadius']);
+      const a = moveEdges(blob, from, ringBox(i), opt); settle(blob, a, ['top', 'height', 'borderRadius']);
+    }
+    cur = i;
+  };
+  rads.forEach((r, i) => { r.addEventListener('click', () => pick(i)); r.addEventListener('keydown', e => { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); pick(i); } }); });
+});
+
+/* ===== 4. snackbar ===== */
+section('snackbar', 'Snackbar', 'Issue 28. Tap Show, then Hide (or let it go by itself after 4 seconds). B and C are glass, over a busy background so you can see it.', ABC(
+  'Glass. It rises into place on a soft spring while its glass widens slightly to full size, like a drop settling; the text fades in just after.',
+  'Glass. It starts as a small round drop at the bottom and stretches out into the full pill, overshooting a touch; the text appears once it has spread.',
+  'Today: a solid light pill that rises 10px and fades in.'), (pv, k) => {
+  pv.innerHTML = `<div class="btnrow"><button class="s4-button" data-variant="tonal" type="button" data-a="show">Show</button><button class="s4-button" data-variant="text" type="button" data-a="hide">Hide</button></div>
+    <div class="stage"><div class="snk"><div class="snk-bg ${k === 'A' ? 'solid' : 's4-glass'}"></div><div class="snk-fg ${k === 'A' ? 'inv' : ''}"><span>Bill archived</span><i>Undo</i></div></div></div>`;
+  const s = pv.querySelector('.snk'), bg = s.querySelector('.snk-bg'), fg = s.querySelector('.snk-fg');
+  let shown = false, timer;
+  const kill = () => [s, bg, fg].forEach(e => e.getAnimations().forEach(a => a.cancel()));
+  const show = () => {
+    clearTimeout(timer); timer = setTimeout(hide, 4000); if (shown) return; shown = true; kill();
+    const w = s.offsetWidth;
+    if (k === 'A') { anim(s, [{ opacity: 0, transform: 'translateY(10px)' }, { opacity: 1, transform: 'none' }], TODAY()); return; }
+    if (k === 'B') {
+      anim(s, [{ opacity: 0, transform: 'translateY(14px)' }, { opacity: 1, transform: 'none' }], SP.soft);
+      anim(bg, [{ left: w * 0.05 + 'px', right: w * 0.05 + 'px' }, { left: '0px', right: '0px' }], spring(380, 0.72));
+      anim(fg, [{ opacity: 0 }, { opacity: 1 }], SP.fade, { delay: 90 });
+    } else {
+      const x = (w - 44) / 2;
+      s.style.opacity = 1;
+      /* the drop rises in, then spreads into the pill on a liquid spring (it can overshoot a touch) */
+      anim(bg, [{ transform: 'translateY(18px)', opacity: 0 }, { transform: 'none', opacity: 1 }], spring(900, 0.9));
+      anim(bg, [{ left: x + 'px', right: x + 'px', top: '4px', bottom: '4px' }, { left: '0px', right: '0px', top: '0px', bottom: '0px' }], spring(320, 0.62), { delay: 140 });
+      anim(fg, [{ opacity: 0 }, { opacity: 1 }], SP.fade, { delay: 300 });
+    }
+  };
+  const hide = () => {
+    clearTimeout(timer); if (!shown) return; shown = false;
+    const w = s.offsetWidth;
+    if (k === 'A') { kill(); anim(s, [{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'translateY(10px)' }], TODAYFX()); return; }
+    kill(); s.style.opacity = 1;
+    if (k === 'B') { anim(s, [{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'translateY(10px)' }], spring(900, 1)); return; }
+    const x = (w - 44) / 2;
+    anim(fg, [{ opacity: 1 }, { opacity: 0 }], spring(1600, 1));
+    anim(bg, [{ left: '0px', right: '0px', top: '0px', bottom: '0px', opacity: 1, transform: 'none' }, { left: x + 'px', right: x + 'px', top: '4px', bottom: '4px', opacity: 1, transform: 'none', offset: 0.6 }, { left: x + 'px', right: x + 'px', top: '4px', bottom: '4px', opacity: 0, transform: 'translateY(14px)' }], { d: 420, e: 'cubic-bezier(.3,0,.2,1)' }).onfinish = () => { s.style.opacity = 0; };
+  };
+  pv.querySelector('[data-a="show"]').onclick = show; pv.querySelector('[data-a="hide"]').onclick = hide;
+});
+
+/* ===== 5. tooltip ===== */
+section('tooltip', 'Tooltip', 'Issue 29. Hover the button, or tap it on a phone (tap again to hide). B and C come in faster than today.', ABC(
+  'Rises 4px and fades in fast (about 150ms), leaves even faster. Glass.',
+  'Glass that grows out of a small drop just above the button, then the label fades in. Still quick.',
+  'Today’s solid tooltip, fading in on the effects spring after the usual delay.'), (pv, k) => {
+  pv.innerHTML = `<div class="stage" style="height:150px"><div class="tipwrap"><div class="tip"><div class="tip-bg ${k === 'A' ? 'solid' : 's4-glass'}"></div><div class="tip-fg ${k === 'A' ? 'inv' : ''}">Export to Excel</div></div><button class="s4-icon-button" data-variant="tonal" type="button" aria-label="Export">${icon('export')}</button></div></div>`;
+  const t = pv.querySelector('.tip'), bg = t.querySelector('.tip-bg'), fg = t.querySelector('.tip-fg'), b = pv.querySelector('button');
+  let on = false, wait;
+  const kill = () => [t, bg, fg].forEach(e => e.getAnimations().forEach(a => a.cancel()));
+  const show = () => {
+    if (on) return; on = true; kill();
+    if (k === 'A') { wait = setTimeout(() => anim(t, [{ opacity: 0 }, { opacity: 1 }], TODAYFX()), 300); return; }
+    if (k === 'B') { anim(t, [{ opacity: 0, transform: 'translateY(4px)' }, { opacity: 1, transform: 'none' }], spring(1100, 0.9)); return; }
+    t.style.opacity = 1;
+    anim(bg, [{ left: '62px', right: '62px', top: '22px', bottom: '0px', borderRadius: '13px', opacity: 0 }, { left: '0px', right: '0px', top: '0px', bottom: '0px', borderRadius: '18px', opacity: 1 }], spring(700, 0.72));
+    anim(fg, [{ opacity: 0 }, { opacity: 1 }], SP.fade, { delay: 80 });
+  };
+  const hide = () => {
+    clearTimeout(wait); if (!on) return; on = false; kill();
+    if (k === 'C') { t.style.opacity = 1; anim(fg, [{ opacity: 1 }, { opacity: 0 }], spring(2000, 1)); anim(bg, [{ left: '0px', right: '0px', top: '0px', bottom: '0px', opacity: 1 }, { left: '62px', right: '62px', top: '22px', bottom: '0px', opacity: 0 }], spring(1400, 1)).onfinish = () => { t.style.opacity = 0; }; return; }
+    anim(t, [{ opacity: 1 }, { opacity: 0 }], k === 'A' ? TODAYFX() : spring(2000, 1));
+  };
+  b.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') show(); });
+  b.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') hide(); });
+  b.addEventListener('click', e => { if (e.pointerType !== 'mouse') (on ? hide : show)(); });
+  b.addEventListener('focus', show); b.addEventListener('blur', hide);
+});
+
+/* ===== 6. menu ===== */
+section('menu', 'Menu', 'Issue 31. Tap the button to open and close the menu (or tap an item).', ABC(
+  'The glass grows down out of the button: it starts the size of the button and pours open to the full menu on a soft spring, the items fading in one after another.',
+  'The same pour with a softer spring: the bottom edge runs ahead and the menu wobbles slightly as it settles; items follow a little later.',
+  'Today: the whole menu drops 8px from the button and fades in.'), (pv, k) => {
+  pv.innerHTML = `<div class="mstage"><button class="s4-button" data-variant="tonal" type="button">${icon('sort')}Sort By</button>
+    <div class="mn"><div class="mn-bg ${k === 'A' ? 'solid s4-glass' : 's4-glass'}"></div><div class="mn-items">
+      <div class="mn-it">${icon('calendar')}Due Date</div><div class="mn-it">${icon('wallet')}Amount</div><div class="mn-it">${icon('people')}Vendor</div></div></div></div>`;
+  const btn = pv.querySelector('button'), m = pv.querySelector('.mn'), bg = m.querySelector('.mn-bg'), items = [...m.querySelectorAll('.mn-it')];
+  let open = false;
+  const kill = () => [m, bg, ...items].forEach(e => e.getAnimations().forEach(a => a.cancel()));
+  const toggle = () => {
+    open = !open; m.classList.toggle('open', open);
+    const bw = btn.offsetWidth, bh = btn.offsetHeight, W = m.offsetWidth, H = m.offsetHeight, dy = btn.offsetTop - m.offsetTop;
+    if (k === 'A') { kill(); anim(m, open ? [{ opacity: 0, transform: 'translateY(-8px)' }, { opacity: 1, transform: 'none' }] : [{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'translateY(-8px)' }], open ? TODAY() : TODAYFX()); return; }
+    const small = { top: dy + 'px', right: (W - bw) + 'px', bottom: (H - dy - bh) + 'px', borderRadius: bh / 2 + 'px' }, big = { top: '0px', right: '0px', bottom: '0px', borderRadius: '16px' };
+    kill(); m.style.opacity = 1;
+    if (open) {
+      const s = k === 'B' ? spring(460, 0.82) : spring(300, 0.62);
+      anim(bg, [Object.assign({ opacity: 0.4 }, small), Object.assign({ opacity: 1 }, big)], s);
+      items.forEach((it, i) => anim(it, [{ opacity: 0, transform: 'translateY(-6px)' }, { opacity: 1, transform: 'none' }], spring(700, 1), { delay: (k === 'B' ? 50 : 90) + i * (k === 'B' ? 25 : 40) }));
+    } else {
+      items.forEach(it => anim(it, [{ opacity: 1 }, { opacity: 0 }], spring(2400, 1)));
+      anim(bg, [Object.assign({ opacity: 1 }, big), Object.assign({ opacity: 0 }, small)], spring(900, 1)).onfinish = () => { m.style.opacity = 0; };
+    }
+  };
+  btn.addEventListener('click', toggle); items.forEach(it => it.addEventListener('click', () => { if (open) toggle(); }));
+});
+
+/* ===== 7. loading ===== */
+section('loading', 'Loading: Skeleton and Progress', 'Issues 25, 26, 27. Each card shows a skeleton, a linear and a circular indicator that are still working, and both at 100%. (The download demo is under the cards.)', ABC(
+  'A soft sheen sweeps across the skeleton as one wave. The bar’s front edge runs ahead and the back edge catches up, like a drop sliding along. The ring’s arc breathes as it turns. At 100% the bar and the ring are completely full.',
+  'The same skeleton wave. The bar is a drop that stretches as it slides through; the ring is two arcs that chase each other, speeding up and slowing down. Full at 100%.',
+  'Today: a blinking skeleton, M3’s moving segment and spinning arc, and the M3 gap and stop dot at 100%.'), (pv, k) => {
+  pv.style.gap = '16px';
+  if (k === 'A') {
+    pv.innerHTML = `<div aria-busy="true" style="display:grid;gap:8px"><div class="s4-skeleton" data-shape="text" style="width:70%"></div><div class="s4-skeleton" data-shape="text" style="width:45%"></div><div class="s4-skeleton" style="height:56px"></div></div>
+      <span class="cap">Working</span><div class="s4-progress" aria-label="Syncing"></div><div class="btnrow"><div class="s4-progress" data-type="circular" aria-label="Loading"></div></div>
+      <span class="cap">100%</span><div class="s4-progress" data-value="1" aria-label="Done"></div><div class="btnrow"><div class="s4-progress" data-type="circular" data-value="1" aria-label="Done"></div></div>`;
+    S4.init(pv); return;
+  }
+  const C = 2 * Math.PI * 19;
+  pv.innerHTML = `<div class="sk" aria-busy="true"><div class="a"></div><div class="l1"></div><div class="l2"></div><div class="bx"></div></div>
+    <span class="cap">Working</span><div class="lin"><i></i></div>
+    <div class="btnrow"><svg class="circ" viewBox="0 0 48 48" aria-label="Loading"><circle class="trk" cx="24" cy="24" r="19"/><circle class="arc a1" cx="24" cy="24" r="19"/>${k === 'C' ? '<circle class="arc a2" cx="24" cy="24" r="19"/>' : ''}</svg></div>
+    <span class="cap">100%</span><div class="lin det"><i style="width:100%"></i></div>
+    <div class="btnrow"><svg class="circ" viewBox="0 0 48 48" aria-label="Done"><circle class="arc" cx="24" cy="24" r="19" style="stroke-dasharray:${C} 0"/></svg></div>`;
+  /* skeleton: one wave across the group */
+  requestAnimationFrame(() => {
+    const g = pv.querySelector('.sk'), G = g.getBoundingClientRect();
+    [...g.children].forEach(el => {
+      const sh = document.createElement('span'); sh.className = 'sheen'; el.appendChild(sh);
+      const x0 = el.getBoundingClientRect().left - G.left;
+      sh.animate([{ transform: `translateX(${-120 - x0}px)` }, { transform: `translateX(${G.width + 40 - x0}px)` }], { duration: 1600, iterations: Infinity, easing: 'cubic-bezier(.4,0,.6,1)', delay: 0 });
+    });
+    /* linear */
+    const bar = pv.querySelector('.lin:not(.det) > i'), W = bar.parentElement.offsetWidth;
+    if (k === 'B') {
+      bar.animate([{ left: '0%', right: '100%' }, { left: '0%', right: '45%', offset: 0.4 }, { left: '55%', right: '0%', offset: 0.78 }, { left: '100%', right: '0%' }], { duration: 1500, iterations: Infinity, easing: 'cubic-bezier(.45,0,.4,1)' });
+    } else {
+      const s = edgeFrames(-W * 0.25, 0, W, W * 1.25, 160, 50, 1, 3, 0);
+      bar.style.right = 'auto';
+      bar.animate(s.fr.map(f => ({ left: f.a + 'px', width: Math.max(6, f.b - f.a) + 'px' })), { duration: s.d * 1.05, iterations: Infinity, easing: 'linear' });
+    }
+    /* circular */
+    const svg = pv.querySelector('.circ'), a1 = svg.querySelector('.a1');
+    if (k === 'B') {
+      svg.animate([{ transform: 'rotate(0deg)' }, { transform: 'rotate(360deg)' }], { duration: 1600, iterations: Infinity });
+      a1.animate([{ strokeDasharray: `8 ${C}`, strokeDashoffset: 0 }, { strokeDasharray: `${C * 0.6} ${C}`, strokeDashoffset: -C * 0.12, offset: 0.5 }, { strokeDasharray: `8 ${C}`, strokeDashoffset: -C + 8 }], { duration: 1300, iterations: Infinity, easing: 'cubic-bezier(.45,0,.35,1)' });
+    } else {
+      const a2 = svg.querySelector('.a2');
+      svg.animate([{ transform: 'rotate(0deg)' }, { transform: 'rotate(200deg)', offset: 0.35 }, { transform: 'rotate(260deg)', offset: 0.6 }, { transform: 'rotate(360deg)' }], { duration: 1800, iterations: Infinity, easing: 'linear' });
+      a1.animate([{ strokeDasharray: `${C * 0.3} ${C}`, strokeDashoffset: 0 }, { strokeDasharray: `${C * 0.12} ${C}`, strokeDashoffset: -C * 0.5, offset: 0.5 }, { strokeDasharray: `${C * 0.3} ${C}`, strokeDashoffset: -C }], { duration: 1400, iterations: Infinity, easing: 'cubic-bezier(.5,0,.3,1)' });
+      a2.animate([{ strokeDasharray: `${C * 0.12} ${C}`, strokeDashoffset: -C * 0.5 }, { strokeDasharray: `${C * 0.3} ${C}`, strokeDashoffset: -C, offset: 0.5 }, { strokeDasharray: `${C * 0.12} ${C}`, strokeDashoffset: -C * 1.5 }], { duration: 1400, iterations: Infinity, easing: 'cubic-bezier(.5,0,.3,1)' });
+    }
+  });
+});
+
+/* ===== download demo ===== */
+(function () {
+  const sec = document.createElement('section'); sec.className = 'sec';
+  sec.innerHTML = `<h2>Download Demo</h2><p>Issue 27: a bar that runs on its own like a real download. Fast for the first 5 seconds, then it stalls and moves at random speeds, and always finishes within 10 seconds. Full at 100%. Not a question; tell me in the notes if it feels real.</p>
+    <div class="dl"><div class="meta"><span class="nm">Q4 Statements.zip</span><span class="pc">0%</span></div><div class="lin det"><i></i></div><div class="meta"><span class="mb">0 of 248 MB</span><span class="st">Starting…</span></div>
+    <div class="btnrow"><button class="s4-button" data-variant="tonal" type="button">${icon('refresh')}Replay</button></div></div>`;
+  document.getElementById('sections').appendChild(sec);
+  const fill = sec.querySelector('.lin > i'), pc = sec.querySelector('.pc'), mb = sec.querySelector('.mb'), st = sec.querySelector('.st');
+  let a, raf;
+  function plan() {
+    const pts = [[0, 0]]; let t = 0, v = 0; const p1 = 55 + Math.random() * 15;
+    while (t < 4.6) { t += 0.35 + Math.random() * 0.45; v = Math.min(p1, v + (p1 / 5) * (0.6 + Math.random() * 0.8) * 0.6); pts.push([Math.min(t, 5), v]); }
+    pts.push([5, p1]); t = 5; v = p1; const end = 9.2 + Math.random() * 0.7;
+    while (t < end - 0.6) {
+      const stall = Math.random() < 0.45; const dt = stall ? 0.3 + Math.random() * 0.8 : 0.2 + Math.random() * 0.6;
+      t = Math.min(end - 0.4, t + dt); if (!stall) v = Math.min(97, v + (100 - v) * (0.08 + Math.random() * 0.3)); pts.push([t, v]);
+    }
+    pts.push([end, 100]); return pts;
+  }
+  function run() {
+    if (a) a.cancel(); cancelAnimationFrame(raf);
+    const pts = plan(), end = pts[pts.length - 1][0];
+    a = fill.animate(pts.map(p => ({ width: p[1] + '%', offset: p[0] / end, easing: 'cubic-bezier(.25,.6,.35,1)' })), { duration: end * 1000, fill: 'forwards' });
+    let last = 0, lastT = 0, speed = 0;
+    const tick = () => {
+      const w = parseFloat(getComputedStyle(fill).width) / fill.parentElement.offsetWidth * 100, now = performance.now();
+      if (now - lastT > 400) { speed = (w - last) / 100 * 248 / ((now - lastT) / 1000); last = w; lastT = now; }
+      pc.textContent = Math.floor(w) + '%'; mb.textContent = Math.round(w / 100 * 248) + ' of 248 MB';
+      st.textContent = w >= 99.9 ? 'Done' : speed < 1 ? 'Waiting…' : speed.toFixed(0) + ' MB/s';
+      if (a.playState !== 'finished') raf = requestAnimationFrame(tick); else { pc.textContent = '100%'; mb.textContent = '248 of 248 MB'; st.textContent = 'Done'; }
+    };
+    lastT = performance.now(); tick();
+  }
+  sec.querySelector('button').onclick = run;
+  new IntersectionObserver((es, o) => { if (es[0].isIntersecting) { run(); o.disconnect(); } }).observe(sec);
+})();
+
+/* ===== 8. overall ===== */
+(function () {
+  const sec = document.createElement('section'); sec.className = 'sec';
+  sec.innerHTML = `<h2>Did I Get “Liquid but Subtle” Right?</h2><p>Looking at all of B and C together: is this the feeling you mean? Pick below (in Your Answers), and if not, describe what’s missing in the notes: a moment from an app you like, more or less wobble, faster or slower, more or less shape-changing.</p>`;
+  document.getElementById('sections').appendChild(sec);
+})();
+S4Review.page('motion-liquid');
+</script>
+</body>
+</html>

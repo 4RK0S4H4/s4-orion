@@ -26,7 +26,8 @@ must open the glass menu, a real date picker, softer error fields; chips that do
 without an inner dot, slider reaching both ends, no stop dot under the handle. Then color: normal, contrast-safe
 colors with accents only as accents (big one, new decision + lab), badges, banner on glass, skeleton wave, progress
 (full at 100%, creative indeterminate, download demo); snackbars on glass, tooltips, rich tooltip corners, menu motion,
-no autofocus in dialogs, field focus on glass, floating glass panels instead of sheets. **Start with the motion lab**
+no autofocus in dialogs, field focus on glass, floating glass panels instead of sheets. **Motion lab published** (`explore/motion-liquid.html`, 8 questions: Today vs Subtle vs More Liquid,
+plus the download demo); **pause for the owner's answers**, then record the motion decision (0042) and build. It
 (confirms "liquid but subtle" before any motion issue is built). Idea A: whatever you touch turns into glass. Motion direction: super subtle but liquidy (amends 0022,
 needs a motion lab first). Goal: looks good on desktop and mobile. Work them in that order after
 (or alongside) the review answers; record new decisions as 0042 onward.
@@ -50,5 +51,6 @@ needs a motion lab first). Goal: looks good on desktop and mobile. Work them in 
 
 ## Session log
 
+- 2026-11-14 (lab): Liquid Motion Lab published. Next: owner's answers, then decision 0042 and the motion issues.
 - 2026-11-14: owner's 35 critiques, one idea and the liquid-motion direction recorded as issues with images (docs/issues). Next: work the issues.
 - 2026-11-13 (framework): review + overhaul (0041), templates, layouts, content components, docs, hub. Next: owner's answers.

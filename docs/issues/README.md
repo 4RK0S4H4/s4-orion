@@ -6,7 +6,7 @@ issue. When an issue is done, move it to "Done" with the commit and decision num
 Goal across all of them (owner, 2026-11-14): **look good on both desktop and mobile** (check at 390 and 1280, light and
 dark, and ask for an iPhone look).
 
-**First step for all motion issues: a motion lab** (owner, 2026-11-14) to confirm that what's built matches what the
+**First step for all motion issues: a motion lab** ([`explore/motion-liquid.html`](../../explore/motion-liquid.html), built 2026-11-14, awaiting the owner's answers) (owner, 2026-11-14) to confirm that what's built matches what the
 owner means by "liquid but subtle", before any motion issue is built. Show each candidate (liquid row hover 7, bending
 chevron 11, liquid radio 19, snackbar 28, tooltip 29, menu 31, progress 26/27, skeleton 25) with the scrubber, plus
 today's motion for comparison, and ask if the owner needs to explain it differently.
