@@ -1,0 +1,240 @@
+/* Date picker (decision 0024: selects and dates open a glass popup, never the browser's own)
+   <div class="s4-text-field">
+     <label for="due">Due Date</label>
+     <input id="due" type="date" min="2026-01-01" max="2027-12-31">        stays in the DOM: form value, min/max, no-JS fallback
+   </div>
+   date-picker.js hides the native input (data-s4-native), puts a .s4-text-field-select button with the formatted date and
+   a calendar icon in its place, and opens this popup:
+   <div class="s4-date-picker s4-glass" popover="manual" role="dialog" aria-label="Choose date" data-view="days|months">
+     <div class="s4-date-picker-header">  month/year button, previous and next icon buttons
+     <div class="s4-date-picker-body">    .s4-date-picker-days (weekday row + 6x7 grid of .s4-date-picker-day) over
+                                          .s4-date-picker-months (3x4 grid of .s4-date-picker-month)
+     <div class="s4-date-picker-footer">  Clear, Today
+   </div>
+   Anchored under its field from 600px up; a centered floating panel on phones. Solid surface-container here; the
+   s4-glass class makes it glass. Only opacity and transform ever animate (date-picker.js). */
+@layer s4.components {
+  /* ---------- the field ---------- */
+  .s4-text-field > input[type="date"][data-s4-native] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .s4-date-picker-field { position: relative; overflow: visible; }
+  /* the whole box opens the picker, the calendar icon included */
+  .s4-date-picker-field::after {
+    content: "";
+    position: absolute;
+    inset-block: 0;
+    inset-inline: calc(var(--s4-space-3) * -1) calc((var(--s4-space-3) * 2 + var(--s4-size-icon)) * -1);
+  }
+  .s4-date-picker-value { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .s4-date-picker-field[data-empty] > .s4-date-picker-value { color: var(--md-sys-color-on-surface-variant); opacity: 0.7; }
+  .s4-date-picker-field:disabled { cursor: default; }
+  .s4-date-picker-icon { pointer-events: none; }
+
+  /* ---------- the popup ---------- */
+  .s4-date-picker {
+    --_cell: var(--s4-space-10);
+    --_pad: var(--s4-space-3);
+    --_selected: var(--md-sys-color-primary);
+    --_on-selected: var(--md-sys-color-on-primary);
+    --_band: var(--md-sys-color-secondary-container);
+    --_on-band: var(--md-sys-color-on-secondary-container);
+    --_hover: color-mix(in srgb, var(--md-sys-color-on-surface) 8%, transparent);
+    --_pressed: color-mix(in srgb, var(--md-sys-color-on-surface) 12%, transparent);
+    --_muted: color-mix(in srgb, var(--md-sys-color-on-surface) 38%, transparent);
+    --_off: color-mix(in srgb, var(--md-sys-color-on-surface) 20%, transparent);
+
+    position: fixed;
+    inset: auto;
+    box-sizing: border-box;
+    width: calc(var(--_cell) * 7 + var(--_pad) * 2);
+    min-width: calc(var(--s4-space-10) * 7 + var(--s4-space-6));
+    max-width: calc(100vw - 2 * var(--s4-space-4));
+    max-height: calc(100dvh - 2 * var(--s4-space-4));
+    margin: 0;
+    padding: var(--_pad);
+    overflow: hidden auto;
+    border: 0;
+    border-radius: var(--s4-shape-menu);
+    background: var(--md-sys-color-surface-container);
+    color: var(--md-sys-color-on-surface);
+    box-shadow: var(--md-sys-elevation-level2);
+    font-family: var(--md-sys-typescale-body-medium-font);
+    font-size: var(--md-sys-typescale-body-medium-size);
+    line-height: var(--md-sys-typescale-body-medium-line-height);
+    letter-spacing: var(--md-sys-typescale-body-medium-tracking);
+    font-weight: var(--md-sys-typescale-body-medium-weight);
+    font-variant-numeric: tabular-nums;
+    flex-direction: column;
+    gap: var(--s4-space-1);
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .s4-date-picker:popover-open, .s4-date-picker[data-open] { display: flex; }
+
+  /* ---------- header: month and year, previous, next ---------- */
+  .s4-date-picker-header { display: flex; align-items: center; min-height: var(--_cell); }
+  .s4-date-picker-title {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s4-space-1);
+    height: var(--s4-size-button);
+    margin-inline-end: auto;
+    padding: 0 var(--s4-space-2) 0 var(--s4-space-3);
+    border: 0;
+    border-radius: var(--md-sys-shape-corner-full);
+    background: transparent;
+    color: inherit;
+    font-family: var(--md-sys-typescale-title-small-font);
+    font-size: var(--md-sys-typescale-title-small-size);
+    line-height: var(--md-sys-typescale-title-small-line-height);
+    letter-spacing: var(--md-sys-typescale-title-small-tracking);
+    font-weight: var(--md-sys-typescale-title-small-weight);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    cursor: pointer;
+    --s4-icon-size: var(--s4-size-icon-small);
+  }
+  .s4-date-picker-title > .s4-icon { color: var(--md-sys-color-on-surface-variant); }
+  .s4-date-picker[data-view="months"] .s4-date-picker-title > .s4-icon { rotate: 180deg; }
+  .s4-date-picker-title:active { background: var(--_pressed); }
+
+  /* ---------- body: the two views share one cell, so the popup never changes size ---------- */
+  .s4-date-picker-body { display: grid; }
+  .s4-date-picker-days, .s4-date-picker-months { grid-area: 1 / 1; min-width: 0; }
+  .s4-date-picker[data-view="months"] .s4-date-picker-days,
+  .s4-date-picker:not([data-view="months"]) .s4-date-picker-months { visibility: hidden; }
+
+  .s4-date-picker-grid { display: grid; grid-template-columns: repeat(7, var(--_cell)); row-gap: 2px; }
+  .s4-date-picker-row { display: contents; }
+  .s4-date-picker-weekday {
+    display: grid;
+    place-items: center;
+    height: var(--s4-space-8);
+    color: var(--md-sys-color-on-surface-variant);
+    font-family: var(--md-sys-typescale-label-medium-font);
+    font-size: var(--md-sys-typescale-label-medium-size);
+    line-height: var(--md-sys-typescale-label-medium-line-height);
+    letter-spacing: var(--md-sys-typescale-label-medium-tracking);
+    font-weight: var(--md-sys-typescale-label-medium-weight);
+  }
+
+  /* a day: the button is the cell; ::before is the range band, ::after the round fill, the number sits on top */
+  .s4-date-picker-day {
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    place-items: center;
+    width: var(--_cell);
+    height: var(--_cell);
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    letter-spacing: inherit;
+    font-variant-numeric: tabular-nums;
+    cursor: pointer;
+  }
+  .s4-date-picker-day::before, .s4-date-picker-day::after { content: ""; position: absolute; z-index: -1; inset: 0; }
+  .s4-date-picker-day::after { border-radius: 50%; }
+  .s4-date-picker-day:focus-visible { z-index: 1; outline-offset: 0; }
+  .s4-date-picker-day[data-outside] { color: var(--_muted); }
+
+  /* today: a small dot under the number, no ring */
+  .s4-date-picker-day[aria-current="date"] { font-weight: var(--md-sys-typescale-label-large-weight); }
+  .s4-date-picker-day[aria-current="date"] > span::after {
+    content: "";
+    position: absolute;
+    inset-block-end: var(--s4-space-1);
+    inset-inline-start: calc(50% - var(--s4-space-1) / 2);
+    width: var(--s4-space-1);
+    height: var(--s4-space-1);
+    border-radius: 50%;
+    background: var(--md-sys-color-primary);
+  }
+
+  /* range: a flat band between the two ends, rounded where a week starts and ends */
+  .s4-date-picker-day[data-range]::before { background: var(--_band); }
+  .s4-date-picker-day[data-range="in"] { color: var(--_on-band); }
+  .s4-date-picker-day[data-range="start"]::before { inset-inline-start: 50%; }
+  .s4-date-picker-day[data-range="end"]::before { inset-inline-end: 50%; }
+  .s4-date-picker-day[data-range]:first-child::before { border-start-start-radius: var(--md-sys-shape-corner-full); border-end-start-radius: var(--md-sys-shape-corner-full); }
+  .s4-date-picker-day[data-range]:last-child::before { border-start-end-radius: var(--md-sys-shape-corner-full); border-end-end-radius: var(--md-sys-shape-corner-full); }
+
+  /* selected (and both ends of a range): filled primary circle */
+  .s4-date-picker-day[aria-selected="true"]:not([data-range="in"]) { color: var(--_on-selected); }
+  .s4-date-picker-day[aria-selected="true"]:not([data-range="in"])::after { background: var(--_selected); }
+  .s4-date-picker-day[aria-selected="true"]:not([data-range="in"]) > span::after { background: var(--_on-selected); }
+
+  /* disabled: outside min/max or a blocked date */
+  .s4-date-picker-day[aria-disabled="true"] { color: var(--_off); cursor: default; }
+  .s4-date-picker-day[aria-disabled="true"][data-range="in"] { color: var(--_muted); }
+
+  /* ---------- month chooser ---------- */
+  .s4-date-picker-months { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s4-space-2); align-content: space-evenly; }
+  .s4-date-picker-month {
+    position: relative;
+    height: var(--s4-size-touch-target);
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: var(--md-sys-shape-corner-full);
+    background: transparent;
+    color: inherit;
+    font-family: var(--md-sys-typescale-label-large-font);
+    font-size: var(--md-sys-typescale-label-large-size);
+    line-height: var(--md-sys-typescale-label-large-line-height);
+    letter-spacing: var(--md-sys-typescale-label-large-tracking);
+    font-weight: var(--md-sys-typescale-label-large-weight);
+    cursor: pointer;
+  }
+  .s4-date-picker-month:focus-visible { z-index: 1; outline-offset: 0; }
+  .s4-date-picker-month[aria-pressed="true"] { background: var(--_selected); color: var(--_on-selected); }
+  .s4-date-picker-month[aria-disabled="true"] { color: var(--_off); cursor: default; }
+
+  /* ---------- footer ---------- */
+  .s4-date-picker-footer { display: flex; align-items: center; justify-content: space-between; }
+
+  /* ---------- hover and press: a quiet fill, no halo ---------- */
+  @media (hover: hover) {
+    .s4-date-picker-day:hover:not([aria-selected="true"], [aria-disabled="true"])::after { background: var(--_hover); }
+    .s4-date-picker-day[data-range="in"]:hover:not([aria-disabled="true"])::after { background: var(--_hover); }
+    .s4-date-picker-month:hover:not([aria-pressed="true"], [aria-disabled="true"]),
+    .s4-date-picker-title:hover { background: var(--_hover); }
+  }
+  .s4-date-picker-day:active:not([aria-selected="true"], [aria-disabled="true"])::after { background: var(--_pressed); }
+  .s4-date-picker-month:active:not([aria-pressed="true"], [aria-disabled="true"]) { background: var(--_pressed); }
+
+  /* ---------- phones: a centered floating panel, days stretch to fill ---------- */
+  @media (max-width: 599.98px) {
+    .s4-date-picker {
+      inset: 0;
+      width: min(calc(var(--s4-space-10) * 9), calc(100vw - 2 * var(--s4-space-4)));
+      min-width: 0;
+      height: fit-content;
+      margin: auto;
+    }
+    .s4-date-picker-grid { grid-template-columns: repeat(7, minmax(0, 1fr)); }
+    .s4-date-picker-day { width: auto; height: auto; aspect-ratio: 1; min-height: calc(var(--s4-space-10) + var(--s4-space-1)); }
+  }
+
+  @media (forced-colors: active) {
+    .s4-date-picker { border: 1px solid CanvasText; }
+    .s4-date-picker-day[aria-selected="true"],
+    .s4-date-picker-month[aria-pressed="true"] { forced-color-adjust: none; background: Highlight; color: HighlightText; }
+    .s4-date-picker-day[data-range="in"] { border-radius: 0; }
+    .s4-date-picker-day::before, .s4-date-picker-day::after { display: none; }
+    .s4-date-picker-day[aria-current="date"] > span::after { forced-color-adjust: none; background: Highlight; }
+    .s4-date-picker-day[aria-selected="true"] > span::after { background: HighlightText; }
+    .s4-date-picker-day[aria-disabled="true"], .s4-date-picker-month[aria-disabled="true"] { color: GrayText; }
+    .s4-date-picker-day[data-outside]:not([aria-selected="true"], [aria-disabled="true"]) { color: CanvasText; }
+  }
+}

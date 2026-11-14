@@ -26,6 +26,7 @@
     overflow: auto;
     flex-direction: column;
     gap: var(--s4-space-4);
+    outline: none;   /* the dialog takes focus when it opens (decision 0043); it needs no ring of its own */
   }
   .s4-dialog[open] { display: flex; }
   .s4-dialog::backdrop { background: color-mix(in srgb, var(--md-sys-color-scrim) calc(var(--s4-scrim-opacity) * 100%), transparent); }

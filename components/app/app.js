@@ -25,6 +25,7 @@
       var title = to.dataset.title, bar = app.querySelector('.s4-top-app-bar .s4-app-bar-title');
       if (title && bar) bar.textContent = title;
       window.scrollTo({ top: 0, behavior: 'instant' });
+      var body = app.querySelector(':scope > .s4-app-body'); if (body) body.scrollTop = 0;   /* data-window: the body scrolls, not the page */
     });
     S4.util.emit(app, 's4-change', { view: name, previous: from ? from.dataset.view : null });
     return true;

@@ -401,6 +401,8 @@ Light values are shown; a second value is dark mode. Color roles also change wit
 | `--s4-glass-glow-shade-alpha` | 0.28 |  | Strength of the ink edge shade on a light surface at the top edge (0 to 1), the same in light and dark mode. |
 | `--s4-glass-glow-flip` | 0.6 |  | OKLCH lightness (0 black to 1 white) at which a surface flips from the glow to the shade. A surface at or above it gets the shade; below it, the glow. A mid gray therefore gets a glow or a shade, never nothing. |
 | `--s4-glass-glow-size` | 12px |  | How far the glow or shade reaches inward from the edge. |
+| `--s4-glass-fill-opacity` | 0.07 | 0.06 | Decision 0043: a filled control on glass (field, chip, neutral button) is a tint of the text color at this opacity instead of an opaque surface role, so it reads as part of the glass. |
+| `--s4-glass-fill-selected-opacity` | 0.14 | 0.07 | Decision 0043: a selected item on glass (nav pill, checked menu item, tonal button) is a tint of the accent at this opacity; its text is on-surface. |
 
 ## Icons
 

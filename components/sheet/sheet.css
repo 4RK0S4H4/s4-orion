@@ -1,20 +1,25 @@
-/* Sheets (M3)
-   <button class="s4-fab" data-sheet="add-expense" aria-label="Add expense"><span class="s4-icon" data-icon="add"></span></button>
+/* Floating panels (decision 0043; they replace M3's bottom and side sheets, and keep the class names)
+   <button class="s4-button" data-sheet="add-expense">Add Expense</button>
    <dialog class="s4-bottom-sheet" id="add-expense" aria-labelledby="ae-h">
-     <span class="s4-sheet-handle" aria-hidden="true"></span>
      <h2 class="s4-sheet-title" id="ae-h">Add Expense</h2>
      <div class="s4-sheet-content">…</div>
-     <div class="s4-sheet-actions"><button class="s4-button" data-close="save">Save</button></div>
+     <div class="s4-sheet-actions"><button class="s4-button" data-variant="text" data-close>Cancel</button><button class="s4-button" data-close="save">Save</button></div>
    </dialog>
-   <dialog class="s4-side-sheet" id="filters">… same parts, opens from the end edge …</dialog>
-   Opened from a FAB: container transform (the FAB becomes the sheet). Otherwise: slides from its edge.
-   From 600 wide the bottom sheet is docked to the bottom and can be dragged down to dismiss; on a phone it is a centered
-   card (like a dialog, no handle) that opens by container transform from any opener. Solid here; glass.css makes both glass. */
+   <dialog class="s4-side-sheet" id="filters">… same parts …</dialog>
+   Nothing slides up the screen or in from its edge. A panel is a glass surface that floats inside the window, inset
+   from every edge, with all four corners round and the full glass edge, and it pops in like a dialog:
+     .s4-bottom-sheet  floats at the bottom center (phones: the full width minus the inset, above the home indicator)
+     .s4-side-sheet    floats at the end side, as tall as the window minus the inset (phones: same as the bottom panel)
+   data-placement="center" on either centers it like a dialog. A .s4-sheet-handle in older markup draws nothing.
+   Solid here; glass.css makes both glass. */
 @layer s4.components {
   .s4-bottom-sheet, .s4-side-sheet {
+    --_inset: var(--s4-space-4);
+    position: fixed;
     margin: 0;
-    padding: 0 var(--s4-space-6) var(--s4-space-6);
+    padding: var(--s4-space-6);
     border: 0;
+    border-radius: var(--s4-shape-sheet);
     background: var(--md-sys-color-surface-container-low);
     color: var(--md-sys-color-on-surface);
     box-shadow: var(--md-sys-elevation-level1);
@@ -22,57 +27,38 @@
     flex-direction: column;
     gap: var(--s4-space-4);
     overscroll-behavior: contain;
+    outline: none;
   }
   .s4-bottom-sheet[open], .s4-side-sheet[open] { display: flex; }
   .s4-bottom-sheet::backdrop, .s4-side-sheet::backdrop { background: color-mix(in srgb, var(--md-sys-color-scrim) calc(var(--s4-scrim-opacity) * 100%), transparent); }
+  .s4-sheet-handle { display: none; }
 
-  .s4-bottom-sheet {
-    inset: auto 0 0;
-    width: min(640px, 100vw);
-    max-width: 100vw;
-    max-height: calc(100dvh - var(--s4-size-top-app-bar));
+  /* bottom panel (and the side panel on a phone) */
+  .s4-bottom-sheet, .s4-side-sheet {
+    inset: auto 0 max(var(--_inset), env(safe-area-inset-bottom, 0px));
+    width: min(560px, calc(100vw - 2 * var(--_inset)));
+    max-width: none;
+    height: fit-content;
+    max-height: calc(100dvh - 2 * var(--_inset) - env(safe-area-inset-top, 0px));
     margin-inline: auto;
-    padding-bottom: max(var(--s4-space-6), env(safe-area-inset-bottom));
-    border-radius: var(--s4-shape-sheet) var(--s4-shape-sheet) 0 0;
-    touch-action: pan-x;
   }
-  /* On a phone (under 600) the bottom sheet is a centered card, shaped like a dialog (decision 0011): no handle, no drag */
-  @media (max-width: 599.98px) {
-    .s4-bottom-sheet {
-      inset: 0;
-      width: min(calc(100vw - 2 * var(--s4-space-4)), 560px);
-      max-width: none;
-      height: fit-content;
-      max-height: calc(100dvh - 2 * var(--s4-space-4));
-      margin: auto;
-      padding-top: var(--s4-space-6);
-      border-radius: var(--md-sys-shape-corner-extra-large);
-      touch-action: auto;
+  /* side panel from medium windows up: floats at the end side */
+  @media (min-width: 600px) {
+    .s4-side-sheet {
+      inset: var(--_inset) var(--_inset) var(--_inset) auto;
+      width: min(400px, calc(100vw - 2 * var(--_inset)));
+      height: auto;
+      max-height: none;
+      margin: 0;
     }
-    .s4-bottom-sheet > .s4-sheet-handle { display: none; }
+    .s4-side-sheet:dir(rtl) { inset: var(--_inset) auto var(--_inset) var(--_inset); }
   }
-  .s4-sheet-handle {
-    flex: none;
-    align-self: center;
-    width: var(--s4-space-8);
-    height: var(--s4-space-1);
-    margin: var(--s4-space-4) 0 var(--s4-space-2);
-    border-radius: var(--md-sys-shape-corner-full);
-    background: color-mix(in srgb, var(--md-sys-color-on-surface-variant) 40%, transparent);
-    cursor: grab;
-    position: relative;
+  :is(.s4-bottom-sheet, .s4-side-sheet)[data-placement="center"] {
+    inset: 0;
+    height: fit-content;
+    max-height: calc(100dvh - 2 * var(--_inset));
+    margin: auto;
   }
-  .s4-sheet-handle::after { content: ""; position: absolute; inset: calc(var(--s4-space-5) * -1) calc(var(--s4-space-6) * -1); }   /* 48dp drag target */
-
-  .s4-side-sheet {
-    inset: 0 0 0 auto;
-    width: min(400px, 100vw);
-    height: 100dvh;
-    max-height: 100dvh;
-    padding-top: var(--s4-space-6);
-    border-radius: var(--s4-shape-sheet) 0 0 var(--s4-shape-sheet);
-  }
-  .s4-side-sheet:dir(rtl) { inset: 0 auto 0 0; border-radius: 0 var(--s4-shape-sheet) var(--s4-shape-sheet) 0; }
 
   .s4-sheet-title {
     margin: 0;

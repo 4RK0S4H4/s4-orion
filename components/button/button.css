@@ -67,6 +67,8 @@
     transform: translateY(-50%);
   }
   .s4-button:active:not(:disabled) { border-radius: var(--_radius-pressed); }
+  /* press-to-square only where it fits (decision 0043): in a pill-shaped container the button keeps the container's curve */
+  :is(.s4-toolbar, .s4-snackbar, .s4-search, .s4-composer) .s4-button:active:not(:disabled) { border-radius: calc(var(--_h) / 2); }
 
   /* ---------- variants ---------- */
   .s4-button[data-variant="tonal"] { --_bg: var(--md-sys-color-secondary-container); --_fg: var(--md-sys-color-on-secondary-container); }

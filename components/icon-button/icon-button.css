@@ -57,6 +57,9 @@
     transform: translate(-50%, -50%);
   }
   .s4-icon-button:active:not(:disabled) { border-radius: var(--_radius-pressed); }
+  /* press-to-square only where it fits (decision 0043): inside a rounded container (a field, the search bar, a pill
+     toolbar, a chip) a squared button would cut across the container's curve, so there it stays round */
+  :is(.s4-text-field, .s4-search, .s4-toolbar, .s4-chip, .s4-snackbar) .s4-icon-button { --_radius-pressed: var(--_radius-round); }
 
   /* ---------- variants ---------- */
   .s4-icon-button[data-variant="filled"] { --_bg: var(--md-sys-color-primary); --_fg: var(--md-sys-color-on-primary); }

@@ -101,12 +101,37 @@
       inset calc(-1 * var(--s4-glass-glow-size)) 0 var(--s4-glass-glow-size) calc(-1 * var(--s4-glass-glow-size)) oklch(from var(--_surface) calc(.99 - .96 * clamp(0, calc((l - var(--s4-glass-glow-flip)) * 1000), 1)) calc(c * .3) h / calc(var(--s4-glass-glow-alpha) * min(1, var(--_aR) / max(var(--s4-glass-edge-top-alpha), .001)) * (1 - clamp(0, calc((l - var(--s4-glass-glow-flip)) * 1000), 1)) + var(--s4-glass-glow-shade-alpha) * min(1, var(--_aR) / max(var(--s4-glass-edge-top-alpha), .001)) * clamp(0, calc((l - var(--s4-glass-glow-flip)) * 1000), 1)));
     }
   }
+  /* ITEMS ON GLASS (decision 0043, replaces 0015): a filled thing on glass is a tint, not an opaque patch. Inside a glass
+     surface the neutral container roles become the text color at a low opacity and the selection role becomes the accent
+     at a low opacity (its text is on-surface), so fields, chips, neutral and tonal buttons, the nav pill and checked menu
+     items all read as part of the glass. Primary actions stay solid. scripts/check-glass.mjs proves on-surface text on
+     both tints. Where glass turns solid (high contrast, reduced transparency) the tints simply sit on the solid surface. */
+  :where(.s4-glass,
+         .s4-top-app-bar[data-scrolled],
+         .s4-nav-bar,
+         .s4-nav-rail:is([data-modal], [data-overlay]),
+         .s4-toolbar,
+         .s4-menu,
+         .s4-dialog,
+         .s4-bottom-sheet,
+         .s4-side-sheet,
+         .s4-rich-tooltip,
+         .s4-tooltip,
+         .s4-snackbar) {
+    --_fill: color-mix(in srgb, var(--md-sys-color-on-surface) calc(var(--s4-glass-fill-opacity) * 100%), transparent);
+    --md-sys-color-surface-container-lowest: var(--_fill);
+    --md-sys-color-surface-container-low: var(--_fill);
+    --md-sys-color-surface-container: var(--_fill);
+    --md-sys-color-surface-container-high: var(--_fill);
+    --md-sys-color-surface-container-highest: var(--_fill);
+    --md-sys-color-secondary-container: color-mix(in srgb, var(--md-sys-color-primary) calc(var(--s4-glass-fill-selected-opacity) * 100%), transparent);
+    --md-sys-color-on-secondary-container: var(--md-sys-color-on-surface);
+  }
   /* DOCKED GLASS (decision 0040): a surface that touches the screen edge lights, glows and shades only the edge that faces the content
-     (the top bar its bottom edge, the bottom nav and bottom sheet their top edge, the rail and side sheet their inner side). */
+     (the top bar its bottom edge, the bottom nav its top edge, the rail its inner side). Floating panels (the former sheets, decision 0043) float clear of every edge and get the full edge. */
   :where(.s4-top-app-bar[data-scrolled]) { --_kt: 0; --_kl: 0; --_kr: 0; }
-  :where(.s4-nav-bar, .s4-toolbar[data-type="docked"], .s4-bottom-sheet) { --_kb: 0; --_kl: 0; --_kr: 0; }
+  :where(.s4-nav-bar, .s4-toolbar[data-type="docked"]) { --_kb: 0; --_kl: 0; --_kr: 0; }
   :where(.s4-nav-rail:is([data-modal], [data-overlay])) { --_kt: 0; --_kb: 0; --_kl: 0; --_lit: 1; }
-  :where(.s4-side-sheet) { --_kt: 0; --_kb: 0; --_kr: 0; --_lit: 1; }
   /* FLOATING ACTION BUTTONS (decision 0025): glass too, tinted with the FAB's own color (--_bg) instead of the surface color, so
      it keeps its identity (primary-container by default, or the data-color it sets). Its icon and label keep the FAB's own
      on-color; scripts/check-glass.mjs proves that pair too. */

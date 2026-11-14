@@ -24,6 +24,9 @@
   .s4-banner[data-tone="primary"] { --_bg: var(--md-sys-color-primary-container); --_fg: var(--md-sys-color-on-primary-container); }
   .s4-banner[data-tone="secondary"] { --_bg: var(--md-sys-color-secondary-container); --_fg: var(--md-sys-color-on-secondary-container); }
   .s4-banner[data-tone="tertiary"] { --_bg: var(--md-sys-color-tertiary-container); --_fg: var(--md-sys-color-on-tertiary-container); }
+  .s4-banner[data-tone="success"] { --_bg: var(--s4-color-success-container); --_fg: var(--s4-color-on-success-container); }
+  .s4-banner[data-tone="warning"] { --_bg: var(--s4-color-warning-container); --_fg: var(--s4-color-on-warning-container); }
+  .s4-banner[data-tone="info"] { --_bg: var(--s4-color-info-container); --_fg: var(--s4-color-on-info-container); }
   .s4-banner[data-tone="error"] { --_bg: var(--md-sys-color-error-container); --_fg: var(--md-sys-color-on-error-container); }
   .s4-banner[data-closing] { opacity: 0; }
   .s4-banner > .s4-icon { align-self: flex-start; margin-block: var(--s4-space-2); --s4-icon-size: var(--s4-size-icon); }

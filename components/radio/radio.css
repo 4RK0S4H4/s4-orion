@@ -4,7 +4,7 @@
    forms and screen readers work as usual.
    20dp filled disc (surface-container-highest); selected = the disc fills with primary ink, no inner dot (decision 0042,
    issue 19): the ink grows in from the middle on the ink spring (a subtle liquid overshoot) and drains out calmly.
-   40dp circular state layer; 48dp touch target. */
+   No state-layer halo (decision 0043); 48dp touch target. */
 @layer s4.components {
   /* a labelled group of radios or checkboxes: a soft outlined box instead of the browser's square fieldset */
   fieldset:has(> :is(.s4-radio, .s4-checkbox)) {
@@ -62,21 +62,7 @@
     border: 0;
     background: var(--md-sys-color-surface-container-highest);   /* decision 0023: a filled disc, no outline */
     border-radius: var(--md-sys-shape-corner-full);
-    transition: background-color var(--_effects);
-  }
-  .s4-radio-ring::before {
-    content: "";
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: var(--_layer);
-    height: var(--_layer);
-    border-radius: var(--md-sys-shape-corner-full);
-    background: var(--_state);
-    opacity: 0;
-    transform: translate(-50%, -50%);
-    pointer-events: none;
-    transition: opacity var(--_effects);
+    transition: background-color var(--_effects), transform var(--s4-motion-spring-ink-duration) var(--s4-motion-spring-ink);
   }
   /* the ink: a full primary disc that grows in when checked */
   .s4-radio-ring::after {
@@ -94,15 +80,16 @@
     transition: transform var(--s4-motion-spring-ink-duration) var(--s4-motion-spring-ink), background-color var(--_effects);
   }
 
+  /* hover and press: the disc itself answers (no halo, decision 0043) */
   @media (hover: hover) {
-    .s4-radio:hover:not(:has(> input:disabled)) .s4-radio-ring::before { opacity: var(--md-sys-state-hover-state-layer-opacity); }
+    .s4-radio:hover:not(:has(> input:disabled)) .s4-radio-ring { transform: scale(1.1); }
+    .s4-radio:hover:not(:has(> input:disabled)):not(:has(> input:checked)) .s4-radio-ring { background: color-mix(in srgb, var(--md-sys-color-on-surface) 22%, var(--md-sys-color-surface-container-highest)); }
   }
-  .s4-radio:has(> input:focus-visible) .s4-radio-ring::before { opacity: var(--md-sys-state-focus-state-layer-opacity); }
   .s4-radio:has(> input:focus-visible) .s4-radio-ring {
     outline: var(--s4-focus-ring-width) solid var(--s4-focus-ring-color);
     outline-offset: var(--s4-focus-ring-offset);
   }
-  .s4-radio:active:not(:has(> input:disabled)) .s4-radio-ring::before { opacity: var(--md-sys-state-pressed-state-layer-opacity); }
+  .s4-radio:active:not(:has(> input:disabled)) .s4-radio-ring { transform: scale(0.9); }
 
   .s4-radio:has(> input:disabled) {
     --_ring: color-mix(in srgb, var(--md-sys-color-on-surface) calc(var(--md-sys-state-disabled-content-opacity) * 100%), transparent);
@@ -113,7 +100,6 @@
 
   @media (forced-colors: active) {
     .s4-radio-ring { forced-color-adjust: none; border-color: CanvasText; }
-    .s4-radio-ring::before { display: none; }
     .s4-radio-ring::after { background: Highlight; }
     .s4-radio:has(> input:checked) .s4-radio-ring { border-color: Highlight; }
     .s4-radio:has(> input:disabled) .s4-radio-ring { border-color: GrayText; }

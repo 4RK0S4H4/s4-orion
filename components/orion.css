@@ -220,6 +220,8 @@
     --s4-glass-glow-shade-alpha: 0.28;
     --s4-glass-glow-flip: 0.6;
     --s4-glass-glow-size: 12px;
+    --s4-glass-fill-opacity: 0.07;
+    --s4-glass-fill-selected-opacity: 0.14;
     --s4-icon-duo-opacity: 0.42;
     --s4-motion-spring-fast-spatial-calm-stiffness: 1400;
     --s4-motion-spring-fast-spatial-calm-damping: 1;
@@ -450,6 +452,8 @@
       --s4-glass-edge-top-alpha: 0.12;
       --s4-glass-edge-side-alpha: 0;
       --s4-glass-edge-bottom-alpha: 0.12;
+      --s4-glass-fill-opacity: 0.06;
+      --s4-glass-fill-selected-opacity: 0.07;
       --s4-icon-duo-opacity: 0.38;
       --s4-color-success: #62d39b;
       --s4-color-success-container: #173a2a;
@@ -523,6 +527,8 @@
     --s4-glass-edge-top-alpha: 0.12;
     --s4-glass-edge-side-alpha: 0;
     --s4-glass-edge-bottom-alpha: 0.12;
+    --s4-glass-fill-opacity: 0.06;
+    --s4-glass-fill-selected-opacity: 0.07;
     --s4-icon-duo-opacity: 0.38;
     --s4-color-success: #62d39b;
     --s4-color-success-container: #173a2a;
@@ -729,6 +735,8 @@
       --s4-glass-edge-top-alpha: 0;
       --s4-glass-edge-side-alpha: 0;
       --s4-glass-edge-bottom-alpha: 0;
+      --s4-glass-fill-opacity: 0.06;
+      --s4-glass-fill-selected-opacity: 0.07;
       --s4-icon-duo-opacity: 0.38;
       --s4-color-success: #b9f0d2;
       --s4-color-success-container: #173a2a;
@@ -806,6 +814,8 @@
       --s4-glass-edge-top-alpha: 0;
       --s4-glass-edge-side-alpha: 0;
       --s4-glass-edge-bottom-alpha: 0;
+      --s4-glass-fill-opacity: 0.06;
+      --s4-glass-fill-selected-opacity: 0.07;
       --s4-icon-duo-opacity: 0.38;
       --s4-color-success: #b9f0d2;
       --s4-color-success-container: #173a2a;
@@ -883,6 +893,8 @@
       --s4-glass-edge-top-alpha: 0;
       --s4-glass-edge-side-alpha: 0;
       --s4-glass-edge-bottom-alpha: 0;
+      --s4-glass-fill-opacity: 0.06;
+      --s4-glass-fill-selected-opacity: 0.07;
       --s4-icon-duo-opacity: 0.38;
       --s4-color-success: #b9f0d2;
       --s4-color-success-container: #173a2a;
@@ -959,6 +971,8 @@
     --s4-glass-edge-top-alpha: 0;
     --s4-glass-edge-side-alpha: 0;
     --s4-glass-edge-bottom-alpha: 0;
+    --s4-glass-fill-opacity: 0.06;
+    --s4-glass-fill-selected-opacity: 0.07;
     --s4-icon-duo-opacity: 0.38;
     --s4-color-success: #b9f0d2;
     --s4-color-success-container: #173a2a;
@@ -1318,6 +1332,8 @@
     transform: translateY(-50%);
   }
   .s4-button:active:not(:disabled) { border-radius: var(--_radius-pressed); }
+  /* press-to-square only where it fits (decision 0043): in a pill-shaped container the button keeps the container's curve */
+  :is(.s4-toolbar, .s4-snackbar, .s4-search, .s4-composer) .s4-button:active:not(:disabled) { border-radius: calc(var(--_h) / 2); }
 
   /* ---------- variants ---------- */
   .s4-button[data-variant="tonal"] { --_bg: var(--md-sys-color-secondary-container); --_fg: var(--md-sys-color-on-secondary-container); }
@@ -1431,6 +1447,9 @@
     transform: translate(-50%, -50%);
   }
   .s4-icon-button:active:not(:disabled) { border-radius: var(--_radius-pressed); }
+  /* press-to-square only where it fits (decision 0043): inside a rounded container (a field, the search bar, a pill
+     toolbar, a chip) a squared button would cut across the container's curve, so there it stays round */
+  :is(.s4-text-field, .s4-search, .s4-toolbar, .s4-chip, .s4-snackbar) .s4-icon-button { --_radius-pressed: var(--_radius-round); }
 
   /* ---------- variants ---------- */
   .s4-icon-button[data-variant="filled"] { --_bg: var(--md-sys-color-primary); --_fg: var(--md-sys-color-on-primary); }
@@ -2274,7 +2293,7 @@
     scrollbar-width: none;
     background: var(--md-sys-color-surface-container-low);
     color: var(--md-sys-color-on-surface-variant);
-    transition: inline-size var(--md-sys-motion-spring-fast-spatial-duration) var(--md-sys-motion-spring-settle);
+    transition: inline-size var(--s4-motion-spring-settle-duration) var(--s4-motion-spring-settle);
   }
   .s4-nav-rail[data-expanded] { --_w: var(--s4-nav-rail-expanded-width, var(--s4-size-nav-rail-expanded)); }
 
@@ -2348,8 +2367,8 @@
   }
   .s4-nav-rail-items > .s4-nav-pill[data-animate] {
     transition:
-      transform var(--md-sys-motion-spring-fast-spatial-duration) var(--md-sys-motion-spring-ink),
-      block-size var(--md-sys-motion-spring-fast-spatial-duration) var(--md-sys-motion-spring-ink);
+      transform var(--s4-motion-spring-ink-duration) var(--s4-motion-spring-ink),
+      block-size var(--s4-motion-spring-ink-duration) var(--s4-motion-spring-ink);
   }
   .s4-nav-rail-title {
     padding: var(--s4-space-4) calc((var(--_row) - var(--s4-size-icon)) / 2) var(--s4-space-1);
@@ -2679,6 +2698,131 @@
   }
 }
 
+/* ---- desktop/desktop.css ---- */
+/* Desktop windows (decision 0043): what an Orion app needs to live in a desktop window or be packaged as a desktop app
+   (an installed PWA with window controls overlay, Electron, Tauri), on top of the same shell and components.
+
+   <div class="s4-app" data-window data-density="auto">
+     <header class="s4-titlebar">                                   optional: a draggable title bar
+       <span class="s4-titlebar-title">Ledger</span>
+       <div class="s4-window-controls">…</div>                      optional: only for frameless windows that draw their own
+     </header>
+     <nav class="s4-nav-rail" data-expand="auto">…</nav>
+     <div class="s4-app-body">…</div>
+   </div>
+
+   data-window on .s4-app: the app fills the window and never scrolls as a page; the body (and each pane) scrolls on its
+   own, the rail and title bar stay put, scrollbars are thin, chrome text can't be selected and controls keep the arrow
+   cursor, as desktop apps do. Pair it with data-density="auto" (base/density.css) for pointer-sized controls.
+   .s4-titlebar: drags the window (app-region), leaves room for the system's window buttons (window controls overlay
+   env(), or data-controls="start" for macOS traffic lights in a frameless window), and anything interactive inside it
+   stays clickable. <kbd class="s4-kbd"> shows a keyboard shortcut. desktop.js adds data-shortcut and data-context-menu. */
+@layer s4.components {
+  .s4-app[data-window] {
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    block-size: 100dvh;
+    min-block-size: 0;
+    overflow: hidden;
+    overscroll-behavior: none;
+  }
+  .s4-app[data-window] > .s4-titlebar { grid-column: 1 / -1; grid-row: 1; }
+  .s4-app[data-window] > .s4-nav-rail { grid-row: 2 / -1; position: relative; top: auto; align-self: stretch; block-size: auto; }
+  .s4-app[data-window] > .s4-app-body { grid-row: 2; min-block-size: 0; overflow-y: auto; overscroll-behavior: contain; }
+  .s4-app[data-window] > .s4-nav-bar { grid-row: 3; position: relative; bottom: auto; }
+  .s4-app[data-window],
+  .s4-app[data-window] * { scrollbar-width: thin; scrollbar-color: var(--md-sys-color-outline-variant) transparent; }
+  .s4-app[data-window] :is(.s4-titlebar, .s4-nav-rail, .s4-top-app-bar, .s4-toolbar, .s4-tabs, .s4-list-subheader, label) { user-select: none; -webkit-user-select: none; }
+  .s4-app[data-window] :is(.s4-button, .s4-icon-button, .s4-fab, .s4-chip, .s4-tab, .s4-segment, .s4-nav-item, .s4-list-item, .s4-checkbox, .s4-radio, .s4-switch, .s4-table-sort, summary) { cursor: default; }
+
+  /* ---------- title bar ---------- */
+  .s4-titlebar {
+    display: flex;
+    align-items: center;
+    gap: var(--s4-space-2);
+    box-sizing: border-box;
+    block-size: max(var(--s4-size-titlebar), env(titlebar-area-height, 0px));
+    /* window controls overlay: keep clear of the system's buttons on either side */
+    padding-inline:
+      calc(env(titlebar-area-x, 0px) + var(--s4-space-3))
+      calc(100% - env(titlebar-area-x, 0px) - env(titlebar-area-width, 100%) + var(--s4-space-3));
+    background: var(--md-sys-color-surface-container-low);
+    color: var(--md-sys-color-on-surface-variant);
+    font-family: var(--md-sys-typescale-label-large-font);
+    font-size: var(--md-sys-typescale-label-large-size);
+    line-height: var(--md-sys-typescale-label-large-line-height);
+    letter-spacing: var(--md-sys-typescale-label-large-tracking);
+    font-weight: var(--md-sys-typescale-label-large-weight);
+    -webkit-app-region: drag;
+    app-region: drag;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  .s4-titlebar :is(button, a, input, select, textarea, .s4-search, .s4-text-field, [data-no-drag]) { -webkit-app-region: no-drag; app-region: no-drag; }
+  /* frameless macOS window: room for the traffic lights at the start */
+  .s4-titlebar[data-controls="start"] { padding-inline-start: calc(var(--s4-space-16) + var(--s4-space-4)); }
+  .s4-titlebar-title {
+    flex: 1 1 auto;
+    min-inline-size: 0;
+    overflow: hidden;
+    color: var(--md-sys-color-on-surface);
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .s4-titlebar[data-align="start"] .s4-titlebar-title { text-align: start; }
+  .s4-titlebar { --s4-size-icon-button: var(--s4-density-compact-icon-button); --s4-size-icon: var(--s4-density-compact-icon); --s4-size-touch-target: var(--s4-density-compact-touch-target); }
+
+  /* window buttons for frameless windows that draw their own (Windows and Linux shells) */
+  .s4-window-controls { display: flex; align-items: center; gap: var(--s4-space-1); margin-inline-start: auto; }
+  .s4-window-control {
+    display: inline-grid;
+    place-items: center;
+    inline-size: var(--s4-density-compact-icon-button);
+    block-size: var(--s4-density-compact-button-small);
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: var(--md-sys-shape-corner-full);
+    background: transparent;
+    color: inherit;
+    cursor: default;
+    --s4-icon-size: var(--s4-space-4);
+    transition: background-color var(--md-sys-motion-spring-fast-effects-duration) var(--md-sys-motion-spring-fast-effects), color var(--md-sys-motion-spring-fast-effects-duration) var(--md-sys-motion-spring-fast-effects);
+  }
+  @media (hover: hover) {
+    .s4-window-control:hover { background: color-mix(in srgb, var(--md-sys-color-on-surface) 10%, transparent); color: var(--md-sys-color-on-surface); }
+    .s4-window-control[data-window-action="close"]:hover { background: var(--s4-color-badge); color: var(--s4-color-on-badge); }
+  }
+  .s4-window-control:focus-visible { outline-offset: calc(var(--s4-focus-ring-width) * -1); }
+
+  /* ---------- keyboard shortcut ---------- */
+  .s4-kbd {
+    display: inline-flex;
+    align-items: center;
+    min-inline-size: var(--s4-space-5);
+    block-size: var(--s4-space-5);
+    padding-inline: var(--s4-space-1);
+    justify-content: center;
+    border-radius: var(--md-sys-shape-corner-extra-small);
+    background: color-mix(in srgb, var(--md-sys-color-on-surface) 8%, transparent);
+    color: var(--md-sys-color-on-surface-variant);
+    font-family: var(--md-sys-typescale-label-medium-font);
+    font-size: var(--md-sys-typescale-label-medium-size);
+    line-height: 1;
+    letter-spacing: var(--md-sys-typescale-label-medium-tracking);
+    font-weight: var(--md-sys-typescale-label-medium-weight);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  .s4-kbd:empty { display: none; }
+  .s4-menu-item > .s4-kbd { margin-inline-start: auto; }
+
+  @media (forced-colors: active) {
+    .s4-titlebar { border-block-end: 1px solid CanvasText; }
+    .s4-kbd { border: 1px solid CanvasText; }
+  }
+}
+
 /* ---- card/card.css ---- */
 /* Card (M3)
    <article class="s4-card" data-variant="elevated|filled|outlined">
@@ -2917,8 +3061,9 @@
     display: flex;
     flex-direction: column;
     min-width: 0;
+    gap: calc(var(--s4-space-1) / 2);
     margin: 0;
-    padding: var(--s4-space-2) 0;
+    padding: var(--s4-space-2);   /* the same inset on every side, so a hover or selected fill never touches only some edges (decision 0043) */
     list-style: none;
   }
   .s4-list > li:not(.s4-list-subheader) { display: block; margin: 0; padding: 0; }
@@ -2940,7 +3085,7 @@
     min-width: 0;
     min-height: var(--_h);
     margin: 0;
-    padding: var(--_pad-block) var(--s4-space-6) var(--_pad-block) var(--s4-space-4);
+    padding: var(--_pad-block) var(--s4-space-4) var(--_pad-block) var(--s4-space-3);
     border: 0;
     border-radius: var(--_radius);
     background: var(--_bg);
@@ -3074,7 +3219,7 @@
     gap: var(--s4-space-4);
     min-height: var(--s4-size-touch-target);
     margin: 0;
-    padding: 0 var(--s4-space-6) 0 var(--s4-space-4);
+    padding: 0 var(--s4-space-4) 0 var(--s4-space-3);
     color: var(--md-sys-color-on-surface-variant);
     font-family: var(--md-sys-typescale-title-small-font);
     font-size: var(--md-sys-typescale-title-small-size);
@@ -3097,6 +3242,7 @@
   .s4-list[data-style="segmented"] .s4-list-item {
     --_bg: var(--s4-list-segment-color, var(--md-sys-color-surface-container-low));
     --_radius: var(--s4-shape-list-segment);
+    padding-inline: var(--s4-space-4);
   }
   /* each run of items between subheaders is one group with outer corners */
   .s4-list[data-style="segmented"] > li:is(:first-child, .s4-list-subheader + li) > .s4-list-item {
@@ -3459,6 +3605,8 @@
   .s4-table-wrap:is([data-sticky], :has(> .s4-table[data-sticky])) {
     max-height: var(--s4-table-max-height, calc(var(--s4-size-table-header) + var(--s4-size-table-row) * 8));
     overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--md-sys-color-outline-variant) transparent;
   }
 
   .s4-table {
@@ -3588,10 +3736,8 @@
     transition: background-color var(--md-sys-motion-spring-fast-effects-duration) var(--md-sys-motion-spring-fast-effects);
   }
 
-  /* the hover, focus and press layer follows rounded ends (decision 0025) */
-  .s4-table tr[tabindex] > :is(td, th):first-child { border-start-start-radius: var(--md-sys-shape-corner-large); border-end-start-radius: var(--md-sys-shape-corner-large); }
-  .s4-table tr[tabindex] > :is(td, th):last-child { border-start-end-radius: var(--md-sys-shape-corner-large); border-end-end-radius: var(--md-sys-shape-corner-large); }
-
+  /* Rows are a grid, not pills: the hover, focus and press layer is a flat band from edge to edge, clipped by the wrap's
+     rounded corners (decision 0043; rounded row ends bent the divider lines and read as glass). */
   .s4-table tbody tr {
     transition:
       background-color var(--md-sys-motion-spring-fast-effects-duration) var(--md-sys-motion-spring-fast-effects),
@@ -3878,20 +4024,34 @@
     font-variant-numeric: tabular-nums;
   }
 
-  /* the composer: sticks to the bottom of the screen, above the nav bar */
+  /* the composer: sticks to the bottom of the screen, above the nav bar. The composer itself is the field (one glass
+     pill): the text field inside has no box of its own, and the buttons are centered on the first line and stay round
+     when pressed, so they always follow the pill's curve (decision 0043). */
   .s4-composer {
+    --_row: var(--s4-size-touch-target);
     position: sticky;
     inset-block-end: calc(var(--s4-app-inset-bottom, 0px) + var(--s4-space-2));
     z-index: var(--s4-z-sticky);
     display: flex;
     align-items: flex-end;
-    gap: var(--s4-space-2);
+    gap: var(--s4-space-1);
     margin-block-start: var(--s4-space-4);
-    padding: var(--s4-space-2);
-    border-radius: var(--md-sys-shape-corner-extra-large);
+    padding: var(--s4-space-1);
+    border-radius: calc(var(--_row) / 2 + var(--s4-space-1));
     background: var(--md-sys-color-surface-container);
   }
-  .s4-composer > .s4-text-field { flex: 1; min-inline-size: 0; }
+  .s4-composer > .s4-text-field { flex: 1; min-inline-size: 0; --_bg: transparent; --_outline: transparent; --_ring: 0px; --_h: var(--_row); }
+  .s4-composer > .s4-text-field:first-child { padding-inline-start: var(--s4-space-2); }
+  .s4-composer > .s4-icon-button {
+    --_radius-pressed: var(--_radius-round);
+    --_radius-square: var(--_radius-round);
+    flex: none;
+    margin: calc((var(--_row) - var(--_h)) / 2);
+  }
+  .s4-composer:has(textarea:focus-visible, input:focus-visible) {
+    outline: var(--s4-focus-ring-width) solid var(--s4-focus-ring-color);
+    outline-offset: var(--s4-focus-ring-offset);
+  }
   @media (forced-colors: active) {
     .s4-message, .s4-composer { border: 1px solid CanvasText; }
   }
@@ -4040,7 +4200,9 @@
     background: var(--_bg);
     box-shadow: inset 0 0 0 1px var(--_outline), 0 0 0 var(--_ring) var(--_ring-color);
     pointer-events: none;
-    transition: box-shadow var(--md-sys-motion-spring-fast-effects-duration) var(--md-sys-motion-spring-fast-effects);
+    transition:
+      box-shadow var(--md-sys-motion-spring-fast-effects-duration) var(--md-sys-motion-spring-fast-effects),
+      background-color var(--md-sys-motion-spring-fast-effects-duration) var(--md-sys-motion-spring-fast-effects);
   }
 
   /* ---------- label (always above) ---------- */
@@ -4158,25 +4320,39 @@
   .s4-text-field-counter { justify-self: end; color: var(--md-sys-color-on-surface-variant); font-variant-numeric: tabular-nums; }
   .s4-text-field:has(> .s4-text-field-counter) > .s4-text-field-supporting { padding-inline-end: var(--s4-space-16); }
 
-  /* ---------- states ---------- */
+  /* ---------- states ----------
+     One change at a time (decision 0043): hover lifts the fill and keeps it while the field has focus, so focusing only
+     adds the ring. An error keeps the normal fill: the label and the message turn error-colored, the message gets a small
+     mark, and the focus ring is the error color. No red box. */
   @media (hover: hover) {
-    .s4-text-field:hover:not(:has(> :is(input, select, textarea):focus)) { --_bg: var(--md-sys-color-surface-container-high); }
+    .s4-text-field:hover { --_bg: var(--md-sys-color-surface-container-high); }
   }
   .s4-text-field:has(> :is(input, select, textarea, .s4-text-field-select):focus-visible),
   .s4-text-field:has(> :is(input, select, textarea):focus) {
-    --_outline: var(--md-sys-color-on-surface);
+    --_outline: var(--_ring-color);
     --_ring: 1px;   /* with the 1px outline: a 2dp ink ring */
     --_label: var(--md-sys-color-on-surface);
   }
   .s4-text-field:is([data-error], :has(> [aria-invalid="true"])) {
-    --_bg: var(--md-sys-color-error-container);   /* decision 0023: an error is a filled field, not a red outline */
-    --_outline: transparent;
     --_ring-color: var(--md-sys-color-error);
     --_label: var(--md-sys-color-error);
     --_caret: var(--md-sys-color-error);
     --_supporting: var(--md-sys-color-error);
   }
-  .s4-text-field:is([data-error], :has(> [aria-invalid="true"])) > :is(input, select, textarea) ~ :is(.s4-icon, .s4-icon-button) { color: var(--md-sys-color-error); }
+  .s4-text-field:is([data-error], :has(> [aria-invalid="true"])) > .s4-text-field-supporting {
+    display: flex;
+    align-items: center;
+    gap: var(--s4-space-1);
+  }
+  .s4-text-field:is([data-error], :has(> [aria-invalid="true"])) > .s4-text-field-supporting::before {
+    content: "";
+    flex: none;
+    width: var(--s4-space-3);
+    height: var(--s4-space-3);
+    border-radius: var(--md-sys-shape-corner-full);
+    background: currentColor;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath fill-rule='evenodd' d='M6 0a6 6 0 1 0 0 12A6 6 0 0 0 6 0Zm-.75 3h1.5v4h-1.5V3Zm0 5h1.5v1.5h-1.5V8Z'/%3E%3C/svg%3E") center / contain no-repeat;
+  }
 
   /* ---------- disabled ---------- */
   .s4-text-field:has(> :is(input, select, textarea):disabled) {
@@ -4197,6 +4373,248 @@
   }
 }
 
+/* ---- date-picker/date-picker.css ---- */
+/* Date picker (decision 0024: selects and dates open a glass popup, never the browser's own)
+   <div class="s4-text-field">
+     <label for="due">Due Date</label>
+     <input id="due" type="date" min="2026-01-01" max="2027-12-31">        stays in the DOM: form value, min/max, no-JS fallback
+   </div>
+   date-picker.js hides the native input (data-s4-native), puts a .s4-text-field-select button with the formatted date and
+   a calendar icon in its place, and opens this popup:
+   <div class="s4-date-picker s4-glass" popover="manual" role="dialog" aria-label="Choose date" data-view="days|months">
+     <div class="s4-date-picker-header">  month/year button, previous and next icon buttons
+     <div class="s4-date-picker-body">    .s4-date-picker-days (weekday row + 6x7 grid of .s4-date-picker-day) over
+                                          .s4-date-picker-months (3x4 grid of .s4-date-picker-month)
+     <div class="s4-date-picker-footer">  Clear, Today
+   </div>
+   Anchored under its field from 600px up; a centered floating panel on phones. Solid surface-container here; the
+   s4-glass class makes it glass. Only opacity and transform ever animate (date-picker.js). */
+@layer s4.components {
+  /* ---------- the field ---------- */
+  .s4-text-field > input[type="date"][data-s4-native] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .s4-date-picker-field { position: relative; overflow: visible; }
+  /* the whole box opens the picker, the calendar icon included */
+  .s4-date-picker-field::after {
+    content: "";
+    position: absolute;
+    inset-block: 0;
+    inset-inline: calc(var(--s4-space-3) * -1) calc((var(--s4-space-3) * 2 + var(--s4-size-icon)) * -1);
+  }
+  .s4-date-picker-value { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .s4-date-picker-field[data-empty] > .s4-date-picker-value { color: var(--md-sys-color-on-surface-variant); opacity: 0.7; }
+  .s4-date-picker-field:disabled { cursor: default; }
+  .s4-date-picker-icon { pointer-events: none; }
+
+  /* ---------- the popup ---------- */
+  .s4-date-picker {
+    --_cell: var(--s4-space-10);
+    --_pad: var(--s4-space-3);
+    --_selected: var(--md-sys-color-primary);
+    --_on-selected: var(--md-sys-color-on-primary);
+    --_band: var(--md-sys-color-secondary-container);
+    --_on-band: var(--md-sys-color-on-secondary-container);
+    --_hover: color-mix(in srgb, var(--md-sys-color-on-surface) 8%, transparent);
+    --_pressed: color-mix(in srgb, var(--md-sys-color-on-surface) 12%, transparent);
+    --_muted: color-mix(in srgb, var(--md-sys-color-on-surface) 38%, transparent);
+    --_off: color-mix(in srgb, var(--md-sys-color-on-surface) 20%, transparent);
+
+    position: fixed;
+    inset: auto;
+    box-sizing: border-box;
+    width: calc(var(--_cell) * 7 + var(--_pad) * 2);
+    min-width: calc(var(--s4-space-10) * 7 + var(--s4-space-6));
+    max-width: calc(100vw - 2 * var(--s4-space-4));
+    max-height: calc(100dvh - 2 * var(--s4-space-4));
+    margin: 0;
+    padding: var(--_pad);
+    overflow: hidden auto;
+    border: 0;
+    border-radius: var(--s4-shape-menu);
+    background: var(--md-sys-color-surface-container);
+    color: var(--md-sys-color-on-surface);
+    box-shadow: var(--md-sys-elevation-level2);
+    font-family: var(--md-sys-typescale-body-medium-font);
+    font-size: var(--md-sys-typescale-body-medium-size);
+    line-height: var(--md-sys-typescale-body-medium-line-height);
+    letter-spacing: var(--md-sys-typescale-body-medium-tracking);
+    font-weight: var(--md-sys-typescale-body-medium-weight);
+    font-variant-numeric: tabular-nums;
+    flex-direction: column;
+    gap: var(--s4-space-1);
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .s4-date-picker:popover-open, .s4-date-picker[data-open] { display: flex; }
+
+  /* ---------- header: month and year, previous, next ---------- */
+  .s4-date-picker-header { display: flex; align-items: center; min-height: var(--_cell); }
+  .s4-date-picker-title {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s4-space-1);
+    height: var(--s4-size-button);
+    margin-inline-end: auto;
+    padding: 0 var(--s4-space-2) 0 var(--s4-space-3);
+    border: 0;
+    border-radius: var(--md-sys-shape-corner-full);
+    background: transparent;
+    color: inherit;
+    font-family: var(--md-sys-typescale-title-small-font);
+    font-size: var(--md-sys-typescale-title-small-size);
+    line-height: var(--md-sys-typescale-title-small-line-height);
+    letter-spacing: var(--md-sys-typescale-title-small-tracking);
+    font-weight: var(--md-sys-typescale-title-small-weight);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    cursor: pointer;
+    --s4-icon-size: var(--s4-size-icon-small);
+  }
+  .s4-date-picker-title > .s4-icon { color: var(--md-sys-color-on-surface-variant); }
+  .s4-date-picker[data-view="months"] .s4-date-picker-title > .s4-icon { rotate: 180deg; }
+  .s4-date-picker-title:active { background: var(--_pressed); }
+
+  /* ---------- body: the two views share one cell, so the popup never changes size ---------- */
+  .s4-date-picker-body { display: grid; }
+  .s4-date-picker-days, .s4-date-picker-months { grid-area: 1 / 1; min-width: 0; }
+  .s4-date-picker[data-view="months"] .s4-date-picker-days,
+  .s4-date-picker:not([data-view="months"]) .s4-date-picker-months { visibility: hidden; }
+
+  .s4-date-picker-grid { display: grid; grid-template-columns: repeat(7, var(--_cell)); row-gap: 2px; }
+  .s4-date-picker-row { display: contents; }
+  .s4-date-picker-weekday {
+    display: grid;
+    place-items: center;
+    height: var(--s4-space-8);
+    color: var(--md-sys-color-on-surface-variant);
+    font-family: var(--md-sys-typescale-label-medium-font);
+    font-size: var(--md-sys-typescale-label-medium-size);
+    line-height: var(--md-sys-typescale-label-medium-line-height);
+    letter-spacing: var(--md-sys-typescale-label-medium-tracking);
+    font-weight: var(--md-sys-typescale-label-medium-weight);
+  }
+
+  /* a day: the button is the cell; ::before is the range band, ::after the round fill, the number sits on top */
+  .s4-date-picker-day {
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    place-items: center;
+    width: var(--_cell);
+    height: var(--_cell);
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    letter-spacing: inherit;
+    font-variant-numeric: tabular-nums;
+    cursor: pointer;
+  }
+  .s4-date-picker-day::before, .s4-date-picker-day::after { content: ""; position: absolute; z-index: -1; inset: 0; }
+  .s4-date-picker-day::after { border-radius: 50%; }
+  .s4-date-picker-day:focus-visible { z-index: 1; outline-offset: 0; }
+  .s4-date-picker-day[data-outside] { color: var(--_muted); }
+
+  /* today: a small dot under the number, no ring */
+  .s4-date-picker-day[aria-current="date"] { font-weight: var(--md-sys-typescale-label-large-weight); }
+  .s4-date-picker-day[aria-current="date"] > span::after {
+    content: "";
+    position: absolute;
+    inset-block-end: var(--s4-space-1);
+    inset-inline-start: calc(50% - var(--s4-space-1) / 2);
+    width: var(--s4-space-1);
+    height: var(--s4-space-1);
+    border-radius: 50%;
+    background: var(--md-sys-color-primary);
+  }
+
+  /* range: a flat band between the two ends, rounded where a week starts and ends */
+  .s4-date-picker-day[data-range]::before { background: var(--_band); }
+  .s4-date-picker-day[data-range="in"] { color: var(--_on-band); }
+  .s4-date-picker-day[data-range="start"]::before { inset-inline-start: 50%; }
+  .s4-date-picker-day[data-range="end"]::before { inset-inline-end: 50%; }
+  .s4-date-picker-day[data-range]:first-child::before { border-start-start-radius: var(--md-sys-shape-corner-full); border-end-start-radius: var(--md-sys-shape-corner-full); }
+  .s4-date-picker-day[data-range]:last-child::before { border-start-end-radius: var(--md-sys-shape-corner-full); border-end-end-radius: var(--md-sys-shape-corner-full); }
+
+  /* selected (and both ends of a range): filled primary circle */
+  .s4-date-picker-day[aria-selected="true"]:not([data-range="in"]) { color: var(--_on-selected); }
+  .s4-date-picker-day[aria-selected="true"]:not([data-range="in"])::after { background: var(--_selected); }
+  .s4-date-picker-day[aria-selected="true"]:not([data-range="in"]) > span::after { background: var(--_on-selected); }
+
+  /* disabled: outside min/max or a blocked date */
+  .s4-date-picker-day[aria-disabled="true"] { color: var(--_off); cursor: default; }
+  .s4-date-picker-day[aria-disabled="true"][data-range="in"] { color: var(--_muted); }
+
+  /* ---------- month chooser ---------- */
+  .s4-date-picker-months { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s4-space-2); align-content: space-evenly; }
+  .s4-date-picker-month {
+    position: relative;
+    height: var(--s4-size-touch-target);
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: var(--md-sys-shape-corner-full);
+    background: transparent;
+    color: inherit;
+    font-family: var(--md-sys-typescale-label-large-font);
+    font-size: var(--md-sys-typescale-label-large-size);
+    line-height: var(--md-sys-typescale-label-large-line-height);
+    letter-spacing: var(--md-sys-typescale-label-large-tracking);
+    font-weight: var(--md-sys-typescale-label-large-weight);
+    cursor: pointer;
+  }
+  .s4-date-picker-month:focus-visible { z-index: 1; outline-offset: 0; }
+  .s4-date-picker-month[aria-pressed="true"] { background: var(--_selected); color: var(--_on-selected); }
+  .s4-date-picker-month[aria-disabled="true"] { color: var(--_off); cursor: default; }
+
+  /* ---------- footer ---------- */
+  .s4-date-picker-footer { display: flex; align-items: center; justify-content: space-between; }
+
+  /* ---------- hover and press: a quiet fill, no halo ---------- */
+  @media (hover: hover) {
+    .s4-date-picker-day:hover:not([aria-selected="true"], [aria-disabled="true"])::after { background: var(--_hover); }
+    .s4-date-picker-day[data-range="in"]:hover:not([aria-disabled="true"])::after { background: var(--_hover); }
+    .s4-date-picker-month:hover:not([aria-pressed="true"], [aria-disabled="true"]),
+    .s4-date-picker-title:hover { background: var(--_hover); }
+  }
+  .s4-date-picker-day:active:not([aria-selected="true"], [aria-disabled="true"])::after { background: var(--_pressed); }
+  .s4-date-picker-month:active:not([aria-pressed="true"], [aria-disabled="true"]) { background: var(--_pressed); }
+
+  /* ---------- phones: a centered floating panel, days stretch to fill ---------- */
+  @media (max-width: 599.98px) {
+    .s4-date-picker {
+      inset: 0;
+      width: min(calc(var(--s4-space-10) * 9), calc(100vw - 2 * var(--s4-space-4)));
+      min-width: 0;
+      height: fit-content;
+      margin: auto;
+    }
+    .s4-date-picker-grid { grid-template-columns: repeat(7, minmax(0, 1fr)); }
+    .s4-date-picker-day { width: auto; height: auto; aspect-ratio: 1; min-height: calc(var(--s4-space-10) + var(--s4-space-1)); }
+  }
+
+  @media (forced-colors: active) {
+    .s4-date-picker { border: 1px solid CanvasText; }
+    .s4-date-picker-day[aria-selected="true"],
+    .s4-date-picker-month[aria-pressed="true"] { forced-color-adjust: none; background: Highlight; color: HighlightText; }
+    .s4-date-picker-day[data-range="in"] { border-radius: 0; }
+    .s4-date-picker-day::before, .s4-date-picker-day::after { display: none; }
+    .s4-date-picker-day[aria-current="date"] > span::after { forced-color-adjust: none; background: Highlight; }
+    .s4-date-picker-day[aria-selected="true"] > span::after { background: HighlightText; }
+    .s4-date-picker-day[aria-disabled="true"], .s4-date-picker-month[aria-disabled="true"] { color: GrayText; }
+    .s4-date-picker-day[data-outside]:not([aria-selected="true"], [aria-disabled="true"]) { color: CanvasText; }
+  }
+}
+
 /* ---- switch/switch.css ---- */
 /* Switch (M3)
    <label class="s4-switch"><input type="checkbox" role="switch"><span class="s4-switch-track"><span class="s4-switch-handle"></span></span>Autopay</label>
@@ -4205,7 +4623,7 @@
    The native checkbox sits invisibly over the 48dp target, so keyboard, forms and screen readers work as usual.
    Track 52x32. Off: surface-container-highest track, 2dp outline border, 16dp outline handle (24 with icons).
    On: primary track, 24dp on-primary handle. Pressed: 28dp handle. The handle slides on the fast-spatial spring.
-   The state layer is a 40dp circle around the handle (drawn on the track, not on the whole label). */
+   No state-layer halo: the handle grows a little on hover and more on press (decision 0043). */
 @layer s4.components {
   .s4-switch {
     position: relative;
@@ -4263,21 +4681,6 @@
     height: var(--s4-size-touch-target);
     transform: translateY(-50%);
   }
-  /* state layer: 40dp circle centred on the handle */
-  .s4-switch-track::before {
-    content: "";
-    position: absolute;
-    left: var(--_x);
-    top: 50%;
-    width: var(--s4-size-icon-button);
-    height: var(--s4-size-icon-button);
-    border-radius: var(--md-sys-shape-corner-full);
-    background: var(--_state);
-    opacity: 0;
-    transform: translate(-50%, -50%);
-    pointer-events: none;
-    transition: left var(--_spatial), opacity var(--_effects);
-  }
   .s4-switch-handle {
     position: absolute;
     left: var(--_x);
@@ -4319,21 +4722,16 @@
   .s4-switch[data-icons]:has(> input:checked) { --_mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9.55 18 3.85 12.3 5.275 10.875 9.55 15.15 18.725 5.975 20.15 7.4Z'/%3E%3C/svg%3E"); }
   .s4-switch[data-icons] .s4-switch-handle::after { opacity: 1; }
 
-  /* ---------- hover, focus, pressed ---------- */
+  /* ---------- hover, focus, pressed: the handle answers by growing a little; no halo, no color change (decision 0043) ---------- */
   @media (hover: hover) {
-    .s4-switch:hover:not(:has(> input:disabled)) { --_handle: var(--md-sys-color-on-surface-variant); }
-    .s4-switch:hover:not(:has(> input:disabled)):has(> input:checked) { --_handle: var(--md-sys-color-primary-container); }
-    .s4-switch:hover:not(:has(> input:disabled)) .s4-switch-track::before { opacity: var(--md-sys-state-hover-state-layer-opacity); }
+    .s4-switch:hover:not(:has(> input:disabled)) { --_handle-size: calc(var(--s4-space-4) + var(--s4-space-1) / 2); }
+    .s4-switch:hover:not(:has(> input:disabled)):is(:has(> input:checked), [data-icons]) { --_handle-size: calc(var(--s4-space-6) + var(--s4-space-1) / 2); }
   }
-  .s4-switch:has(> input:focus-visible) .s4-switch-track::before { opacity: var(--md-sys-state-focus-state-layer-opacity); }
   .s4-switch:has(> input:focus-visible) .s4-switch-track {
     outline: var(--s4-focus-ring-width) solid var(--s4-focus-ring-color);
     outline-offset: var(--s4-focus-ring-offset);
   }
   .s4-switch:active:not(:has(> input:disabled)) { --_handle-size: calc(var(--s4-space-6) + var(--s4-space-1)); }
-  .s4-switch:active:not(:has(> input:disabled)) .s4-switch-track::before { opacity: var(--md-sys-state-pressed-state-layer-opacity); }
-  .s4-switch:active:not(:has(> input:disabled)):not(:has(> input:checked)) { --_handle: var(--md-sys-color-on-surface-variant); }
-  .s4-switch:active:not(:has(> input:disabled)):has(> input:checked) { --_handle: var(--md-sys-color-primary-container); }
 
   /* ---------- disabled ---------- */
   .s4-switch:has(> input:disabled) {
@@ -4359,7 +4757,6 @@
     .s4-switch:has(> input:disabled) { color: GrayText; }
     .s4-switch:has(> input:disabled) .s4-switch-track { border-color: GrayText; }
     .s4-switch:has(> input:disabled) .s4-switch-handle { background: GrayText; }
-    .s4-switch-track::before { display: none; }
   }
 }
 
@@ -4371,7 +4768,7 @@
    data-error on the label, disabled. The native input sits invisibly on top, so keyboard, forms and screen readers work.
    Soft Square (decision 0009): 20dp box, 6dp corners, 1.5dp outline border; checked = primary fill with an on-primary mark
    (ink in a monochrome app); the mark wipes in and fades out.
-   40dp circular state layer around the box; 48dp touch target. */
+   No state-layer halo: on hover the box grows a touch, on press it dips (decision 0043). 48dp touch target. */
 @layer s4.components {
   .s4-checkbox {
     --_border: transparent;
@@ -4422,32 +4819,17 @@
     background: var(--_fill);
     transition: background-color var(--_effects), border-color var(--_effects);
   }
-  /* state layer (40dp circle) and the 48dp touch target */
-  .s4-checkbox-box::before {
-    content: "";
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: var(--_layer);
-    height: var(--_layer);
-    border-radius: var(--md-sys-shape-corner-full);
-    background: var(--_state);
-    opacity: 0;
-    transform: translate(-50%, -50%);
-    pointer-events: none;
-    transition: opacity var(--_effects);
-  }
-  /* the mark: a check or a dash, drawn with a mask so it takes --_mark; it wipes in from the start */
+  /* the mark: a thin check or a short dash that fits well inside the box (decision 0043), drawn with a mask so it takes
+     --_mark. It settles in with the ink spring (transform and opacity only). */
   .s4-checkbox-box::after {
     content: "";
     position: absolute;
-    inset: -2px;
+    inset: calc(var(--s4-space-1) / 2 + 1px);
     background: var(--_mark);
     mask: var(--_mask, none) center / 100% no-repeat;
-    clip-path: inset(0 100% 0 0);
     opacity: 0;
-    /* unchecking: fade the mark out first, then reset the wipe */
-    transition: opacity var(--md-sys-motion-spring-fast-effects-duration) var(--md-sys-motion-spring-fast-effects), clip-path 0s linear var(--md-sys-motion-spring-fast-effects-duration);
+    transform: scale(0.6);
+    transition: opacity var(--_effects), transform var(--s4-motion-spring-ink-duration) var(--s4-motion-spring-ink);
   }
   .s4-checkbox:has(> input:checked),
   .s4-checkbox:has(> input:indeterminate) {
@@ -4455,27 +4837,21 @@
     --_fill: var(--md-sys-color-primary);
     --_state: var(--md-sys-color-primary);
   }
-  .s4-checkbox:has(> input:checked) { --_mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'%3E%3Cpath d='M7.2 13.2 3.6 9.6l1.3-1.3 2.3 2.3 5.9-5.9 1.3 1.3z'/%3E%3C/svg%3E"); }
-  .s4-checkbox:has(> input:indeterminate) { --_mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'%3E%3Cpath d='M4 8h10v2H4z'/%3E%3C/svg%3E"); }
-  .s4-checkbox:has(> input:is(:checked, :indeterminate)) .s4-checkbox-box::after {
-    clip-path: inset(0);
-    opacity: 1;
-    transition: opacity 0s, clip-path var(--md-sys-motion-spring-effects-duration) var(--md-sys-motion-spring-effects);
-  }
+  .s4-checkbox:has(> input:checked) { --_mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpath d='M3.2 7.4l2.5 2.5 5.1-5.6' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); }
+  .s4-checkbox:has(> input:indeterminate) { --_mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpath d='M4 7h6' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round'/%3E%3C/svg%3E"); }
+  .s4-checkbox:has(> input:is(:checked, :indeterminate)) .s4-checkbox-box::after { opacity: 1; transform: none; }
 
-  /* ---------- hover, focus, pressed ---------- */
+  /* ---------- hover, focus, pressed: the box itself answers (no halo around it, decision 0043) ---------- */
+  .s4-checkbox-box { transition: background-color var(--_effects), transform var(--s4-motion-spring-ink-duration) var(--s4-motion-spring-ink); }
   @media (hover: hover) {
-    .s4-checkbox:hover:not(:has(> input:disabled)) .s4-checkbox-box::before { opacity: var(--md-sys-state-hover-state-layer-opacity); }
-    .s4-checkbox:hover:not(:has(> input:disabled)):not(:has(> input:is(:checked, :indeterminate))) { --_fill: var(--md-sys-color-surface-container-high); }
-  }
-  .s4-checkbox:has(> input:focus-visible) .s4-checkbox-box::before {
-    opacity: var(--md-sys-state-focus-state-layer-opacity);
+    .s4-checkbox:hover:not(:has(> input:disabled)) .s4-checkbox-box { transform: scale(1.1); }
+    .s4-checkbox:hover:not(:has(> input:disabled)):not(:has(> input:is(:checked, :indeterminate))) { --_fill: color-mix(in srgb, var(--md-sys-color-on-surface) 22%, var(--md-sys-color-surface-container-highest)); }
   }
   .s4-checkbox:has(> input:focus-visible) .s4-checkbox-box {
     outline: var(--s4-focus-ring-width) solid var(--s4-focus-ring-color);
     outline-offset: var(--s4-focus-ring-offset);
   }
-  .s4-checkbox:active:not(:has(> input:disabled)) .s4-checkbox-box::before { opacity: var(--md-sys-state-pressed-state-layer-opacity); }
+  .s4-checkbox:active:not(:has(> input:disabled)) .s4-checkbox-box { transform: scale(0.9); }
 
   /* ---------- error ---------- */
   .s4-checkbox[data-error], .s4-checkbox:has(> input[aria-invalid="true"]) { --_border: var(--md-sys-color-error); --_state: var(--md-sys-color-error); }
@@ -4497,7 +4873,6 @@
 
   @media (forced-colors: active) {
     .s4-checkbox-box { forced-color-adjust: none; border-color: CanvasText; background: Canvas; }
-    .s4-checkbox-box::before { display: none; }
     .s4-checkbox:has(> input:is(:checked, :indeterminate)) .s4-checkbox-box { background: Highlight; border-color: Highlight; }
     .s4-checkbox:has(> input:is(:checked, :indeterminate)) .s4-checkbox-box::after { background: HighlightText; }
     .s4-checkbox:has(> input:disabled) .s4-checkbox-box { border-color: GrayText; }
@@ -4511,7 +4886,7 @@
    forms and screen readers work as usual.
    20dp filled disc (surface-container-highest); selected = the disc fills with primary ink, no inner dot (decision 0042,
    issue 19): the ink grows in from the middle on the ink spring (a subtle liquid overshoot) and drains out calmly.
-   40dp circular state layer; 48dp touch target. */
+   No state-layer halo (decision 0043); 48dp touch target. */
 @layer s4.components {
   /* a labelled group of radios or checkboxes: a soft outlined box instead of the browser's square fieldset */
   fieldset:has(> :is(.s4-radio, .s4-checkbox)) {
@@ -4569,21 +4944,7 @@
     border: 0;
     background: var(--md-sys-color-surface-container-highest);   /* decision 0023: a filled disc, no outline */
     border-radius: var(--md-sys-shape-corner-full);
-    transition: background-color var(--_effects);
-  }
-  .s4-radio-ring::before {
-    content: "";
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: var(--_layer);
-    height: var(--_layer);
-    border-radius: var(--md-sys-shape-corner-full);
-    background: var(--_state);
-    opacity: 0;
-    transform: translate(-50%, -50%);
-    pointer-events: none;
-    transition: opacity var(--_effects);
+    transition: background-color var(--_effects), transform var(--s4-motion-spring-ink-duration) var(--s4-motion-spring-ink);
   }
   /* the ink: a full primary disc that grows in when checked */
   .s4-radio-ring::after {
@@ -4601,15 +4962,16 @@
     transition: transform var(--s4-motion-spring-ink-duration) var(--s4-motion-spring-ink), background-color var(--_effects);
   }
 
+  /* hover and press: the disc itself answers (no halo, decision 0043) */
   @media (hover: hover) {
-    .s4-radio:hover:not(:has(> input:disabled)) .s4-radio-ring::before { opacity: var(--md-sys-state-hover-state-layer-opacity); }
+    .s4-radio:hover:not(:has(> input:disabled)) .s4-radio-ring { transform: scale(1.1); }
+    .s4-radio:hover:not(:has(> input:disabled)):not(:has(> input:checked)) .s4-radio-ring { background: color-mix(in srgb, var(--md-sys-color-on-surface) 22%, var(--md-sys-color-surface-container-highest)); }
   }
-  .s4-radio:has(> input:focus-visible) .s4-radio-ring::before { opacity: var(--md-sys-state-focus-state-layer-opacity); }
   .s4-radio:has(> input:focus-visible) .s4-radio-ring {
     outline: var(--s4-focus-ring-width) solid var(--s4-focus-ring-color);
     outline-offset: var(--s4-focus-ring-offset);
   }
-  .s4-radio:active:not(:has(> input:disabled)) .s4-radio-ring::before { opacity: var(--md-sys-state-pressed-state-layer-opacity); }
+  .s4-radio:active:not(:has(> input:disabled)) .s4-radio-ring { transform: scale(0.9); }
 
   .s4-radio:has(> input:disabled) {
     --_ring: color-mix(in srgb, var(--md-sys-color-on-surface) calc(var(--md-sys-state-disabled-content-opacity) * 100%), transparent);
@@ -4620,7 +4982,6 @@
 
   @media (forced-colors: active) {
     .s4-radio-ring { forced-color-adjust: none; border-color: CanvasText; }
-    .s4-radio-ring::before { display: none; }
     .s4-radio-ring::after { background: Highlight; }
     .s4-radio:has(> input:checked) .s4-radio-ring { border-color: Highlight; }
     .s4-radio:has(> input:disabled) .s4-radio-ring { border-color: GrayText; }
@@ -4694,7 +5055,6 @@
     user-select: none;
     --s4-icon-size: var(--_icon);
     transition:
-      padding var(--_spatial),
       background-color var(--_effects),
       color var(--_effects),
       box-shadow var(--_effects);
@@ -4725,26 +5085,14 @@
   .s4-chip:has(> .s4-chip-remove) { --_pad-end: var(--s4-space-2); }
   .s4-chip:has(> .s4-chip-avatar:first-child) { --_pad-start: var(--s4-space-1); }
 
-  /* ---------- filter: check slides in, selected = secondary-container ---------- */
-  .s4-chip-check {
-    flex: none;
-    width: 0;
-    height: var(--_icon);
-    margin-inline-end: calc(var(--_gap) * -1);
-    background: currentColor;
-    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9.55 18 3.85 12.3 5.275 10.875 9.55 15.15 18.725 5.975 20.15 7.4Z'/%3E%3C/svg%3E") left center / var(--_icon) no-repeat;
-    transition: width var(--_spatial), margin var(--_spatial);
-  }
-  .s4-chip[data-type="filter"] > .s4-icon { transition: width var(--_spatial), margin var(--_spatial), opacity var(--_effects); }
+  /* ---------- filter: selected = the accent fill (primary). A chip never changes size (decision 0043): nothing slides
+     in, so its neighbours never move. .s4-chip-check is kept in the markup for older pages and draws nothing. ---------- */
+  .s4-chip-check { display: none; }
   .s4-chip[aria-pressed="true"] {
-    --_bg: var(--md-sys-color-inverse-surface);
-    --_fg: var(--md-sys-color-inverse-on-surface);
-    --_icon-color: var(--md-sys-color-inverse-on-surface);
-    --_pad-start: var(--s4-space-2);
+    --_bg: var(--md-sys-color-primary);
+    --_fg: var(--md-sys-color-on-primary);
+    --_icon-color: var(--md-sys-color-on-primary);
   }
-  .s4-chip[aria-pressed="true"] > .s4-chip-check { width: var(--_icon); margin-inline-end: 0; }
-  /* a leading icon gives way to the check */
-  .s4-chip[aria-pressed="true"] > .s4-chip-check + .s4-icon { width: 0; margin-inline-end: calc(var(--_gap) * -1); opacity: 0; }
 
   /* ---------- avatar and remove button ---------- */
   .s4-chip-avatar {
@@ -4809,7 +5157,6 @@
   @media (forced-colors: active) {
     .s4-chip { border: 1px solid ButtonText; }
     .s4-chip[aria-pressed="true"] { background: Highlight; color: HighlightText; }
-    .s4-chip-check { background: HighlightText; forced-color-adjust: none; }
   }
 }
 
@@ -4830,7 +5177,8 @@
     --_handle-w: var(--s4-space-1);
     --_handle-h: calc(var(--s4-space-10) + var(--s4-space-1));
     --_gap: calc(var(--s4-space-1) * 1.5);
-    --_inset: calc(var(--_track-h) / 2);                     /* handle travel starts and ends half a track height in */
+    --_inset: calc(var(--s4-space-1) / 2);                    /* the handle travels the whole track: at 0% and 100% it sits on the very end, so no sliver of track is left beyond it (decision 0043) */
+    --_round: calc(var(--_track-h) / 2);
     --_inner: calc(var(--md-sys-shape-corner-extra-small) / 2);
     --_active: var(--md-sys-color-primary);
     --_inactive: var(--md-sys-color-secondary-container);
@@ -4859,13 +5207,13 @@
   .s4-slider::before {
     left: 0;
     width: max(0px, calc(var(--_x) - var(--_handle-w) / 2 - var(--_gap)));
-    border-radius: var(--_inset) var(--_inner) var(--_inner) var(--_inset);
+    border-radius: var(--_round) var(--_inner) var(--_inner) var(--_round);
     background: var(--_active);
   }
   .s4-slider::after {
     right: 0;
     width: max(0px, calc(100% - var(--_x) - var(--_handle-w) / 2 - var(--_gap)));
-    border-radius: var(--_inner) var(--_inset) var(--_inset) var(--_inner);
+    border-radius: var(--_inner) var(--_round) var(--_round) var(--_inner);
     background: var(--_inactive);
   }
   /* stop indicators: the end stop always; every step with data-stops. Dots take the color of the track they sit on. */
@@ -4889,7 +5237,15 @@
     left: calc(var(--_inset) - (100% - 2 * var(--_inset)) / var(--_steps, 10) / 2);
     right: auto;
     width: calc((100% - 2 * var(--_inset)) * (var(--_steps, 10) + 1) / var(--_steps, 10));
-    mask: var(--_dot) 0 50% / var(--_p) var(--s4-space-1) repeat-x;
+    /* dots, minus a window around the handle: a dot the handle covers or sits beside is hidden, never half shown */
+    --_hx: calc(var(--_p) / 2 + var(--_value) * (100% - var(--_p)));
+    --_cut: calc(var(--_handle-w) / 2 + var(--_gap) + var(--s4-space-1));
+    mask:
+      var(--_dot) 0 50% / var(--_p) var(--s4-space-1) repeat-x,
+      linear-gradient(to right, var(--_handle) calc(var(--_hx) - var(--_cut)), transparent 0, transparent calc(var(--_hx) + var(--_cut)), var(--_handle) 0),
+      linear-gradient(to right, transparent var(--_p), var(--_handle) 0, var(--_handle) calc(100% - var(--_p)), transparent 0);   /* the two ends need no dot */
+    mask-composite: intersect;
+    -webkit-mask-composite: source-in;
     background: linear-gradient(to right, var(--_stop-on-active) calc(var(--_p) / 2 + var(--_value) * (100% - var(--_p))), var(--_stop-on-inactive) 0);
   }
   .s4-slider-handle {
@@ -4946,8 +5302,8 @@
     appearance: none;
     background: transparent;
   }
-  .s4-slider > input[type="range"]::-webkit-slider-thumb { appearance: none; width: var(--_track-h); height: var(--_handle-h); }
-  .s4-slider > input[type="range"]::-moz-range-thumb { width: var(--_track-h); height: var(--_handle-h); border: 0; }
+  .s4-slider > input[type="range"]::-webkit-slider-thumb { appearance: none; width: var(--s4-space-1); height: var(--_handle-h); }
+  .s4-slider > input[type="range"]::-moz-range-thumb { width: var(--s4-space-1); height: var(--_handle-h); border: 0; }
 
   /* pressed and focus */
   .s4-slider:has(> input:active) { --_handle-w: calc(var(--s4-space-1) / 2); }
@@ -5166,6 +5522,10 @@
   .s4-status[data-tone="primary"] { --_bg: var(--md-sys-color-primary-container); --_fg: var(--md-sys-color-on-primary-container); }
   .s4-status[data-tone="secondary"] { --_bg: var(--md-sys-color-secondary-container); --_fg: var(--md-sys-color-on-secondary-container); }
   .s4-status[data-tone="tertiary"] { --_bg: var(--md-sys-color-tertiary-container); --_fg: var(--md-sys-color-on-tertiary-container); }
+  /* plain status colors (decision 0043): fixed green, amber and blue that never change with the accent */
+  .s4-status[data-tone="success"] { --_bg: var(--s4-color-success-container); --_fg: var(--s4-color-on-success-container); }
+  .s4-status[data-tone="warning"] { --_bg: var(--s4-color-warning-container); --_fg: var(--s4-color-on-warning-container); }
+  .s4-status[data-tone="info"] { --_bg: var(--s4-color-info-container); --_fg: var(--s4-color-on-info-container); }
   .s4-status[data-tone="error"] { --_bg: var(--md-sys-color-error-container); --_fg: var(--md-sys-color-on-error-container); }
 
   @media (forced-colors: active) {
@@ -5378,6 +5738,9 @@
   .s4-banner[data-tone="primary"] { --_bg: var(--md-sys-color-primary-container); --_fg: var(--md-sys-color-on-primary-container); }
   .s4-banner[data-tone="secondary"] { --_bg: var(--md-sys-color-secondary-container); --_fg: var(--md-sys-color-on-secondary-container); }
   .s4-banner[data-tone="tertiary"] { --_bg: var(--md-sys-color-tertiary-container); --_fg: var(--md-sys-color-on-tertiary-container); }
+  .s4-banner[data-tone="success"] { --_bg: var(--s4-color-success-container); --_fg: var(--s4-color-on-success-container); }
+  .s4-banner[data-tone="warning"] { --_bg: var(--s4-color-warning-container); --_fg: var(--s4-color-on-warning-container); }
+  .s4-banner[data-tone="info"] { --_bg: var(--s4-color-info-container); --_fg: var(--s4-color-on-info-container); }
   .s4-banner[data-tone="error"] { --_bg: var(--md-sys-color-error-container); --_fg: var(--md-sys-color-on-error-container); }
   .s4-banner[data-closing] { opacity: 0; }
   .s4-banner > .s4-icon { align-self: flex-start; margin-block: var(--s4-space-2); --s4-icon-size: var(--s4-size-icon); }
@@ -5555,6 +5918,7 @@
     overflow: auto;
     flex-direction: column;
     gap: var(--s4-space-4);
+    outline: none;   /* the dialog takes focus when it opens (decision 0043); it needs no ring of its own */
   }
   .s4-dialog[open] { display: flex; }
   .s4-dialog::backdrop { background: color-mix(in srgb, var(--md-sys-color-scrim) calc(var(--s4-scrim-opacity) * 100%), transparent); }
@@ -5592,23 +5956,28 @@
 }
 
 /* ---- sheet/sheet.css ---- */
-/* Sheets (M3)
-   <button class="s4-fab" data-sheet="add-expense" aria-label="Add expense"><span class="s4-icon" data-icon="add"></span></button>
+/* Floating panels (decision 0043; they replace M3's bottom and side sheets, and keep the class names)
+   <button class="s4-button" data-sheet="add-expense">Add Expense</button>
    <dialog class="s4-bottom-sheet" id="add-expense" aria-labelledby="ae-h">
-     <span class="s4-sheet-handle" aria-hidden="true"></span>
      <h2 class="s4-sheet-title" id="ae-h">Add Expense</h2>
      <div class="s4-sheet-content">…</div>
-     <div class="s4-sheet-actions"><button class="s4-button" data-close="save">Save</button></div>
+     <div class="s4-sheet-actions"><button class="s4-button" data-variant="text" data-close>Cancel</button><button class="s4-button" data-close="save">Save</button></div>
    </dialog>
-   <dialog class="s4-side-sheet" id="filters">… same parts, opens from the end edge …</dialog>
-   Opened from a FAB: container transform (the FAB becomes the sheet). Otherwise: slides from its edge.
-   From 600 wide the bottom sheet is docked to the bottom and can be dragged down to dismiss; on a phone it is a centered
-   card (like a dialog, no handle) that opens by container transform from any opener. Solid here; glass.css makes both glass. */
+   <dialog class="s4-side-sheet" id="filters">… same parts …</dialog>
+   Nothing slides up the screen or in from its edge. A panel is a glass surface that floats inside the window, inset
+   from every edge, with all four corners round and the full glass edge, and it pops in like a dialog:
+     .s4-bottom-sheet  floats at the bottom center (phones: the full width minus the inset, above the home indicator)
+     .s4-side-sheet    floats at the end side, as tall as the window minus the inset (phones: same as the bottom panel)
+   data-placement="center" on either centers it like a dialog. A .s4-sheet-handle in older markup draws nothing.
+   Solid here; glass.css makes both glass. */
 @layer s4.components {
   .s4-bottom-sheet, .s4-side-sheet {
+    --_inset: var(--s4-space-4);
+    position: fixed;
     margin: 0;
-    padding: 0 var(--s4-space-6) var(--s4-space-6);
+    padding: var(--s4-space-6);
     border: 0;
+    border-radius: var(--s4-shape-sheet);
     background: var(--md-sys-color-surface-container-low);
     color: var(--md-sys-color-on-surface);
     box-shadow: var(--md-sys-elevation-level1);
@@ -5616,57 +5985,38 @@
     flex-direction: column;
     gap: var(--s4-space-4);
     overscroll-behavior: contain;
+    outline: none;
   }
   .s4-bottom-sheet[open], .s4-side-sheet[open] { display: flex; }
   .s4-bottom-sheet::backdrop, .s4-side-sheet::backdrop { background: color-mix(in srgb, var(--md-sys-color-scrim) calc(var(--s4-scrim-opacity) * 100%), transparent); }
+  .s4-sheet-handle { display: none; }
 
-  .s4-bottom-sheet {
-    inset: auto 0 0;
-    width: min(640px, 100vw);
-    max-width: 100vw;
-    max-height: calc(100dvh - var(--s4-size-top-app-bar));
+  /* bottom panel (and the side panel on a phone) */
+  .s4-bottom-sheet, .s4-side-sheet {
+    inset: auto 0 max(var(--_inset), env(safe-area-inset-bottom, 0px));
+    width: min(560px, calc(100vw - 2 * var(--_inset)));
+    max-width: none;
+    height: fit-content;
+    max-height: calc(100dvh - 2 * var(--_inset) - env(safe-area-inset-top, 0px));
     margin-inline: auto;
-    padding-bottom: max(var(--s4-space-6), env(safe-area-inset-bottom));
-    border-radius: var(--s4-shape-sheet) var(--s4-shape-sheet) 0 0;
-    touch-action: pan-x;
   }
-  /* On a phone (under 600) the bottom sheet is a centered card, shaped like a dialog (decision 0011): no handle, no drag */
-  @media (max-width: 599.98px) {
-    .s4-bottom-sheet {
-      inset: 0;
-      width: min(calc(100vw - 2 * var(--s4-space-4)), 560px);
-      max-width: none;
-      height: fit-content;
-      max-height: calc(100dvh - 2 * var(--s4-space-4));
-      margin: auto;
-      padding-top: var(--s4-space-6);
-      border-radius: var(--md-sys-shape-corner-extra-large);
-      touch-action: auto;
+  /* side panel from medium windows up: floats at the end side */
+  @media (min-width: 600px) {
+    .s4-side-sheet {
+      inset: var(--_inset) var(--_inset) var(--_inset) auto;
+      width: min(400px, calc(100vw - 2 * var(--_inset)));
+      height: auto;
+      max-height: none;
+      margin: 0;
     }
-    .s4-bottom-sheet > .s4-sheet-handle { display: none; }
+    .s4-side-sheet:dir(rtl) { inset: var(--_inset) auto var(--_inset) var(--_inset); }
   }
-  .s4-sheet-handle {
-    flex: none;
-    align-self: center;
-    width: var(--s4-space-8);
-    height: var(--s4-space-1);
-    margin: var(--s4-space-4) 0 var(--s4-space-2);
-    border-radius: var(--md-sys-shape-corner-full);
-    background: color-mix(in srgb, var(--md-sys-color-on-surface-variant) 40%, transparent);
-    cursor: grab;
-    position: relative;
+  :is(.s4-bottom-sheet, .s4-side-sheet)[data-placement="center"] {
+    inset: 0;
+    height: fit-content;
+    max-height: calc(100dvh - 2 * var(--_inset));
+    margin: auto;
   }
-  .s4-sheet-handle::after { content: ""; position: absolute; inset: calc(var(--s4-space-5) * -1) calc(var(--s4-space-6) * -1); }   /* 48dp drag target */
-
-  .s4-side-sheet {
-    inset: 0 0 0 auto;
-    width: min(400px, 100vw);
-    height: 100dvh;
-    max-height: 100dvh;
-    padding-top: var(--s4-space-6);
-    border-radius: var(--s4-shape-sheet) 0 0 var(--s4-shape-sheet);
-  }
-  .s4-side-sheet:dir(rtl) { inset: 0 auto 0 0; border-radius: 0 var(--s4-shape-sheet) var(--s4-shape-sheet) 0; }
 
   .s4-sheet-title {
     margin: 0;
@@ -5885,12 +6235,37 @@
       inset calc(-1 * var(--s4-glass-glow-size)) 0 var(--s4-glass-glow-size) calc(-1 * var(--s4-glass-glow-size)) oklch(from var(--_surface) calc(.99 - .96 * clamp(0, calc((l - var(--s4-glass-glow-flip)) * 1000), 1)) calc(c * .3) h / calc(var(--s4-glass-glow-alpha) * min(1, var(--_aR) / max(var(--s4-glass-edge-top-alpha), .001)) * (1 - clamp(0, calc((l - var(--s4-glass-glow-flip)) * 1000), 1)) + var(--s4-glass-glow-shade-alpha) * min(1, var(--_aR) / max(var(--s4-glass-edge-top-alpha), .001)) * clamp(0, calc((l - var(--s4-glass-glow-flip)) * 1000), 1)));
     }
   }
+  /* ITEMS ON GLASS (decision 0043, replaces 0015): a filled thing on glass is a tint, not an opaque patch. Inside a glass
+     surface the neutral container roles become the text color at a low opacity and the selection role becomes the accent
+     at a low opacity (its text is on-surface), so fields, chips, neutral and tonal buttons, the nav pill and checked menu
+     items all read as part of the glass. Primary actions stay solid. scripts/check-glass.mjs proves on-surface text on
+     both tints. Where glass turns solid (high contrast, reduced transparency) the tints simply sit on the solid surface. */
+  :where(.s4-glass,
+         .s4-top-app-bar[data-scrolled],
+         .s4-nav-bar,
+         .s4-nav-rail:is([data-modal], [data-overlay]),
+         .s4-toolbar,
+         .s4-menu,
+         .s4-dialog,
+         .s4-bottom-sheet,
+         .s4-side-sheet,
+         .s4-rich-tooltip,
+         .s4-tooltip,
+         .s4-snackbar) {
+    --_fill: color-mix(in srgb, var(--md-sys-color-on-surface) calc(var(--s4-glass-fill-opacity) * 100%), transparent);
+    --md-sys-color-surface-container-lowest: var(--_fill);
+    --md-sys-color-surface-container-low: var(--_fill);
+    --md-sys-color-surface-container: var(--_fill);
+    --md-sys-color-surface-container-high: var(--_fill);
+    --md-sys-color-surface-container-highest: var(--_fill);
+    --md-sys-color-secondary-container: color-mix(in srgb, var(--md-sys-color-primary) calc(var(--s4-glass-fill-selected-opacity) * 100%), transparent);
+    --md-sys-color-on-secondary-container: var(--md-sys-color-on-surface);
+  }
   /* DOCKED GLASS (decision 0040): a surface that touches the screen edge lights, glows and shades only the edge that faces the content
-     (the top bar its bottom edge, the bottom nav and bottom sheet their top edge, the rail and side sheet their inner side). */
+     (the top bar its bottom edge, the bottom nav its top edge, the rail its inner side). Floating panels (the former sheets, decision 0043) float clear of every edge and get the full edge. */
   :where(.s4-top-app-bar[data-scrolled]) { --_kt: 0; --_kl: 0; --_kr: 0; }
-  :where(.s4-nav-bar, .s4-toolbar[data-type="docked"], .s4-bottom-sheet) { --_kb: 0; --_kl: 0; --_kr: 0; }
+  :where(.s4-nav-bar, .s4-toolbar[data-type="docked"]) { --_kb: 0; --_kl: 0; --_kr: 0; }
   :where(.s4-nav-rail:is([data-modal], [data-overlay])) { --_kt: 0; --_kb: 0; --_kl: 0; --_lit: 1; }
-  :where(.s4-side-sheet) { --_kt: 0; --_kb: 0; --_kr: 0; --_lit: 1; }
   /* FLOATING ACTION BUTTONS (decision 0025): glass too, tinted with the FAB's own color (--_bg) instead of the surface color, so
      it keeps its identity (primary-container by default, or the data-color it sets). Its icon and label keep the FAB's own
      on-color; scripts/check-glass.mjs proves that pair too. */

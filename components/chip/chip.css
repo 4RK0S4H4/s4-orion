@@ -64,7 +64,6 @@
     user-select: none;
     --s4-icon-size: var(--_icon);
     transition:
-      padding var(--_spatial),
       background-color var(--_effects),
       color var(--_effects),
       box-shadow var(--_effects);
@@ -95,26 +94,14 @@
   .s4-chip:has(> .s4-chip-remove) { --_pad-end: var(--s4-space-2); }
   .s4-chip:has(> .s4-chip-avatar:first-child) { --_pad-start: var(--s4-space-1); }
 
-  /* ---------- filter: check slides in, selected = secondary-container ---------- */
-  .s4-chip-check {
-    flex: none;
-    width: 0;
-    height: var(--_icon);
-    margin-inline-end: calc(var(--_gap) * -1);
-    background: currentColor;
-    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9.55 18 3.85 12.3 5.275 10.875 9.55 15.15 18.725 5.975 20.15 7.4Z'/%3E%3C/svg%3E") left center / var(--_icon) no-repeat;
-    transition: width var(--_spatial), margin var(--_spatial);
-  }
-  .s4-chip[data-type="filter"] > .s4-icon { transition: width var(--_spatial), margin var(--_spatial), opacity var(--_effects); }
+  /* ---------- filter: selected = the accent fill (primary). A chip never changes size (decision 0043): nothing slides
+     in, so its neighbours never move. .s4-chip-check is kept in the markup for older pages and draws nothing. ---------- */
+  .s4-chip-check { display: none; }
   .s4-chip[aria-pressed="true"] {
-    --_bg: var(--md-sys-color-inverse-surface);
-    --_fg: var(--md-sys-color-inverse-on-surface);
-    --_icon-color: var(--md-sys-color-inverse-on-surface);
-    --_pad-start: var(--s4-space-2);
+    --_bg: var(--md-sys-color-primary);
+    --_fg: var(--md-sys-color-on-primary);
+    --_icon-color: var(--md-sys-color-on-primary);
   }
-  .s4-chip[aria-pressed="true"] > .s4-chip-check { width: var(--_icon); margin-inline-end: 0; }
-  /* a leading icon gives way to the check */
-  .s4-chip[aria-pressed="true"] > .s4-chip-check + .s4-icon { width: 0; margin-inline-end: calc(var(--_gap) * -1); opacity: 0; }
 
   /* ---------- avatar and remove button ---------- */
   .s4-chip-avatar {
@@ -179,6 +166,5 @@
   @media (forced-colors: active) {
     .s4-chip { border: 1px solid ButtonText; }
     .s4-chip[aria-pressed="true"] { background: Highlight; color: HighlightText; }
-    .s4-chip-check { background: HighlightText; forced-color-adjust: none; }
   }
 }

@@ -21,8 +21,9 @@
     display: flex;
     flex-direction: column;
     min-width: 0;
+    gap: calc(var(--s4-space-1) / 2);
     margin: 0;
-    padding: var(--s4-space-2) 0;
+    padding: var(--s4-space-2);   /* the same inset on every side, so a hover or selected fill never touches only some edges (decision 0043) */
     list-style: none;
   }
   .s4-list > li:not(.s4-list-subheader) { display: block; margin: 0; padding: 0; }
@@ -44,7 +45,7 @@
     min-width: 0;
     min-height: var(--_h);
     margin: 0;
-    padding: var(--_pad-block) var(--s4-space-6) var(--_pad-block) var(--s4-space-4);
+    padding: var(--_pad-block) var(--s4-space-4) var(--_pad-block) var(--s4-space-3);
     border: 0;
     border-radius: var(--_radius);
     background: var(--_bg);
@@ -178,7 +179,7 @@
     gap: var(--s4-space-4);
     min-height: var(--s4-size-touch-target);
     margin: 0;
-    padding: 0 var(--s4-space-6) 0 var(--s4-space-4);
+    padding: 0 var(--s4-space-4) 0 var(--s4-space-3);
     color: var(--md-sys-color-on-surface-variant);
     font-family: var(--md-sys-typescale-title-small-font);
     font-size: var(--md-sys-typescale-title-small-size);
@@ -201,6 +202,7 @@
   .s4-list[data-style="segmented"] .s4-list-item {
     --_bg: var(--s4-list-segment-color, var(--md-sys-color-surface-container-low));
     --_radius: var(--s4-shape-list-segment);
+    padding-inline: var(--s4-space-4);
   }
   /* each run of items between subheaders is one group with outer corners */
   .s4-list[data-style="segmented"] > li:is(:first-child, .s4-list-subheader + li) > .s4-list-item {

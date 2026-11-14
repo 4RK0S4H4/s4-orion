@@ -17,6 +17,7 @@
 @import url("tabs/tabs.css");
 @import url("toolbar/toolbar.css");
 @import url("search/search.css");
+@import url("desktop/desktop.css");
 /* containment and data */
 @import url("card/card.css");
 @import url("pane/pane.css");
@@ -34,6 +35,7 @@
 @import url("prose/prose.css");
 /* inputs */
 @import url("text-field/text-field.css");
+@import url("date-picker/date-picker.css");
 @import url("switch/switch.css");
 @import url("checkbox/checkbox.css");
 @import url("radio/radio.css");

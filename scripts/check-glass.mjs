@@ -35,6 +35,24 @@ for (const mode of ['light', 'dark']) {
     if (r < 4.5) { failures++; console.error(`  x ${mode}: ${seed} ${v}: on-surface on glass is ${r.toFixed(2)}:1`); }
   }
   worstAll = Math.min(worstAll, worst.r);
+  /* items on glass (decision 0043): on-surface text on a filled control (ink tint) and on a selected item (accent tint),
+     with neutral surfaces (the default) and with stock tinted surfaces */
+  const fo = val('--s4-glass-fill-opacity', mode), so = val('--s4-glass-fill-selected-opacity', mode);
+  const mono = M3.scheme('#000000', 'monochrome', mode === 'dark', 0);
+  let fillWorst = { r: Infinity };
+  for (const [seed, variants] of seeds) for (const v of variants) {
+    const s = M3.scheme(seed, v, mode === 'dark', 0);
+    for (const surf of [mono, s]) {
+      const tint = rgb(surf['surface-container']), text = rgb(surf['on-surface']), accent = rgb(s.primary);
+      for (const back of [lo, hi]) {
+        const glass = mix(tint, [back, back, back], t);
+        const r = Math.min(ratio(text, mix(text, glass, fo)), ratio(text, mix(accent, glass, so)));
+        if (r < fillWorst.r) fillWorst = { r, seed, v, surfaces: surf === mono ? 'neutral' : 'tinted' };
+        if (r < 4.5) { failures++; console.error(`  x ${mode}: ${seed} ${v} (${surf === mono ? 'neutral' : 'tinted'} surfaces): on-surface on a fill on glass is ${r.toFixed(2)}:1`); }
+      }
+    }
+  }
+  console.log(`Items on glass ${mode} (fill ${fo}, selected ${so}): worst ${fillWorst.r.toFixed(2)}:1 (${fillWorst.seed} ${fillWorst.v}, ${fillWorst.surfaces} surfaces)`);
   /* floating action buttons are glass tinted with their own color (decision 0025): icon and label in the FAB's on-color */
   const fabPairs = [['primary-container', 'on-primary-container'], ['secondary-container', 'on-secondary-container'], ['tertiary-container', 'on-tertiary-container'], ['primary', 'on-primary'], ['secondary', 'on-secondary'], ['tertiary', 'on-tertiary']];
   const tfDefault = val('--s4-glass-tint-opacity-fab', mode), tfColor = val('--s4-glass-tint-opacity-fab-color', mode);

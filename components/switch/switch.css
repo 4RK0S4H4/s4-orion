@@ -5,7 +5,7 @@
    The native checkbox sits invisibly over the 48dp target, so keyboard, forms and screen readers work as usual.
    Track 52x32. Off: surface-container-highest track, 2dp outline border, 16dp outline handle (24 with icons).
    On: primary track, 24dp on-primary handle. Pressed: 28dp handle. The handle slides on the fast-spatial spring.
-   The state layer is a 40dp circle around the handle (drawn on the track, not on the whole label). */
+   No state-layer halo: the handle grows a little on hover and more on press (decision 0043). */
 @layer s4.components {
   .s4-switch {
     position: relative;
@@ -63,21 +63,6 @@
     height: var(--s4-size-touch-target);
     transform: translateY(-50%);
   }
-  /* state layer: 40dp circle centred on the handle */
-  .s4-switch-track::before {
-    content: "";
-    position: absolute;
-    left: var(--_x);
-    top: 50%;
-    width: var(--s4-size-icon-button);
-    height: var(--s4-size-icon-button);
-    border-radius: var(--md-sys-shape-corner-full);
-    background: var(--_state);
-    opacity: 0;
-    transform: translate(-50%, -50%);
-    pointer-events: none;
-    transition: left var(--_spatial), opacity var(--_effects);
-  }
   .s4-switch-handle {
     position: absolute;
     left: var(--_x);
@@ -119,21 +104,16 @@
   .s4-switch[data-icons]:has(> input:checked) { --_mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9.55 18 3.85 12.3 5.275 10.875 9.55 15.15 18.725 5.975 20.15 7.4Z'/%3E%3C/svg%3E"); }
   .s4-switch[data-icons] .s4-switch-handle::after { opacity: 1; }
 
-  /* ---------- hover, focus, pressed ---------- */
+  /* ---------- hover, focus, pressed: the handle answers by growing a little; no halo, no color change (decision 0043) ---------- */
   @media (hover: hover) {
-    .s4-switch:hover:not(:has(> input:disabled)) { --_handle: var(--md-sys-color-on-surface-variant); }
-    .s4-switch:hover:not(:has(> input:disabled)):has(> input:checked) { --_handle: var(--md-sys-color-primary-container); }
-    .s4-switch:hover:not(:has(> input:disabled)) .s4-switch-track::before { opacity: var(--md-sys-state-hover-state-layer-opacity); }
+    .s4-switch:hover:not(:has(> input:disabled)) { --_handle-size: calc(var(--s4-space-4) + var(--s4-space-1) / 2); }
+    .s4-switch:hover:not(:has(> input:disabled)):is(:has(> input:checked), [data-icons]) { --_handle-size: calc(var(--s4-space-6) + var(--s4-space-1) / 2); }
   }
-  .s4-switch:has(> input:focus-visible) .s4-switch-track::before { opacity: var(--md-sys-state-focus-state-layer-opacity); }
   .s4-switch:has(> input:focus-visible) .s4-switch-track {
     outline: var(--s4-focus-ring-width) solid var(--s4-focus-ring-color);
     outline-offset: var(--s4-focus-ring-offset);
   }
   .s4-switch:active:not(:has(> input:disabled)) { --_handle-size: calc(var(--s4-space-6) + var(--s4-space-1)); }
-  .s4-switch:active:not(:has(> input:disabled)) .s4-switch-track::before { opacity: var(--md-sys-state-pressed-state-layer-opacity); }
-  .s4-switch:active:not(:has(> input:disabled)):not(:has(> input:checked)) { --_handle: var(--md-sys-color-on-surface-variant); }
-  .s4-switch:active:not(:has(> input:disabled)):has(> input:checked) { --_handle: var(--md-sys-color-primary-container); }
 
   /* ---------- disabled ---------- */
   .s4-switch:has(> input:disabled) {
@@ -159,6 +139,5 @@
     .s4-switch:has(> input:disabled) { color: GrayText; }
     .s4-switch:has(> input:disabled) .s4-switch-track { border-color: GrayText; }
     .s4-switch:has(> input:disabled) .s4-switch-handle { background: GrayText; }
-    .s4-switch-track::before { display: none; }
   }
 }

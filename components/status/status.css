@@ -45,6 +45,10 @@
   .s4-status[data-tone="primary"] { --_bg: var(--md-sys-color-primary-container); --_fg: var(--md-sys-color-on-primary-container); }
   .s4-status[data-tone="secondary"] { --_bg: var(--md-sys-color-secondary-container); --_fg: var(--md-sys-color-on-secondary-container); }
   .s4-status[data-tone="tertiary"] { --_bg: var(--md-sys-color-tertiary-container); --_fg: var(--md-sys-color-on-tertiary-container); }
+  /* plain status colors (decision 0043): fixed green, amber and blue that never change with the accent */
+  .s4-status[data-tone="success"] { --_bg: var(--s4-color-success-container); --_fg: var(--s4-color-on-success-container); }
+  .s4-status[data-tone="warning"] { --_bg: var(--s4-color-warning-container); --_fg: var(--s4-color-on-warning-container); }
+  .s4-status[data-tone="info"] { --_bg: var(--s4-color-info-container); --_fg: var(--s4-color-on-info-container); }
   .s4-status[data-tone="error"] { --_bg: var(--md-sys-color-error-container); --_fg: var(--md-sys-color-on-error-container); }
 
   @media (forced-colors: active) {

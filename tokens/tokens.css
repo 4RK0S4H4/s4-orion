@@ -217,6 +217,8 @@
     --s4-glass-glow-shade-alpha: 0.28;
     --s4-glass-glow-flip: 0.6;
     --s4-glass-glow-size: 12px;
+    --s4-glass-fill-opacity: 0.07;
+    --s4-glass-fill-selected-opacity: 0.14;
     --s4-icon-duo-opacity: 0.42;
     --s4-motion-spring-fast-spatial-calm-stiffness: 1400;
     --s4-motion-spring-fast-spatial-calm-damping: 1;
@@ -447,6 +449,8 @@
       --s4-glass-edge-top-alpha: 0.12;
       --s4-glass-edge-side-alpha: 0;
       --s4-glass-edge-bottom-alpha: 0.12;
+      --s4-glass-fill-opacity: 0.06;
+      --s4-glass-fill-selected-opacity: 0.07;
       --s4-icon-duo-opacity: 0.38;
       --s4-color-success: #62d39b;
       --s4-color-success-container: #173a2a;
@@ -520,6 +524,8 @@
     --s4-glass-edge-top-alpha: 0.12;
     --s4-glass-edge-side-alpha: 0;
     --s4-glass-edge-bottom-alpha: 0.12;
+    --s4-glass-fill-opacity: 0.06;
+    --s4-glass-fill-selected-opacity: 0.07;
     --s4-icon-duo-opacity: 0.38;
     --s4-color-success: #62d39b;
     --s4-color-success-container: #173a2a;
@@ -726,6 +732,8 @@
       --s4-glass-edge-top-alpha: 0;
       --s4-glass-edge-side-alpha: 0;
       --s4-glass-edge-bottom-alpha: 0;
+      --s4-glass-fill-opacity: 0.06;
+      --s4-glass-fill-selected-opacity: 0.07;
       --s4-icon-duo-opacity: 0.38;
       --s4-color-success: #b9f0d2;
       --s4-color-success-container: #173a2a;
@@ -803,6 +811,8 @@
       --s4-glass-edge-top-alpha: 0;
       --s4-glass-edge-side-alpha: 0;
       --s4-glass-edge-bottom-alpha: 0;
+      --s4-glass-fill-opacity: 0.06;
+      --s4-glass-fill-selected-opacity: 0.07;
       --s4-icon-duo-opacity: 0.38;
       --s4-color-success: #b9f0d2;
       --s4-color-success-container: #173a2a;
@@ -880,6 +890,8 @@
       --s4-glass-edge-top-alpha: 0;
       --s4-glass-edge-side-alpha: 0;
       --s4-glass-edge-bottom-alpha: 0;
+      --s4-glass-fill-opacity: 0.06;
+      --s4-glass-fill-selected-opacity: 0.07;
       --s4-icon-duo-opacity: 0.38;
       --s4-color-success: #b9f0d2;
       --s4-color-success-container: #173a2a;
@@ -956,6 +968,8 @@
     --s4-glass-edge-top-alpha: 0;
     --s4-glass-edge-side-alpha: 0;
     --s4-glass-edge-bottom-alpha: 0;
+    --s4-glass-fill-opacity: 0.06;
+    --s4-glass-fill-selected-opacity: 0.07;
     --s4-icon-duo-opacity: 0.38;
     --s4-color-success: #b9f0d2;
     --s4-color-success-container: #173a2a;

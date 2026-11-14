@@ -49,7 +49,9 @@
   /* ---------- pop: dialogs and the phone sheet card ---------- */
   function pop(el, opts) {
     var open = !opts || opts.open !== false, d = M.reduced() ? 0 : 16;
-    return moveFade(el, open, 'translateY(' + (open ? d : d / 2) + 'px)', open ? ['spatial', 'effects'] : ['fast-effects', 'fast-effects']);
+    /* axis 'x': a floating panel at the side arrives from its side (decision 0043); sign follows the writing direction */
+    var x = opts && opts.axis === 'x', sign = x && getComputedStyle(el).direction === 'rtl' ? -1 : 1;
+    return moveFade(el, open, (x ? 'translateX(' : 'translateY(') + (sign * (open ? d : d / 2)) + 'px)', open ? ['spatial', 'effects'] : ['fast-effects', 'fast-effects']);
   }
 
   /* ---------- drop: menus (0042: not out of the button; the glass fades in place, the items follow) ---------- */

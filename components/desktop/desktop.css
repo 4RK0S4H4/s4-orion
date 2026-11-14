@@ -1,0 +1,123 @@
+/* Desktop windows (decision 0043): what an Orion app needs to live in a desktop window or be packaged as a desktop app
+   (an installed PWA with window controls overlay, Electron, Tauri), on top of the same shell and components.
+
+   <div class="s4-app" data-window data-density="auto">
+     <header class="s4-titlebar">                                   optional: a draggable title bar
+       <span class="s4-titlebar-title">Ledger</span>
+       <div class="s4-window-controls">…</div>                      optional: only for frameless windows that draw their own
+     </header>
+     <nav class="s4-nav-rail" data-expand="auto">…</nav>
+     <div class="s4-app-body">…</div>
+   </div>
+
+   data-window on .s4-app: the app fills the window and never scrolls as a page; the body (and each pane) scrolls on its
+   own, the rail and title bar stay put, scrollbars are thin, chrome text can't be selected and controls keep the arrow
+   cursor, as desktop apps do. Pair it with data-density="auto" (base/density.css) for pointer-sized controls.
+   .s4-titlebar: drags the window (app-region), leaves room for the system's window buttons (window controls overlay
+   env(), or data-controls="start" for macOS traffic lights in a frameless window), and anything interactive inside it
+   stays clickable. <kbd class="s4-kbd"> shows a keyboard shortcut. desktop.js adds data-shortcut and data-context-menu. */
+@layer s4.components {
+  .s4-app[data-window] {
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    block-size: 100dvh;
+    min-block-size: 0;
+    overflow: hidden;
+    overscroll-behavior: none;
+  }
+  .s4-app[data-window] > .s4-titlebar { grid-column: 1 / -1; grid-row: 1; }
+  .s4-app[data-window] > .s4-nav-rail { grid-row: 2 / -1; position: relative; top: auto; align-self: stretch; block-size: auto; }
+  .s4-app[data-window] > .s4-app-body { grid-row: 2; min-block-size: 0; overflow-y: auto; overscroll-behavior: contain; }
+  .s4-app[data-window] > .s4-nav-bar { grid-row: 3; position: relative; bottom: auto; }
+  .s4-app[data-window],
+  .s4-app[data-window] * { scrollbar-width: thin; scrollbar-color: var(--md-sys-color-outline-variant) transparent; }
+  .s4-app[data-window] :is(.s4-titlebar, .s4-nav-rail, .s4-top-app-bar, .s4-toolbar, .s4-tabs, .s4-list-subheader, label) { user-select: none; -webkit-user-select: none; }
+  .s4-app[data-window] :is(.s4-button, .s4-icon-button, .s4-fab, .s4-chip, .s4-tab, .s4-segment, .s4-nav-item, .s4-list-item, .s4-checkbox, .s4-radio, .s4-switch, .s4-table-sort, summary) { cursor: default; }
+
+  /* ---------- title bar ---------- */
+  .s4-titlebar {
+    display: flex;
+    align-items: center;
+    gap: var(--s4-space-2);
+    box-sizing: border-box;
+    block-size: max(var(--s4-size-titlebar), env(titlebar-area-height, 0px));
+    /* window controls overlay: keep clear of the system's buttons on either side */
+    padding-inline:
+      calc(env(titlebar-area-x, 0px) + var(--s4-space-3))
+      calc(100% - env(titlebar-area-x, 0px) - env(titlebar-area-width, 100%) + var(--s4-space-3));
+    background: var(--md-sys-color-surface-container-low);
+    color: var(--md-sys-color-on-surface-variant);
+    font-family: var(--md-sys-typescale-label-large-font);
+    font-size: var(--md-sys-typescale-label-large-size);
+    line-height: var(--md-sys-typescale-label-large-line-height);
+    letter-spacing: var(--md-sys-typescale-label-large-tracking);
+    font-weight: var(--md-sys-typescale-label-large-weight);
+    -webkit-app-region: drag;
+    app-region: drag;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  .s4-titlebar :is(button, a, input, select, textarea, .s4-search, .s4-text-field, [data-no-drag]) { -webkit-app-region: no-drag; app-region: no-drag; }
+  /* frameless macOS window: room for the traffic lights at the start */
+  .s4-titlebar[data-controls="start"] { padding-inline-start: calc(var(--s4-space-16) + var(--s4-space-4)); }
+  .s4-titlebar-title {
+    flex: 1 1 auto;
+    min-inline-size: 0;
+    overflow: hidden;
+    color: var(--md-sys-color-on-surface);
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .s4-titlebar[data-align="start"] .s4-titlebar-title { text-align: start; }
+  .s4-titlebar { --s4-size-icon-button: var(--s4-density-compact-icon-button); --s4-size-icon: var(--s4-density-compact-icon); --s4-size-touch-target: var(--s4-density-compact-touch-target); }
+
+  /* window buttons for frameless windows that draw their own (Windows and Linux shells) */
+  .s4-window-controls { display: flex; align-items: center; gap: var(--s4-space-1); margin-inline-start: auto; }
+  .s4-window-control {
+    display: inline-grid;
+    place-items: center;
+    inline-size: var(--s4-density-compact-icon-button);
+    block-size: var(--s4-density-compact-button-small);
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: var(--md-sys-shape-corner-full);
+    background: transparent;
+    color: inherit;
+    cursor: default;
+    --s4-icon-size: var(--s4-space-4);
+    transition: background-color var(--md-sys-motion-spring-fast-effects-duration) var(--md-sys-motion-spring-fast-effects), color var(--md-sys-motion-spring-fast-effects-duration) var(--md-sys-motion-spring-fast-effects);
+  }
+  @media (hover: hover) {
+    .s4-window-control:hover { background: color-mix(in srgb, var(--md-sys-color-on-surface) 10%, transparent); color: var(--md-sys-color-on-surface); }
+    .s4-window-control[data-window-action="close"]:hover { background: var(--s4-color-badge); color: var(--s4-color-on-badge); }
+  }
+  .s4-window-control:focus-visible { outline-offset: calc(var(--s4-focus-ring-width) * -1); }
+
+  /* ---------- keyboard shortcut ---------- */
+  .s4-kbd {
+    display: inline-flex;
+    align-items: center;
+    min-inline-size: var(--s4-space-5);
+    block-size: var(--s4-space-5);
+    padding-inline: var(--s4-space-1);
+    justify-content: center;
+    border-radius: var(--md-sys-shape-corner-extra-small);
+    background: color-mix(in srgb, var(--md-sys-color-on-surface) 8%, transparent);
+    color: var(--md-sys-color-on-surface-variant);
+    font-family: var(--md-sys-typescale-label-medium-font);
+    font-size: var(--md-sys-typescale-label-medium-size);
+    line-height: 1;
+    letter-spacing: var(--md-sys-typescale-label-medium-tracking);
+    font-weight: var(--md-sys-typescale-label-medium-weight);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  .s4-kbd:empty { display: none; }
+  .s4-menu-item > .s4-kbd { margin-inline-start: auto; }
+
+  @media (forced-colors: active) {
+    .s4-titlebar { border-block-end: 1px solid CanvasText; }
+    .s4-kbd { border: 1px solid CanvasText; }
+  }
+}

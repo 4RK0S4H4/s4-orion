@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Date Picker · S4 Orion</title>
+<link rel="stylesheet" href="../index.css">
+<link rel="stylesheet" href="../_example/example.css">
+<link rel="stylesheet" href="date-picker.css">
+<style>
+  .ex-board:has(> .dp-grid) { display: block; }
+  .dp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr)); gap: var(--s4-space-6) var(--s4-space-4); align-items: start; }
+  .dp-form { display: grid; gap: var(--s4-space-6); }
+  .dp-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s4-space-3) var(--s4-space-4); }
+  .dp-output { color: var(--md-sys-color-on-surface-variant); font-size: var(--md-sys-typescale-body-medium-size); line-height: var(--md-sys-typescale-body-medium-line-height); font-variant-numeric: tabular-nums; }
+</style>
+</head>
+<body>
+<header class="ex-bar"><h1><a href="../">Components</a> / Date Picker</h1></header>
+<main class="ex-main">
+  <p>A date field opens a glass calendar instead of the browser's own picker. The markup stays a native <code>&lt;input type="date"&gt;</code> in a text field, so forms, <code>min</code> and <code>max</code> keep working and the page still works without scripts. Under its field on a desktop, a centered panel on a phone. Arrow keys move by day and week, Page Up and Page Down by month.</p>
+
+  <section class="ex-sec">
+    <h2>Single Date</h2>
+    <p>One with a date already set, one empty. Tap the month to jump to another month or year.</p>
+    <div class="ex-board col">
+      <div class="dp-grid">
+        <div class="s4-text-field">
+          <label for="dp-due">Due Date</label>
+          <input id="dp-due" type="date" value="2026-11-20">
+          <div class="s4-text-field-supporting">Electric Co., invoice 1042.</div>
+        </div>
+        <div class="s4-text-field">
+          <label for="dp-paid">Paid On</label>
+          <input id="dp-paid" type="date">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ex-sec">
+    <h2>Min / Max and Disabled Dates</h2>
+    <p><code>min</code> and <code>max</code> come from the native attributes; <code>data-disabled-dates</code> blocks single days (here Thanksgiving and Christmas). The keyboard stops at the limits too.</p>
+    <div class="ex-board col">
+      <div class="dp-grid">
+        <div class="s4-text-field">
+          <label for="dp-schedule">Schedule Payment</label>
+          <input id="dp-schedule" type="date" value="2026-11-18" min="2026-11-16" max="2026-12-31" data-disabled-dates="2026-11-26,2026-12-25">
+          <div class="s4-text-field-supporting">Any business day until the end of the year.</div>
+        </div>
+        <div class="s4-text-field">
+          <label for="dp-issued">Invoice Date</label>
+          <input id="dp-issued" type="date" max="2026-11-14" data-placeholder="Not Issued Yet">
+          <div class="s4-text-field-supporting">Can't be in the future.</div>
+        </div>
+        <div class="s4-text-field">
+          <label for="dp-closed">Closed On</label>
+          <input id="dp-closed" type="date" value="2026-10-31" disabled>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ex-sec">
+    <h2>Range</h2>
+    <p><code>data-range-end</code> points to a second date input: the first tap sets the start, the second the end. Nothing changes until both are chosen.</p>
+    <div class="ex-board col">
+      <div class="dp-grid">
+        <div class="s4-text-field">
+          <label for="dp-from">Statement Period</label>
+          <input id="dp-from" type="date" value="2026-11-03" data-range-end="dp-to">
+          <input id="dp-to" type="date" value="2026-11-12" hidden>
+          <div class="s4-text-field-supporting">Bills due in this period are included.</div>
+        </div>
+        <div class="s4-text-field">
+          <label for="dp-trip-from">Travel Dates</label>
+          <input id="dp-trip-from" type="date" min="2026-11-14" data-range-end="dp-trip-to">
+          <input id="dp-trip-to" type="date" hidden>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ex-sec">
+    <h2>In a Form</h2>
+    <p>The native input carries the value, so the form submits <code>yyyy-mm-dd</code> like any date field, and Reset restores it.</p>
+    <div class="ex-board col">
+      <form class="dp-form" id="dp-form">
+        <div class="dp-grid">
+          <div class="s4-text-field">
+            <label for="dp-vendor">Vendor</label>
+            <input id="dp-vendor" name="vendor" autocomplete="organization" value="Electric Co.">
+          </div>
+          <div class="s4-text-field">
+            <label for="dp-form-due">Due Date</label>
+            <input id="dp-form-due" name="due" type="date" value="2026-12-01" min="2026-01-01" max="2027-12-31">
+          </div>
+        </div>
+        <div class="dp-actions">
+          <button class="s4-button" type="submit">Save Bill</button>
+          <button class="s4-button" data-variant="text" type="reset">Reset</button>
+          <output class="dp-output" id="dp-result" for="dp-vendor dp-form-due">Nothing saved yet.</output>
+        </div>
+      </form>
+    </div>
+  </section>
+  <p class="ex-foot">Source: <code>components/date-picker/</code> · Solar icons by 480 Design (CC BY 4.0)</p>
+</main>
+<script src="../assets/icons.js"></script>
+<script src="../core/core.js"></script>
+<script src="../motion/motion.js"></script>
+<script src="../menu/menu.js"></script>
+<script src="../text-field/text-field.js"></script>
+<script src="date-picker.js"></script>
+<script src="../button/button.js"></script>
+<script src="../button-group/button-group.js"></script>
+<script src="../_example/example.js"></script>
+<script>
+  document.getElementById('dp-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var data = new FormData(e.target);
+    document.getElementById('dp-result').textContent = 'Saved: vendor=' + data.get('vendor') + ', due=' + (data.get('due') || '(none)');
+  });
+  document.getElementById('dp-form').addEventListener('reset', function () { document.getElementById('dp-result').textContent = 'Nothing saved yet.'; });
+</script>
+</body>
+</html>

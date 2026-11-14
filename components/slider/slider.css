@@ -14,7 +14,8 @@
     --_handle-w: var(--s4-space-1);
     --_handle-h: calc(var(--s4-space-10) + var(--s4-space-1));
     --_gap: calc(var(--s4-space-1) * 1.5);
-    --_inset: calc(var(--_track-h) / 2);                     /* handle travel starts and ends half a track height in */
+    --_inset: calc(var(--s4-space-1) / 2);                    /* the handle travels the whole track: at 0% and 100% it sits on the very end, so no sliver of track is left beyond it (decision 0043) */
+    --_round: calc(var(--_track-h) / 2);
     --_inner: calc(var(--md-sys-shape-corner-extra-small) / 2);
     --_active: var(--md-sys-color-primary);
     --_inactive: var(--md-sys-color-secondary-container);
@@ -43,13 +44,13 @@
   .s4-slider::before {
     left: 0;
     width: max(0px, calc(var(--_x) - var(--_handle-w) / 2 - var(--_gap)));
-    border-radius: var(--_inset) var(--_inner) var(--_inner) var(--_inset);
+    border-radius: var(--_round) var(--_inner) var(--_inner) var(--_round);
     background: var(--_active);
   }
   .s4-slider::after {
     right: 0;
     width: max(0px, calc(100% - var(--_x) - var(--_handle-w) / 2 - var(--_gap)));
-    border-radius: var(--_inner) var(--_inset) var(--_inset) var(--_inner);
+    border-radius: var(--_inner) var(--_round) var(--_round) var(--_inner);
     background: var(--_inactive);
   }
   /* stop indicators: the end stop always; every step with data-stops. Dots take the color of the track they sit on. */
@@ -73,7 +74,15 @@
     left: calc(var(--_inset) - (100% - 2 * var(--_inset)) / var(--_steps, 10) / 2);
     right: auto;
     width: calc((100% - 2 * var(--_inset)) * (var(--_steps, 10) + 1) / var(--_steps, 10));
-    mask: var(--_dot) 0 50% / var(--_p) var(--s4-space-1) repeat-x;
+    /* dots, minus a window around the handle: a dot the handle covers or sits beside is hidden, never half shown */
+    --_hx: calc(var(--_p) / 2 + var(--_value) * (100% - var(--_p)));
+    --_cut: calc(var(--_handle-w) / 2 + var(--_gap) + var(--s4-space-1));
+    mask:
+      var(--_dot) 0 50% / var(--_p) var(--s4-space-1) repeat-x,
+      linear-gradient(to right, var(--_handle) calc(var(--_hx) - var(--_cut)), transparent 0, transparent calc(var(--_hx) + var(--_cut)), var(--_handle) 0),
+      linear-gradient(to right, transparent var(--_p), var(--_handle) 0, var(--_handle) calc(100% - var(--_p)), transparent 0);   /* the two ends need no dot */
+    mask-composite: intersect;
+    -webkit-mask-composite: source-in;
     background: linear-gradient(to right, var(--_stop-on-active) calc(var(--_p) / 2 + var(--_value) * (100% - var(--_p))), var(--_stop-on-inactive) 0);
   }
   .s4-slider-handle {
@@ -130,8 +139,8 @@
     appearance: none;
     background: transparent;
   }
-  .s4-slider > input[type="range"]::-webkit-slider-thumb { appearance: none; width: var(--_track-h); height: var(--_handle-h); }
-  .s4-slider > input[type="range"]::-moz-range-thumb { width: var(--_track-h); height: var(--_handle-h); border: 0; }
+  .s4-slider > input[type="range"]::-webkit-slider-thumb { appearance: none; width: var(--s4-space-1); height: var(--_handle-h); }
+  .s4-slider > input[type="range"]::-moz-range-thumb { width: var(--s4-space-1); height: var(--_handle-h); border: 0; }
 
   /* pressed and focus */
   .s4-slider:has(> input:active) { --_handle-w: calc(var(--s4-space-1) / 2); }

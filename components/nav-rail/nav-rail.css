@@ -38,7 +38,7 @@
     scrollbar-width: none;
     background: var(--md-sys-color-surface-container-low);
     color: var(--md-sys-color-on-surface-variant);
-    transition: inline-size var(--md-sys-motion-spring-fast-spatial-duration) var(--md-sys-motion-spring-settle);
+    transition: inline-size var(--s4-motion-spring-settle-duration) var(--s4-motion-spring-settle);
   }
   .s4-nav-rail[data-expanded] { --_w: var(--s4-nav-rail-expanded-width, var(--s4-size-nav-rail-expanded)); }
 
@@ -112,8 +112,8 @@
   }
   .s4-nav-rail-items > .s4-nav-pill[data-animate] {
     transition:
-      transform var(--md-sys-motion-spring-fast-spatial-duration) var(--md-sys-motion-spring-ink),
-      block-size var(--md-sys-motion-spring-fast-spatial-duration) var(--md-sys-motion-spring-ink);
+      transform var(--s4-motion-spring-ink-duration) var(--s4-motion-spring-ink),
+      block-size var(--s4-motion-spring-ink-duration) var(--s4-motion-spring-ink);
   }
   .s4-nav-rail-title {
     padding: var(--s4-space-4) calc((var(--_row) - var(--s4-size-icon)) / 2) var(--s4-space-1);

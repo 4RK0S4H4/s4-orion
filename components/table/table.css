@@ -32,6 +32,8 @@
   .s4-table-wrap:is([data-sticky], :has(> .s4-table[data-sticky])) {
     max-height: var(--s4-table-max-height, calc(var(--s4-size-table-header) + var(--s4-size-table-row) * 8));
     overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--md-sys-color-outline-variant) transparent;
   }
 
   .s4-table {
@@ -161,10 +163,8 @@
     transition: background-color var(--md-sys-motion-spring-fast-effects-duration) var(--md-sys-motion-spring-fast-effects);
   }
 
-  /* the hover, focus and press layer follows rounded ends (decision 0025) */
-  .s4-table tr[tabindex] > :is(td, th):first-child { border-start-start-radius: var(--md-sys-shape-corner-large); border-end-start-radius: var(--md-sys-shape-corner-large); }
-  .s4-table tr[tabindex] > :is(td, th):last-child { border-start-end-radius: var(--md-sys-shape-corner-large); border-end-end-radius: var(--md-sys-shape-corner-large); }
-
+  /* Rows are a grid, not pills: the hover, focus and press layer is a flat band from edge to edge, clipped by the wrap's
+     rounded corners (decision 0043; rounded row ends bent the divider lines and read as glass). */
   .s4-table tbody tr {
     transition:
       background-color var(--md-sys-motion-spring-fast-effects-duration) var(--md-sys-motion-spring-fast-effects),
