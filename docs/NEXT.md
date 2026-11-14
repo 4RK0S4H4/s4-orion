@@ -15,7 +15,7 @@ the rail FAB; release 1.0.0; minified bundles and per-set icons; pruning for 2.0
 Also still waiting on the owner's iPhone checks: 0037 (glow/shade flip, Glass Playground) and 0040 (docked glass lit
 edge only, showcase).
 
-## Owner critiques (2026-11-14): 21 open issues and one idea
+## Owner critiques (2026-11-14): 27 open issues and one idea
 
 "Very close to a final product." The owner sent six critiques with screenshots, listed in
 [`issues/README.md`](issues/README.md) (images in `issues/img/`): rail collapse animation bug, duotone icons white when
@@ -23,7 +23,9 @@ selected, rail labels beside icons + hamburger (Line Duotone allowed there), sol
 close, selected list rows touching the side edges; then liquid row hover, switch hover without the halo, no glass on tables,
 table row hover, accordion too fast with a bending chevron; composer button height, press-to-square only where it fits, selects
 must open the glass menu, a real date picker, softer error fields; chips that don't grow (draft first), smaller checkbox marks, liquid radio
-without an inner dot, slider reaching both ends, no stop dot under the handle. Idea A: whatever you touch turns into glass. Motion direction: super subtle but liquidy (amends 0022,
+without an inner dot, slider reaching both ends, no stop dot under the handle. Then color: normal, contrast-safe
+colors with accents only as accents (big one, new decision + lab), badges, banner on glass, skeleton wave, progress
+(full at 100%, creative indeterminate, download demo). Idea A: whatever you touch turns into glass. Motion direction: super subtle but liquidy (amends 0022,
 needs a motion lab first). Goal: looks good on desktop and mobile. Work them in that order after
 (or alongside) the review answers; record new decisions as 0042 onward.
 
@@ -46,5 +48,5 @@ needs a motion lab first). Goal: looks good on desktop and mobile. Work them in 
 
 ## Session log
 
-- 2026-11-14: owner's 21 critiques, one idea and the liquid-motion direction recorded as issues with images (docs/issues). Next: work the issues.
+- 2026-11-14: owner's 27 critiques, one idea and the liquid-motion direction recorded as issues with images (docs/issues). Next: work the issues.
 - 2026-11-13 (framework): review + overhaul (0041), templates, layouts, content components, docs, hub. Next: owner's answers.

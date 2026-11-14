@@ -140,6 +140,40 @@ With stops (`data-stops`), a sliver of a stop dot shows beside the handle. Hide 
 to. Together with issue 20 this makes the ends look doubly bad: fix both and check 0%, 100% and every stop.
 ![Stop dot under the handle](img/2026-11-14-slider-stop-dot-under-handle.png)
 
+### 22. Color: normal, contrast-safe colors; accents stay accents
+The owner (2026-11-14): M3 Expressive colors whole panels and apps with the seed color; **keep it normal**. Choose colors
+that never cut contrast, and feel free to use the kind of colors other CSS frameworks use for light and dark mode
+(neutral grays for surfaces, a clear accent). With a seed, the accent colors only accents (the main button, selection,
+links, focus, FAB), not every surface; surfaces and containers stay neutral. Also covers the status, badge and error
+tones (see 16, 23). This changes how the color roles are generated (0001, 0003): record as a new decision, keep the
+contrast checks (42 pairs, check-glass) passing, and show light and dark options with a few seeds in a lab first.
+![Swatches](img/2026-11-14-swatches-colors.png)
+
+### 23. Badges look washed out in dark mode
+The count badge (salmon on dark) looks washed out. Likely fixed by issue 22's palette; check after it, and make the
+badge read clearly in both modes.
+![Badges](img/2026-11-14-badges-washed-out.png)
+
+### 24. Banner on glass
+Owner's call: make the banner glass. Note it sits in the page, so this is an exception to "content is solid" (0004);
+record it as a decision, keep text AA on it (check-glass), and check it over plain and busy backgrounds. No image.
+
+### 25. Skeleton: glitchy, and a wave instead of a blink
+The skeleton's animation looks glitchy (owner on Chrome). Replace the blink with a subtle **wave** (a soft sheen
+travelling across the placeholders, in step across the group), only transform/opacity, off under reduced motion.
+![Skeleton](img/2026-11-14-skeleton.png)
+
+### 26. Circular progress: 100% is a full circle; a more creative indeterminate
+At 100% the circular indicator still shows the M3 gap; it must close into a full circle. The indeterminate animation
+should be a bit more creative (subtle and liquid, per the motion direction).
+![Circular progress](img/2026-11-14-progress-circular.png)
+
+### 27. Linear progress: full at 100%, creative indeterminate, a realistic download demo
+Same as 26 for the linear bar: no gap or stop at 100%, a more creative indeterminate animation. On the progress
+reference page, add a **download demo**: a bar that runs on its own and always reaches 100% within 10 seconds, fast for
+the first 5 seconds, then stopping and moving at random speeds for the last 5, like a real download (replay button).
+![Linear progress](img/2026-11-14-progress-linear.webp)
+
 ## Ideas (to explore later, not yet issues)
 
 ### A. Whatever you touch turns into glass
