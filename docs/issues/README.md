@@ -6,6 +6,11 @@ issue. When an issue is done, move it to "Done" with the commit and decision num
 Goal across all of them (owner, 2026-11-14): **look good on both desktop and mobile** (check at 390 and 1280, light and
 dark, and ask for an iPhone look).
 
+**First step for all motion issues: a motion lab** (owner, 2026-11-14) to confirm that what's built matches what the
+owner means by "liquid but subtle", before any motion issue is built. Show each candidate (liquid row hover 7, bending
+chevron 11, liquid radio 19, snackbar 28, tooltip 29, menu 31, progress 26/27, skeleton 25) with the scrubber, plus
+today's motion for comparison, and ask if the owner needs to explain it differently.
+
 **Motion direction (owner, 2026-11-14):** the general animation theme should be **super subtle but liquidy**, with small
 interesting moments (a shape that flows, an icon that bends into the next one) instead of plain fades and spins. Quick
 enough to never be in the way, but never looking instant. This amends 0022 (simpler motion): keep its sturdiness rules
@@ -154,9 +159,8 @@ The count badge (salmon on dark) looks washed out. Likely fixed by issue 22's pa
 badge read clearly in both modes.
 ![Badges](img/2026-11-14-badges-washed-out.png)
 
-### 24. Banner on glass
-Owner's call: make the banner glass. Note it sits in the page, so this is an exception to "content is solid" (0004);
-record it as a decision, keep text AA on it (check-glass), and check it over plain and busy backgrounds. No image.
+### 24. ~~Banner on glass~~ (scrapped)
+Scrapped by the owner (2026-11-14): they meant snackbars, not banners. Banners stay solid content. See issue 28.
 
 ### 25. Skeleton: glitchy, and a wave instead of a blink
 The skeleton's animation looks glitchy (owner on Chrome). Replace the blink with a subtle **wave** (a soft sheen
@@ -173,6 +177,51 @@ Same as 26 for the linear bar: no gap or stop at 100%, a more creative indetermi
 reference page, add a **download demo**: a bar that runs on its own and always reaches 100% within 10 seconds, fast for
 the first 5 seconds, then stopping and moving at random speeds for the last 5, like a real download (replay button).
 ![Linear progress](img/2026-11-14-progress-linear.webp)
+
+### 28. Snackbars on glass, with a liquid arrival
+Snackbars become glass: the owner sees them as a notification, a raised object (the light solid pill today). Their
+arrival and exit should be liquid but subtle (motion lab first). Keep the text and the action AA on glass
+(extend check-glass to the snackbar's action color). Updates 0010 (pill snackbar) and the review's proposal 7.
+![Snackbar](img/2026-11-14-snackbar.png)
+
+### 29. Tooltips: a bit faster and a better entrance
+Tooltips should come in a little faster, with a better animation (in the new motion style). Covers plain and rich
+tooltips. No separate image; the rich tooltip image below shows the component.
+
+### 30. Rich tooltips: rounder, with room around the action
+The rich tooltip's corners are too small for the rounded Learn More button sitting close to the corner. Round the
+tooltip out (corner at least the button's radius plus the padding) and give the action room from the edge.
+![Rich tooltip](img/2026-11-14-rich-tooltip.png)
+
+### 31. Menus in the new motion style
+Update the menu's open and close (today: drop 8px and fade, 0022) to the liquid-but-subtle style once the motion lab
+has settled it. No image.
+
+### 32. Don't autofocus fields in dialogs and sheets
+Opening a dialog or sheet focuses its first text field, so on iOS the keyboard pops up at the same moment as the dialog
+(annoying; seen in many past demos). Focus the dialog itself (or its heading) instead, never a text field, unless the
+app asks for it explicitly (e.g. `data-autofocus`). Keep focus management accessible (focus inside the dialog, return
+to the opener on close).
+![Dialog with focused field](img/2026-11-14-dialog-autofocus-field.png)
+
+### 33. Field focus ring on glass feels off
+On a transparent surface (the sheet), the text field's focus/outline animation feels off because the field's fill
+changes on hover at the same time. Might go away with the color update (22); recheck after it, then fix what's left
+(one change at a time: fill or ring, not both).
+![Field in a sheet](img/2026-11-14-bottom-sheet.png)
+
+### 34. Replace bottom and side sheets with floating glass panels
+The owner wants to drop the sheet concept: something sliding up the screen (or in from the side) feels strange. Instead,
+a **floating glass panel** placed where it fits (bottom, side, near what opened it), inset from the screen edges with
+its own rounded corners and the normal glass edge, entering with the new motion. Applies to phones and desktop; update
+the sheet component, the templates and the showcase, and record a decision (replaces the bottom/side sheet parts of
+0011 and 0022). Draft the options in a lab first.
+![Bottom sheet](img/2026-11-14-bottom-sheet.png)
+
+### 35. Side sheet: no edge glow down the side
+The side sheet shows the glass edge glow along its full-height side, which the owner calls a misuse of glass. Solved by
+34 (a floating panel with the normal glass edge); until then no edge light on a side sheet's long edge.
+![Side sheet edge glow](img/2026-11-14-side-sheet-edge-glow.png)
 
 ## Ideas (to explore later, not yet issues)
 
