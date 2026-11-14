@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Desktop App · S4 Orion Template</title>
+<!-- Template: Desktop App. For an app that lives in a desktop window: an installed web app, Electron or Tauri. The app fills the window and each pane scrolls on its own (data-window), controls are pointer-sized where the pointer is a mouse (data-density="auto"), a title bar drags the window, rows have a right-click menu and actions have keyboard shortcuts. On a phone the same page is the normal touch layout. -->
+<script>(function (k) { try { var t = JSON.parse(localStorage.getItem(k) || 'null'); if (t && t.mode && t.mode !== 'system') document.documentElement.dataset.theme = t.mode; } catch (e) {} })('orion-template-theme');</script>
+<link rel="preload" href="../components/assets/inter-variable.woff2?v=2edaa7b" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../components/orion.css?v=b2a08eb">
+<style>
+  .ld-detail-head { display: flex; align-items: center; gap: var(--s4-space-3); }
+  .ld-detail-head > :nth-child(2) { flex: 1; min-inline-size: 0; }
+</style>
+</head>
+<body>
+<div class="s4-app" data-window data-density="auto">
+  <header class="s4-titlebar">
+    <span class="s4-titlebar-title">Ledger Mail</span>
+    <button class="s4-icon-button" type="button" aria-label="Search" data-tooltip="Search" data-shortcut="mod+k" id="tb-search"><span class="s4-icon" data-icon="search"></span></button>
+  </header>
+  <nav class="s4-nav-rail" aria-label="Main" data-expand="auto">
+    <div class="s4-nav-rail-header"><button class="s4-icon-button" type="button" data-rail-toggle aria-expanded="false" aria-label="Expand Navigation" data-label-expand="Expand Navigation" data-label-collapse="Collapse Navigation" data-shortcut="mod+b"><span class="s4-icon" data-icon="menu"></span></button><button class="s4-fab" type="button" aria-label="Compose" data-dialog="compose" data-shortcut="mod+n"><span class="s4-icon" data-icon="edit"></span><span class="s4-fab-label">Compose</span></button></div>
+    <div class="s4-nav-rail-items">
+    <a class="s4-nav-item" href="#inbox" data-view="inbox" aria-current="page"><span class="s4-nav-indicator"><span class="s4-icon" data-icon="inbox"></span></span><span class="s4-nav-label">Inbox</span></a>
+    <a class="s4-nav-item" href="#people" data-view="people"><span class="s4-nav-indicator"><span class="s4-icon" data-icon="people"></span></span><span class="s4-nav-label">People</span></a>
+    <a class="s4-nav-item" href="#archive" data-view="archive"><span class="s4-nav-indicator"><span class="s4-icon" data-icon="archive"></span></span><span class="s4-nav-label">Archive</span></a>
+    </div>
+    <div class="s4-nav-rail-footer">
+      <a class="s4-nav-item" href="#settings" data-shortcut="mod+comma"><span class="s4-nav-indicator"><span class="s4-icon" data-icon="settings"></span></span><span class="s4-nav-label">Settings</span></a>
+    </div>
+  </nav>
+  <div class="s4-app-body">
+    <header class="s4-top-app-bar">
+      <div class="s4-app-bar-title-group"><h1 class="s4-app-bar-title">Inbox</h1></div>
+      <div class="s4-app-bar-actions"><button class="s4-icon-button" type="button" aria-label="Filter" data-tooltip="Filter"><span class="s4-icon" data-icon="filter"></span></button></div>
+    </header>
+    <main class="s4-content" data-width="wide">
+      <section class="s4-view" data-view="inbox" data-title="Inbox">
+        <div class="s4-split" id="inbox">
+          <section class="s4-split-pane" aria-label="Messages">
+            <div class="s4-search" role="search" data-filter="#inbox-list">
+              <span class="s4-icon" data-icon="search"></span>
+              <input class="s4-search-input" type="search" placeholder="Search Inbox" aria-label="Search inbox">
+              <button class="s4-icon-button s4-search-clear" type="button" aria-label="Clear Search" hidden><span class="s4-icon" data-icon="close"></span></button>
+            </div>
+            <ul class="s4-list" id="inbox-list" role="listbox" aria-label="Messages" data-lines="3">
+                <li role="none"><div class="s4-list-item" role="option" aria-selected="true" data-value="0" data-split-open data-context-menu="row-menu">
+          <span class="s4-list-leading"><span class="s4-avatar">MC</span></span>
+          <span class="s4-list-content"><span class="s4-list-overline">Maya Chen</span><span class="s4-list-headline">Invoice for October</span><span class="s4-list-supporting">Can you send the October invoice before Friday?</span></span>
+          <span class="s4-list-trailing"><span class="s4-list-supporting s4-num">9:41</span><span class="s4-status" data-tone="primary">Unread</span></span></div></li>
+        <li role="none"><div class="s4-list-item" role="option" aria-selected="false" data-value="1" data-split-open data-context-menu="row-menu">
+          <span class="s4-list-leading"><span class="s4-avatar">JW</span></span>
+          <span class="s4-list-content"><span class="s4-list-overline">Jonas Weber</span><span class="s4-list-headline">Contract renewal</span><span class="s4-list-supporting">The new terms look good. Two small notes on section 4.</span></span>
+          <span class="s4-list-trailing"><span class="s4-list-supporting s4-num">8:15</span></span></div></li>
+        <li role="none"><div class="s4-list-item" role="option" aria-selected="false" data-value="2" data-split-open data-context-menu="row-menu">
+          <span class="s4-list-leading"><span class="s4-avatar">PN</span></span>
+          <span class="s4-list-content"><span class="s4-list-overline">Priya Nair</span><span class="s4-list-headline">Launch checklist</span><span class="s4-list-supporting">All items are green except the press kit.</span></span>
+          <span class="s4-list-trailing"><span class="s4-list-supporting s4-num">Mon</span></span></div></li>
+        <li role="none"><div class="s4-list-item" role="option" aria-selected="false" data-value="3" data-split-open data-context-menu="row-menu">
+          <span class="s4-list-leading"><span class="s4-avatar">SO</span></span>
+          <span class="s4-list-content"><span class="s4-list-overline">Sam Ortiz</span><span class="s4-list-headline">Budget draft</span><span class="s4-list-supporting">Draft attached for review.</span></span>
+          <span class="s4-list-trailing"><span class="s4-list-supporting s4-num">Sun</span><span class="s4-status" data-tone="error">Flagged</span></span></div></li>
+        <li role="none"><div class="s4-list-item" role="option" aria-selected="false" data-value="4" data-split-open data-context-menu="row-menu">
+          <span class="s4-list-leading"><span class="s4-avatar">LF</span></span>
+          <span class="s4-list-content"><span class="s4-list-overline">Lena Fischer</span><span class="s4-list-headline">Photos from the offsite</span><span class="s4-list-supporting">Uploaded 48 photos to the shared album.</span></span>
+          <span class="s4-list-trailing"><span class="s4-list-supporting s4-num">Oct 28</span></span></div></li>
+            </ul>
+          </section>
+          <section class="s4-split-pane s4-stack" data-sticky aria-label="Message">
+            <div class="s4-row"><button class="s4-button" data-variant="text" type="button" data-split-back><span class="s4-icon" data-icon="back"></span>Inbox</button></div>
+            <section class="s4-pane">
+              <div class="ld-detail-head">
+                <span class="s4-avatar" data-size="l" id="d-avatar">MC</span>
+                <div><h2 class="s4-title-large s4-emphasized" id="d-subject" style="margin:0">Invoice for October</h2><p class="s4-body-medium s4-on-surface-variant" id="d-from" style="margin:0">Maya Chen</p></div>
+                <button class="s4-icon-button" type="button" aria-label="More" data-menu="item-more"><span class="s4-icon" data-icon="more-vert"></span></button>
+              </div>
+              <p class="s4-body-large" id="d-body" style="margin:0">Can you send the October invoice before Friday?</p>
+              <dl class="s4-dl">
+                <div class="s4-dl-row"><dt>Received</dt><dd id="d-time">9:41</dd></div>
+                <div class="s4-dl-row"><dt>Label</dt><dd><span class="s4-status">Clients</span></dd></div>
+                <div class="s4-dl-row"><dt>Attachments</dt><dd>None</dd></div>
+              </dl>
+              <div class="s4-row"><button class="s4-button" type="button" data-dialog="compose">Reply</button><button class="s4-button" data-variant="tonal" type="button">Forward</button></div>
+            </section>
+          </section>
+        </div>
+        <button class="s4-fab" data-fixed type="button" data-dialog="compose"><span class="s4-icon" data-icon="edit"></span><span class="s4-fab-label">Compose</span></button>
+      </section>
+      <section class="s4-view" data-view="people" data-title="People" hidden><div class="s4-empty"><span class="s4-empty-icon"><span class="s4-icon" data-icon="people"></span></span><h2 class="s4-empty-title">No People Yet</h2><p class="s4-empty-text">People you write to show up here.</p></div></section>
+      <section class="s4-view" data-view="archive" data-title="Archive" hidden><div class="s4-empty"><span class="s4-empty-icon"><span class="s4-icon" data-icon="archive"></span></span><h2 class="s4-empty-title">Nothing Archived</h2><p class="s4-empty-text">Archived messages stay here for a year.</p></div></section>
+    </main>
+  </div>
+  <nav class="s4-nav-bar" aria-label="Main">
+    <a class="s4-nav-item" href="#inbox" data-view="inbox" aria-current="page"><span class="s4-nav-indicator"><span class="s4-icon" data-icon="inbox"></span></span><span class="s4-nav-label">Inbox</span></a>
+    <a class="s4-nav-item" href="#people" data-view="people"><span class="s4-nav-indicator"><span class="s4-icon" data-icon="people"></span></span><span class="s4-nav-label">People</span></a>
+    <a class="s4-nav-item" href="#archive" data-view="archive"><span class="s4-nav-indicator"><span class="s4-icon" data-icon="archive"></span></span><span class="s4-nav-label">Archive</span></a>
+  </nav>
+</div>
+<div class="s4-menu" id="item-more" aria-label="Message Actions">
+  <button class="s4-menu-item" type="button" id="do-archive"><span class="s4-icon" data-icon="archive"></span>Archive</button>
+  <button class="s4-menu-item" type="button"><span class="s4-icon" data-icon="star"></span>Flag</button>
+  <hr class="s4-menu-divider">
+  <button class="s4-menu-item" type="button" data-color="error"><span class="s4-icon" data-icon="delete"></span>Delete</button>
+</div>
+<dialog class="s4-dialog" id="compose" aria-labelledby="compose-h">
+  <h2 class="s4-dialog-headline" id="compose-h">New Message</h2>
+  <div class="s4-dialog-content s4-stack">
+    <div class="s4-text-field"><input id="to" type="email" autocomplete="email"><label for="to">To</label></div>
+    <div class="s4-text-field"><textarea id="msg" rows="3"></textarea><label for="msg">Message</label></div>
+  </div>
+  <div class="s4-dialog-actions"><button class="s4-button" data-variant="text" data-close="cancel" type="button">Cancel</button><button class="s4-button" data-close="send" type="button">Send</button></div>
+</dialog>
+<script src="../components/assets/icons.js?v=27d8ac2"></script>
+<script src="../components/orion.js?v=75e15e4"></script>
+<script>S4.theme.restore('orion-template-theme', { mode: 'system' });
+/* fill the detail pane from the selected row (a real app renders from its data) */
+var list = document.getElementById('inbox-list');
+list.addEventListener('s4-change', function () {
+  var row = list.querySelector('[aria-selected="true"]'); if (!row) return;
+  document.getElementById('d-avatar').textContent = row.querySelector('.s4-avatar').textContent;
+  document.getElementById('d-from').textContent = row.querySelector('.s4-list-overline').textContent;
+  document.getElementById('d-subject').textContent = row.querySelector('.s4-list-headline').textContent;
+  document.getElementById('d-body').textContent = row.querySelector('.s4-list-supporting').textContent;
+  document.getElementById('d-time').textContent = row.querySelector('.s4-list-trailing .s4-list-supporting').textContent;
+});
+document.getElementById('do-archive').addEventListener('click', function () { S4.snackbar({ text: 'Message archived', action: 'Undo' }); });
+document.getElementById('compose').addEventListener('s4-close', function (e) { if (e.detail && e.detail.value === 'send') S4.snackbar({ text: 'Message sent' }); });</script>
+<div class="s4-menu" id="row-menu" aria-label="Message actions">
+  <button class="s4-menu-item" type="button" data-value="reply" data-shortcut="mod+r"><span class="s4-icon" data-icon="edit"></span>Reply<kbd class="s4-kbd"></kbd></button>
+  <button class="s4-menu-item" type="button" data-value="archive" data-shortcut="mod+e"><span class="s4-icon" data-icon="archive"></span>Archive<kbd class="s4-kbd"></kbd></button>
+  <hr class="s4-menu-divider">
+  <button class="s4-menu-item" type="button" data-value="delete" data-color="error"><span class="s4-icon" data-icon="delete"></span>Delete</button>
+</div>
+<script>
+  document.getElementById('row-menu').addEventListener('s4-select', function (e) {
+    var row = this.contextTarget, name = row ? row.querySelector('.s4-list-headline').textContent : 'Message';
+    S4.snackbar({ text: (e.detail.item.dataset.value === 'delete' ? 'Deleted: ' : e.detail.item.dataset.value === 'archive' ? 'Archived: ' : 'Replying to: ') + name });
+  });
+  document.getElementById('tb-search').addEventListener('click', function () { var i = document.querySelector('.s4-search-input'); if (i) i.focus(); });
+</script>
+</body>
+</html>

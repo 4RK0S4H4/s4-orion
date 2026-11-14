@@ -232,5 +232,20 @@ window.S4_REVIEW_DEMOS = [
       { id: 'speed', label: 'How fast', help: 'Accordion and snackbar at three speeds.', options: [{ v: 'A', label: 'Lab 1 Speed' }, { v: 'B', label: '15% Faster' }, { v: 'C', label: '30% Faster' }] },
       { id: 'split', label: 'Liquid for ink, plain for glass?', help: 'Ink = fills that show state; glass = surfaces.', options: [{ v: 'Yes', label: 'Right' }, { v: 'No', label: 'Not quite; see notes' }] }
     ]
+  },
+  {
+    id: 'orion-2', title: 'Overhaul Review', href: 'explore/review-orion-2.html',
+    questions: [
+      { id: 'color', label: 'Color with an accent', help: 'Issue 22.', options: [{ v: 'A', label: 'Neutral surfaces' }, { v: 'B', label: 'Tinted surfaces' }, { v: 'Other', label: 'Describe in notes' }] },
+      { id: 'density', label: 'Size on a computer', options: [{ v: 'A', label: 'Compact with a mouse, opt-in' }, { v: 'B', label: 'Touch size everywhere' }, { v: 'C', label: 'Compact by default on computers' }] },
+      { id: 'chip', label: 'Selected chips', help: 'Issue 17.', options: [{ v: 'A', label: 'Accent fill' }, { v: 'B', label: 'Dot slot' }, { v: 'C', label: 'Soft tint' }, { v: 'Other', label: 'Describe in notes' }] },
+      { id: 'panels', label: 'Floating panels instead of sheets', options: [{ v: 'Yes', label: 'Keep it' }, { v: 'No', label: 'Not quite; see notes' }] },
+      { id: 'rail', label: 'Side navigation', options: [{ v: 'Yes', label: 'Keep it' }, { v: 'No', label: 'Not quite; see notes' }] },
+      { id: 'onglass', label: 'Things on glass', options: [{ v: 'Yes', label: 'Keep it' }, { v: 'No', label: 'Not quite; see notes' }] },
+      { id: 'errors', label: 'Error fields', options: [{ v: 'Yes', label: 'Keep it' }, { v: 'No', label: 'Not quite; see notes' }] },
+      { id: 'controls', label: 'Checkbox, radio, switch, slider', options: [{ v: 'Yes', label: 'Keep it' }, { v: 'No', label: 'Not quite; see notes' }] },
+      { id: 'date', label: 'Date picker', options: [{ v: 'Yes', label: 'Keep it' }, { v: 'No', label: 'Not quite; see notes' }] },
+      { id: 'desktop', label: 'Desktop app template', options: [{ v: 'Yes', label: 'Keep it' }, { v: 'No', label: 'Not quite; see notes' }] }
+    ]
   }
 ];

@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>S4 Orion: Overhaul Review</title>
+<link rel="stylesheet" href="../components/orion.css?v=b2a08eb">
+<style>
+body{margin:0;background:var(--md-sys-color-surface);color:var(--md-sys-color-on-surface)}
+h1,h2,p{margin:0}
+.bar{display:flex;align-items:center;padding:12px 24px;background:var(--md-sys-color-surface-container)}
+.bar h1{font-size:20px;line-height:28px;font-weight:500}
+.page{max-width:1100px;margin:0 auto;padding:24px 16px 120px;display:flex;flex-direction:column;gap:40px}
+.intro{max-width:80ch;color:var(--md-sys-color-on-surface-variant);display:flex;flex-direction:column;gap:12px}
+.sec > h2{font-size:24px;line-height:32px;font-weight:500;margin-bottom:6px}
+.sec > p{color:var(--md-sys-color-on-surface-variant);max-width:85ch;margin-bottom:16px}
+.cards{--rv-min:300px}
+.pv{border-radius:20px;overflow:hidden;background:var(--md-sys-color-surface-container-low)}
+.pv iframe{display:block;width:100%;height:520px;border:0}
+.pv.pair{display:grid;grid-template-columns:1fr;gap:2px}
+.pv.note{padding:16px;color:var(--md-sys-color-on-surface-variant);font:400 14px/20px Inter,system-ui,sans-serif}
+.pv.note a{color:var(--md-sys-color-primary)}
+</style>
+</head>
+<body>
+<header class="bar"><h1>S4 Orion: Overhaul Review</h1></header>
+<main class="page">
+  <div class="intro">
+    <p>The overhaul is built and live on every page (decision 0043). These are the choices I made for you where the issues asked for options. Tap the card you want; the first card in each question is what is built now. Copy your answers at the end.</p>
+  </div>
+  <div id="sections" style="display:flex;flex-direction:column;gap:40px"></div>
+</main>
+<script src="../components/assets/icons.js?v=27d8ac2"></script>
+<script src="../components/orion.js?v=75e15e4"></script>
+<script src="lib/questions.js?v=dbf82b2"></script>
+<script src="lib/review.js?v=2d9b250"></script>
+<script>
+function section(id, title, text, opts) {
+  const sec = document.createElement('section'); sec.className = 'sec';
+  sec.innerHTML = `<h2>${title}</h2><p>${text}</p><div class="cards rv-group" role="radiogroup" aria-label="${title}"></div>`;
+  document.getElementById('sections').appendChild(sec);
+  opts.forEach(o => {
+    const pv = document.createElement('div');
+    if (o.frames) { pv.className = 'pv pair'; pv.innerHTML = o.frames.map(f => `<iframe loading="lazy" title="${o.name}" src="review-orion-2-frame.html?${f}"></iframe>`).join(''); }
+    else { pv.className = 'pv note'; pv.innerHTML = o.html; }
+    sec.querySelector('.cards').appendChild(S4Review.card({ pick: id + ':' + o.k, letter: o.k, title: o.name, desc: o.desc, tag: o.tag || '', preview: pv }));
+  });
+}
+section('color', '1. Color With an Accent', 'Issue 22. The same screen with a blue accent, light on top and dark below. Without an accent Orion stays black, white and gray either way.', [
+  { k: 'A', name: 'Neutral Surfaces', tag: 'Built', desc: 'Gray surfaces; the accent only on the main button, selection, switches and focus.', frames: ['seed=0b57d0&mode=light', 'seed=0b57d0&mode=dark'] },
+  { k: 'B', name: 'Tinted Surfaces', desc: 'Stock Material: every surface takes a tint of the accent.', frames: ['seed=0b57d0&surfaces=tinted&mode=light', 'seed=0b57d0&surfaces=tinted&mode=dark'] },
+]);
+section('density', '2. Size on a Computer', 'For desktop windows and desktop apps. Phones and tablets always keep the touch size. Best judged on a computer.', [
+  { k: 'A', name: 'Compact With a Mouse', tag: 'Built as Opt-In', desc: 'Smaller rows, fields and buttons, 14px text, wherever the pointer is a mouse. Today an app asks for it with data-density="auto".', frames: ['density=compact&mode=dark'] },
+  { k: 'B', name: 'Touch Size Everywhere', desc: 'The same sizes on a computer as on a phone.', frames: ['mode=dark'] },
+  { k: 'C', name: 'Compact by Default on Computers', desc: 'Like A, but every Orion app does it without asking.', html: 'Looks like card A. Choosing this makes it the default for every app.' },
+]);
+section('chip', '3. Selected Chips', 'Issue 17. A chip never changes size any more. How should the selected one look? Tap the chips to try.', [
+  { k: 'A', name: 'Accent Fill', tag: 'Built', desc: 'The selected chip fills with the accent (black or white without one). No check.', frames: ['chip=A&mode=dark&seed=0b57d0'] },
+  { k: 'B', name: 'Dot Slot', desc: 'Every chip has a small dot; the dot fills when selected.', frames: ['chip=B&mode=dark&seed=0b57d0'] },
+  { k: 'C', name: 'Soft Tint', desc: 'The selected chip takes the soft selection tint, like a selected row.', frames: ['chip=C&mode=dark&seed=0b57d0'] },
+]);
+const yn = (id, title, text, link, label) => section(id, title, text, [
+  { k: 'Yes', name: 'Keep It', tag: 'Built', desc: 'This is what I meant.', html: `Try it: <a href="${link}">${label}</a>` },
+  { k: 'No', name: 'Not Quite', desc: 'Say what is off in the notes.', html: 'Describe it in the notes at the end.' },
+]);
+yn('panels', '4. Floating Panels Instead of Sheets', 'Issues 34 and 35. Nothing slides up the screen: a glass panel floats inside the window with round corners and pops in. The side one floats at the side.', '../components/sheet/sheet.html', 'Panels page');
+yn('rail', '5. Side Navigation', 'Issues 1 to 3. Rows with the label beside the icon, a hamburger button, one icon wide when collapsed, a solid main button.', '../components/nav-rail/nav-rail.html', 'Navigation rail page');
+yn('onglass', '6. Things on Glass', 'Issue 4. Fields, chips, quiet buttons and the selected nav item on glass are see-through tints instead of solid patches.', '../demo/index.html', 'Showcase (open a dialog, look at the nav bar)');
+yn('errors', '7. Error Fields', 'Issue 16. No red box: the label and message turn red with a small mark, and the focus ring is red.', '../components/text-field/text-field.html', 'Text field page');
+yn('controls', '8. Checkbox, Radio, Switch, Slider', 'Issues 8, 18, 20, 21. No hover halo, a small thin check, the slider reaches both ends.', '../components/checkbox/checkbox.html', 'Checkbox page');
+yn('date', '9. Date Picker', 'Issue 15. A glass calendar with month and year switch, Clear and Today, keyboard, and a range mode.', '../components/date-picker/date-picker.html', 'Date picker page');
+yn('desktop', '10. Desktop App Template', 'A window that does not scroll as a page, a draggable title bar, right-click menus and keyboard shortcuts. Best on a computer.', '../templates/desktop-app.html', 'Desktop app template');
+S4Review.page('orion-2');
+</script>
+</body>
+</html>

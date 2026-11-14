@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Orion Overhaul Review: sample</title>
+<link rel="stylesheet" href="../components/orion.css?v=b2a08eb">
+<style>
+  body { margin: 0; }
+  .fr { display: flex; flex-direction: column; gap: var(--s4-space-4); padding: var(--s4-space-4); }
+  /* chip option B: a check in a slot that is always there */
+  [data-chip="B"] .s4-chip[data-type="filter"]::before { position: static; opacity: 1; content: ""; inline-size: var(--s4-space-3); block-size: var(--s4-space-3); border-radius: var(--md-sys-shape-corner-full); background: color-mix(in srgb, currentColor 30%, transparent); z-index: 0; }
+  [data-chip="B"] .s4-chip[aria-pressed="true"] { --_bg: var(--md-sys-color-surface-container-highest); --_fg: var(--md-sys-color-on-surface); }
+  [data-chip="B"] .s4-chip[aria-pressed="true"]::before { background: var(--md-sys-color-primary); }
+  /* chip option C: a soft tint */
+  [data-chip="C"] .s4-chip[aria-pressed="true"] { --_bg: var(--md-sys-color-secondary-container); --_fg: var(--md-sys-color-on-secondary-container); }
+</style>
+</head>
+<body>
+<div class="fr" id="fr">
+  <div class="s4-chip-set" data-select="single" aria-label="Filter">
+    <button class="s4-chip" data-type="filter" type="button" aria-pressed="true">All</button>
+    <button class="s4-chip" data-type="filter" type="button" aria-pressed="false">Due</button>
+    <button class="s4-chip" data-type="filter" type="button" aria-pressed="false">Paid</button>
+    <button class="s4-chip" data-type="filter" type="button" aria-pressed="false">Overdue</button>
+  </div>
+  <section class="s4-pane">
+    <ul class="s4-list" role="listbox" aria-label="Bills">
+      <li role="none"><div class="s4-list-item" role="option" aria-selected="true"><span class="s4-list-leading"><span class="s4-icon" data-icon="bills"></span></span><span class="s4-list-content"><span class="s4-list-headline">Electric Co.</span><span class="s4-list-supporting">Due Nov 20</span></span><span class="s4-list-trailing"><span class="s4-list-amount">$212.48</span></span></div></li>
+      <li role="none"><div class="s4-list-item" role="option" aria-selected="false"><span class="s4-list-leading"><span class="s4-icon" data-icon="wallet"></span></span><span class="s4-list-content"><span class="s4-list-headline">Rent</span><span class="s4-list-supporting">Paid Nov 1</span></span><span class="s4-list-trailing"><span class="s4-status" data-tone="success">Paid</span></span></div></li>
+      <li role="none"><div class="s4-list-item" role="option" aria-selected="false"><span class="s4-list-leading"><span class="s4-icon" data-icon="calendar"></span></span><span class="s4-list-content"><span class="s4-list-headline">Insurance</span><span class="s4-list-supporting">Was due Nov 3</span></span><span class="s4-list-trailing"><span class="s4-status" data-tone="error">Overdue</span></span></div></li>
+    </ul>
+  </section>
+  <div class="s4-text-field"><label for="amt">Amount</label><span class="s4-text-field-affix" data-prefix>$</span><input id="amt" value="212.48" inputmode="decimal"></div>
+  <div class="s4-row"><button class="s4-button" type="button">Pay Bill</button><button class="s4-button" data-variant="tonal" type="button">Remind Me</button><label class="s4-switch"><input type="checkbox" checked><span class="s4-switch-track"><span class="s4-switch-handle"></span></span>Autopay</label></div>
+</div>
+<script src="../components/assets/icons.js?v=27d8ac2"></script>
+<script src="../components/orion.js?v=75e15e4"></script>
+<script>
+  var q = new URLSearchParams(location.search), root = document.documentElement;
+  if (q.get('mode')) root.dataset.theme = q.get('mode');
+  if (q.get('density')) root.dataset.density = q.get('density');
+  if (q.get('chip')) root.dataset.chip = q.get('chip');
+  if (q.get('seed')) S4.theme({ seed: '#' + q.get('seed'), surfaces: q.get('surfaces') || 'neutral' });
+</script>
+</body>
+</html>

@@ -1,12 +1,12 @@
-# Sheets
+# Floating Panels
 
-A short task without leaving the screen. From 600 wide, **bottom sheets** slide from the bottom edge; drag the handle down to dismiss. **On a phone (under 600) the bottom sheet is a
-centered card**, shaped and animated like a dialog (it pops in, no handle, no drag; decisions 0011, 0022). **Side sheets** slide from the end edge. Both on glass.
+A short task without leaving the screen (decision 0043; these replace bottom and side sheets and keep their class
+names). A panel is a glass surface that floats inside the window: inset from every edge, all four corners round, and it
+pops in like a dialog. Nothing slides up the screen and nothing docks to an edge.
 
 ```html
-<button class="s4-fab" data-sheet="add-expense" aria-label="Add expense"><span class="s4-icon" data-icon="add"></span></button>
+<button class="s4-button" data-sheet="add-expense">Add Expense</button>
 <dialog class="s4-bottom-sheet" id="add-expense" aria-labelledby="ae-h">
-  <span class="s4-sheet-handle" aria-hidden="true"></span>
   <h2 class="s4-sheet-title" id="ae-h">Add Expense</h2>
   <div class="s4-sheet-content">…fields…</div>
   <div class="s4-sheet-actions"><button class="s4-button" data-variant="text" data-close="cancel">Cancel</button><button class="s4-button" data-close="save">Save</button></div>
@@ -17,8 +17,21 @@ centered card**, shaped and animated like a dialog (it pops in, no handle, no dr
 </dialog>
 ```
 
-Opening, closing, `[data-close]`, `data-persistent`, focus and events work exactly like the [dialog](../dialog/)
-(`S4.sheet.open/close` are the same functions). Drag-dismiss fires `s4-close { value: "drag" }`.
+| Class / attribute | What |
+|---|---|
+| `.s4-bottom-sheet` | Floats at the bottom center (on a phone: the full width minus the inset, above the home indicator). |
+| `.s4-side-sheet` | From 600 wide: floats at the end side, as tall as the window minus the inset. On a phone: same as the bottom panel. |
+| `data-placement="center"` | Centers the panel like a dialog. |
+| `data-persistent` | A click outside doesn't close it. |
 
-**Do:** use a bottom sheet for a quick add or a set of choices on phones; a side sheet for filters or details beside content on
-wide screens. **Don't:** put a sheet on a dialog, or a second sheet on a sheet.
+Opening, closing, `[data-close]`, focus and events work exactly like the [dialog](../dialog/) (`S4.sheet.open/close`
+are the same functions). Opening never focuses a text field; add `data-autofocus` to a control to ask for it.
+`.s4-sheet-handle` in older markup draws nothing, and panels are not dragged.
+
+**Do:** use a bottom panel for a quick add or a set of choices; a side panel for filters or details beside content on
+wide screens. Always give it a Cancel or Close. **Don't:** put a panel on a dialog, or a second panel on a panel.
+
+**Accessibility:** a native modal `<dialog>`: focus is trapped, Escape closes, focus returns to the opener. Give it
+`aria-labelledby`.
+
+**Tokens:** `--s4-shape-sheet`, `--s4-space-4` (inset), `--s4-scrim-opacity`, glass tokens.

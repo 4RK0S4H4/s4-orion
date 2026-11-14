@@ -11,16 +11,20 @@ reasoning. A decision isn't reopened without the owner; a new one gets the next 
 | Topic | Read |
 |---|---|
 | Base system: M3 Expressive roles, type, shape, springs, monochrome default, Inter, Title Case | 0001, 0003 |
+| Color: neutral surfaces, the accent only on accents, fixed status colors | 0043 |
+| Density (comfortable, compact), desktop windows and desktop apps | 0043 |
+| Side navigation: rows, hamburger, solid main action | 0043 |
+| Floating panels (the former sheets), date picker, controls without halos | 0043 |
 | Repo, build, generated files | 0002, 0041 |
 | Glass: where it goes (chrome and overlays only, two layers max, solid fallbacks, AA floor) | 0004 |
 | Glass: the look (tint 75%, blur 8px, saturate 150%, no shadow) | 0021, 0028, 0035, 0017 |
 | Glass: the edge (thin rim top and bottom, glow or shade by lightness, width by screen density, docked bars light only the free edge) | 0034, 0036, 0037, 0029, 0040 |
-| Items on glass keep their own color | 0015 |
+| Items on glass are tints, not solid patches | 0043 (replaces 0015) |
 | Motion: pop, drop, slide, rise, shared axis; only transform and opacity | 0022, amended by 0042 (liquid ink) |
 | Shape and fill: nothing outlined, small things are pills, no sharp corners, inputs medium-rounded | 0023, 0024, 0025 |
 | Button groups: the Joined Capsule | 0026 |
 | FAB: glass tinted with its own color | 0025, 0032 |
-| Icons: Solar, menu = dots | 0007 |
+| Icons: Solar; menu = hamburger (Line Duotone) | 0007, amended by 0043 |
 | Framework: layouts, page widths, templates, new content components | 0041 |
 
 ## All records
@@ -33,15 +37,15 @@ reasoning. A decision isn't reopened without the owner; a new one gets the next 
 | 0004 | The glass layer: where glass goes and its contrast guarantee | Active (the numbers superseded by 0021 and later) |
 | 0005 | Phase 6 review of the demo | History |
 | 0006 | Liquid glass, the Material way | Not adopted |
-| 0007 | Icon Lab answers (menu = dots) | Active |
+| 0007 | Icon Lab answers (menu = dots) | Active (menu is a hamburger since 0043) |
 | 0008 | Owner critique 2026-11-07 | Refined (motion parts superseded by 0022) |
 | 0009 | Style Lab: text fields, checkboxes, tabs | Refined by 0023, 0024 (checkboxes are filled circles; tabs keep the tray) |
 | 0010 | Owner critique round 2: pill snackbar, round tabs, sliding nav highlight | Active |
-| 0011 | Style Lab 2: notched groups, centered-card phone sheet | Groups superseded by 0026; phone sheet active |
+| 0011 | Style Lab 2: notched groups, centered-card phone sheet | Groups superseded by 0026; phone sheet superseded by 0043 (floating panels) |
 | 0012 | Liquid glass on real pages (WebKit) | Superseded by 0019, then abandoned |
 | 0013 | Thin frost line edge, glass without shadow | Edge superseded by 0021+; no shadow active (0017) |
 | 0014 | Calmer color through glass | Superseded by 0021 (saturate 150%) |
-| 0015 | Items on glass | Active |
+| 0015 | Items on glass | Superseded by 0043 |
 | 0016 | Thinner frost line on bars | Superseded by 0027+ and 0040 |
 | 0017 | No shadows anywhere | Active |
 | 0018 | Menus emerge from under their button | Superseded by 0022 (menus drop) |
@@ -69,3 +73,4 @@ reasoning. A decision isn't reopened without the owner; a new one gets the next 
 | 0040 | Docked glass lights only its free edge | Active, awaiting the owner's iPhone check |
 | 0041 | Orion as a framework: layouts, templates, content components | Proposed (built, awaiting the owner's review) |
 | 0042 | Liquid motion for ink, plain motion for glass | Active (row hover still open) |
+| 0043 | The overhaul: neutral color, density, side navigation, items on glass, floating panels, date picker, desktop apps | Built, awaiting the owner's review |

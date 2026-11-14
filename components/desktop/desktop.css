@@ -71,6 +71,9 @@
   .s4-titlebar[data-align="start"] .s4-titlebar-title { text-align: start; }
   .s4-titlebar { --s4-size-icon-button: var(--s4-density-compact-icon-button); --s4-size-icon: var(--s4-density-compact-icon); --s4-size-touch-target: var(--s4-density-compact-touch-target); }
 
+  /* on a phone there is no window to drag: the title bar goes away and the top app bar leads */
+  @container s4-app (width < 600px) { .s4-app > .s4-titlebar { display: none; } }
+
   /* window buttons for frameless windows that draw their own (Windows and Linux shells) */
   .s4-window-controls { display: flex; align-items: center; gap: var(--s4-space-1); margin-inline-start: auto; }
   .s4-window-control {

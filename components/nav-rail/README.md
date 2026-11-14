@@ -1,5 +1,11 @@
 # Navigation Rail
 
+> **Decision 0043:** the rail is side navigation. Items are rows (icon, label beside it). Collapsed it is one icon wide
+> (72) and labels become hover titles; expanded (240) the labels show; it expands by itself from 1200
+> (`data-expand="off"` to stop that). The menu button is a hamburger. The header's `.s4-fab` is a solid primary button
+> in the same row shape, never glass. Optional `.s4-nav-rail-title` group titles and a `.s4-nav-rail-footer` that stays
+> at the bottom. Where the text below still describes labels under icons or a 96dp rail, this note wins.
+
 Top-level destinations at the side of expanded windows (840 and up). M3 Expressive rail: collapsed (96dp) or expanded,
 with an optional menu button and FAB. Uses the same `.s4-nav-item` as the [navigation bar](../nav-bar/) (styles in
 `nav-bar.css`).

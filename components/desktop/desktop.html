@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Desktop Windows · S4 Orion</title>
+<link rel="stylesheet" href="../index.css">
+<link rel="stylesheet" href="../_example/example.css">
+</head>
+<body>
+<header class="ex-bar"><h1><a href="../">Components</a> / Desktop Windows</h1></header>
+<main class="ex-main">
+  <p>What an Orion app needs to live in a desktop window or ship as a desktop app: a window that never scrolls as a page, a title bar that drags it, pointer-sized controls, keyboard shortcuts and right-click menus. Full screen: <a href="../../templates/desktop-app.html">desktop app template</a>.</p>
+
+  <section class="ex-sec">
+    <h2>A Window</h2>
+    <p><code>data-window</code> and <code>data-density="compact"</code> on the app. The title bar drags the window in an installed app; the body scrolls on its own.</p>
+    <div style="block-size:calc(var(--s4-space-16) * 6);overflow:hidden;border-radius:var(--md-sys-shape-corner-large)">
+      <div class="s4-app" data-window data-density="compact" style="block-size:100%">
+        <header class="s4-titlebar"><span class="s4-titlebar-title">Ledger</span>
+          <div class="s4-window-controls"><button class="s4-window-control" type="button" data-window-action="minimize" aria-label="Minimize"><span class="s4-icon" data-icon="chevron-down"></span></button><button class="s4-window-control" type="button" data-window-action="close" aria-label="Close"><span class="s4-icon" data-icon="close"></span></button></div>
+        </header>
+        <nav class="s4-nav-rail" aria-label="Main" data-expanded>
+          <div class="s4-nav-rail-header"><button class="s4-fab" type="button" data-shortcut="mod+n"><span class="s4-icon" data-icon="add"></span><span class="s4-fab-label">New Bill</span></button></div>
+          <div class="s4-nav-rail-items">
+            <a class="s4-nav-item" href="#home" aria-current="page"><span class="s4-nav-indicator"><span class="s4-icon" data-icon="home"></span></span><span class="s4-nav-label">Home</span></a>
+            <a class="s4-nav-item" href="#bills"><span class="s4-nav-indicator"><span class="s4-icon" data-icon="bills"></span></span><span class="s4-nav-label">Bills</span></a>
+            <div class="s4-nav-rail-title">Reports</div>
+            <a class="s4-nav-item" href="#budget"><span class="s4-nav-indicator"><span class="s4-icon" data-icon="wallet"></span></span><span class="s4-nav-label">Budget</span></a>
+          </div>
+          <div class="s4-nav-rail-footer"><a class="s4-nav-item" href="#settings"><span class="s4-nav-indicator"><span class="s4-icon" data-icon="settings"></span></span><span class="s4-nav-label">Settings</span></a></div>
+        </nav>
+        <div class="s4-app-body"><main class="s4-content"><div class="s4-page-header"><h2 class="s4-title-large">Bills</h2><button class="s4-button" type="button">Pay All</button></div>
+          <ul class="s4-list">
+            <li><div class="s4-list-item" tabindex="0" data-context-menu="dk-menu"><span class="s4-list-content"><span class="s4-list-headline">Electric Co.</span></span><span class="s4-list-trailing"><span class="s4-list-amount">$212.48</span></span></div></li>
+            <li><div class="s4-list-item" tabindex="0" data-context-menu="dk-menu"><span class="s4-list-content"><span class="s4-list-headline">Water Utility</span></span><span class="s4-list-trailing"><span class="s4-list-amount">$48.10</span></span></div></li>
+            <li><div class="s4-list-item" tabindex="0" data-context-menu="dk-menu"><span class="s4-list-content"><span class="s4-list-headline">Internet</span></span><span class="s4-list-trailing"><span class="s4-list-amount">$79.00</span></span></div></li>
+            <li><div class="s4-list-item" tabindex="0" data-context-menu="dk-menu"><span class="s4-list-content"><span class="s4-list-headline">Insurance</span></span><span class="s4-list-trailing"><span class="s4-list-amount">$310.00</span></span></div></li>
+            <li><div class="s4-list-item" tabindex="0" data-context-menu="dk-menu"><span class="s4-list-content"><span class="s4-list-headline">Rent</span></span><span class="s4-list-trailing"><span class="s4-list-amount">$1,950.00</span></span></div></li>
+          </ul></main></div>
+      </div>
+    </div>
+    <p style="margin-top:var(--s4-space-3)">Right-click a row (long press on a phone) for its menu.</p>
+    <div class="s4-menu" id="dk-menu" aria-label="Bill actions">
+      <button class="s4-menu-item" type="button" data-shortcut="mod+enter"><span class="s4-icon" data-icon="check"></span>Mark Paid<kbd class="s4-kbd"></kbd></button>
+      <button class="s4-menu-item" type="button"><span class="s4-icon" data-icon="edit"></span>Edit</button>
+      <button class="s4-menu-item" type="button" data-color="error"><span class="s4-icon" data-icon="delete"></span>Delete</button>
+    </div>
+  </section>
+
+  <section class="ex-sec">
+    <h2>Shortcuts</h2>
+    <p><code>data-shortcut</code> clicks the element from anywhere; an empty <code>.s4-kbd</code> shows it the platform's way.</p>
+    <div class="ex-board">
+      <button class="s4-button" type="button" data-shortcut="mod+s" id="dk-save">Save<kbd class="s4-kbd"></kbd></button>
+      <button class="s4-button" data-variant="tonal" type="button" data-shortcut="mod+shift+e" id="dk-export">Export<kbd class="s4-kbd"></kbd></button>
+      <output id="dk-out" class="s4-body-medium s4-on-surface-variant">Press a shortcut.</output>
+    </div>
+  </section>
+
+  <section class="ex-sec">
+    <h2>Density</h2>
+    <p>The same controls, comfortable (touch) and compact (<code>data-density="compact"</code>).</p>
+    <div class="ex-board"><button class="s4-button" type="button">Pay Bill</button><button class="s4-chip" type="button">Utilities</button><div class="s4-text-field" style="inline-size:calc(var(--s4-space-16) * 3)"><input aria-label="Amount" value="212.48"></div></div>
+    <div class="ex-board" data-density="compact" style="margin-top:var(--s4-space-3)"><button class="s4-button" type="button">Pay Bill</button><button class="s4-chip" type="button">Utilities</button><div class="s4-text-field" style="inline-size:calc(var(--s4-space-16) * 3)"><input aria-label="Amount" value="212.48"></div></div>
+  </section>
+</main>
+<script src="../assets/icons.js"></script>
+<script src="../core/core.js"></script>
+<script src="../motion/motion.js"></script>
+<script src="../menu/menu.js"></script>
+<script src="../nav-bar/nav-bar.js"></script>
+<script src="../nav-rail/nav-rail.js"></script>
+<script src="../desktop/desktop.js"></script>
+<script src="../button-group/button-group.js"></script>
+<script src="../_example/example.js"></script>
+<script>
+  ['dk-save', 'dk-export'].forEach(function (id) { document.getElementById(id).addEventListener('click', function () { document.getElementById('dk-out').textContent = this.firstChild.textContent + ' ran.'; }); });
+</script>
+</body>
+</html>

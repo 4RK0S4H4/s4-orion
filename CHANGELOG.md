@@ -6,6 +6,27 @@ All notable changes to S4 Orion are recorded here. The format follows [Keep a Ch
 - **Minor**: new tokens, components, variants or skill guidance that existing apps can ignore.
 - **Patch**: fixes that bring output back in line with the documented rules (contrast, bugs, docs).
 
+## [1.1.0] - Unreleased
+
+The overhaul (decision 0043): one language for phones, desktop windows and desktop apps.
+
+### Added
+- Density: `data-density="compact|auto"` and the `--s4-density-compact-*` tokens.
+- Desktop: `data-window` on `.s4-app`, `.s4-titlebar`, `.s4-window-controls`, `.s4-kbd`, `data-shortcut`, `data-context-menu`, `S4.desktop`, the `s4-window` and `s4-context` events, `templates/desktop-app.html`.
+- Date picker for `input[type=date]` in a text field (range, min/max, disabled dates, keyboard).
+- Status colors `--s4-color-success|warning|info` (with containers), `--s4-color-badge`; `data-tone="success|warning|info"` on status and banner.
+- `S4.theme({ surfaces: 'neutral' | 'tinted' })`; rail group titles and footer; `data-autofocus`; `data-placement="center"` on panels; glass fill tokens.
+
+### Changed
+- A seed colors only accents; surfaces stay neutral (stock M3 with `surfaces: 'tinted'`).
+- The navigation rail is side navigation: rows, 72 wide collapsed, hamburger menu icon, solid main action, expands by itself from 1200.
+- Bottom and side sheets are floating glass panels that pop in; no handle or drag.
+- Items on glass are tints; fields in error keep their fill; chips keep their size when selected; checkbox, radio and switch have no hover halo; table rows hover as a flat band; lists are inset on every side; avatars are neutral by default; duotone icons have clearer tones.
+- Dialogs and panels no longer focus a text field when they open.
+
+### Fixed
+- Slider reaches both ends; stop dots no longer peek out beside the handle. The composer's buttons line up with its field. The select on the text field reference page opens the glass menu.
+
 ## [1.0.0] - Unreleased
 
 The first version of S4 Orion, a leaner rebuild of S4 Material 1.3 on Material 3 Expressive.

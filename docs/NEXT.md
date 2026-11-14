@@ -3,46 +3,35 @@
 Read [`framework.md`](framework.md) for how the system fits together and [`decisions/README.md`](decisions/README.md)
 for what applies today. The full log up to 2026-11-13 is in [`history/NEXT-2026-10-to-11-13.md`](history/NEXT-2026-10-to-11-13.md).
 
-## Now (2026-11-13): framework layer built, waiting on the owner
+## Now (2026-11-14): the overhaul is built, waiting on the owner
 
-The end-to-end [framework review](reviews/2026-11-13-framework-review.md) is done and its fixes are built
-([0041](decisions/0041-framework-layer.md)): eight templates, canonical layouts and page widths, stat, description list,
-prose, messages, theme controls by attribute, deep links, 15 icons, framework guide, decision index, rebuilt hub.
+The owner asked for a review and a real overhaul so Orion works on phones, desktop windows and desktop apps.
+[Decision 0043](decisions/0043-adaptive-neutral-overhaul.md) records what the issues add up to and everything built:
+neutral color with the accent only on accents, fixed status colors, two densities, the rail as side navigation, tints
+for items on glass, floating panels instead of sheets, a date picker, controls without halos, and the desktop layer
+(`data-window`, title bar, shortcuts, context menus, `templates/desktop-app.html`). 24 of the open issues are done.
 
-**Pause here** for the owner's answers to the six questions in the review (approve 0041; rail auto-expand everywhere;
-the rail FAB; release 1.0.0; minified bundles and per-set icons; pruning for 2.0).
-
-Also still waiting on the owner's iPhone checks: 0037 (glow/shade flip, Glass Playground) and 0040 (docked glass lit
-edge only, showcase).
+**Pause here** for the owner's answers in the [Overhaul Review](../explore/review-orion-2.html) (10 questions: color,
+size on a computer, selected chips, then keep-or-not for panels, rail, things on glass, error fields, controls, date
+picker, desktop template).
 
 ## Reminder for the owner
 
 **Review the row hover on a computer** (issue 7): [Liquid Motion Lab 2](../explore/motion-liquid-2.html), question 1.
-Bring this up at the start of the next session.
-
-## Owner critiques (2026-11-14): 35 issues (one scrapped) and one idea
-
-"Very close to a final product." The owner sent six critiques with screenshots, listed in
-[`issues/README.md`](issues/README.md) (images in `issues/img/`): rail collapse animation bug, duotone icons white when
-selected, rail labels beside icons + hamburger (Line Duotone allowed there), solid controls on glass, duotone tones too
-close, selected list rows touching the side edges; then liquid row hover, switch hover without the halo, no glass on tables,
-table row hover, accordion too fast with a bending chevron; composer button height, press-to-square only where it fits, selects
-must open the glass menu, a real date picker, softer error fields; chips that don't grow (draft first), smaller checkbox marks, liquid radio
-without an inner dot, slider reaching both ends, no stop dot under the handle. Then color: normal, contrast-safe
-colors with accents only as accents (big one, new decision + lab), badges, banner on glass, skeleton wave, progress
-(full at 100%, creative indeterminate, download demo); snackbars on glass, tooltips, rich tooltip corners, menu motion,
-no autofocus in dialogs, field focus on glass, floating glass panels instead of sheets. **Motion lab published** (`explore/motion-liquid.html`, 8 questions: Today vs Subtle vs More Liquid,
-plus the download demo); Lab 1 answered (0042); **Lab 2** (`explore/motion-liquid-2.html`) **awaits the owner's answers**, then finish 0042 and build the motion issues. Idea A: whatever you touch turns into glass. Motion direction: super subtle but liquidy (amends 0022,
-needs a motion lab first). Goal: looks good on desktop and mobile. Work them in that order after
-(or alongside) the review answers; record new decisions as 0042 onward.
+Also still waiting on iPhone checks: 0037 (glow/shade flip), 0040 (docked glass lit edge), and now everything in 0043
+(WebKit is untested here).
 
 ## Plan after the answers
 
-1. Apply the answers (each a small commit; 0041 becomes accepted or is amended).
-2. Release 1.0.0: CHANGELOG date, tag `v1.0.0`, re-package the skill, tell the owner to re-download it.
-3. 1.1: minified `orion.min.css`/`orion.min.js`, icons split per set (load only the active one), size budget in CI.
-4. Showcase: add a list-detail view and a stats pane so the demo uses the new layout and components.
-5. Evals: run `skill/s4-orion/evals/` with the new skill (does Claude pick the right template?), add one eval per template.
+1. Apply the review answers (each a small commit); 0043 becomes accepted or is amended. If compact becomes the default
+   on computers, move `data-density="auto"` into the base and check every template at 1280.
+2. Issue 7 (row hover) once the owner has looked on a computer; idea A (touched things turn into glass) as a lab.
+3. Still unanswered from the framework review (0041): approve 0041, release, minified bundles and per-set icons, pruning.
+   (Rail auto-expand and the rail FAB are settled by 0043.)
+4. Release: CHANGELOG date, tag, re-package the skill, tell the owner to re-download it.
+5. Desktop next steps: resizable split panes, a command palette (search + shortcuts), a menu bar pattern, a real
+   Electron or Tauri shell example wired to `s4-window`.
+6. Showcase: add the date picker, a floating side panel, status tones and a compact-density toggle.
 
 ## Backlog
 
@@ -55,6 +44,7 @@ needs a motion lab first). Goal: looks good on desktop and mobile. Work them in 
 
 ## Session log
 
+- 2026-11-14 (overhaul): decision 0043 built (see Now). Overhaul Review published. Date picker README and the showcase additions are the loose ends. Next: owner's answers.
 - 2026-11-14 (motion): Lab 2 answered; 0042 accepted and built (spring tokens ink/rise/settle/tip/reveal/bend; accordion, glass snackbar and tooltip, menu items follow, skeleton wave, progress, radio ink, rich tooltip corners). Issues 11, 19, 25-31 done. Open: row hover (owner reviews on a computer). Next: color (22) and the rest of the issues, in order.
 - 2026-11-14 (lab 2): Lab 1 answered (0042: liquid only for ink, glass plain, faster; accordion/snackbar/tooltip/loading = B). Liquid Motion Lab 2 published (row hover edges, radio ink under windows, menu, speed). Next: owner's answers, then build the motion issues.
 - 2026-11-14 (lab): Liquid Motion Lab published. Next: owner's answers, then decision 0042 and the motion issues.

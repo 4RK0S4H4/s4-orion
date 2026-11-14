@@ -9,8 +9,8 @@
 @layer s4.components {
   .s4-avatar {
     --_size: var(--s4-size-avatar);
-    --_bg: var(--md-sys-color-primary-container);
-    --_fg: var(--md-sys-color-on-primary-container);
+    --_bg: var(--md-sys-color-surface-container-highest);   /* decision 0043: neutral by default; data-tone="primary" for the accent */
+    --_fg: var(--md-sys-color-on-surface);
     --_type: var(--md-sys-typescale-title-medium-size);
     position: relative;
     display: inline-grid;
@@ -36,6 +36,7 @@
   .s4-avatar[data-size="s"] { --_size: var(--s4-space-8); --_type: var(--md-sys-typescale-label-large-size); }
   .s4-avatar[data-size="l"] { --_size: calc(var(--s4-space-10) + var(--s4-space-4)); --_type: var(--md-sys-typescale-title-large-size); }
   .s4-avatar[data-size="xl"] { --_size: calc(var(--s4-space-12) + var(--s4-space-8)); --_type: var(--md-sys-typescale-headline-small-size); }
+  .s4-avatar[data-tone="primary"] { --_bg: var(--md-sys-color-primary-container); --_fg: var(--md-sys-color-on-primary-container); }
   .s4-avatar[data-tone="secondary"] { --_bg: var(--md-sys-color-secondary-container); --_fg: var(--md-sys-color-on-secondary-container); }
   .s4-avatar[data-tone="tertiary"] { --_bg: var(--md-sys-color-tertiary-container); --_fg: var(--md-sys-color-on-tertiary-container); }
   .s4-avatar[data-tone="neutral"] { --_bg: var(--md-sys-color-surface-container-highest); --_fg: var(--md-sys-color-on-surface-variant); }

@@ -15,13 +15,15 @@ The personal layer is short and deliberate:
 - **Inter** as the typeface, with its full OpenType features.
 - **Solar icons**: Bold Duotone where the icon carries the screen, Linear at small sizes.
 - **Title Case** for labels; sentences stay sentence case.
-- **Monochrome by default.** Color comes from one seed when an app wants it.
+- **Monochrome by default.** Color comes from one seed when an app wants it, and then only on accents: surfaces stay neutral (decision 0043).
 - **Glass on floating chrome** and nowhere else.
-- **Simple, sturdy motion**: dialogs pop, menus drop from their button, sheets slide from their edge, shared axis between views (decision 0022).
+- **Simple, sturdy motion**: dialogs and floating panels pop, menus fade in place, shared axis between views; controls answer where they are (decisions 0022, 0042, 0043).
+- **Normal before expressive** (decision 0043): where Material decorates (tinted surfaces, halos, sheets that slide up the screen), Orion does the plain thing.
+- **One language, three places**: phones, desktop windows and desktop apps share the components; density and the window layer adapt them.
 
 ## 2. One source of color
 
-Every color is a role generated from a seed by Material Color Utilities: primary, surface containers, outlines, and so on.
+Every color is a role: primary, surface containers, outlines, and so on. Surfaces, text and outlines are neutral grays; a seed generates the accent roles (primary, selection, focus) with Material Color Utilities; status colors are fixed.
 Nobody picks hex values for components. To raise contrast you raise the contrast level, which regenerates every role;
 you don't darken one color by hand. The default seed is monochrome, so an app without a brand looks calm and neutral, and
 an app with one gets a complete, accessible scheme from a single value.
@@ -30,7 +32,7 @@ an app with one gets a complete, accessible scheme from a single value.
 
 Content sits on solid tonal surfaces: cards, panes, lists, fields and tables are all M3 surface containers. Glass is reserved
 for layers that float above content and move or overlay it: app bars once content scrolls under them, nav bars, toolbars,
-menus, sheets, dialogs and tooltips. Glass is never used under dense text, and it always has a fallback: more contrast,
+menus, floating panels, dialogs and tooltips. A filled thing that sits on glass is a tint, never a solid patch. Glass is never used under dense text, and it always has a fallback: more contrast,
 reduced transparency, or a browser without backdrop blur all turn it solid.
 
 ## 4. Motion that never gets in the way

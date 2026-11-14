@@ -6,10 +6,10 @@ Every component has a live reference page at https://4rk0s4h4.github.io/s4-orion
 ## Contents
 
 - **Actions:** [button](#button), [icon-button](#icon-button), [button-group](#button-group), [fab](#fab)
-- **Navigation and shell:** [app](#app), [layout](#layout), [top-app-bar](#top-app-bar), [nav-bar](#nav-bar), [nav-rail](#nav-rail), [tabs](#tabs), [toolbar](#toolbar), [search](#search), [breadcrumbs](#breadcrumbs), [pagination](#pagination), [stepper](#stepper)
+- **Navigation and shell:** [app](#app), [layout](#layout), [top-app-bar](#top-app-bar), [nav-bar](#nav-bar), [nav-rail](#nav-rail), [tabs](#tabs), [toolbar](#toolbar), [search](#search), [desktop](#desktop), [breadcrumbs](#breadcrumbs), [pagination](#pagination), [stepper](#stepper)
 - **Containment and data:** [card](#card), [pane](#pane), [list](#list), [table](#table), [stat](#stat), [description-list](#description-list), [divider](#divider), [avatar](#avatar), [accordion](#accordion), [empty-state](#empty-state)
 - **Content:** [prose](#prose), [message](#message)
-- **Inputs:** [text-field](#text-field), [chip](#chip), [switch](#switch), [checkbox](#checkbox), [radio](#radio), [slider](#slider), [swatches](#swatches)
+- **Inputs:** [text-field](#text-field), [date-picker](#date-picker), [chip](#chip), [switch](#switch), [checkbox](#checkbox), [radio](#radio), [slider](#slider), [swatches](#swatches)
 - **Feedback:** [badge](#badge), [status](#status), [progress](#progress), [banner](#banner), [skeleton](#skeleton), [snackbar](#snackbar), [tooltip](#tooltip)
 - **Overlays:** [menu](#menu), [dialog](#dialog), [sheet](#sheet)
 
@@ -453,6 +453,12 @@ Highlight and the bar gets a top border.
 
 ## Navigation Rail
 
+> **Decision 0043:** the rail is side navigation. Items are rows (icon, label beside it). Collapsed it is one icon wide
+> (72) and labels become hover titles; expanded (240) the labels show; it expands by itself from 1200
+> (`data-expand="off"` to stop that). The menu button is a hamburger. The header's `.s4-fab` is a solid primary button
+> in the same row shape, never glass. Optional `.s4-nav-rail-title` group titles and a `.s4-nav-rail-footer` that stays
+> at the bottom. Where the text below still describes labels under icons or a 96dp rail, this note wins.
+
 Top-level destinations at the side of expanded windows (840 and up). M3 Expressive rail: collapsed (96dp) or expanded,
 with an optional menu button and FAB. Uses the same `.s4-nav-item` as the [navigation bar](#nav-bar) (styles in
 `nav-bar.css`).
@@ -640,6 +646,51 @@ wraps the whole bar. The clear button is a real button with a label. Forced colo
 
 **Tokens:** `--s4-size-text-field` (56), `--s4-shape-search`, `--md-sys-color-surface-container-high`,
 `--md-sys-typescale-body-large-*`, `--s4-layout-list-width` (×2 = 720 max).
+
+---
+
+<a id="desktop"></a>
+
+## Desktop Windows
+
+What an Orion app needs to live in a desktop window or ship as a desktop app (an installed web app, Electron, Tauri),
+on the same shell and components (decision 0043).
+
+```html
+<div class="s4-app" data-window data-density="auto">
+  <header class="s4-titlebar"><span class="s4-titlebar-title">Ledger</span></header>
+  <nav class="s4-nav-rail" aria-label="Main">…</nav>
+  <div class="s4-app-body">…</div>
+</div>
+
+<button class="s4-button" data-shortcut="mod+n">New Bill <kbd class="s4-kbd"></kbd></button>
+<li data-context-menu="row-menu">…</li>
+<div class="s4-menu" id="row-menu">…</div>
+```
+
+| Class / attribute | What |
+|---|---|
+| `data-window` on `.s4-app` | The app fills the window and never scrolls as a page; the body and each pane scroll on their own. Thin scrollbars, arrow cursor on controls, chrome text can't be selected. |
+| `data-density="auto"` | Pointer-sized controls where the pointer is a mouse (see `base/density.css`); `compact` forces it. |
+| `.s4-titlebar` | A title bar that drags the window. Buttons, links and fields inside stay clickable. Leaves room for the system's window buttons (window controls overlay). Hidden under 600. |
+| `data-controls="start"` on the title bar | Room for macOS traffic lights in a frameless window. |
+| `.s4-titlebar-title` | The centered title; `data-align="start"` on the bar puts it at the start. |
+| `.s4-window-controls` > `.s4-window-control[data-window-action="minimize\|maximize\|close"]` | Window buttons for frameless shells; each click fires `s4-window { action }` on the document. Wire that to the shell. |
+| `data-shortcut="mod+k"` | That key combination clicks the element. `mod` is ⌘ on Apple platforms, Ctrl elsewhere; also `shift`, `alt`. |
+| `<kbd class="s4-kbd">` | Shows a shortcut. Empty inside a `data-shortcut` element (or with `data-for="id"`), it is filled in the platform's spelling. |
+| `data-context-menu="menu-id"` | Right-click (long press on touch) opens that menu at the pointer. The menu fires `s4-context { target }` and has `.contextTarget`. |
+
+**When:** `data-window` for anything used like an application (mail, an editor, a dashboard that stays open). A page
+people read (article, landing page) keeps normal page scrolling.
+
+**Do:** give every primary action a shortcut and show it in its tooltip or menu item; keep right-click menus short and
+make every item reachable another way. **Don't:** draw `.s4-window-controls` when the system already draws its own;
+don't put the only way to do something in a context menu.
+
+**Accessibility:** shortcuts never fire while typing unless they use `mod`; context menus are normal menus (arrows,
+Escape, typeahead) and return focus to the row.
+
+**Tokens:** `--s4-size-titlebar`, `--s4-density-compact-*`.
 
 ---
 
@@ -1379,6 +1430,41 @@ forced-colors mode draws real borders.
 
 ---
 
+<a id="date-picker"></a>
+
+## Date Picker
+
+A date field opens a glass calendar instead of the browser's own picker (decision 0043). The markup stays native, so
+forms, `min`, `max` and pages without scripts keep working.
+
+```html
+<div class="s4-text-field"><label for="due">Due Date</label><input id="due" type="date" min="2026-01-01" max="2027-12-31"></div>
+
+<!-- a range: one picker fills both inputs -->
+<div class="s4-text-field"><label for="from">Statement Period</label><input id="from" type="date" data-range-end="to"></div>
+<input id="to" type="date" hidden>
+```
+
+| Attribute (on the input) | What |
+|---|---|
+| `value`, `min`, `max` | As on any date input (`yyyy-mm-dd`). Days outside the limits can't be chosen, by pointer or keyboard. |
+| `data-disabled-dates="2026-11-26,2026-12-25"` | Single days that can't be chosen. |
+| `data-range-end="id"` | Selects a range: the first choice is the start, the second the end (swapped if earlier); the end goes into the input with that id. |
+
+Choosing a date sets the input's value, fires `input` and `change` on it and `s4-change { value }` on the field.
+The header's month button switches to a month and year chooser; Clear empties the field, Today jumps to today.
+Under 600 wide the calendar is a centered floating panel.
+
+**Keyboard:** arrows move by day and week, Home and End to the ends of the week, Page Up and Page Down by month
+(with Shift by year), Enter or Space chooses, Escape closes and returns to the field.
+
+**Accessibility:** the field is a button that names the label and the chosen date; the calendar is a dialog with a
+roving focus in the grid; today and the selected day are announced.
+
+**Tokens:** `--s4-shape-menu`, `--md-sys-color-primary`, `--md-sys-color-secondary-container`, glass tokens.
+
+---
+
 <a id="chip"></a>
 
 ## Chip
@@ -1964,15 +2050,15 @@ only what can't be undone (use Undo in a snackbar otherwise). **Don't:** stack d
 
 <a id="sheet"></a>
 
-## Sheets
+## Floating Panels
 
-A short task without leaving the screen. From 600 wide, **bottom sheets** slide from the bottom edge; drag the handle down to dismiss. **On a phone (under 600) the bottom sheet is a
-centered card**, shaped and animated like a dialog (it pops in, no handle, no drag; decisions 0011, 0022). **Side sheets** slide from the end edge. Both on glass.
+A short task without leaving the screen (decision 0043; these replace bottom and side sheets and keep their class
+names). A panel is a glass surface that floats inside the window: inset from every edge, all four corners round, and it
+pops in like a dialog. Nothing slides up the screen and nothing docks to an edge.
 
 ```html
-<button class="s4-fab" data-sheet="add-expense" aria-label="Add expense"><span class="s4-icon" data-icon="add"></span></button>
+<button class="s4-button" data-sheet="add-expense">Add Expense</button>
 <dialog class="s4-bottom-sheet" id="add-expense" aria-labelledby="ae-h">
-  <span class="s4-sheet-handle" aria-hidden="true"></span>
   <h2 class="s4-sheet-title" id="ae-h">Add Expense</h2>
   <div class="s4-sheet-content">…fields…</div>
   <div class="s4-sheet-actions"><button class="s4-button" data-variant="text" data-close="cancel">Cancel</button><button class="s4-button" data-close="save">Save</button></div>
@@ -1983,8 +2069,21 @@ centered card**, shaped and animated like a dialog (it pops in, no handle, no dr
 </dialog>
 ```
 
-Opening, closing, `[data-close]`, `data-persistent`, focus and events work exactly like the [dialog](#dialog)
-(`S4.sheet.open/close` are the same functions). Drag-dismiss fires `s4-close { value: "drag" }`.
+| Class / attribute | What |
+|---|---|
+| `.s4-bottom-sheet` | Floats at the bottom center (on a phone: the full width minus the inset, above the home indicator). |
+| `.s4-side-sheet` | From 600 wide: floats at the end side, as tall as the window minus the inset. On a phone: same as the bottom panel. |
+| `data-placement="center"` | Centers the panel like a dialog. |
+| `data-persistent` | A click outside doesn't close it. |
 
-**Do:** use a bottom sheet for a quick add or a set of choices on phones; a side sheet for filters or details beside content on
-wide screens. **Don't:** put a sheet on a dialog, or a second sheet on a sheet.
+Opening, closing, `[data-close]`, focus and events work exactly like the [dialog](#dialog) (`S4.sheet.open/close`
+are the same functions). Opening never focuses a text field; add `data-autofocus` to a control to ask for it.
+`.s4-sheet-handle` in older markup draws nothing, and panels are not dragged.
+
+**Do:** use a bottom panel for a quick add or a set of choices; a side panel for filters or details beside content on
+wide screens. Always give it a Cancel or Close. **Don't:** put a panel on a dialog, or a second panel on a panel.
+
+**Accessibility:** a native modal `<dialog>`: focus is trapped, Escape closes, focus returns to the opener. Give it
+`aria-labelledby`.
+
+**Tokens:** `--s4-shape-sheet`, `--s4-space-4` (inset), `--s4-scrim-opacity`, glass tokens.

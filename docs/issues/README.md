@@ -19,41 +19,7 @@ decision and show options in a motion lab with the scrubber before building.
 
 ## Open (2026-11-14)
 
-### 1. Rail collapse animation glitches
-Collapsing the expanded navigation rail with its animation shows a visual bug (labels and pill during the width change).
-Reproduce on `components/nav-rail/nav-rail.html` (press the menu button to expand, then collapse) with the scrubber.
-![Rail collapsed and expanded](img/2026-11-14-rail-collapsed-expanded.png)
-
-### 2. Duotone icons turn completely white when selected
-Some duotone icons lose their two tones on a selected item (here Bills in the rail: the icon is a flat white shape).
-Check every selected or pressed state that sets the icon color (nav bar, rail, chips, list, segments, menu).
-![Selected rail icon all white](img/2026-11-14-rail-selected-icon-white.png)
-
-### 3. Rail items on desktop: label beside the icon, hamburger menu button
-On desktop the rail items should be normal rows with the label next to the icon (not stacked under it), like a standard
-side navigation. The rail's menu button becomes a **hamburger** icon (today it's dots). Owner's exception to "Bold
-Duotone only": in places like this a **Line Duotone** icon is fine. Also see the grey-disc FAB in the collapsed rail
-(question 3 of the framework review). Needs a decision record (amends 0007 and the rail docs).
-![Rail collapsed and expanded](img/2026-11-14-rail-collapsed-expanded.png)
-
-### 4. Solid controls on glass look out of place
-Where a transparent (glass) surface holds a solid, selectable thing (a toolbar's Save Draft button, the nav bar's
-selected pill, icons and clear buttons in fields on glass), the solid fill looks pasted on. Make items on glass look
-like they belong (revisit 0015 "items on glass keep their own color" with the owner; keep the contrast guarantee and
-extend `check-glass` to whatever fill is chosen).
-![Toolbar button on glass](img/2026-11-14-toolbar-button-on-glass.png)
-![Field icons on glass](img/2026-11-14-field-icons-on-glass.png)
-
-### 5. Duotone icon tones are too close together
-In general the two tones of the duotone icons are too similar, which hurts contrast and readability. Raise the
-difference between the base and the accent tone (check against the surfaces they sit on, light and dark).
-![Selected rail icon all white](img/2026-11-14-rail-selected-icon-white.png)
-
-### 6. Selected list rows touch the side edges but not the top
-In lists (and similar places) the selected or hovered fill runs to the left and right edges of the container while
-there is a gap at the top, which looks odd. Inset the selection evenly (padding or margin on all sides) so the fill
-never touches only some edges.
-![List selection edges](img/2026-11-14-list-selection-edges.png)
+Issues 1 to 6, 8 to 10, 12 to 18, 20 to 23 and 32 to 35 were built in the overhaul (decision 0043) and wait for the owner's look in the [Overhaul Review](../../explore/review-orion-2.html). Still open: 7 and idea A.
 
 ### 7. Liquid hover between list rows (owner reviews on a computer)
 **Reminder for the owner: review the row hover options on a computer** ([Lab 2](../../explore/motion-liquid-2.html), question 1: Today, Edges Settle, Edges Lean, Corners Melt) and say which one, or describe it. Owner's direction so far: a minor animation of the hover box's edges, not a box that travels between rows.
@@ -61,122 +27,8 @@ Original note: moving the pointer from one row to the next should feel liquid: t
 rounded corners morph as it goes (like the sliding nav pill, but softer). Subtle. Applies to lists and similar rows.
 ![List rows](img/2026-11-14-list-hover-liquid.png)
 
-### 8. Switch hover looks bad; no hover halo
-The switch's hover state looks wrong, and the owner doesn't like the round hover "shadow" (state-layer halo) around the
-handle. Find a cleaner hover (for example a slight handle or track change) for switches, and check the other controls
-that draw the same halo (checkbox, radio, slider handle).
-![Switch hover](img/2026-11-14-switch-hover.png)
-
-### 9. No glass on tables
-The table (sticky header, scroll area) looks like it's trying to be glass; it looks bad. Tables are content and stay
-solid: remove any glass or translucency from the table and its sticky header.
-![Table](img/2026-11-14-table-no-glass.png)
-
-### 10. Table row hover looks bad
-Hovering a row draws a fill with odd rounded edges and a big halo around the row checkbox. Make the row hover clean
-(and consistent with issue 6's even inset and issue 7's liquid hover).
-![Table row hover](img/2026-11-14-table-row-hover.png)
-
-### 12. Composer send button height looks bugged
-In the chat composer the send button doesn't match the height of the message field next to it (it looks squashed and
-misaligned). Align button and field heights in the composer (and anywhere an icon button sits beside a field).
-![Composer](img/2026-11-14-composer-button-height.png)
-
-### 13. Press-to-square only where it fits
-The owner likes buttons morphing toward a square when pressed, **but not** when the button sits at the end of a rounded
-container (like the send button in the composer), where a square looks bad against the container's curve or seems to
-overlap it. There the button should keep a shape that follows the container (stay round or match the container's
-corner). Confirm this reading with the owner before building.
-![Pressed send button](img/2026-11-14-button-press-square-in-container.png)
-
-### 14. Selects must open the glass menu
-The Category select on the text field reference page opens the browser's native drop-down list. Selects are supposed to
-open the glass menu (0024); find why this one doesn't (reference page script order, or a select case text-field.js
-misses) and check every select in the gallery, templates and showcase.
-![Native drop-down](img/2026-11-14-select-native-dropdown.png)
-
-### 15. A real date picker
-Date fields open the browser's native calendar. Build an Orion date picker with the details already done: month header
-with a month/year switch, previous/next, weekday row, today marked, selected day filled, days outside the month muted,
-Clear and Today actions, keyboard support (arrows, Page Up/Down, Home/End, Enter, Escape), on glass like the menu,
-a phone layout (sheet or centered card), min/max and disabled dates, and a range option. Native `<input type="date">`
-stays underneath for forms and as the fallback.
-![Native date picker](img/2026-11-14-native-date-picker.png)
-
-### 16. Error fields: the red is too intense
-The error state fills the whole field with a strong red (error-container) that's too intense and clashes with other
-colors. Go a different way: for example keep the normal field fill and mark the error with the label, helper text, a
-small icon and a quieter accent, and soften the error tones generally. Show options in a lab.
-![Error fields](img/2026-11-14-error-fields-red.png)
-
-### 17. Selected chips must not change size
-Filter chips grow when selected (the check slides in), which pushes the other chips around. Chips keep one size in every
-state. **Draft first:** show the owner several ideas for how a selected chip looks without growing (fill change, icon
-swap in a fixed slot, inverse fill, a glass state, etc.) in a review lab before building.
-![Chips](img/2026-11-14-chips-expanding-check.png)
-
-### 18. Checkbox marks are too big
-The check and indeterminate marks inside checkboxes are far too big and stand out; the owner also isn't used to seeing
-icon-like glyphs in checkboxes. Make the mark smaller and quieter (a thin check that fits the box, a short dash for
-indeterminate). Show in the same lab as 17/19 if it's a visible change.
-![Checkboxes and radios](img/2026-11-14-checkbox-radio.png)
-
-### 20. Slider must reach both ends
-The owner likes the slider's general look, but at 0% and 100% it doesn't reach the end: a sliver of the inactive track
-stays at the very end (or the active track looks less than full). At the ends the active (or inactive) track should run
-all the way, with no leftover sliver.
-![Slider at zero](img/2026-11-14-slider-at-zero.png)
-![Slider at max](img/2026-11-14-slider-at-max.png)
-
-### 21. No stop dot peeking out under the handle
-With stops (`data-stops`), a sliver of a stop dot shows beside the handle. Hide any dot the handle covers or sits next
-to. Together with issue 20 this makes the ends look doubly bad: fix both and check 0%, 100% and every stop.
-![Stop dot under the handle](img/2026-11-14-slider-stop-dot-under-handle.png)
-
-### 22. Color: normal, contrast-safe colors; accents stay accents
-The owner (2026-11-14): M3 Expressive colors whole panels and apps with the seed color; **keep it normal**. Choose colors
-that never cut contrast, and feel free to use the kind of colors other CSS frameworks use for light and dark mode
-(neutral grays for surfaces, a clear accent). With a seed, the accent colors only accents (the main button, selection,
-links, focus, FAB), not every surface; surfaces and containers stay neutral. Also covers the status, badge and error
-tones (see 16, 23). This changes how the color roles are generated (0001, 0003): record as a new decision, keep the
-contrast checks (42 pairs, check-glass) passing, and show light and dark options with a few seeds in a lab first.
-![Swatches](img/2026-11-14-swatches-colors.png)
-
-### 23. Badges look washed out in dark mode
-The count badge (salmon on dark) looks washed out. Likely fixed by issue 22's palette; check after it, and make the
-badge read clearly in both modes.
-![Badges](img/2026-11-14-badges-washed-out.png)
-
 ### 24. ~~Banner on glass~~ (scrapped)
 Scrapped by the owner (2026-11-14): they meant snackbars, not banners. Banners stay solid content. See issue 28.
-
-### 32. Don't autofocus fields in dialogs and sheets
-Opening a dialog or sheet focuses its first text field, so on iOS the keyboard pops up at the same moment as the dialog
-(annoying; seen in many past demos). Focus the dialog itself (or its heading) instead, never a text field, unless the
-app asks for it explicitly (e.g. `data-autofocus`). Keep focus management accessible (focus inside the dialog, return
-to the opener on close).
-![Dialog with focused field](img/2026-11-14-dialog-autofocus-field.png)
-
-### 33. Field focus ring on glass feels off
-On a transparent surface (the sheet), the text field's focus/outline animation feels off because the field's fill
-changes on hover at the same time. Might go away with the color update (22); recheck after it, then fix what's left
-(one change at a time: fill or ring, not both).
-![Field in a sheet](img/2026-11-14-bottom-sheet.png)
-
-### 34. Replace bottom and side sheets with floating glass panels
-The owner wants to drop the sheet concept: something sliding up the screen (or in from the side) feels strange. Instead,
-a **floating glass panel** placed where it fits (bottom, side, near what opened it), inset from the screen edges with
-its own rounded corners and the normal glass edge, entering with the new motion. Applies to phones and desktop; update
-the sheet component, the templates and the showcase, and record a decision (replaces the bottom/side sheet parts of
-0011 and 0022). Draft the options in a lab first.
-![Bottom sheet](img/2026-11-14-bottom-sheet.png)
-
-### 35. Side sheet: no edge glow down the side
-The side sheet shows the glass edge glow along its full-height side, which the owner calls a misuse of glass. Solved by
-34 (a floating panel with the normal glass edge); until then no edge light on a side sheet's long edge.
-![Side sheet edge glow](img/2026-11-14-side-sheet-edge-glow.png)
-
-## Ideas (to explore later, not yet issues)
 
 ### A. Whatever you touch turns into glass
 Owner's "crazy side idea" (2026-11-14), to spend real time on: anything you touch or that is active becomes glass. A
@@ -189,6 +41,30 @@ tinted states)? Does it read on a solid content surface with nothing interesting
 
 ## Done
 
+- **1.** Rail collapse animation glitches: done 2026-11-14 (rail is rows; only its edge moves, decision 0043).
+- **2.** Duotone icons turn completely white when selected: done 2026-11-14 (selected icons keep both tones, decision 0043).
+- **3.** Rail items on desktop: label beside the icon, hamburger menu button: done 2026-11-14 (rows with the label beside the icon, hamburger, solid main action, decision 0043).
+- **4.** Solid controls on glass look out of place: done 2026-11-14 (items on glass are tints, proven by check-glass, decision 0043).
+- **5.** Duotone icon tones are too close together: done 2026-11-14 (faded tone 0.42 / 0.38, decision 0043).
+- **6.** Selected list rows touch the side edges but not the top: done 2026-11-14 (lists inset on every side, decision 0043).
+- **8.** Switch hover looks bad; no hover halo: done 2026-11-14 (no halo; the handle grows a little, decision 0043).
+- **9.** No glass on tables: done 2026-11-14 (flat rows, solid header, thin scrollbar, decision 0043).
+- **10.** Table row hover looks bad: done 2026-11-14 (flat band, no checkbox halo, decision 0043).
+- **12.** Composer send button height looks bugged: done 2026-11-14 (the composer is one pill, decision 0043).
+- **13.** Press-to-square only where it fits: done 2026-11-14 (buttons stay round inside rounded containers, decision 0043).
+- **14.** Selects must open the glass menu: done 2026-11-14 (the reference page loads the menu script, decision 0043).
+- **15.** A real date picker: done 2026-11-14 (glass calendar with range, keyboard and a phone panel, decision 0043).
+- **16.** Error fields: the red is too intense: done 2026-11-14 (normal fill; label, message and ring carry the error, decision 0043).
+- **17.** Selected chips must not change size: done 2026-11-14 (chips keep one size; options in the Overhaul Review, decision 0043).
+- **18.** Checkbox marks are too big: done 2026-11-14 (thin small marks, decision 0043).
+- **20.** Slider must reach both ends: done 2026-11-14 (the handle travels the whole track, decision 0043).
+- **21.** No stop dot peeking out under the handle: done 2026-11-14 (dots near the handle and at the ends are hidden, decision 0043).
+- **22.** Color: normal, contrast-safe colors; accents stay accents: done 2026-11-14 (neutral surfaces, accent only on accents; options in the Overhaul Review, decision 0043).
+- **23.** Badges look washed out in dark mode: done 2026-11-14 (one red badge in both modes, decision 0043).
+- **32.** Don't autofocus fields in dialogs and sheets: done 2026-11-14 (the dialog takes focus, never a field, decision 0043).
+- **33.** Field focus ring on glass feels off: done 2026-11-14 (hover fill stays during focus; fields on glass are tints, decision 0043).
+- **34.** Replace bottom and side sheets with floating glass panels: done 2026-11-14 (floating glass panels, decision 0043).
+- **35.** Side sheet: no edge glow down the side: done 2026-11-14 (panels float clear of every edge, decision 0043).
 - **11.** Accordion: too fast, chevron should bend, not spin: done 2026-11-14 (accordion reveal + bending chevron, decision 0042).
 - **19.** Radio: liquid selection, no inner dot: done 2026-11-14 (ink fill, no dot (window idea dropped by the owner), decision 0042).
 - **25.** Skeleton: glitchy, and a wave instead of a blink: done 2026-11-14 (one sheen wave, decision 0042).

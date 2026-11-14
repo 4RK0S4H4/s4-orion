@@ -11,10 +11,10 @@ and deliberate:
 
 - **Inter** as the typeface, **Solar** icons (Bold Duotone, Linear arrows) behind neutral names. Phosphor Duotone and Phosphor Bold Duotone are built in as alternatives: `S4.icon.use('phosphor-duotone')` switches the page (credit the set in use).
 - **Title Case** labels; sentences stay sentence case.
-- **Monochrome by default.** An app that wants color sets one seed; every role is generated from it.
+- **Monochrome by default.** An app that wants color sets one seed, and the seed colors only accents (main button, FAB, selection, switches, focus); surfaces stay neutral gray (decision 0043). Status uses the fixed tones `success`, `warning`, `info`, `error`.
 - **Very clear glass on floating chrome only** (app bars over scrolled content, nav bar, toolbars, menus, dialogs, sheets),
   with a contrast floor that keeps text WCAG AA over any backdrop. Content is always solid.
-- **Simple, sturdy motion:** dialogs pop in, menus fade in place with their items following, ink (state fills) moves with a subtle liquid spring, shared axis between views, sheets slide from their edge; only movement and fades, on M3 Expressive springs.
+- **Simple, sturdy motion:** dialogs and floating panels pop in, menus fade in place with their items following, ink (state fills) moves with a subtle liquid spring, shared axis between views; only movement and fades, on M3 Expressive springs.
 
 When a question isn't answered here or in the references, do what stock Material 3 Expressive does. That keeps every app
 predictable and lets M3 guidance apply directly. Inventing new components, colors or radii is how a design system drifts.
@@ -39,6 +39,7 @@ rename, replace the content). They are complete, checker-clean pages; keep their
 |---|---|---|
 | `dashboard.html` | analytics, finance, admin, status, trackers | shell + views; stats, chart pane, attention list, table view |
 | `list-detail.html` | mail, CRM, tickets, orders, contacts, any CRUD | `.s4-split` list-detail, compose dialog, FAB |
+| `desktop-app.html` | anything that ships as a desktop app or lives in a desktop window all day (installed web app, Electron, Tauri) | `data-window`, title bar, compact density, shortcuts, right-click menus |
 | `settings.html` | any app's settings | reading width; theme controls, segmented lists, danger pane |
 | `sign-in.html` | sign-in, sign-up, onboarding, one-task screens | no navigation, reading width, centered pane |
 | `article.html` | help, docs, blog, release notes, legal | reading width, breadcrumbs, `.s4-prose` |
@@ -99,7 +100,8 @@ last destination. Keep one shell (`.s4-app`) per page.
   `data-width="wide"` (1600) for tables, boards and editors; the default (1200) for dashboards.
 - **Two panes:** `.s4-split` (list-detail, the default) or `.s4-split[data-layout="supporting"]`: one pane at a time on
   phones, side by side from 840. Don't hand-build split grids.
-- **Many destinations or a desktop-first tool:** `data-expand="auto"` on the rail shows labels from 1200.
+- **The rail is side navigation:** rows with the label beside the icon; it shows labels by itself from 1200 and is one icon wide below that. Add a `[data-rail-toggle]` menu button (icon `menu`, a hamburger) when there are more than four destinations. Its `.s4-fab` is the screen's main action as a solid button.
+- **Desktop apps and desktop-first tools:** `data-window data-density="auto"` on `.s4-app` (the window never scrolls as a page, controls are pointer-sized with a mouse), a `.s4-titlebar`, `data-shortcut="mod+n"` on primary actions with `<kbd class="s4-kbd"></kbd>` in their menu items, and `data-context-menu="id"` on rows. Never restyle components to make them smaller: density does it.
 - Read `references/patterns.md` for screen patterns (dashboard, list and detail, settings, forms, empty states, theming).
 
 ## Decision rules
@@ -135,13 +137,14 @@ last destination. Keep one shell (`.s4-app`) per page.
 
 **Overlays**
 - A short list of choices from a button: **menu**. A decision or a short input: **dialog**. A short task without leaving:
-  **bottom sheet** (quick add; on a phone it renders as a centered card) or **side sheet** (filters, details on wide screens). Confirmation after an
+  **floating panel**: `.s4-bottom-sheet` (quick add; floats at the bottom) or `.s4-side-sheet` (filters, details; floats at the side on wide screens). Panels are glass, inset from every edge, and never slide or dock. Confirmation after an
   action: **snackbar** with Undo. Naming an icon: **tooltip**.
 - Confirm only what can't be undone. Prefer Undo in a snackbar.
 
 **Motion** (built in; use the APIs, never hand-write durations or easings)
-- Dialogs (and the bottom sheet on a phone) **pop**: rise 16px and fade in (`[data-dialog]`, `[data-sheet]`, or `S4.transition.pop(el, { open })`).
-- Menus fade in where they sit and their items follow (built into `[data-menu]`); sibling views and tabs use **shared axis**; sheets on wider screens **slide from the edge**; snackbars and tooltips are glass and **rise** into place (built in).
+- Dialogs and floating panels **pop**: rise 16px and fade in (`[data-dialog]`, `[data-sheet]`, or `S4.transition.pop(el, { open })`).
+- Menus fade in where they sit and their items follow (built into `[data-menu]`); sibling views and tabs use **shared axis**; snackbars and tooltips are glass and **rise** into place (built in).
+- Decision 0043: dialogs and panels never focus a text field when they open (no `autofocus` on inputs); date fields are plain `<input type="date">` in a text field (the glass calendar is automatic; `data-range-end="id"` for a range); errors are `data-error="Message"` on the field, never a red fill; a selected chip is `aria-pressed="true"` and never gets a check icon.
 - Decision 0042: liquid motion (the `ink` spring, edges that lead and trail) only for ink, the solid fills that show state; glass surfaces move plainly.
 - Transitions only move and fade (decision 0022): never animate clip-path, size, color or blur, never clone elements.
 - Never scale a surface's content to make it appear (it stretches text). Bounce is fine on movement; fades never bounce.
@@ -213,7 +216,6 @@ Request: "Add a screen to my expenses app listing this month's bills, with a way
   <button class="s4-fab" data-fixed data-sheet="add-bill" type="button"><span class="s4-icon" data-icon="add"></span><span class="s4-fab-label">Add Bill</span></button>
 </section>
 <dialog class="s4-bottom-sheet" id="add-bill" aria-labelledby="add-bill-h">
-  <span class="s4-sheet-handle" aria-hidden="true"></span>
   <h2 class="s4-sheet-title" id="add-bill-h">Add Bill</h2>
   <div class="s4-sheet-content">
     <div class="s4-text-field"><input id="vendor"><label for="vendor">Vendor</label></div>
